@@ -1,0 +1,11 @@
+@use "@angular/material" as mat
+
+@use "src/styles/colors" as c
+  
+$light-green-palette: (50: c.$light-green-50, 100: c.$light-green-100, 200: c.$light-green-200, 300: c.$light-green-300, 400: c.$light-green-400, 500: c.$light-green-500, 600: c.$light-green-600, 700: c.$light-green-700, 800: c.$light-green-800, 900: c.$light-green-900, contrast: (50: c.$black, 100: c.$black, 200: c.$black, 300: c.$black, 400: c.$black, 500: c.$black, 600: c.$black, 700: c.$black, 800: c.$black, 900: c.$black))
+$dark-green-palette: (50: c.$dark-green-50, 100: c.$dark-green-100, 200: c.$dark-green-200, 300: c.$dark-green-300, 400: c.$dark-green-400, 500: c.$dark-green-600, 600: c.$dark-green-600, 700: c.$dark-green-700, 800: c.$dark-green-800, 900: c.$dark-green-900, contrast: (50: c.$black, 100: c.$black, 200: c.$black, 300: c.$white, 400: c.$white, 500: c.$white, 600: c.$white, 700: c.$white, 800: c.$white, 900: c.$white))
+
+$light-theme-primary: mat.define-palette($light-green-palette, 900)
+$light-theme-accent: mat.define-palette($dark-green-palette)
+
+$light-theme: mat.define-light-theme((color: (primary: $light-theme-primary, accent: $light-theme-accent)))

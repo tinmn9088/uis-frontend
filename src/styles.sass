@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat
+
+@use './styles/themes/light'
+
+@include mat.core()
+
+@include mat.all-component-themes(light.$light-theme)
+  
+@import '~@angular/material/prebuilt-themes/indigo-pink.css'
+@import '~bootstrap/dist/css/bootstrap-grid.min.css'
+@import '~bootstrap/dist/css/bootstrap-reboot.min.css'
+@import '~bootstrap/dist/css/bootstrap-utilities.min.css'
+@import 'styles/icons.css'
+
+*
+  font-size: 16px
+
+a
+  text-decoration: none
