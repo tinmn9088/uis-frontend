@@ -1,0 +1,30 @@
+<div class="d-flex flex-column">
+  <h3 class="text-center">Войти</h3>
+
+  <mat-card class="auth-form-card mb-3">
+    <form class="d-flex flex-column" [formGroup]="formGroup" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+      <mat-form-field appearance="standard" color="primary">
+        <mat-label>Логин</mat-label>
+        <input matInput name="username" formControlName="username" [(ngModel)]="username">
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard" color="primary">
+        <mat-label>Пароль</mat-label>
+        <input matInput [type]="passwordHidden ? 'password' : 'text'" name="password" formControlName="password" [(ngModel)]="password">
+        <button type="button" tabindex="-1" mat-icon-button matSuffix (click)="passwordHidden = !passwordHidden"  [disabled]="formGroup.disabled">
+          <mat-icon>{{passwordHidden ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error>Required</mat-error>
+      </mat-form-field> 
+      <button class="p-0" mat-flat-button color="primary" [disabled]="formGroup.disabled">
+        Войти
+        <mat-progress-bar class="w-100 rounded-bottom" [ngClass]="formGroup.disabled ? '' : 'opacity-0'" mode="indeterminate"></mat-progress-bar>
+      </button>
+    </form>
+  </mat-card>
+
+  
+  <mat-card class="register-callout-card">
+    <p class="text-center">Нет аккаунта? <a href="#">Зарегистрируйся</a> .</p>
+  </mat-card>
+</div>
