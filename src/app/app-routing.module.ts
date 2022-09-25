@@ -4,7 +4,13 @@ import { LoginComponent } from './modules/user/components/login/login.component'
 import { PageNotFoundComponent } from './modules/shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: 'users/login', component: LoginComponent },
+  {
+    path: 'users',
+    children: [
+      { path: 'login', component: LoginComponent },
+      { path: '**', component: PageNotFoundComponent }
+    ]
+  },
   { path: '**', component: PageNotFoundComponent },
 ];
 
