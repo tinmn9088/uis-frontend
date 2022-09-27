@@ -1,0 +1,10 @@
+{
+  "LoginForm": {
+    "SignIn": "Sign in",
+    "SignUp": "Sign up",
+    "Login": "Login",
+    "Password": "Password",
+    "Required": "Required",
+    "NoAccount": "No account"
+  }
+}

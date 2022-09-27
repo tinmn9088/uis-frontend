@@ -1,0 +1,12 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu" xPosition="before">
+  <button mat-menu-item [matMenuTriggerFor]="lang">Language ({{ currentLanguage }})</button>
+</mat-menu>
+
+<mat-menu #lang="matMenu" xPosition="before">
+  <button mat-menu-item (click)="language = languages.Ru">🇷🇺 Ru</button>
+  <button mat-menu-item (click)="language = languages.En">🇺🇸 En</button>
+</mat-menu>
