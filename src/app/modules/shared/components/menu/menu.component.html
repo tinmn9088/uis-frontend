@@ -1,5 +1,8 @@
-<button mat-icon-button [matMenuTriggerFor]="menu">
-  <mat-icon>more_vert</mat-icon>
+<button mat-icon-button
+  [matMenuTriggerFor]="menu" 
+  (menuOpened)="rotateStyle = 'rotate'" 
+  (menuClosed)="rotateStyle = ''">
+  <mat-icon class="settings-icon" [ngClass]="rotateStyle">settings</mat-icon>
 </button>
 
 <mat-menu #menu="matMenu" xPosition="before">

@@ -12,6 +12,8 @@ export class MenuComponent implements OnInit {
 
   readonly languages = Language;
 
+  rotateStyle: string = '';
+
   constructor() { }
 
   ngOnInit(): void { }
