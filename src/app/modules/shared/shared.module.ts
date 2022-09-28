@@ -6,9 +6,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MenuComponent } from './components/menu/menu.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCommonModule } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -27,9 +27,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     TranslateModule,
     MenuComponent,
+    MatButtonModule,
     MatCardModule,
     MatCommonModule,
-    MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,

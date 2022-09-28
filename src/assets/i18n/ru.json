@@ -6,5 +6,11 @@
     "Password": "Пароль",
     "Required": "Обязательно",
     "NoAccount": "Нет аккаунта"
+  },
+
+  "ErrorPage404": {
+    "NotFound": "Не найдено",
+    "GoToMainPage": "Перейти на",
+    "Link": "главную страницу"
   }
 }

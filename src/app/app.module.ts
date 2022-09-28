@@ -4,19 +4,19 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PageNotFoundComponent } from './modules/shared/components/page-not-found/page-not-found.component';
+import { ErrorPagesModule } from './modules/error-pages/error-pages.module';
 import { Language, localStorageLanguageKey } from './modules/shared/models/language.model';
 import { SharedModule } from './modules/shared/shared.module';
 import { UserModule } from './modules/user/user.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PageNotFoundComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ErrorPagesModule,
     UserModule,
     SharedModule
   ],

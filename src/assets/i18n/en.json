@@ -6,5 +6,11 @@
     "Password": "Password",
     "Required": "Required",
     "NoAccount": "No account"
+  },
+
+  "ErrorPage404": {
+    "NotFound": "Not Found",
+    "GoToMainPage": "Go to",
+    "Link": "main page"
   }
 }
