@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 
 // AoT requires an exported function for factories
@@ -34,6 +35,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
   ],
   declarations: [
@@ -53,7 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatProgressBarModule,
     ReactiveFormsModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'en',
+      defaultLanguage: 'ru',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
