@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { LoginRequest } from '../../models/login-request.model';
 
 @Injectable({
@@ -12,6 +12,6 @@ export class AuthorizationService {
 
   // TODO: implement
   login(loginRequest: LoginRequest): Observable<boolean> {
-    return of(true);
+    return throwError(() => new Error());
   }
 }

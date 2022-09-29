@@ -5,7 +5,10 @@
     "Login": "Логин",
     "Password": "Пароль",
     "Required": "Обязательно",
-    "NoAccount": "Нет аккаунта"
+    "NoAccount": "Нет аккаунта",
+    "Snackbar": {
+      "5XX": "Ошибка сервера"
+    }
   },
 
   "ErrorPage404": {

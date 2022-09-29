@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthorizationService } from '../../services/authorization/authorization.service';
 
 @Component({
@@ -21,7 +23,8 @@ export class LoginFormComponent implements OnInit {
 
   // TODO: remove activated route
   constructor(private _authorizationService: AuthorizationService, 
-    private _router: Router, private _activatedRoute: ActivatedRoute) { }
+    private _router: Router, private _activatedRoute: ActivatedRoute,
+    private _snackBar: MatSnackBar, private _translate: TranslateService) { }
 
   ngOnInit(): void { }
 
@@ -30,10 +33,7 @@ export class LoginFormComponent implements OnInit {
       return;
     }
 
-    // disable form
-    this.passwordHidden = true;
     this.formGroup.disable();
-    formDirective.resetForm();
     
     const loginForm = this;
     const loginRequest = { username: this.username, password: this.password };
@@ -44,8 +44,15 @@ export class LoginFormComponent implements OnInit {
         next(status) {
           
           // TODO: navigate to main page
-          loginForm.formGroup.enable();
-          loginForm._router.navigateByUrl(loginForm._activatedRoute.toString());
+          window.location.reload();    
+        },
+        error(err) {
+          loginForm._translate.get('LoginForm.Snackbar.5XX').subscribe({
+            next(message) {
+              loginForm.formGroup.enable();
+              loginForm._snackBar.open(`❌ ${message}`, '', { duration: 2000 });
+            }
+          });
         }
       });
     }, 3000);

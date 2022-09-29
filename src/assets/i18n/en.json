@@ -5,7 +5,10 @@
     "Login": "Login",
     "Password": "Password",
     "Required": "Required",
-    "NoAccount": "No account"
+    "NoAccount": "No account",
+    "Snackbar": {
+      "5XX": "Server Error"
+    }
   },
 
   "ErrorPage404": {
