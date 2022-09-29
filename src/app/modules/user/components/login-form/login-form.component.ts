@@ -20,8 +20,8 @@ export class LoginFormComponent implements OnInit {
   });
 
   // TODO: remove activated route
-  constructor(private authorizationService: AuthorizationService, 
-    private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private _authorizationService: AuthorizationService, 
+    private _router: Router, private _activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void { }
 
@@ -40,12 +40,12 @@ export class LoginFormComponent implements OnInit {
 
     // TODO: remove timeout
     setTimeout(() => {
-      this.authorizationService.login(loginRequest).subscribe({
+      this._authorizationService.login(loginRequest).subscribe({
         next(status) {
           
           // TODO: navigate to main page
           loginForm.formGroup.enable();
-          loginForm.router.navigateByUrl(loginForm.activatedRoute.toString());
+          loginForm._router.navigateByUrl(loginForm._activatedRoute.toString());
         }
       });
     }, 3000);

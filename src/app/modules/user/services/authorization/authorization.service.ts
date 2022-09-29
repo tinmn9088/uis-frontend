@@ -8,7 +8,7 @@ import { LoginRequest } from '../../models/login-request.model';
 })
 export class AuthorizationService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private _http: HttpClient) {}
 
   // TODO: implement
   login(loginRequest: LoginRequest): Observable<boolean> {
