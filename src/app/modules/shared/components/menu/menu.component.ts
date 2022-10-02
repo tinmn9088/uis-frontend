@@ -12,7 +12,7 @@ export class MenuComponent implements OnInit {
 
   readonly languages = Language;
 
-  rotateStyle: string = '';
+  rotate: boolean = false;
 
   constructor() { }
 

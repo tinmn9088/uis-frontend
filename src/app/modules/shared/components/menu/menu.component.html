@@ -1,8 +1,8 @@
 <button mat-icon-button
   [matMenuTriggerFor]="menu" 
-  (menuOpened)="rotateStyle = 'rotate'" 
-  (menuClosed)="rotateStyle = ''">
-  <mat-icon class="settings-icon" [ngClass]="rotateStyle">settings</mat-icon>
+  (menuOpened)="rotate = true" 
+  (menuClosed)="rotate = false">
+  <mat-icon class="settings-icon" [class.rotate]="rotate">settings</mat-icon>
 </button>
 
 <mat-menu #menu="matMenu" xPosition="before">
@@ -10,6 +10,6 @@
 </mat-menu>
 
 <mat-menu #lang="matMenu" xPosition="before">
-  <button mat-menu-item (click)="language = languages.Ru">🇷🇺 Ru</button>
-  <button mat-menu-item (click)="language = languages.En">🇺🇸 En</button>
+  <button mat-menu-item (click)="language = languages.Ru">🇷🇺 Русский</button>
+  <button mat-menu-item (click)="language = languages.En">🇺🇸 English</button>
 </mat-menu>
