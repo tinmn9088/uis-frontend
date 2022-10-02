@@ -1,11 +1,9 @@
 {
   "LoginForm": {
     "SignIn": "Войти",
-    "SignUp": "Зарегистрируйся",
     "Login": "Логин",
     "Password": "Пароль",
     "Required": "Обязательно",
-    "NoAccount": "Нет аккаунта",
     "Snackbar": {
       "5XX": "Ошибка сервера"
     }
