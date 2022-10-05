@@ -2,7 +2,7 @@
   <h3 class="text-center">{{ 'LoginForm.SignIn' | translate }}</h3>
 
   <mat-card class="auth-form-card mb-3">
-    <form class="d-flex flex-column" [formGroup]="formGroup" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+    <form class="d-flex flex-column" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="standard" color="primary">
         <mat-label>{{ 'LoginForm.Login' | translate }}</mat-label>
         <input matInput name="username" formControlName="username" [(ngModel)]="username">

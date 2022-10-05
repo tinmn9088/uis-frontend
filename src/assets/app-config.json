@@ -1,0 +1,9 @@
+{
+  "baseUrl": "localhost:8080",
+  "localStorageKeys": {
+    "jwt": {
+      "access": "accessJwtToken",
+      "refresh": "refreshJwtToken"
+    }
+  }
+}

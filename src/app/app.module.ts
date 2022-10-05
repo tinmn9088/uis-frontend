@@ -7,8 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorPagesModule } from './modules/error-pages/error-pages.module';
 import { Language, localStorageLanguageKey } from './modules/shared/models/language.model';
+import { AppConfigService } from './modules/shared/services/app-config/app-config.service';
 import { SharedModule } from './modules/shared/shared.module';
 import { UserModule } from './modules/user/user.module';
+
+function appConfigLoader(appConfig: AppConfigService): () => void {
+  return () => appConfig.load();
+}
 
 export function translateLoader(translate: TranslateService, injector: Injector): () => Promise<any> {
   return () => new Promise<any>((resolve: any) => {
@@ -41,6 +46,12 @@ export function translateLoader(translate: TranslateService, injector: Injector)
       provide: APP_INITIALIZER,
       useFactory: translateLoader,
       deps: [TranslateService, Injector],
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appConfigLoader,
+      deps: [AppConfigService],
       multi: true
     }
   ],

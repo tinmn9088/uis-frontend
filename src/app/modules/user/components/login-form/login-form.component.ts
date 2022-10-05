@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthorizationService } from '../../services/authorization/authorization.service';
 
@@ -21,14 +21,13 @@ export class LoginFormComponent implements OnInit {
     'password': new FormControl(this.password, Validators.required),
   });
 
-  // TODO: remove activated route
   constructor(private _authorizationService: AuthorizationService, 
-    private _router: Router, private _activatedRoute: ActivatedRoute,
-    private _snackBar: MatSnackBar, private _translate: TranslateService) { }
+    private _router: Router, private _snackBar: MatSnackBar,
+    private _translate: TranslateService) { }
 
   ngOnInit(): void { }
 
-  onSubmit(formDirective: FormGroupDirective) {
+  onSubmit() {
     if (this.formGroup.invalid) {
       return;
     }
@@ -38,24 +37,17 @@ export class LoginFormComponent implements OnInit {
     const loginForm = this;
     const loginRequest = { username: this.username, password: this.password };
 
-    // TODO: remove timeout
-    setTimeout(() => {
-      this._authorizationService.login(loginRequest).subscribe({
-        next(status) {
-          
-          // TODO: navigate to main page
-          window.location.reload();    
-        },
-        error(err) {
-          loginForm._translate.get('LoginForm.Snackbar.5XX').subscribe({
-            next(message) {
-              loginForm.formGroup.enable();
-              loginForm._snackBar.open(`❌ ${message}`, '', { duration: 2000 });
-            }
-          });
-        }
-      });
-    }, 3000);
+    this._authorizationService.login(loginRequest).subscribe({
+      complete: () => loginForm._router.navigateByUrl('/'),
+      error: () => {        
+        loginForm._translate.get('LoginForm.Snackbar.5XX').subscribe({
+          next(message) {
+            loginForm.formGroup.enable();
+            loginForm._snackBar.open(`❌ ${message}`, '', { duration: 2000 });
+          }
+        });
+      }
+    });
   }
 
 }
