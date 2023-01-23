@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SpecializationListComponent } from './components/specialization-list/specialization-list.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SpecializationListComponent
+  ],
   imports: [
     CommonModule
   ]
