@@ -1,0 +1,15 @@
+<app-toolbar (menuButtonClick)="drawer.toggle()"></app-toolbar>
+
+<mat-drawer-container autosize>
+  <mat-drawer #drawer mode="side" opened="true">
+    <p>Sidenav</p>
+    <button *ngFor="let option of options" mat-fab extended color="primary">
+      {{ option.title + ' ' + option.path }}
+    </button>
+  </mat-drawer>
+
+  <div>
+    <p>Content</p>
+    <ng-content></ng-content>
+  </div>
+</mat-drawer-container>

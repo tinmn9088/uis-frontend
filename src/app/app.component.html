@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+<app-frame
+  [options]="[
+    { title: 'Option 1', path: 'Option 1' },
+    { title: 'Option 2', path: 'Option 2' }
+  ]">
+  <router-outlet></router-outlet>
+</app-frame>
