@@ -7,11 +7,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 @NgModule({
-  declarations: [ToolbarComponent, FrameComponent],
-  exports: [ToolbarComponent, FrameComponent],
+  declarations: [ToolbarComponent, FrameComponent, PaginatorComponent],
+  exports: [ToolbarComponent, FrameComponent, PaginatorComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -20,6 +22,7 @@ import { RouterModule } from '@angular/router';
     MatIconModule,
     MatSidenavModule,
     MatTabsModule,
+    MatPaginatorModule,
   ],
 })
 export class SharedModule {}
