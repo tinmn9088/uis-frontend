@@ -36,8 +36,13 @@ export class PaginatorComponent implements AfterViewInit {
   }
 
   onIndexButtonClick(index: number) {
-    this.matPaginator.pageIndex = index - 1;
-    this.matPaginator.nextPage();
+    if (index === 0) {
+      this.matPaginator.pageIndex = index + 1;
+      this.matPaginator.previousPage();
+    } else {
+      this.matPaginator.pageIndex = index - 1;
+      this.matPaginator.nextPage();
+    }
     this.updatePageIndexes();
   }
 
@@ -46,6 +51,7 @@ export class PaginatorComponent implements AfterViewInit {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
     this.page.emit(e);
+    this.updatePageIndexes();
   }
 
   updatePageIndexes() {
