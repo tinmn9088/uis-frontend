@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpecializationListComponent } from './specialization-list.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('SpecializationListComponent', () => {
   let component: SpecializationListComponent;
@@ -8,6 +9,7 @@ describe('SpecializationListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [SharedModule],
       declarations: [SpecializationListComponent],
     }).compileComponents();
 

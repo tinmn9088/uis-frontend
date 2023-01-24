@@ -10,10 +10,16 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [ToolbarComponent, FrameComponent, PaginatorComponent],
-  exports: [ToolbarComponent, FrameComponent, PaginatorComponent],
+  exports: [
+    ToolbarComponent,
+    FrameComponent,
+    PaginatorComponent,
+    BrowserAnimationsModule,
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -23,6 +29,7 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
     MatSidenavModule,
     MatTabsModule,
     MatPaginatorModule,
+    BrowserAnimationsModule,
   ],
 })
 export class SharedModule {}
