@@ -1,0 +1,28 @@
+
+{
+  "toolbar": {
+    "tabs": {
+      "categories": "Категории",
+      "disciplines": "Дисциплины",
+      "specializations": "Специальности",
+      "curricula": "Учебные планы"
+    },
+    "menu": {
+      "add": {
+        "category": "Добавить категорию",
+        "discipline": "Добавить дисциплину",
+        "specialization": "Добавить специальность",
+        "curricula": "Добавить учебный план"
+      },
+      "login": {
+        "show_profile": "Посмотреть профиль",
+        "change_language": "Сменить язык",
+        "settings": "Настройки",
+        "logout": "Выйти"
+      }
+    },
+    "login": {
+      "default": "Гость"
+    }
+  }
+}

@@ -1,33 +1,77 @@
 <mat-toolbar>
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-    (click)="onMenuClick()">
+  <button mat-icon-button aria-label="Menu button" (click)="onMenuClick()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>My App</span>
+
   <nav mat-tab-nav-bar [tabPanel]="tabPanel">
     <a
       mat-tab-link
       *ngFor="let tab of tabs"
       (click)="onTabClick(tab)"
       [active]="activeTab === tab">
-      {{ tab.title }}
+      {{ tab.title | translate | uppercase }}
     </a>
   </nav>
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-  <span class="example-spacer"></span>
-  <button
-    mat-icon-button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button>
+
+  <span class="spacer"></span>
+
+  <span
+    class="button-with-arrow"
+    aria-label="Add button"
+    [matMenuTriggerFor]="addMenu">
+    <mat-icon>add</mat-icon>
+    <mat-icon class="button-with-arrow__arrow-dropdown"
+      >arrow_drop_down</mat-icon
+    >
+  </span>
+  <mat-menu #addMenu="matMenu" xPosition="before">
+    <ng-container *ngFor="let item of addMenuItems">
+      <a mat-menu-item routerLink="{{ item.path }}">
+        <mat-icon>add</mat-icon>
+        {{ item.text | translate }}
+      </a>
+    </ng-container>
+  </mat-menu>
+
+  <span
+    class="button-with-arrow underline"
+    aria-label="Login button"
+    [matMenuTriggerFor]="loginMenu">
+    {{ user?.login || 'toolbar.login.default' | translate }}
+    <mat-icon class="button-with-arrow__arrow-dropdown"
+      >arrow_drop_down</mat-icon
+    >
+  </span>
+  <mat-menu #loginMenu="matMenu" xPosition="before">
+    <div class="login-menu-header">
+      <div class="login-menu-header__image-container">
+        <div
+          class="login-menu-header__image"
+          [ngStyle]="{
+            'background-image':
+              'url(' + (user?.avatar || 'assets/images/avatar-person.svg') + ')'
+          }"></div>
+      </div>
+      <div class="login-menu-header__text">
+        <span class="login-menu-header__login">
+          {{ user?.login || 'toolbar.login.default' | translate }}
+        </span>
+        <span class="login-menu-header__roles">
+          {{ user?.roles | join : ', ' }}
+        </span>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let item of loginMenuItems">
+      <a mat-menu-item routerLink="{{ item.path }}">
+        <mat-icon [ngStyle]="{ color: item.color }">
+          {{ item.icon }}
+        </mat-icon>
+        <span [ngStyle]="{ color: item.color }">
+          {{ item.text | translate }}
+        </span>
+      </a>
+    </ng-container>
+  </mat-menu>
 </mat-toolbar>

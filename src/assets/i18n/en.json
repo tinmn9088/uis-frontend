@@ -1,0 +1,28 @@
+
+{
+  "toolbar": {
+    "tabs": {
+      "categories": "Categories",
+      "disciplines": "Disciplines",
+      "specializations": "Specializations",
+      "curricula": "Curricula"
+    },
+    "menu": {
+      "add": {
+        "category": "Add category",
+        "discipline": "Add discipline",
+        "specialization": "Add specialization",
+        "curricula": "Add curricula"
+      },
+      "login": {
+        "show_profile": "Show profile",
+        "change_language": "Change language",
+        "settings": "Setting",
+        "logout": "Logout"
+      }
+    },
+    "login": {
+      "default": "Guest"
+    }
+  }
+}

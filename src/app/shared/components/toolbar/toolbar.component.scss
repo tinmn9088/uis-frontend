@@ -1,3 +1,60 @@
-.example-spacer {
+mat-toolbar {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.spacer {
   flex: 1 1 auto;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.button-with-arrow {
+  display: flex;
+  align-items: center;
+
+  margin-left: 16px;
+
+  &__arrow-dropdown {
+    position: relative;
+    left: -5px;
+  }
+}
+
+.login-menu-header {
+  display: flex;
+  flex-direction: row;
+
+  min-width: 250px;
+  min-height: 75px;
+
+  &__text {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    > * {
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
+  }
+
+  &__image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 33%;
+  }
+
+  &__image {
+    width: 40px;
+    height: 40px;
+  }
+
+  &__roles {
+    size: 0.9em;
+    color: rgba(0, 0, 0, 0.54);
+  }
 }

@@ -16,6 +16,12 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { JoinPipe } from './pipes/join.pipe';
 
 const modules = [
   CommonModule,
@@ -32,13 +38,29 @@ const modules = [
   MatProgressBarModule,
   MatInputModule,
   MatExpansionModule,
+  HttpClientModule,
+  MatMenuModule,
+  MatDividerModule,
 ];
 
 const declarations = [ToolbarComponent, FrameComponent, PaginatorComponent];
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
-  declarations: [...declarations],
+  declarations: [...declarations, JoinPipe],
   exports: [...modules, declarations],
-  imports: [...modules],
+  imports: [
+    ...modules,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+  ],
 })
 export class SharedModule {}
