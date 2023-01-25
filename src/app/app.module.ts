@@ -7,12 +7,12 @@ import { SpecializationModule } from './specialization/specialization.module';
 import { SharedModule } from './shared/shared.module';
 import { TranslateService } from '@ngx-translate/core';
 import { LOCATION_INITIALIZED } from '@angular/common';
-import { LOCAL_STORAGE_LANGUAGE_KEY } from './shared/models/language.model';
+import { LanguageService } from './shared/services/language.service';
 import { HttpClientModule } from '@angular/common/http';
-import { environment } from 'src/environments/environment.development';
 
 export function translateLoader(
   translate: TranslateService,
+  languageService: LanguageService,
   injector: Injector
 ): () => Promise<void> {
   return () =>
@@ -22,23 +22,17 @@ export function translateLoader(
         Promise.resolve()
       );
       locationInitialized.then(() => {
-        const defaultLanguage = environment.defaultLanguage;
-        translate.setDefaultLang(defaultLanguage);
-        translate
-          .use(
-            localStorage.getItem(LOCAL_STORAGE_LANGUAGE_KEY) || defaultLanguage
-          )
-          .subscribe({
-            next: () =>
-              console.info(
-                `Successfully initialized "${translate.currentLang}" language.`
-              ),
-            error: () =>
-              console.error(
-                `Problem with '${translate.currentLang}' language initialization.`
-              ),
-            complete: () => resolve(),
-          });
+        translate.use(languageService.getLanguage()).subscribe({
+          next: () =>
+            console.info(
+              `Successfully initialized "${translate.currentLang}" language.`
+            ),
+          error: () =>
+            console.error(
+              `Problem with '${translate.currentLang}' language initialization.`
+            ),
+          complete: () => resolve(),
+        });
       });
     });
 }
@@ -57,7 +51,7 @@ export function translateLoader(
     {
       provide: APP_INITIALIZER,
       useFactory: translateLoader,
-      deps: [TranslateService, Injector],
+      deps: [TranslateService, LanguageService, Injector],
       multi: true,
     },
   ],

@@ -21,9 +21,9 @@
     aria-label="Add button"
     [matMenuTriggerFor]="addMenu">
     <mat-icon>add</mat-icon>
-    <mat-icon class="button-with-arrow__arrow-dropdown"
-      >arrow_drop_down</mat-icon
-    >
+    <mat-icon class="button-with-arrow__arrow-dropdown">
+      arrow_drop_down
+    </mat-icon>
   </span>
   <mat-menu #addMenu="matMenu" xPosition="before">
     <ng-container *ngFor="let item of addMenuItems">
@@ -39,9 +39,9 @@
     aria-label="Login button"
     [matMenuTriggerFor]="loginMenu">
     {{ user?.login || 'toolbar.login.default' | translate }}
-    <mat-icon class="button-with-arrow__arrow-dropdown"
-      >arrow_drop_down</mat-icon
-    >
+    <mat-icon class="button-with-arrow__arrow-dropdown">
+      arrow_drop_down
+    </mat-icon>
   </span>
   <mat-menu #loginMenu="matMenu" xPosition="before">
     <div class="login-menu-header">
@@ -62,16 +62,41 @@
         </span>
       </div>
     </div>
+
     <mat-divider></mat-divider>
-    <ng-container *ngFor="let item of loginMenuItems">
-      <a mat-menu-item routerLink="{{ item.path }}">
-        <mat-icon [ngStyle]="{ color: item.color }">
-          {{ item.icon }}
-        </mat-icon>
-        <span [ngStyle]="{ color: item.color }">
-          {{ item.text | translate }}
-        </span>
-      </a>
-    </ng-container>
+
+    <a mat-menu-item routerLink="'/'">
+      <mat-icon>account_circle</mat-icon>
+      <span>{{ 'toolbar.menu.login.show_profile' | translate }}</span>
+    </a>
+    <a mat-menu-item routerLink="'/'" [matMenuTriggerFor]="langMenu">
+      <mat-icon>language</mat-icon>
+      <span>{{ 'toolbar.menu.login.change_language' | translate }}</span>
+    </a>
+    <a mat-menu-item routerLink="'/'">
+      <mat-icon>settings</mat-icon>
+      <span>{{ 'toolbar.menu.login.settings' | translate }}</span>
+    </a>
+    <a mat-menu-item routerLink="'/'">
+      <mat-icon [ngStyle]="{ color: 'red' }">exit_to_app</mat-icon>
+      <span [ngStyle]="{ color: 'red' }">
+        {{ 'toolbar.menu.login.logout' | translate }}
+      </span>
+    </a>
+  </mat-menu>
+
+  <mat-menu #langMenu="matMenu">
+    <button mat-menu-item (click)="languageService.setLanguage(languages.Ru)">
+      <span>Русский</span>
+      <mat-icon>
+        {{ languageService.getLanguage() === languages.Ru ? 'done' : '' }}
+      </mat-icon>
+    </button>
+    <button mat-menu-item (click)="languageService.setLanguage(languages.En)">
+      <span>English</span>
+      <mat-icon>
+        {{ languageService.getLanguage() === languages.En ? 'done' : '' }}
+      </mat-icon>
+    </button>
   </mat-menu>
 </mat-toolbar>

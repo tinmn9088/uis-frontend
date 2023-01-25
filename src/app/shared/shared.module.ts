@@ -22,6 +22,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { JoinPipe } from './pipes/join.pipe';
+import { PaginatorService } from './services/paginator.service';
+import { LanguageService } from './services/language.service';
 
 const modules = [
   CommonModule,
@@ -62,5 +64,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
   ],
+  providers: [PaginatorService, LanguageService],
 })
 export class SharedModule {}
