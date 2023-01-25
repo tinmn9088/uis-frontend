@@ -1,5 +1,36 @@
-<p>Specialization 1</p>
-<p>Specialization 2</p>
-<p>Specialization 3</p>
+<p>
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="Placeholder" [(ngModel)]="searchQuery" />
+    <button
+      *ngIf="searchQuery"
+      matSuffix
+      mat-icon-button
+      (click)="searchQuery = ''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</p>
+
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+    <button mat-icon-button disabled></button>
+    {{ node.specialization.name }}
+  </mat-tree-node>
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+    <button
+      mat-icon-button
+      [attr.aria-label]="'Toggle ' + node.specialization.name"
+      matTreeNodeToggle>
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+      </mat-icon>
+    </button>
+    {{ node.specialization.name }}
+    <mat-progress-bar
+      *ngIf="node.isLoading"
+      mode="indeterminate"
+      class="example-tree-progress-bar"></mat-progress-bar>
+  </mat-tree-node>
+</mat-tree>
 
 <app-paginator [length]="100" [pageSize]="10" [pageIndex]="6"></app-paginator>

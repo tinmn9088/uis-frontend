@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { PaginatorService } from './paginator.service';
 
-fdescribe('PaginatorService', () => {
+describe('PaginatorService', () => {
   let service: PaginatorService;
 
   beforeEach(() => {

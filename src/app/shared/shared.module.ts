@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FrameComponent } from './components/frame/frame.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -11,25 +12,31 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatInputModule } from '@angular/material/input';
+
+const modules = [
+  CommonModule,
+  RouterModule,
+  BrowserAnimationsModule,
+  FormsModule,
+  MatToolbarModule,
+  MatButtonModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatTabsModule,
+  MatPaginatorModule,
+  MatTreeModule,
+  MatProgressBarModule,
+  MatInputModule,
+];
+
+const declarations = [ToolbarComponent, FrameComponent, PaginatorComponent];
 
 @NgModule({
-  declarations: [ToolbarComponent, FrameComponent, PaginatorComponent],
-  exports: [
-    ToolbarComponent,
-    FrameComponent,
-    PaginatorComponent,
-    BrowserAnimationsModule,
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatTabsModule,
-    MatPaginatorModule,
-    BrowserAnimationsModule,
-  ],
+  declarations: [...declarations],
+  exports: [...modules, declarations],
+  imports: [...modules],
 })
 export class SharedModule {}
