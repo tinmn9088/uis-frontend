@@ -51,9 +51,8 @@ export class SpecializationTreeDataSourceService
     );
   }
 
-  disconnect(_: CollectionViewer): void {
-    this._treeControl.expansionModel.changed.unsubscribe();
-  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+  disconnect(_: CollectionViewer): void {}
 
   handleTreeControl(change: SelectionChange<SpecializationFlatNode>) {
     if (change.added) {
