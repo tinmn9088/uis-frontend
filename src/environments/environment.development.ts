@@ -8,5 +8,6 @@ export const environment = {
       access: 'accessJwtToken',
       refresh: 'refreshJwtToken',
     },
+    language: 'lang',
   },
 };

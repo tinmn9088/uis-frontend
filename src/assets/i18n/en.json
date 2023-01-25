@@ -1,12 +1,14 @@
 
 {
-  "toolbar": {
-    "tabs": {
+  "module": {
+    "name": {
       "categories": "Categories",
       "disciplines": "Disciplines",
       "specializations": "Specializations",
       "curricula": "Curricula"
-    },
+    }
+  },
+  "toolbar": {
     "menu": {
       "add": {
         "category": "Add category",

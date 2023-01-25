@@ -1,12 +1,14 @@
 
 {
-  "toolbar": {
-    "tabs": {
+  "module": {
+    "name": {
       "categories": "Категории",
       "disciplines": "Дисциплины",
       "specializations": "Специальности",
       "curricula": "Учебные планы"
-    },
+    }
+  },
+  "toolbar": {
     "menu": {
       "add": {
         "category": "Добавить категорию",

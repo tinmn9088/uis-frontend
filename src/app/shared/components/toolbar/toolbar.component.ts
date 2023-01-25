@@ -10,6 +10,8 @@ import { Subscription } from 'rxjs';
 import { User } from '../../../user/models/user.model';
 import { Language } from '../../enums/language.enum';
 import { LanguageService } from '../../services/language.service';
+import { ModuleName } from '../../enums/module-name.enum';
+import { ModuleService } from '../../services/module.service';
 
 declare type Tab = {
   title: string;
@@ -25,10 +27,22 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   private _pathChangeSubscription: Subscription;
   readonly languages = Language;
   tabs: Tab[] = [
-    { title: 'toolbar.tabs.categories', path: '/' },
-    { title: 'toolbar.tabs.disciplines', path: '/' },
-    { title: 'toolbar.tabs.specializations', path: '/specializations/list' },
-    { title: 'toolbar.tabs.curricula', path: '/' },
+    {
+      title: this.moduleService.getI18N(ModuleName.Category),
+      path: '/',
+    },
+    {
+      title: this.moduleService.getI18N(ModuleName.Discipline),
+      path: '/',
+    },
+    {
+      title: this.moduleService.getI18N(ModuleName.Specialization),
+      path: '/specializations/list',
+    },
+    {
+      title: this.moduleService.getI18N(ModuleName.Curricula),
+      path: '/',
+    },
   ];
   addMenuItems = [
     { text: 'toolbar.menu.add.category', path: '/' },
@@ -42,26 +56,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   constructor(
     public languageService: LanguageService,
+    public moduleService: ModuleService,
     private _router: Router
   ) {
     this._pathChangeSubscription = this._router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         const currentPath = event.url;
-        console.debug(`Current path: "${currentPath}"`);
         this.activeTab =
           this.activeTab || this.tabs.find(tab => tab.path === currentPath);
       }
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.user = {
       login: 'Пользователь1',
       roles: ['admin', 'guest'],
     };
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this._pathChangeSubscription.unsubscribe();
   }
 
