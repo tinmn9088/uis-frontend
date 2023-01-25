@@ -2,12 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpecializationListComponent } from './specialization-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import {
-  SpecializationFlatNode,
-  getLevel,
-  isExpandable,
-} from '../../services/specialization.service';
-import { FlatTreeControl } from '@angular/cdk/tree';
+import { SpecializationModule } from 'src/app/specialization/specialization.module';
 
 describe('SpecializationListComponent', () => {
   let component: SpecializationListComponent;
@@ -15,17 +10,8 @@ describe('SpecializationListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [SharedModule, SpecializationModule],
       declarations: [SpecializationListComponent],
-      providers: [
-        {
-          provide: FlatTreeControl,
-          useValue: new FlatTreeControl<SpecializationFlatNode>(
-            getLevel,
-            isExpandable
-          ),
-        },
-      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SpecializationListComponent);
