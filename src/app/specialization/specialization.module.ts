@@ -9,9 +9,14 @@ import {
   isExpandable,
 } from './services/specialization.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
+import { SpecializationFlatNodeComponent } from './components/specialization-flat-node/specialization-flat-node.component';
 
 @NgModule({
-  declarations: [SpecializationListComponent, SpecializationTreeViewComponent],
+  declarations: [
+    SpecializationListComponent,
+    SpecializationTreeViewComponent,
+    SpecializationFlatNodeComponent,
+  ],
   imports: [CommonModule, SharedModule],
   providers: [
     {

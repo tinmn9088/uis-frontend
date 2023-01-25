@@ -1,0 +1,38 @@
+<mat-accordion [hideToggle]="specializationNode.isLoading">
+  <mat-expansion-panel
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-progress-bar
+        *ngIf="specializationNode.isLoading"
+        mode="indeterminate"
+        class="progress-bar"></mat-progress-bar>
+      <ng-container *ngIf="!specializationNode.isLoading">
+        <mat-panel-title>
+          {{ specializationNode.specialization.name }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ specializationNode.specialization.cipher }}
+        </mat-panel-description>
+      </ng-container>
+    </mat-expansion-panel-header>
+    <p>
+      <span class="extansion-panel-row-title">Название</span>
+      <span class="extansion-panel-row-value">{{
+        specializationNode.specialization.name
+      }}</span>
+    </p>
+    <p>
+      <span class="extansion-panel-row-title">Короткое название</span>
+      <span class="extansion-panel-row-value">{{
+        specializationNode.specialization.shortName
+      }}</span>
+    </p>
+    <p>
+      <span class="extansion-panel-row-title">Шифр</span>
+      <span class="extansion-panel-row-value">{{
+        specializationNode.specialization.cipher
+      }}</span>
+    </p>
+  </mat-expansion-panel>
+</mat-accordion>

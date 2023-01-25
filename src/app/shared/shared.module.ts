@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const modules = [
   CommonModule,
@@ -30,6 +31,7 @@ const modules = [
   MatTreeModule,
   MatProgressBarModule,
   MatInputModule,
+  MatExpansionModule,
 ];
 
 const declarations = [ToolbarComponent, FrameComponent, PaginatorComponent];
