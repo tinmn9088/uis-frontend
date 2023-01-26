@@ -2,20 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SpecializationListComponent } from './components/specialization-list/specialization-list.component';
 import { SharedModule } from '../shared/shared.module';
-import { SpecializationTreeViewComponent } from './components/specialization-tree-view/specialization-tree-view.component';
+import { SpecializationTreeComponent } from './components/specialization-tree/specialization-tree.component';
 import {
   SpecializationFlatNode,
   getLevel,
   isExpandable,
 } from './services/specialization.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { SpecializationFlatNodeComponent } from './components/specialization-flat-node/specialization-flat-node.component';
+import { SpecializationTreeNodeComponent } from './components/specialization-tree-node/specialization-tree-node.component';
 
 @NgModule({
   declarations: [
     SpecializationListComponent,
-    SpecializationTreeViewComponent,
-    SpecializationFlatNodeComponent,
+    SpecializationTreeComponent,
+    SpecializationTreeNodeComponent,
   ],
   imports: [CommonModule, SharedModule],
   providers: [

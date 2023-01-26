@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SpecializationFlatNodeComponent } from './specialization-flat-node.component';
+import { SpecializationTreeNodeComponent } from './specialization-tree-node.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SpecializationFlatNode } from '../../services/specialization.service';
 
-describe('SpecializationFlatNodeComponent', () => {
-  let component: SpecializationFlatNodeComponent;
-  let fixture: ComponentFixture<SpecializationFlatNodeComponent>;
+describe('SpecializationTreeNodeComponent', () => {
+  let component: SpecializationTreeNodeComponent;
+  let fixture: ComponentFixture<SpecializationTreeNodeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [SpecializationFlatNodeComponent],
+      declarations: [SpecializationTreeNodeComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SpecializationFlatNodeComponent);
+    fixture = TestBed.createComponent(SpecializationTreeNodeComponent);
     component = fixture.componentInstance;
   });
 

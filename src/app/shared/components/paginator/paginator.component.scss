@@ -1,8 +1,8 @@
-mat-paginator {
+.hidden-mat-paginator {
   display: none;
 }
 
-.container {
+.paginator {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -11,23 +11,17 @@ mat-paginator {
   min-width: 620px;
   background-color: white;
 
-  $button-size: 42px;
-
-  button {
+  &__index-button,
+  &__arrow-button {
+    $button-size: 42px;
     min-width: $button-size;
     max-width: $button-size;
     min-height: $button-size;
     max-height: $button-size;
   }
 
-  > {
-    .page-indexes > button {
-      margin-left: 5px;
-      margin-right: 5px;
-    }
-    button {
-      margin-left: 56px;
-      margin-right: 56px;
-    }
+  &__index-button {
+    margin-left: 5px;
+    margin-right: 5px;
   }
 }

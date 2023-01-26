@@ -7,11 +7,11 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { SpecializationTreeDataSourceService } from '../../services/specialization-tree-data-source.service';
 
 @Component({
-  selector: 'app-specialization-tree-view',
-  templateUrl: './specialization-tree-view.component.html',
-  styleUrls: ['./specialization-tree-view.component.scss'],
+  selector: 'app-specialization-tree',
+  templateUrl: './specialization-tree.component.html',
+  styleUrls: ['./specialization-tree.component.scss'],
 })
-export class SpecializationTreeViewComponent {
+export class SpecializationTreeComponent {
   constructor(
     public treeControl: FlatTreeControl<SpecializationFlatNode>,
     public dataSource: SpecializationTreeDataSourceService

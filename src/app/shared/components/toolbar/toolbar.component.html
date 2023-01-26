@@ -1,11 +1,18 @@
-<mat-toolbar [ngStyle]="{ 'background-color': 'rgba(0, 0, 0, 0)' }">
-  <button mat-icon-button aria-label="Menu button" (click)="onMenuClick()">
+<mat-toolbar
+  class="toolbar"
+  [ngStyle]="{ 'background-color': 'rgba(0, 0, 0, 0)' }">
+  <button
+    mat-icon-button
+    class="toolbar__menu-button"
+    aria-label="Menu button"
+    (click)="onMenuClick()">
     <mat-icon>menu</mat-icon>
   </button>
 
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <nav mat-tab-nav-bar class="toolbar__tab-panel" [tabPanel]="tabPanel">
     <a
       mat-tab-link
+      class="toolbar__tab"
       *ngFor="let tab of tabs"
       (click)="onTabClick(tab)"
       [active]="activeTab === tab">
@@ -14,16 +21,14 @@
   </nav>
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 
-  <span class="spacer"></span>
+  <span class="toolbar__spacer"></span>
 
   <span
-    class="button-with-arrow"
+    class="toolbar__button_with-arrow"
     aria-label="Add button"
     [matMenuTriggerFor]="addMenu">
     <mat-icon>add</mat-icon>
-    <mat-icon class="button-with-arrow__arrow-dropdown">
-      arrow_drop_down
-    </mat-icon>
+    <mat-icon class="toolbar__button-arrow">arrow_drop_down</mat-icon>
   </span>
   <mat-menu #addMenu="matMenu" xPosition="before">
     <ng-container *ngFor="let item of addMenuItems">
@@ -35,29 +40,27 @@
   </mat-menu>
 
   <span
-    class="button-with-arrow underline-on"
+    class="toolbar__button_with-arrow underline-on"
     aria-label="Login button"
     [matMenuTriggerFor]="loginMenu">
     {{ user?.login || 'toolbar.login.default' | translate }}
-    <mat-icon class="button-with-arrow__arrow-dropdown">
-      arrow_drop_down
-    </mat-icon>
+    <mat-icon class="toolbar__button-arrow">arrow_drop_down</mat-icon>
   </span>
   <mat-menu #loginMenu="matMenu" xPosition="before">
-    <div class="login-menu-header">
-      <div class="login-menu-header__image-container">
+    <div class="toolbar__login-menu-header">
+      <div class="toolbar__login-menu-header-image-container">
         <div
-          class="login-menu-header__image"
+          class="toolbar__login-menu-header-image"
           [ngStyle]="{
             'background-image':
               'url(' + (user?.avatar || 'assets/images/avatar-person.svg') + ')'
           }"></div>
       </div>
-      <div class="login-menu-header__text">
-        <span class="login-menu-header__login">
+      <div class="toolbar__login-menu-header-text">
+        <span class="toolbar__login-menu-header-login">
           {{ user?.login || 'toolbar.login.default' | translate }}
         </span>
-        <span class="login-menu-header__roles">
+        <span class="toolbar__login-menu-header-roles">
           {{ user?.roles | join : ', ' }}
         </span>
       </div>

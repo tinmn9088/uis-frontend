@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SpecializationTreeViewComponent } from './specialization-tree-view.component';
+import { SpecializationTreeComponent } from './specialization-tree.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import {
@@ -9,14 +9,14 @@ import {
   isExpandable,
 } from '../../services/specialization.service';
 
-describe('SpecializationTreeViewComponent', () => {
-  let component: SpecializationTreeViewComponent;
-  let fixture: ComponentFixture<SpecializationTreeViewComponent>;
+describe('SpecializationTreeComponent', () => {
+  let component: SpecializationTreeComponent;
+  let fixture: ComponentFixture<SpecializationTreeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [SpecializationTreeViewComponent],
+      declarations: [SpecializationTreeComponent],
       providers: [
         {
           provide: FlatTreeControl,
@@ -28,7 +28,7 @@ describe('SpecializationTreeViewComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SpecializationTreeViewComponent);
+    fixture = TestBed.createComponent(SpecializationTreeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -17,12 +17,14 @@
     </mat-form-field>
   </div>
 
-  <div class="specialization-list__tree-view-container">
-    <app-specialization-tree-view></app-specialization-tree-view>
+  <div class="specialization-list__tree-container">
+    <app-specialization-tree class="specialization-list__tree">
+    </app-specialization-tree>
   </div>
 
   <div class="specialization-list__paginator-container">
     <app-paginator
+      class="specialization-list__paginator"
       [length]="100"
       [pageSize]="10"
       [pageIndex]="6"></app-paginator>

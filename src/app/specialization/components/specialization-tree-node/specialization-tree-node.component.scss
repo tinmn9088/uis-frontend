@@ -11,11 +11,11 @@
   margin-bottom: 10px !important;
 }
 
-.progress-bar {
-  margin-left: 30px;
-}
-
 .extansion-panel {
+  &__progress-bar {
+    margin-left: 30px;
+  }
+
   &__row {
     font-size: 0.9rem;
     margin: 0;
