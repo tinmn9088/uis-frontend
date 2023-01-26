@@ -27,6 +27,13 @@
     }
   },
   "sidenav": {
-    "add_button": "Add"
+    "add_button": "Create"
+  },
+  "specializations": {
+    "list": {
+      "search": {
+        "placeholder": "Search specializations"
+      }
+    }
   }
 }

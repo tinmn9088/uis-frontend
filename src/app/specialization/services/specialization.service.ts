@@ -33,7 +33,7 @@ export class SpecializationService {
           children: [
             {
               id: 7,
-              name: 'Специальность А1 (**)',
+              name: 'Специальность А1 (**) AAAAAAAAAAAAAAAAAAAAAAA<<<<<<<<<',
               shortName: 'СА1(**)',
               cipher: '00111',
               children: [],

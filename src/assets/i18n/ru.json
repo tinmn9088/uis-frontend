@@ -28,5 +28,12 @@
   },
   "sidenav": {
     "add_button": "Добавить"
+  },
+  "specializations": {
+    "list": {
+      "search": {
+        "placeholder": "Искать специальности"
+      }
+    }
   }
 }

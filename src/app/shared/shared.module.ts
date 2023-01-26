@@ -53,7 +53,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [...declarations, JoinPipe],
-  exports: [...modules, declarations],
+  exports: [...modules, declarations, TranslateModule],
   imports: [
     ...modules,
     TranslateModule.forRoot({

@@ -1,7 +1,12 @@
 <div class="specialization-list">
   <div class="specialization-list__search-container">
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Placeholder" [(ngModel)]="searchQuery" />
+      <input
+        matInput
+        placeholder="{{
+          'specializations.list.search.placeholder' | translate
+        }}"
+        [(ngModel)]="searchQuery" />
       <button
         *ngIf="searchQuery"
         matSuffix
