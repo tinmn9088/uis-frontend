@@ -1,6 +1,7 @@
-.mat-drawer-container, .mat-drawer-content {
+.mat-drawer-container,
+.mat-drawer-content {
   background-color: rgba(0, 0, 0, 0);
-  
+
   $toolbar-height: 64px;
 
   height: calc(100% - $toolbar-height);
@@ -12,7 +13,6 @@
 }
 
 .sidenav {
-
   $sidenav-width: 320px;
   $button-height: 56px;
 

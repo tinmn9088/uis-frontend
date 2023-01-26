@@ -1,8 +1,8 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
-@use "../colors/basic" as b;
-@use "../colors/user" as c;
-  
+@use '../colors/basic' as b;
+@use '../colors/user' as c;
+
 $light-green-palette: (
   50: c.$light-green-50,
   100: c.$light-green-100,
@@ -24,7 +24,9 @@ $light-green-palette: (
     600: b.$black,
     700: b.$black,
     800: b.$black,
-    900: b.$black));
+    900: b.$black,
+  ),
+);
 $dark-green-palette: (
   50: c.$dark-green-50,
   100: c.$dark-green-100,
@@ -46,11 +48,18 @@ $dark-green-palette: (
     600: b.$white,
     700: b.$white,
     800: b.$white,
-    900: b.$white));
+    900: b.$white,
+  ),
+);
 
 $light-theme-primary: mat.define-palette($light-green-palette, 900);
 $light-theme-accent: mat.define-palette($dark-green-palette);
 
-$light-theme: mat.define-light-theme((color: (
-  primary: $light-theme-primary, 
-  accent: $light-theme-accent)));
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-theme-primary,
+      accent: $light-theme-accent,
+    ),
+  )
+);

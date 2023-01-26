@@ -1,8 +1,8 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
-@use "../colors/basic" as b;
-@use "../colors/specialization" as c;
-  
+@use '../colors/basic' as b;
+@use '../colors/specialization' as c;
+
 $light-blue-palette: (
   50: c.$light-blue-50,
   100: c.$light-blue-100,
@@ -24,7 +24,9 @@ $light-blue-palette: (
     600: b.$black,
     700: b.$black,
     800: b.$black,
-    900: b.$black));
+    900: b.$black,
+  ),
+);
 $dark-blue-palette: (
   50: c.$dark-blue-50,
   100: c.$dark-blue-100,
@@ -46,11 +48,18 @@ $dark-blue-palette: (
     600: b.$white,
     700: b.$white,
     800: b.$white,
-    900: b.$white));
+    900: b.$white,
+  ),
+);
 
 $light-theme-primary: mat.define-palette($light-blue-palette, 900);
 $light-theme-accent: mat.define-palette($dark-blue-palette);
 
-$light-theme: mat.define-light-theme((color: (
-  primary: $light-theme-primary, 
-  accent: $light-theme-accent)));
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-theme-primary,
+      accent: $light-theme-accent,
+    ),
+  )
+);
