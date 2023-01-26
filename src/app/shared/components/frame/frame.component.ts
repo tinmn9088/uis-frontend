@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./frame.component.scss'],
 })
 export class FrameComponent {
-  @Input() options?: { title: string; path: string }[];
+  @Input() options?: { title: string; path: string; isActive: boolean }[];
 }

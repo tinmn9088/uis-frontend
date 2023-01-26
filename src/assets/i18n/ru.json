@@ -26,5 +26,8 @@
     "login": {
       "default": "Гость"
     }
+  },
+  "sidenav": {
+    "add_button": "Добавить"
   }
 }

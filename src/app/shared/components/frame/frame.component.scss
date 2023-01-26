@@ -1,0 +1,29 @@
+.sidenav {
+  $sidenav-width: 320px;
+  $button-height: 56px;
+
+  display: flex;
+  flex-direction: column;
+
+  min-width: $sidenav-width;
+  max-width: $sidenav-width;
+
+  &__add-button {
+    width: fit-content;
+    margin: 10px 25px 10px 25px;
+    padding: 25px 35px 25px 35px;
+    font-weight: bolder;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  &__button {
+    border-radius: 0px 50px 50px 0px;
+    width: 100%;
+    min-height: $button-height;
+    max-height: $button-height;
+    justify-content: flex-start;
+  }
+}

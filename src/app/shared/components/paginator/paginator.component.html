@@ -9,13 +9,12 @@
 <div class="container">
   <button
     mat-stroked-button
-    color="primary"
     [disabled]="!paginator.hasPreviousPage()"
     (click)="paginator.previousPage()">
-    <mat-icon>chevron_left</mat-icon>
+    <i class="material-icons">chevron_left</i>
   </button>
   <div class="page-indexes">
-    <div *ngFor="let i of pageIndexes">
+    <ng-container *ngFor="let i of pageIndexes">
       <button
         mat-stroked-button
         *ngIf="i !== pageIndex"
@@ -25,13 +24,12 @@
       <button mat-raised-button *ngIf="i === pageIndex" color="primary">
         {{ i + 1 }}
       </button>
-    </div>
+    </ng-container>
   </div>
   <button
     mat-stroked-button
-    color="primary"
     [disabled]="!paginator.hasNextPage()"
     (click)="paginator.nextPage()">
-    <mat-icon>chevron_right</mat-icon>
+    <i class="material-icons">chevron_right</i>
   </button>
 </div>

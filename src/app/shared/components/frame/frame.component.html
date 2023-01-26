@@ -1,15 +1,31 @@
 <app-toolbar (menuButtonClick)="drawer.toggle()"></app-toolbar>
 
-<mat-drawer-container autosize>
+<mat-drawer-container
+  autosize
+  [ngStyle]="{
+    'background-color': 'rgba(0, 0, 0, 0)',
+    'min-height': 'calc(100vh - 64px)'
+  }">
   <mat-drawer #drawer mode="side" opened="true">
-    <p>Sidenav</p>
-    <button *ngFor="let option of options" mat-fab extended color="primary">
-      {{ option.title + ' ' + option.path }}
-    </button>
+    <nav class="sidenav">
+      <a routerLink="/specializations">
+        <button mat-raised-button class="sidenav__add-button" color="primary">
+          {{ 'sidenav.add_button' | translate | uppercase }}
+        </button>
+      </a>
+      <a
+        class="sidenav__button"
+        mat-flat-button
+        *ngFor="let option of options"
+        color="{{ option.isActive ? 'primary' : '' }}"
+        routerLink="{{ option.path }}">
+        <mat-icon class="sidenav__button-icon">launch</mat-icon>
+        <span class="sidenav__button-text">{{ option.title }}</span>
+      </a>
+    </nav>
   </mat-drawer>
 
   <div>
-    <p>Content</p>
     <ng-content></ng-content>
   </div>
 </mat-drawer-container>
