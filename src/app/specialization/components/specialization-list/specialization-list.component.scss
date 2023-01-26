@@ -12,6 +12,8 @@ $paginator-height: 76px;
   }
 
   &__search-container {
+    padding-left: 10px;
+
     mat-form-field {
       width: 66%;
     }
