@@ -10,6 +10,9 @@
   @include mat.all-component-colors(specialization.$light-theme);
 }
 
+@import '../fonts/material-icons';
+@import '../fonts/roboto';
+
 html,
 body {
   height: 100%;
