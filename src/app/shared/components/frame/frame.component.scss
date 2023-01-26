@@ -5,7 +5,7 @@
   $toolbar-height: 64px;
 
   height: calc(100% - $toolbar-height);
-  overflow: scroll !important;
+  overflow: scroll;
 }
 
 .mat-drawer-side {

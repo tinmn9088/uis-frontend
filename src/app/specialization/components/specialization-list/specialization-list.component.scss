@@ -3,18 +3,17 @@ $paginator-height: 76px;
 .specialization-list {
   display: flex;
   flex-direction: column;
+  margin: 0;
 
-  width: 90%;
+  width: 100%;
 
   > * {
     width: 100%;
-    min-width: 600px;
   }
 
   &__search-container {
-    padding-left: 10px;
-
     mat-form-field {
+      margin-left: 10px;
       width: 66%;
     }
   }
