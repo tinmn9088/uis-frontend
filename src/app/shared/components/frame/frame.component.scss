@@ -1,4 +1,17 @@
+.mat-drawer-container {
+  background-color: rgba(0, 0, 0, 0);
+
+  $toolbar-height: 64px;
+
+  min-height: calc(100% - $toolbar-height);
+}
+
+.mat-drawer-side {
+  border-right: rgba(0, 0, 0, 0);
+}
+
 .sidenav {
+
   $sidenav-width: 320px;
   $button-height: 56px;
 

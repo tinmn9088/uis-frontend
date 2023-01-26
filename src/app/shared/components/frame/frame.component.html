@@ -1,11 +1,6 @@
 <app-toolbar (menuButtonClick)="drawer.toggle()"></app-toolbar>
 
-<mat-drawer-container
-  autosize
-  [ngStyle]="{
-    'background-color': 'rgba(0, 0, 0, 0)',
-    'min-height': 'calc(100vh - 64px)'
-  }">
+<mat-drawer-container autosize>
   <mat-drawer #drawer mode="side" opened="true">
     <nav class="sidenav">
       <a routerLink="/specializations">
@@ -25,7 +20,7 @@
     </nav>
   </mat-drawer>
 
-  <div>
+  <mat-drawer-content>
     <ng-content></ng-content>
-  </div>
+  </mat-drawer-content>
 </mat-drawer-container>

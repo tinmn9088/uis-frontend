@@ -1,16 +1,25 @@
-<p>
-  <mat-form-field appearance="outline">
-    <input matInput placeholder="Placeholder" [(ngModel)]="searchQuery" />
-    <button
-      *ngIf="searchQuery"
-      matSuffix
-      mat-icon-button
-      (click)="searchQuery = ''">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-</p>
+<div class="specialization-list">
+  <div class="specialization-list__search-container">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Placeholder" [(ngModel)]="searchQuery" />
+      <button
+        *ngIf="searchQuery"
+        matSuffix
+        mat-icon-button
+        (click)="searchQuery = ''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
 
-<app-specialization-tree-view></app-specialization-tree-view>
+  <div class="specialization-list__tree-view-container">
+    <app-specialization-tree-view></app-specialization-tree-view>
+  </div>
 
-<app-paginator [length]="100" [pageSize]="10" [pageIndex]="6"></app-paginator>
+  <div class="specialization-list__paginator-container">
+    <app-paginator
+      [length]="100"
+      [pageSize]="10"
+      [pageIndex]="6"></app-paginator>
+  </div>
+</div>
