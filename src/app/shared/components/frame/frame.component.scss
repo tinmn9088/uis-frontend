@@ -1,9 +1,10 @@
-.mat-drawer-container {
+.mat-drawer-container, .mat-drawer-content {
   background-color: rgba(0, 0, 0, 0);
-
+  
   $toolbar-height: 64px;
 
-  min-height: calc(100% - $toolbar-height);
+  height: calc(100% - $toolbar-height);
+  overflow: scroll !important;
 }
 
 .mat-drawer-side {

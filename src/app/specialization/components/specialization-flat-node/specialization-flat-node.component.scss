@@ -1,8 +1,29 @@
+.mat-accordion {
+  .mat-expansion-panel {
+    box-shadow: none;
+    border-radius: 28px;
+  }
+}
+
+.opened {
+  background-color: rgba(0, 0, 0, 0.06);
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
 .progress-bar {
   margin-left: 30px;
 }
 
-.extansion-panel-row-value {
-  margin-left: 30px;
-  color: rgba(0, 0, 0, 0.54);
+.extansion-panel {
+  &__row {
+    font-size: 0.9rem;
+    margin: 0;
+    margin-top: 14px;
+  }
+
+  &__row-value {
+    margin-left: 30px;
+    color: rgba(0, 0, 0, 0.54);
+  }
 }

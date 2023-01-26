@@ -1,7 +1,9 @@
 <mat-accordion [hideToggle]="specializationNode.isLoading">
   <mat-expansion-panel
+    class="extansion-panel"
     (opened)="panelOpenState = true"
-    (closed)="panelOpenState = false">
+    (closed)="panelOpenState = false"
+    [ngClass]="{ opened: panelOpenState }">
     <mat-expansion-panel-header>
       <mat-progress-bar
         *ngIf="specializationNode.isLoading"
@@ -11,26 +13,20 @@
         <mat-panel-title>
           {{ specializationNode.specialization.name }}
         </mat-panel-title>
-        <mat-panel-description>
+        <mat-panel-description *ngIf="!panelOpenState">
           {{ specializationNode.specialization.cipher }}
         </mat-panel-description>
       </ng-container>
     </mat-expansion-panel-header>
-    <p>
-      <span class="extansion-panel-row-title">Название</span>
-      <span class="extansion-panel-row-value">{{
-        specializationNode.specialization.name
-      }}</span>
-    </p>
-    <p>
-      <span class="extansion-panel-row-title">Короткое название</span>
-      <span class="extansion-panel-row-value">{{
+    <p class="extansion-panel__row">
+      <span class="extansion-panel__row-title">Короткое название:</span>
+      <span class="extansion-panel__row-value">{{
         specializationNode.specialization.shortName
       }}</span>
     </p>
-    <p>
-      <span class="extansion-panel-row-title">Шифр</span>
-      <span class="extansion-panel-row-value">{{
+    <p class="extansion-panel__row">
+      <span class="extansion-panel__row-title">Шифр:</span>
+      <span class="extansion-panel__row-value">{{
         specializationNode.specialization.cipher
       }}</span>
     </p>
