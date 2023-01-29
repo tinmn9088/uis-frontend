@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LayoutModule } from '@angular/cdk/layout';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FrameComponent } from './components/frame/frame.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -30,6 +31,7 @@ const modules = [
   RouterModule,
   BrowserAnimationsModule,
   FormsModule,
+  LayoutModule,
   MatToolbarModule,
   MatButtonModule,
   MatIconModule,

@@ -1,14 +1,112 @@
-<mat-toolbar
-  class="toolbar"
-  [ngStyle]="{ 'background-color': 'rgba(0, 0, 0, 0)' }">
-  <button
-    mat-icon-button
-    class="toolbar__menu-button"
-    aria-label="Menu button"
-    (click)="onMenuClick()">
-    <mat-icon>menu</mat-icon>
-  </button>
+<mat-toolbar class="toolbar">
+  <mat-toolbar-row class="toolbar__row-1">
+    <button
+      mat-icon-button
+      class="toolbar__menu-button"
+      aria-label="Menu button"
+      (click)="onMenuClick()">
+      <mat-icon>menu</mat-icon>
+    </button>
 
+    <ng-container *ngIf="!compact">
+      <ng-container *ngTemplateOutlet="tabsTemplate"></ng-container>
+    </ng-container>
+
+    <span class="toolbar__spacer"></span>
+
+    <span
+      class="toolbar__button_with-arrow"
+      aria-label="Add button"
+      [matMenuTriggerFor]="addMenu">
+      <mat-icon>add</mat-icon>
+      <mat-icon class="toolbar__button-arrow">arrow_drop_down</mat-icon>
+    </span>
+
+    <mat-menu #addMenu="matMenu" xPosition="before">
+      <ng-container *ngFor="let item of addMenuItems">
+        <a mat-menu-item routerLink="{{ item.path }}">
+          <mat-icon>add</mat-icon>
+          {{ item.text | translate }}
+        </a>
+      </ng-container>
+    </mat-menu>
+
+    <span
+      class="toolbar__button_with-arrow underline-on"
+      aria-label="Login button"
+      [matMenuTriggerFor]="loginMenu">
+      {{ user?.login || 'toolbar.login.default' | translate }}
+      <mat-icon class="toolbar__button-arrow">arrow_drop_down</mat-icon>
+    </span>
+
+    <mat-menu #loginMenu="matMenu" xPosition="before">
+      <div class="toolbar__login-menu-header">
+        <div class="toolbar__login-menu-header-image-container">
+          <div
+            class="toolbar__login-menu-header-image"
+            [ngStyle]="{
+              'background-image':
+                'url(' +
+                (user?.avatar || 'assets/images/avatar-person.svg') +
+                ')'
+            }"></div>
+        </div>
+        <div class="toolbar__login-menu-header-text">
+          <span class="toolbar__login-menu-header-login">
+            {{ user?.login || 'toolbar.login.default' | translate }}
+          </span>
+          <span class="toolbar__login-menu-header-roles">
+            {{ user?.roles | join : ', ' }}
+          </span>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <a mat-menu-item routerLink="'/'">
+        <mat-icon>account_circle</mat-icon>
+        <span>{{ 'toolbar.menu.login.show_profile' | translate }}</span>
+      </a>
+      <a mat-menu-item routerLink="'/'" [matMenuTriggerFor]="langMenu">
+        <mat-icon>language</mat-icon>
+        <span>{{ 'toolbar.menu.login.change_language' | translate }}</span>
+      </a>
+      <a mat-menu-item routerLink="'/'">
+        <mat-icon>settings</mat-icon>
+        <span>{{ 'toolbar.menu.login.settings' | translate }}</span>
+      </a>
+      <a mat-menu-item routerLink="'/'">
+        <mat-icon [ngStyle]="{ color: 'red' }">exit_to_app</mat-icon>
+        <span [ngStyle]="{ color: 'red' }">
+          {{ 'toolbar.menu.login.logout' | translate }}
+        </span>
+      </a>
+    </mat-menu>
+
+    <mat-menu #langMenu="matMenu">
+      <button mat-menu-item (click)="languageService.setLanguage(languages.Ru)">
+        <span>🇷🇺 Русский</span>
+        <mat-icon>
+          {{ languageService.getLanguage() === languages.Ru ? 'done' : '' }}
+        </mat-icon>
+      </button>
+      <button mat-menu-item (click)="languageService.setLanguage(languages.En)">
+        <span>🇬🇧 English</span>
+        <mat-icon>
+          {{ languageService.getLanguage() === languages.En ? 'done' : '' }}
+        </mat-icon>
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row *ngIf="compact" class="toolbar__row-2">
+    <ng-container
+      class="toolbar__row-2-tabs"
+      *ngTemplateOutlet="tabsTemplate"></ng-container>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<ng-template #tabsTemplate>
   <nav mat-tab-nav-bar class="toolbar__tab-panel" [tabPanel]="tabPanel">
     <a
       mat-tab-link
@@ -20,86 +118,4 @@
     </a>
   </nav>
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-
-  <span class="toolbar__spacer"></span>
-
-  <span
-    class="toolbar__button_with-arrow"
-    aria-label="Add button"
-    [matMenuTriggerFor]="addMenu">
-    <mat-icon>add</mat-icon>
-    <mat-icon class="toolbar__button-arrow">arrow_drop_down</mat-icon>
-  </span>
-  <mat-menu #addMenu="matMenu" xPosition="before">
-    <ng-container *ngFor="let item of addMenuItems">
-      <a mat-menu-item routerLink="{{ item.path }}">
-        <mat-icon>add</mat-icon>
-        {{ item.text | translate }}
-      </a>
-    </ng-container>
-  </mat-menu>
-
-  <span
-    class="toolbar__button_with-arrow underline-on"
-    aria-label="Login button"
-    [matMenuTriggerFor]="loginMenu">
-    {{ user?.login || 'toolbar.login.default' | translate }}
-    <mat-icon class="toolbar__button-arrow">arrow_drop_down</mat-icon>
-  </span>
-  <mat-menu #loginMenu="matMenu" xPosition="before">
-    <div class="toolbar__login-menu-header">
-      <div class="toolbar__login-menu-header-image-container">
-        <div
-          class="toolbar__login-menu-header-image"
-          [ngStyle]="{
-            'background-image':
-              'url(' + (user?.avatar || 'assets/images/avatar-person.svg') + ')'
-          }"></div>
-      </div>
-      <div class="toolbar__login-menu-header-text">
-        <span class="toolbar__login-menu-header-login">
-          {{ user?.login || 'toolbar.login.default' | translate }}
-        </span>
-        <span class="toolbar__login-menu-header-roles">
-          {{ user?.roles | join : ', ' }}
-        </span>
-      </div>
-    </div>
-
-    <mat-divider></mat-divider>
-
-    <a mat-menu-item routerLink="'/'">
-      <mat-icon>account_circle</mat-icon>
-      <span>{{ 'toolbar.menu.login.show_profile' | translate }}</span>
-    </a>
-    <a mat-menu-item routerLink="'/'" [matMenuTriggerFor]="langMenu">
-      <mat-icon>language</mat-icon>
-      <span>{{ 'toolbar.menu.login.change_language' | translate }}</span>
-    </a>
-    <a mat-menu-item routerLink="'/'">
-      <mat-icon>settings</mat-icon>
-      <span>{{ 'toolbar.menu.login.settings' | translate }}</span>
-    </a>
-    <a mat-menu-item routerLink="'/'">
-      <mat-icon [ngStyle]="{ color: 'red' }">exit_to_app</mat-icon>
-      <span [ngStyle]="{ color: 'red' }">
-        {{ 'toolbar.menu.login.logout' | translate }}
-      </span>
-    </a>
-  </mat-menu>
-
-  <mat-menu #langMenu="matMenu">
-    <button mat-menu-item (click)="languageService.setLanguage(languages.Ru)">
-      <span>🇷🇺 Русский</span>
-      <mat-icon>
-        {{ languageService.getLanguage() === languages.Ru ? 'done' : '' }}
-      </mat-icon>
-    </button>
-    <button mat-menu-item (click)="languageService.setLanguage(languages.En)">
-      <span>🇬🇧 English</span>
-      <mat-icon>
-        {{ languageService.getLanguage() === languages.En ? 'done' : '' }}
-      </mat-icon>
-    </button>
-  </mat-menu>
-</mat-toolbar>
+</ng-template>

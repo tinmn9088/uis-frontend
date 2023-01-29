@@ -3,6 +3,10 @@
 }
 
 .toolbar {
+  max-width: 100%;
+
+  background-color: rgba(0, 0, 0, 0);
+
   &__spacer {
     flex: 1 1 auto;
   }
@@ -54,5 +58,11 @@
       size: 0.9em;
       color: rgba(0, 0, 0, 0.54);
     }
+  }
+
+  &__row-1,
+  &__row-2 {
+    width: 100%;
+    overflow: auto;
   }
 }
