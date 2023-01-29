@@ -32,8 +32,12 @@
   "specializations": {
     "list": {
       "search": {
-        "placeholder": "Search specializations"
+        "placeholder": "Search by: name, cipher"
       }
+    },
+    "options": {
+      "search": "Search specializations",
+      "view": "View specialization"
     }
   }
 }

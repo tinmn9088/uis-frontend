@@ -32,8 +32,12 @@
   "specializations": {
     "list": {
       "search": {
-        "placeholder": "Искать специальности"
+        "placeholder": "Поиск по: название, шифр"
       }
+    },
+    "options": {
+      "search": "Поиск специалностей",
+      "view": "Просмотр специальности"
     }
   }
 }

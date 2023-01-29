@@ -4,16 +4,18 @@
     (opened)="panelOpenState = true"
     (closed)="panelOpenState = false"
     [ngClass]="{ opened: panelOpenState }">
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header class="extansion-panel__header">
       <mat-progress-bar
         *ngIf="specializationNode.isLoading"
         mode="indeterminate"
         class="extansion-panel__progress-bar"></mat-progress-bar>
       <ng-container *ngIf="!specializationNode.isLoading">
-        <mat-panel-title>
+        <mat-panel-title class="extansion-panel__header-title">
           {{ specializationNode.specialization.name }}
         </mat-panel-title>
-        <mat-panel-description *ngIf="!panelOpenState">
+        <mat-panel-description
+          class="extansion-panel__header-description"
+          *ngIf="!panelOpenState">
           {{ specializationNode.specialization.cipher }}
         </mat-panel-description>
       </ng-container>

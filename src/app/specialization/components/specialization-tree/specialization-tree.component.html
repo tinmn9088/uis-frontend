@@ -15,6 +15,7 @@
     class="tree__node">
     <button
       mat-icon-button
+      [disabled]="node.isLoading"
       [attr.aria-label]="'Toggle ' + node.specialization.name"
       matTreeNodeToggle
       class="tree__expand-button">

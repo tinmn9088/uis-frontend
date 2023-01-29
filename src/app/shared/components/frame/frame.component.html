@@ -1,26 +1,37 @@
-<app-toolbar class="toolbar" (menuButtonClick)="drawer.toggle()"></app-toolbar>
+<div class="frame">
+  <app-toolbar
+    class="frame__toolbar"
+    (menuButtonClick)="drawer.toggle()"></app-toolbar>
 
-<mat-drawer-container autosize>
-  <mat-drawer #drawer mode="side" opened="true">
-    <nav class="sidenav">
-      <a routerLink="/specializations">
-        <button mat-raised-button class="sidenav__add-button" color="primary">
-          {{ 'sidenav.add_button' | translate | uppercase }}
-        </button>
-      </a>
-      <a
-        class="sidenav__button"
-        mat-flat-button
-        *ngFor="let option of options"
-        color="{{ option.isActive ? 'primary' : '' }}"
-        routerLink="{{ option.path }}">
-        <mat-icon class="sidenav__button-icon">launch</mat-icon>
-        <span class="sidenav__button-text">{{ option.title }}</span>
-      </a>
-    </nav>
-  </mat-drawer>
+  <mat-drawer-container class="frame__drawer-container" autosize>
+    <mat-drawer class="frame__sidenav" #drawer mode="side" opened="true">
+      <nav class="frame__sidenav-options">
+        <a routerLink="/specializations">
+          <button
+            mat-raised-button
+            class="frame__sidenav-add-button"
+            color="primary">
+            {{ 'sidenav.add_button' | translate | uppercase }}
+          </button>
+        </a>
+        <a
+          class="frame__sidenav-option"
+          mat-flat-button
+          *ngFor="let option of options"
+          color="{{ option.isActive ? 'primary' : '' }}"
+          routerLink="{{ option.path }}">
+          <mat-icon class="frame__sidenav-option-icon">launch</mat-icon>
+          <span class="frame__sidenav-option-text">{{
+            option.title | translate
+          }}</span>
+        </a>
+      </nav>
+    </mat-drawer>
 
-  <mat-drawer-content>
-    <ng-content></ng-content>
-  </mat-drawer-content>
-</mat-drawer-container>
+    <mat-drawer-content
+      class="frame__content"
+      [ngStyle]="{ height: contentHeightPixels + 'px' }">
+      <ng-content></ng-content>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

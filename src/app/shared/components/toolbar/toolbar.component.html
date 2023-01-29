@@ -90,13 +90,13 @@
 
   <mat-menu #langMenu="matMenu">
     <button mat-menu-item (click)="languageService.setLanguage(languages.Ru)">
-      <span>Русский</span>
+      <span>🇷🇺 Русский</span>
       <mat-icon>
         {{ languageService.getLanguage() === languages.Ru ? 'done' : '' }}
       </mat-icon>
     </button>
     <button mat-menu-item (click)="languageService.setLanguage(languages.En)">
-      <span>English</span>
+      <span>🇬🇧 English</span>
       <mat-icon>
         {{ languageService.getLanguage() === languages.En ? 'done' : '' }}
       </mat-icon>

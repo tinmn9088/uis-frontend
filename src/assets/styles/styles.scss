@@ -22,12 +22,14 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+$scrollbar-width: 8px;
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: $scrollbar-width;
 }
 
 ::-webkit-scrollbar:horizontal {
-  height: 8px;
+  height: $scrollbar-width;
 }
 
 ::-webkit-scrollbar-thumb {

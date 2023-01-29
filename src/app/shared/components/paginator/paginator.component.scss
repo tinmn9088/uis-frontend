@@ -7,9 +7,21 @@
   flex-direction: row;
   justify-content: space-between;
 
-  width: fit-content;
-  min-width: 620px;
+  width: 100%;
   background-color: white;
+
+  &__page-indexes {
+    margin: 0 12px 0 12px;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  &__index-button {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 
   &__index-button,
   &__arrow-button {
@@ -18,10 +30,5 @@
     max-width: $button-size;
     min-height: $button-size;
     max-height: $button-size;
-  }
-
-  &__index-button {
-    margin-left: 5px;
-    margin-right: 5px;
   }
 }
