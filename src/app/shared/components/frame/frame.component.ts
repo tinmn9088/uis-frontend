@@ -30,7 +30,7 @@ export class FrameComponent implements AfterViewInit {
     this.updateContentHeight();
   }
 
-  updateContentHeight() {
+  private updateContentHeight() {
     this.contentHeightPixels = (
       this.drawerContainer as any
     )._element.nativeElement.offsetHeight;
