@@ -1,10 +1,18 @@
 <div class="frame">
   <app-toolbar
     class="frame__toolbar"
+    [showTabs]="showToolbarTabs"
     (menuButtonClick)="drawer.toggle()"></app-toolbar>
 
-  <mat-drawer-container class="frame__drawer-container" autosize>
-    <mat-drawer class="frame__sidenav" #drawer mode="side" opened="true">
+  <mat-drawer-container class="frame__drawer-container">
+    <mat-drawer
+      class="frame__sidenav"
+      [ngClass]="sidenavFullsize ? 'fullsize' : ''"
+      (openedStart)="onDrawerOpenedStart()"
+      (closedStart)="onDrawerClosedStart()"
+      #drawer
+      mode="side"
+      opened="true">
       <nav class="frame__sidenav-options">
         <a routerLink="/specializations">
           <button

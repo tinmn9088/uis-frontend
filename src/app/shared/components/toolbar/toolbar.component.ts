@@ -1,12 +1,13 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { Subscription, distinctUntilChanged, tap } from 'rxjs';
+import { Subscription, distinctUntilChanged } from 'rxjs';
 import { User } from '../../../user/models/user.model';
 import { Language } from '../../enums/language.enum';
 import { LanguageService } from '../../services/language.service';
@@ -29,10 +30,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   private _pathChangeSubscription: Subscription;
   private readonly _breakpoint$ = this._breakpointObserver
     .observe([this.BREAKPOINT])
-    .pipe(
-      tap(value => console.log(value)),
-      distinctUntilChanged()
-    );
+    .pipe(distinctUntilChanged());
   readonly languages = Language;
   tabs: Tab[] = [
     {
@@ -59,8 +57,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     { text: 'toolbar.menu.add.curricula', path: '/' },
   ];
   activeTab?: Tab;
-  compact = true;
+  compact = false;
   user?: User;
+  @Input() showTabs = true;
   @Output() menuButtonClick = new EventEmitter();
 
   constructor(
@@ -83,7 +82,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       login: 'Пользователь1',
       roles: ['admin', 'guest'],
     };
-    this._breakpoint$.subscribe(() => this.breakpointChanged());
+    this._breakpoint$.subscribe(() => this.onBreakpointChange());
   }
 
   ngOnDestroy() {
@@ -99,7 +98,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.menuButtonClick.emit();
   }
 
-  private breakpointChanged() {
+  private onBreakpointChange() {
     this.compact = !this._breakpointObserver.isMatched(this.BREAKPOINT);
   }
 }
