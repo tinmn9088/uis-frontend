@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpecializationTreeNodeComponent } from './specialization-tree-node.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SpecializationFlatNode } from '../../services/specialization.service';
+import { SpecializationFlatNode } from '../../services/specialization-tree-data-source.service';
 
 describe('SpecializationTreeNodeComponent', () => {
   let component: SpecializationTreeNodeComponent;
@@ -24,6 +24,7 @@ describe('SpecializationTreeNodeComponent', () => {
       name: 'TestName',
       shortName: 'TestShortName',
       cipher: 'TestCipher',
+      hasChildren: false,
     });
     fixture.detectChanges();
     expect(component).toBeTruthy();

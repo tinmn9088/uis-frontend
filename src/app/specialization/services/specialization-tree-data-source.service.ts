@@ -5,11 +5,22 @@ import {
 } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, merge } from 'rxjs';
-import {
-  SpecializationFlatNode,
-  SpecializationService,
-} from './specialization.service';
+import { BehaviorSubject, Observable, delay, map, merge } from 'rxjs';
+import { SpecializationService } from './specialization.service';
+import { Specialization } from '../models/specialization.model';
+
+export class SpecializationFlatNode {
+  constructor(
+    public specialization: Specialization,
+    public level = 1,
+    public expandable = false,
+    public isLoading = false
+  ) {}
+}
+
+export const getLevel = (node: SpecializationFlatNode) => node.level;
+
+export const isExpandable = (node: SpecializationFlatNode) => node.expandable;
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +43,22 @@ export class SpecializationTreeDataSourceService
     private _treeControl: FlatTreeControl<SpecializationFlatNode>,
     private _specializationService: SpecializationService
   ) {
-    this.data = this._specializationService.initialData();
+    this._specializationService
+      .getParents()
+      .pipe(
+        map(specializations =>
+          specializations.map(
+            specialization =>
+              new SpecializationFlatNode(
+                specialization,
+                0,
+                specialization.hasChildren,
+                false
+              )
+          )
+        )
+      )
+      .subscribe(nodes => (this.data = nodes));
   }
 
   connect(
@@ -72,33 +98,34 @@ export class SpecializationTreeDataSourceService
     if (expand) {
       node.isLoading = true;
 
-      setTimeout(() => {
-        const children = this._specializationService.getChildren(
-          node.specialization.id
-        );
+      this._specializationService
+        .getChildren(node.specialization.id)
+        .pipe(delay(200))
+        .subscribe(children => {
+          console.debug('Children received', children);
 
-        if (!children) {
+          if (!children || children.length === 0) {
+            this.dataChange.next(this.data);
+            node.isLoading = false;
+            return;
+          }
+
+          const nodes = children.map(
+            specialization =>
+              new SpecializationFlatNode(
+                specialization,
+                node.level + 1,
+                specialization.hasChildren
+              )
+          );
+
+          console.debug(`New nodes added`, nodes);
+
+          this.data.splice(index + 1, 0, ...nodes);
+
           this.dataChange.next(this.data);
           node.isLoading = false;
-          return;
-        }
-
-        const nodes = children.map(
-          specialization =>
-            new SpecializationFlatNode(
-              specialization,
-              node.level + 1,
-              this._specializationService.isExpandable(specialization.id)
-            )
-        );
-
-        console.debug(`New nodes added`, nodes);
-
-        this.data.splice(index + 1, 0, ...nodes);
-
-        this.dataChange.next(this.data);
-        node.isLoading = false;
-      }, 1000);
+        });
     } else {
       let count = 0;
       for (

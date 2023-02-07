@@ -30,6 +30,7 @@ const modules = [
   CommonModule,
   RouterModule,
   BrowserAnimationsModule,
+  HttpClientModule,
   FormsModule,
   LayoutModule,
   MatToolbarModule,

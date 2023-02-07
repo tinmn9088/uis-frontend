@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
+import { FlatTreeControl } from '@angular/cdk/tree';
 import {
   SpecializationFlatNode,
+  SpecializationTreeDataSourceService,
   isExpandable,
-} from '../../services/specialization.service';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { SpecializationTreeDataSourceService } from '../../services/specialization-tree-data-source.service';
+} from '../../services/specialization-tree-data-source.service';
 
 @Component({
   selector: 'app-specialization-tree',

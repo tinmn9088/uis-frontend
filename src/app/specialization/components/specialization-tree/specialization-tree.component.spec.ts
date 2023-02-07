@@ -7,7 +7,7 @@ import {
   SpecializationFlatNode,
   getLevel,
   isExpandable,
-} from '../../services/specialization.service';
+} from '../../services/specialization-tree-data-source.service';
 
 describe('SpecializationTreeComponent', () => {
   let component: SpecializationTreeComponent;

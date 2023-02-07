@@ -3,5 +3,5 @@ export interface Specialization {
   name: string;
   shortName: string;
   cipher: string;
-  children?: Specialization[];
+  hasChildren: boolean;
 }

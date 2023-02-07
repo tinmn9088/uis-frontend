@@ -1,18 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SpecializationTreeDataSourceService } from './specialization-tree-data-source.service';
-import { FlatTreeControl } from '@angular/cdk/tree';
 import {
   SpecializationFlatNode,
+  SpecializationTreeDataSourceService,
   getLevel,
   isExpandable,
-} from './specialization.service';
+} from './specialization-tree-data-source.service';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('SpecializationDataSourceService', () => {
   let service: SpecializationTreeDataSourceService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [SharedModule],
       providers: [
         {
           provide: FlatTreeControl,
