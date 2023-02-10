@@ -10,12 +10,14 @@ import {
   getLevel,
   isExpandable,
 } from './services/specialization-tree-data-source.service';
+import { SpecializationFormComponent } from './components/specialization-form/specialization-form.component';
 
 @NgModule({
   declarations: [
     SpecializationListComponent,
     SpecializationTreeComponent,
     SpecializationTreeNodeComponent,
+    SpecializationFormComponent,
   ],
   imports: [CommonModule, SharedModule],
   providers: [

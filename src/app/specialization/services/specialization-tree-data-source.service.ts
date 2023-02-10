@@ -7,7 +7,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, delay, map, merge } from 'rxjs';
 import { SpecializationService } from './specialization.service';
-import { Specialization } from '../models/specialization.model';
+import { Specialization } from '../domain/specialization';
 
 export class SpecializationFlatNode {
   constructor(

@@ -1,0 +1,25 @@
+.form {
+  min-width: fit-content;
+  height: 100%;
+  overflow: auto;
+
+  padding: 0 8px 0 8px;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    margin-bottom: 36px;
+  }
+
+  &__field {
+    margin-bottom: 16px;
+  }
+
+  &__create-button,
+  &__cancel-button {
+    font-weight: bolder;
+  }
+}

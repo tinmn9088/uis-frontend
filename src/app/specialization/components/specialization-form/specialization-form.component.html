@@ -1,0 +1,66 @@
+<form class="form" #form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div
+    class="form__container"
+    [ngStyle]="{ width: formContainerWidthPercents + '%' }">
+    <h3 class="form__title">ADD SPECIALIZATION</h3>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">Name label</mat-label>
+      <input
+        class="form__input"
+        matInput
+        name="name"
+        formControlName="name"
+        [(ngModel)]="name" />
+      <mat-error class="form__error-message">Name error</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">Short name label</mat-label>
+      <input
+        class="form__input"
+        matInput
+        name="name"
+        formControlName="name"
+        [(ngModel)]="shortName" />
+      <mat-error class="form__error-message">Short name error</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">Cipher label</mat-label>
+      <input
+        class="form__input"
+        matInput
+        name="name"
+        formControlName="name"
+        [(ngModel)]="cipher" />
+      <mat-error class="form__error-message">Cipher error</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">Parent specialization label</mat-label>
+      <input
+        class="form__input"
+        matInput
+        name="name"
+        formControlName="name"
+        [(ngModel)]="parent" />
+      <mat-error class="form__error-message"
+        >Parent specialization error</mat-error
+      >
+    </mat-form-field>
+
+    <div class="form__buttons">
+      <button
+        class="form__create-button"
+        mat-flat-button
+        color="primary"
+        [disabled]="formGroup.disabled">
+        CREATE
+      </button>
+      <button class="form__cancel-button" mat-flat-button color="secondary">
+        CANCEL
+      </button>
+    </div>
+  </div>
+</form>

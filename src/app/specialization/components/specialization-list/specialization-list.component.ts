@@ -1,6 +1,4 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { distinctUntilChanged, tap } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-specialization-list',

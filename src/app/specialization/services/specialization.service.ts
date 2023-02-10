@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Specialization } from '../models/specialization.model';
+import { Specialization } from '../domain/specialization';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import Modules from 'src/assets/modules.json';

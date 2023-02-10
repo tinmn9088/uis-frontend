@@ -1,4 +1,4 @@
-import { Language } from 'src/app/shared/enums/language.enum';
+import { Language } from 'src/app/shared/domain/language';
 
 export const environment = {
   defaultLanguage: Language.En,

@@ -1,16 +1,3 @@
-<app-frame
-  [ngClass]="themeClass"
-  [options]="[
-    {
-      title: 'specializations.options.search',
-      path: '/specializations/list',
-      isActive: true
-    },
-    {
-      title: 'specializations.options.view',
-      path: '/specializations',
-      isActive: false
-    }
-  ]">
+<app-frame [ngClass]="themeClass" [options]="options">
   <router-outlet></router-outlet>
 </app-frame>

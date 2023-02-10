@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FrameComponent } from './components/frame/frame.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -32,9 +33,11 @@ const modules = [
   BrowserAnimationsModule,
   HttpClientModule,
   FormsModule,
+  ReactiveFormsModule,
   LayoutModule,
   MatToolbarModule,
   MatButtonModule,
+  MatFormFieldModule,
   MatIconModule,
   MatSidenavModule,
   MatTabsModule,

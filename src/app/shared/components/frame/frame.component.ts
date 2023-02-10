@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   Component,
-  HostListener,
   Input,
   OnInit,
   ViewChild,
@@ -13,6 +12,7 @@ import {
 } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { distinctUntilChanged } from 'rxjs';
+import { ModuleSidenavOption } from '../../domain/module-sidenav-option';
 
 @Component({
   selector: 'app-frame[options]',
@@ -24,28 +24,30 @@ export class FrameComponent implements OnInit, AfterViewInit {
   private readonly _breakpoint$ = this._breakpointObserver
     .observe([this.BREAKPOINT])
     .pipe(distinctUntilChanged());
+  private _resizeObserver: ResizeObserver;
   contentHeightPixels?: number;
   sidenavFullsize = true;
   showToolbarTabs = true;
-  @Input() options?: { title: string; path: string; isActive: boolean }[];
+  @Input() options?: ModuleSidenavOption[];
   @ViewChild(MatDrawerContainer) drawerContainer!: MatDrawerContainer;
   @ViewChild(MatDrawerContent) drawerContent!: MatDrawerContent;
   @ViewChild(MatDrawer) drawer!: MatDrawer;
 
-  constructor(private _breakpointObserver: BreakpointObserver) {}
+  constructor(private _breakpointObserver: BreakpointObserver) {
+    this._resizeObserver = new ResizeObserver(entries => {
+      this.contentHeightPixels = entries[0]?.contentRect.height;
+    });
+  }
 
   ngOnInit() {
     this._breakpoint$.subscribe(() => this.onBreakpointChange());
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => this.updateContentHeight(), 0);
+  ngAfterViewInit() {
     setTimeout(() => this.onBreakpointChange(), 0);
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.updateContentHeight();
+    this._resizeObserver.observe(
+      (this.drawerContainer as any)._element.nativeElement
+    );
   }
 
   onDrawerOpenedStart() {
@@ -53,7 +55,6 @@ export class FrameComponent implements OnInit, AfterViewInit {
     if (compact) {
       this.showToolbarTabs = false;
     }
-    setTimeout(() => this.updateContentHeight(), 0);
   }
 
   onDrawerClosedStart() {
@@ -61,13 +62,6 @@ export class FrameComponent implements OnInit, AfterViewInit {
     if (compact) {
       this.showToolbarTabs = true;
     }
-    setTimeout(() => this.updateContentHeight(), 0);
-  }
-
-  private updateContentHeight() {
-    this.contentHeightPixels = (
-      this.drawerContainer as any
-    )._element.nativeElement.offsetHeight;
   }
 
   private onBreakpointChange() {

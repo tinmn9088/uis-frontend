@@ -1,53 +1,48 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { Subscription, distinctUntilChanged } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { User } from '../../../user/models/user.model';
-import { Language } from '../../enums/language.enum';
+import { Language } from '../../domain/language';
 import { LanguageService } from '../../services/language.service';
-import { ModuleName } from '../../enums/module-name.enum';
+import { ModuleName } from '../../domain/module-name';
 import { ModuleService } from '../../services/module.service';
-import { BreakpointObserver } from '@angular/cdk/layout';
-
-declare type Tab = {
-  title: string;
-  path: string;
-};
+import { Tab } from '../../domain/module-tab';
+import { MatToolbar } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements OnInit, OnDestroy {
-  private readonly BREAKPOINT = '(min-width: 960px)';
+export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
+  private _resizeObserver: ResizeObserver;
   private _pathChangeSubscription: Subscription;
-  private readonly _breakpoint$ = this._breakpointObserver
-    .observe([this.BREAKPOINT])
-    .pipe(distinctUntilChanged());
   readonly languages = Language;
   tabs: Tab[] = [
     {
       title: this._moduleService.getI18N(ModuleName.Category),
-      path: '/',
+      path: this._moduleService.getPath(ModuleName.Category),
     },
     {
       title: this._moduleService.getI18N(ModuleName.Discipline),
-      path: '/',
+      path: this._moduleService.getPath(ModuleName.Discipline),
     },
     {
       title: this._moduleService.getI18N(ModuleName.Specialization),
-      path: '/specializations/list',
+      path: this._moduleService.getPath(ModuleName.Specialization),
     },
     {
       title: this._moduleService.getI18N(ModuleName.Curricula),
-      path: '/',
+      path: this._moduleService.getPath(ModuleName.Curricula),
     },
   ];
   addMenuItems = [
@@ -61,13 +56,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   user?: User;
   @Input() showTabs = true;
   @Output() menuButtonClick = new EventEmitter();
+  @ViewChild(MatToolbar) matToolbar!: MatToolbar;
 
   constructor(
     public languageService: LanguageService,
     private _moduleService: ModuleService,
-    private _breakpointObserver: BreakpointObserver,
     private _router: Router
   ) {
+    this._resizeObserver = new ResizeObserver(entries => {
+      this.onResize(entries[0]?.contentRect.width);
+    });
     this._pathChangeSubscription = this._router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         const currentPath = event.url;
@@ -82,7 +80,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       login: 'Пользователь1',
       roles: ['admin', 'guest'],
     };
-    this._breakpoint$.subscribe(() => this.onBreakpointChange());
+  }
+
+  ngAfterViewInit() {
+    this._resizeObserver.observe(this.matToolbar._elementRef.nativeElement);
   }
 
   ngOnDestroy() {
@@ -98,7 +99,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.menuButtonClick.emit();
   }
 
-  private onBreakpointChange() {
-    this.compact = !this._breakpointObserver.isMatched(this.BREAKPOINT);
+  onResize(width: number) {
+    this.compact = width < 960;
   }
 }

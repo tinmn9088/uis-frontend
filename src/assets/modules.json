@@ -3,24 +3,37 @@
     "name": "Category",
     "themeCssClass": "category-theme",
     "i18nName": "module.name.categories",
-    "path": "categories"
+    "path": "categories",
+    "sidenavOptions": []
   },
   "discipline": {
     "name": "Discipline",
     "themeCssClass": "discipline-theme",
     "i18nName": "module.name.disciplines",
-    "path": "disciplines"
+    "path": "disciplines",
+    "sidenavOptions": []
   },
   "specialization": {
     "name": "Specialization",
     "themeCssClass": "specialization-theme",
     "i18nName": "module.name.specializations",
-    "path": "specializations"
+    "path": "specializations",
+    "sidenavOptions": [
+      {
+        "title": "specializations.options.search",
+        "path": "/specializations/list"
+      },
+      {
+        "title": "specializations.options.view",
+        "path": "/specializations/create"
+      }
+    ]
   },
   "curricula": {
     "name": "Curricula",
     "themeCssClass": "curricula-theme",
     "i18nName": "module.name.curricula",
-    "path": "curricula"
+    "path": "curricula",
+    "sidenavOptions": []
   }
 }
