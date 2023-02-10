@@ -25,27 +25,19 @@ export class AppComponent implements OnDestroy {
     this.toolbarTabs = [
       {
         title: this._moduleService.getI18N(ModuleName.Category),
-        path:
-          this._moduleService.getSidenavOptions(ModuleName.Category)[0]?.path ||
-          this._moduleService.getPath(ModuleName.Category),
+        path: this._moduleService.getPath(ModuleName.Category),
       },
       {
         title: this._moduleService.getI18N(ModuleName.Discipline),
-        path:
-          this._moduleService.getSidenavOptions(ModuleName.Discipline)[0]
-            ?.path || this._moduleService.getPath(ModuleName.Discipline),
+        path: this._moduleService.getPath(ModuleName.Discipline),
       },
       {
         title: this._moduleService.getI18N(ModuleName.Specialization),
-        path:
-          this._moduleService.getSidenavOptions(ModuleName.Specialization)[0]
-            ?.path || this._moduleService.getPath(ModuleName.Specialization),
+        path: this._moduleService.getPath(ModuleName.Specialization),
       },
       {
         title: this._moduleService.getI18N(ModuleName.Curricula),
-        path:
-          this._moduleService.getSidenavOptions(ModuleName.Curricula)[0]
-            ?.path || this._moduleService.getPath(ModuleName.Curricula),
+        path: this._moduleService.getPath(ModuleName.Curricula),
       },
     ];
     this._pathChangeSubscription = this._router.events.subscribe({

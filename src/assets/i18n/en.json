@@ -35,6 +35,7 @@
         "placeholder": "Search by: name, cipher"
       }
     },
+    "add_form": {},
     "options": {
       "search": "Search specializations",
       "view": "View specialization"

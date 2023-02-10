@@ -20,7 +20,7 @@
     "themeCssClass": "specialization-theme",
     "i18nName": "module.name.specializations",
     "path": "/specializations",
-    "sidenavAddButtonPath": "/specializations/create",
+    "sidenavAddButtonPath": "/specializations/add",
     "sidenavOptions": [
       {
         "title": "specializations.options.search",
@@ -28,7 +28,7 @@
       },
       {
         "title": "specializations.options.view",
-        "path": "/specializations/create"
+        "path": "/specializations/add"
       }
     ]
   },
