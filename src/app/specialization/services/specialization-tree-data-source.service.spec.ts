@@ -8,13 +8,14 @@ import {
 } from './specialization-tree-data-source.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SpecializationDataSourceService', () => {
   let service: SpecializationTreeDataSourceService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [SharedModule, HttpClientTestingModule],
       providers: [
         {
           provide: FlatTreeControl,

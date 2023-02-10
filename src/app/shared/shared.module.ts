@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -49,6 +50,7 @@ const modules = [
   HttpClientModule,
   MatMenuModule,
   MatDividerModule,
+  MatSnackBarModule,
 ];
 
 const declarations = [ToolbarComponent, FrameComponent, PaginatorComponent];
