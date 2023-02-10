@@ -1,4 +1,4 @@
-export interface Tab {
+export interface ModuleToolbarTab {
   title: string;
   path: string;
 }

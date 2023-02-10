@@ -22,6 +22,11 @@ export class ModuleService {
     return module.path;
   }
 
+  getSidenavAddButtonPath(name: ModuleName): string {
+    const module = this.getModule(name);
+    return module.sidenavAddButtonPath;
+  }
+
   getSidenavOptions(name: ModuleName): ModuleSidenavOption[] {
     const module = this.getModule(name);
     return module.sidenavOptions;
@@ -39,7 +44,7 @@ export class ModuleService {
   getModuleNameByPath(path: string): ModuleName | undefined {
     const names = this.getAllModuleNames();
     for (const name of names) {
-      if (path.startsWith('/' + this.getModule(name).path)) {
+      if (path.startsWith(this.getModule(name).path)) {
         return name;
       }
     }

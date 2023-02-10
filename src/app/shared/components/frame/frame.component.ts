@@ -15,7 +15,7 @@ import { distinctUntilChanged } from 'rxjs';
 import { ModuleSidenavOption } from '../../domain/module-sidenav-option';
 
 @Component({
-  selector: 'app-frame[options]',
+  selector: 'app-frame[sidenavOptions][activeOption][toolbarTabs][activeTab]',
   templateUrl: './frame.component.html',
   styleUrls: ['./frame.component.scss'],
 })
@@ -28,7 +28,11 @@ export class FrameComponent implements OnInit, AfterViewInit {
   contentHeightPixels?: number;
   sidenavFullsize = true;
   showToolbarTabs = true;
-  @Input() options?: ModuleSidenavOption[];
+  @Input() sidenavOptions!: ModuleSidenavOption[];
+  @Input() activeOption?: ModuleSidenavOption;
+  @Input() toolbarTabs!: ModuleSidenavOption[];
+  @Input() activeTab?: ModuleSidenavOption;
+  @Input() addButtonPath?: string;
   @ViewChild(MatDrawerContainer) drawerContainer!: MatDrawerContainer;
   @ViewChild(MatDrawerContent) drawerContent!: MatDrawerContent;
   @ViewChild(MatDrawer) drawer!: MatDrawer;

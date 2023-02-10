@@ -1,3 +1,9 @@
-<app-frame [ngClass]="themeClass" [options]="options">
+<app-frame
+  [ngClass]="themeClass"
+  [sidenavOptions]="sidenavOptions"
+  [activeOption]="activeOption"
+  [toolbarTabs]="toolbarTabs"
+  [activeTab]="activeTab"
+  [addButtonPath]="addButtonPath">
   <router-outlet></router-outlet>
 </app-frame>

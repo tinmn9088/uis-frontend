@@ -29,6 +29,13 @@ export class SpecializationFormComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this._resizeObserver.observe(this.form.nativeElement);
+
+    // fix initial 100% form container width (autofocus is too fast)
+    setTimeout(
+      () =>
+        (document.querySelector('.form__input') as HTMLInputElement).focus(),
+      200
+    );
   }
 
   onSubmit() {

@@ -1,10 +1,12 @@
 <div class="frame">
   <app-toolbar
     class="frame__toolbar"
+    [tabs]="toolbarTabs"
+    [activeTab]="activeTab"
     [showTabs]="showToolbarTabs"
     (menuButtonClick)="drawer.toggle()"></app-toolbar>
 
-  <mat-drawer-container class="frame__drawer-container">
+  <mat-drawer-container class="frame__drawer-container" autosize>
     <mat-drawer
       class="frame__sidenav"
       [ngClass]="sidenavFullsize ? 'fullsize' : ''"
@@ -14,7 +16,7 @@
       mode="side"
       opened="true">
       <nav class="frame__sidenav-options">
-        <a routerLink="/specializations">
+        <a *ngIf="addButtonPath" routerLink="{{ addButtonPath }}">
           <button
             mat-raised-button
             class="frame__sidenav-add-button"
@@ -25,8 +27,8 @@
         <a
           class="frame__sidenav-option"
           mat-flat-button
-          *ngFor="let option of options"
-          color="{{ option.isActive ? 'primary' : '' }}"
+          *ngFor="let option of sidenavOptions"
+          color="{{ option === activeOption ? 'primary' : '' }}"
           routerLink="{{ option.path }}">
           <mat-icon class="frame__sidenav-option-icon">launch</mat-icon>
           <span class="frame__sidenav-option-text">{{

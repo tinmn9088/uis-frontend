@@ -6,7 +6,7 @@ import { SpecializationFormComponent } from './specialization/components/special
 
 const routes: Routes = [
   {
-    path: Modules.specialization.path,
+    path: Modules.specialization.path.slice(1),
     children: [
       { path: 'list', component: SpecializationListComponent },
       { path: 'create', component: SpecializationFormComponent },

@@ -9,7 +9,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root',
 })
 export class SpecializationService {
-  private readonly MODULE_URL = `http://${environment.backendUrl}/${Modules.specialization.path}`;
+  private readonly MODULE_URL = `http://${environment.backendUrl}${Modules.specialization.path}`;
 
   constructor(private _http: HttpClient) {}
 
