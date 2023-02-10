@@ -35,8 +35,9 @@
         "placeholder": "Search by: name, cipher"
       }
     },
-    "add_form": {
-      "title": "Add specialization",
+    "form": {
+      "add_title": "Add specialization",
+      "edit_title": "Specialization ",
       "name_label": "Name",
       "name_error": "Name required",
       "short_name_label": "Short name",
@@ -50,6 +51,7 @@
     },
     "options": {
       "search": "Search specializations",
+      "add": "Add specialization",
       "view": "View specialization"
     }
   }

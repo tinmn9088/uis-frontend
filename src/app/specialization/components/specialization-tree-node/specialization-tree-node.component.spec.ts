@@ -25,6 +25,7 @@ describe('SpecializationTreeNodeComponent', () => {
       shortName: 'TestShortName',
       cipher: 'TestCipher',
       hasChildren: false,
+      parentId: 1,
     });
     fixture.detectChanges();
     expect(component).toBeTruthy();

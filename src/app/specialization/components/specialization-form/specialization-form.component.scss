@@ -18,10 +18,8 @@
     margin-bottom: 16px;
   }
 
-  &__buttons {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
+  &__create-button {
+    margin-right: 16px;
   }
 
   &__create-button,

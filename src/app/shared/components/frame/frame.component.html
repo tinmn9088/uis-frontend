@@ -24,17 +24,22 @@
             {{ 'sidenav.add_button' | translate | uppercase }}
           </button>
         </a>
-        <a
-          class="frame__sidenav-option"
-          mat-flat-button
-          *ngFor="let option of sidenavOptions"
-          color="{{ option === activeOption ? 'primary' : '' }}"
-          routerLink="{{ option.path }}">
-          <mat-icon class="frame__sidenav-option-icon">launch</mat-icon>
-          <span class="frame__sidenav-option-text">{{
-            option.title | translate
-          }}</span>
-        </a>
+        <ng-container *ngFor="let option of sidenavOptions">
+          <a
+            class="frame__sidenav-option"
+            mat-flat-button
+            *ngIf="!isSidenavOptionHidden(option)"
+            color="{{ option === activeOption ? 'primary' : '' }}"
+            [ngStyle]="{
+              'pointer-events': option === activeOption ? 'none' : 'auto'
+            }"
+            routerLink="{{ option.path }}">
+            <mat-icon class="frame__sidenav-option-icon">launch</mat-icon>
+            <span class="frame__sidenav-option-text">
+              {{ option.title | translate }}
+            </span>
+          </a>
+        </ng-container>
       </nav>
     </mat-drawer>
 

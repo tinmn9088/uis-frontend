@@ -27,9 +27,15 @@
         "path": "/specializations/list"
       },
       {
-        "title": "specializations.options.view",
+        "title": "specializations.options.add",
         "path": "/specializations/add",
-        "pathRegex": "/specializations/(add|\\d+)"
+        "groupId": 1
+      },
+      {
+        "title": "specializations.options.view",
+        "path": "/specializations/0",
+        "pathRegex": "/specializations/\\d+",
+        "groupId": 1
       }
     ]
   },

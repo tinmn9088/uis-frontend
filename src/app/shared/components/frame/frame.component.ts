@@ -68,6 +68,17 @@ export class FrameComponent implements OnInit, AfterViewInit {
     }
   }
 
+  isSidenavOptionHidden(option: ModuleSidenavOption): boolean {
+    if (option === this.activeOption) return false;
+    const group = this.sidenavOptions.filter(
+      other => other.groupId === option.groupId
+    );
+    if (group.find(optionFromGroup => optionFromGroup === this.activeOption)) {
+      return true;
+    }
+    return option !== group[0];
+  }
+
   private onBreakpointChange() {
     const compact = !this._breakpointObserver.isMatched(this.BREAKPOINT);
     if (compact) {
