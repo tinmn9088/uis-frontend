@@ -28,7 +28,8 @@
       },
       {
         "title": "specializations.options.view",
-        "path": "/specializations/add"
+        "path": "/specializations/add",
+        "pathRegex": "/specializations/(add|\\d+)"
       }
     ]
   },

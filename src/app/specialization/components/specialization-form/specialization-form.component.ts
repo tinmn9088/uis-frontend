@@ -1,5 +1,9 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SpecializationAddRequest } from '../../domain/specialization-add-request';
+import { SpecializationService } from '../../services/specialization.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-specialization-form',
@@ -16,7 +20,11 @@ export class SpecializationFormComponent implements AfterViewInit {
   formGroup!: FormGroup;
   @ViewChild('form') form!: ElementRef;
 
-  constructor() {
+  constructor(
+    private _specializationService: SpecializationService,
+    private _snackbarService: SnackbarService,
+    private _translate: TranslateService
+  ) {
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
     });
@@ -24,6 +32,7 @@ export class SpecializationFormComponent implements AfterViewInit {
       name: new FormControl(this.name, Validators.required),
       shortName: new FormControl(this.shortName, Validators.required),
       cipher: new FormControl(this.cipher, Validators.required),
+      parent: new FormControl(this.parent),
     });
   }
 
@@ -39,7 +48,43 @@ export class SpecializationFormComponent implements AfterViewInit {
   }
 
   onSubmit() {
-    console.log('Submitted');
+    if (this.formGroup.invalid) {
+      console.debug(this.formGroup.controls);
+      return;
+    }
+
+    this.formGroup.disable();
+
+    const addRequest: SpecializationAddRequest = {
+      name: this.name || '',
+      shortName: this.shortName || '',
+      cipher: this.cipher || '',
+    };
+    if (this.parent) addRequest.parent = this.parent;
+    console.debug('Add specialization request', addRequest);
+
+    this._specializationService.add(addRequest).subscribe({
+      next: specialization => {
+        console.debug('Received back', specialization);
+        this._translate
+          .get('specializations.add_form.snackbar_success_message')
+          .subscribe({
+            next: message => {
+              this._snackbarService.showSuccess(message);
+              this.formGroup.enable();
+            },
+          });
+        setTimeout(
+          () =>
+            this._specializationService.navigateToViewPage(specialization.id),
+          2000
+        );
+      },
+      error: (reason: Error) => {
+        this._snackbarService.showError(reason.message);
+        this.formGroup.enable();
+      },
+    });
   }
 
   private updateFormContainerWidth(formWidth: number) {

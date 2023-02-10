@@ -18,6 +18,12 @@
     margin-bottom: 16px;
   }
 
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+
   &__create-button,
   &__cancel-button {
     font-weight: bolder;

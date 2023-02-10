@@ -2,52 +2,61 @@
   <div
     class="form__container"
     [ngStyle]="{ width: formContainerWidthPercents + '%' }">
-    <h3 class="form__title">ADD SPECIALIZATION</h3>
+    <h3 class="form__title">
+      {{ 'specializations.add_form.title' | translate | uppercase }}
+    </h3>
 
     <mat-form-field class="form__field" appearance="outline" color="primary">
-      <mat-label class="form__label">Name label</mat-label>
+      <mat-label class="form__label">
+        {{ 'specializations.add_form.name_label' | translate }}
+      </mat-label>
       <input
         class="form__input"
         matInput
-        name="name"
         formControlName="name"
         [(ngModel)]="name" />
-      <mat-error class="form__error-message">Name error</mat-error>
+      <mat-error class="form__error-message">
+        {{ 'specializations.add_form.name_error' | translate }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form__field" appearance="outline" color="primary">
-      <mat-label class="form__label">Short name label</mat-label>
+      <mat-label class="form__label">
+        {{ 'specializations.add_form.short_name_label' | translate }}
+      </mat-label>
       <input
         class="form__input"
         matInput
-        name="name"
-        formControlName="name"
+        formControlName="shortName"
         [(ngModel)]="shortName" />
-      <mat-error class="form__error-message">Short name error</mat-error>
+      <mat-error class="form__error-message">
+        {{ 'specializations.add_form.short_name_error' | translate }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form__field" appearance="outline" color="primary">
-      <mat-label class="form__label">Cipher label</mat-label>
+      <mat-label class="form__label">
+        {{ 'specializations.add_form.cipher_label' | translate }}
+      </mat-label>
       <input
         class="form__input"
         matInput
-        name="name"
-        formControlName="name"
+        formControlName="cipher"
         [(ngModel)]="cipher" />
-      <mat-error class="form__error-message">Cipher error</mat-error>
+      <mat-error class="form__error-message">
+        {{ 'specializations.add_form.cipher_error' | translate }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form__field" appearance="outline" color="primary">
-      <mat-label class="form__label">Parent specialization label</mat-label>
+      <mat-label class="form__label">
+        {{ 'specializations.add_form.parent_label' | translate }}
+      </mat-label>
       <input
         class="form__input"
         matInput
-        name="name"
-        formControlName="name"
+        formControlName="parent"
         [(ngModel)]="parent" />
-      <mat-error class="form__error-message"
-        >Parent specialization error</mat-error
-      >
     </mat-form-field>
 
     <div class="form__buttons">
@@ -56,10 +65,14 @@
         mat-flat-button
         color="primary"
         [disabled]="formGroup.disabled">
-        CREATE
+        {{ 'specializations.add_form.add_button' | translate }}
       </button>
-      <button class="form__cancel-button" mat-flat-button color="secondary">
-        CANCEL
+      <button
+        class="form__cancel-button"
+        mat-flat-button
+        color="secondary"
+        [disabled]="formGroup.disabled">
+        {{ 'specializations.add_form.cancel_button' | translate }}
       </button>
     </div>
   </div>

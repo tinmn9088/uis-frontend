@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import Modules from 'src/assets/modules.json';
 import { Observable, map } from 'rxjs';
+import { SpecializationAddRequest } from '../domain/specialization-add-request';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,11 @@ import { Observable, map } from 'rxjs';
 export class SpecializationService {
   private readonly MODULE_URL = `http://${environment.backendUrl}${Modules.specialization.path}`;
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient, private _router: Router) {}
+
+  navigateToViewPage(id: number) {
+    this._router.navigateByUrl(`${Modules.specialization.path}/${id}`);
+  }
 
   getParents(): Observable<Specialization[]> {
     return this._http.get<Specialization[]>(`${this.MODULE_URL}/parents`);
@@ -29,5 +35,12 @@ export class SpecializationService {
 
   isExpandable(parentId: number): Observable<boolean> {
     return this.getById(parentId).pipe(map(spec => spec.hasChildren));
+  }
+
+  add(specialization: SpecializationAddRequest): Observable<Specialization> {
+    return this._http.post<Specialization>(
+      `${this.MODULE_URL}`,
+      specialization
+    );
   }
 }

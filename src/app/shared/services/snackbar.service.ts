@@ -15,7 +15,7 @@ export class SnackbarService {
     message: string,
     action?: string
   ): MatSnackBarRef<TextOnlySnackBar> {
-    return this.showMessageAndAction(message, action);
+    return this.showMessageAndAction(`✅ ${message}`, action);
   }
 
   showError(

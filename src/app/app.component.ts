@@ -52,7 +52,7 @@ export class AppComponent implements OnDestroy {
           this.themeClass = _moduleService.getThemeCssClass(moduleName);
           this.sidenavOptions = _moduleService.getSidenavOptions(moduleName);
           this.activeOption = this.sidenavOptions.find(option =>
-            currentPath.startsWith(option.path)
+            this.isActiveOption(currentPath, option)
           );
           this.activeTab = this.toolbarTabs.find(tab =>
             currentPath.startsWith(tab.path)
@@ -67,5 +67,13 @@ export class AppComponent implements OnDestroy {
 
   ngOnDestroy() {
     this._pathChangeSubscription.unsubscribe();
+  }
+
+  private isActiveOption(currentPath: string, option: ModuleSidenavOption) {
+    let active = currentPath.startsWith(option.path);
+    if (option.pathRegex) {
+      active = active || currentPath.match(option.pathRegex) !== null;
+    }
+    return active;
   }
 }
