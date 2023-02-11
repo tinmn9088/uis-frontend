@@ -32,7 +32,7 @@
         "groupId": 1
       },
       {
-        "title": "specializations.options.view",
+        "title": "specializations.options.edit",
         "path": "/specializations/0",
         "pathRegex": "/specializations/\\d+",
         "groupId": 1

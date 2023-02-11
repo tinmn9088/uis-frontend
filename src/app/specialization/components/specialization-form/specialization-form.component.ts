@@ -19,11 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SpecializationFormComponent implements OnInit, AfterViewInit {
   private _resizeObserver: ResizeObserver;
-  id = -1;
-  name?: string;
-  shortName?: string;
-  cipher?: string;
-  parentId?: number;
+  id?: number;
   editMode!: boolean;
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
@@ -40,11 +36,27 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
     });
     this.formGroup = new FormGroup({
-      name: new FormControl(this.name, Validators.required),
-      shortName: new FormControl(this.shortName, Validators.required),
-      cipher: new FormControl(this.cipher, Validators.required),
-      parentId: new FormControl(this.parentId),
+      name: new FormControl('', Validators.required),
+      shortName: new FormControl('', Validators.required),
+      cipher: new FormControl('', Validators.required),
+      parentId: new FormControl(''),
     });
+  }
+
+  get name(): string {
+    return this.formGroup.get('name')?.value;
+  }
+
+  get shortName(): string {
+    return this.formGroup.get('shortName')?.value;
+  }
+
+  get cipher(): string {
+    return this.formGroup.get('cipher')?.value;
+  }
+
+  get parentId(): number {
+    return this.formGroup.get('parentId')?.value;
   }
 
   ngOnInit() {
@@ -55,10 +67,12 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
           this.id = parseInt(params['id']);
           this._specializationService.getById(this.id).subscribe({
             next: specialization => {
-              this.name = specialization.name;
-              this.shortName = specialization.shortName;
-              this.cipher = specialization.cipher;
-              this.parentId = specialization.parentId;
+              this.formGroup.patchValue({
+                name: specialization.name,
+                shortName: specialization.shortName,
+                cipher: specialization.cipher,
+                parentId: specialization.parentId,
+              });
             },
           });
         },

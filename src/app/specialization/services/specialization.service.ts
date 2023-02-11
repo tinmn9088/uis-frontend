@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Specialization } from '../domain/specialization';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import Modules from 'src/assets/modules.json';
 import { Observable, map } from 'rxjs';
@@ -42,5 +42,12 @@ export class SpecializationService {
       `${this.MODULE_URL}`,
       specialization
     );
+  }
+
+  search(query: string): Observable<Specialization[]> {
+    const params = new HttpParams().set('query', query);
+    return this._http.get<Specialization[]>(`${this.MODULE_URL}/search`, {
+      params: params,
+    });
   }
 }

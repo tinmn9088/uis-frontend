@@ -52,7 +52,7 @@
     "options": {
       "search": "Search specializations",
       "add": "Add specialization",
-      "view": "View specialization"
+      "edit": "Edit specialization"
     }
   }
 }
