@@ -1,4 +1,8 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree">
+<mat-tree
+  *ngIf="!isLoading; else loading"
+  [dataSource]="dataSource"
+  [treeControl]="treeControl"
+  class="tree">
   <mat-tree-node
     *matTreeNodeDef="let node"
     matTreeNodePadding
@@ -29,3 +33,9 @@
     </app-specialization-tree-node>
   </mat-tree-node>
 </mat-tree>
+
+<ng-template #loading>
+  <div class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

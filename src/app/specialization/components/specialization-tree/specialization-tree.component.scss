@@ -1,3 +1,11 @@
 .tree__node-content {
   flex-grow: 1;
 }
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 48px 0 48px 0;
+}

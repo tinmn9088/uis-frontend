@@ -14,6 +14,7 @@ import { SpecializationFlatNode } from '../../domain/specialization-flat-node';
   styleUrls: ['./specialization-tree.component.scss'],
 })
 export class SpecializationTreeComponent implements OnInit {
+  isLoading = true;
   @Input() pageSize?: number;
   @Input() pageNumber?: number;
   @Output() dataUpdated = new EventEmitter<SpecializationPageableResponse>();
@@ -31,8 +32,12 @@ export class SpecializationTreeComponent implements OnInit {
   hasChild = (_: number, node: SpecializationFlatNode) => isExpandable(node);
 
   search(searchQuery?: string) {
+    this.isLoading = true;
     this.dataSource
       .updateData(searchQuery, this.pageSize, this.pageNumber)
-      .subscribe(response => this.dataUpdated.emit(response));
+      .subscribe(response => {
+        this.dataUpdated.emit(response);
+        this.isLoading = false;
+      });
   }
 }
