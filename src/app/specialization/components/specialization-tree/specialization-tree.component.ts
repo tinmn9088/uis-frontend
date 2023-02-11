@@ -5,6 +5,7 @@ import {
   SpecializationTreeDataSourceService,
   isExpandable,
 } from '../../services/specialization-tree-data-source.service';
+import { SpecializationService } from '../../services/specialization.service';
 
 @Component({
   selector: 'app-specialization-tree',
@@ -12,10 +13,25 @@ import {
   styleUrls: ['./specialization-tree.component.scss'],
 })
 export class SpecializationTreeComponent {
+  dataSource!: SpecializationTreeDataSourceService;
+
   constructor(
     public treeControl: FlatTreeControl<SpecializationFlatNode>,
-    public dataSource: SpecializationTreeDataSourceService
-  ) {}
+    public specializationService: SpecializationService
+  ) {
+    this.dataSource = new SpecializationTreeDataSourceService(
+      treeControl,
+      specializationService
+    );
+  }
 
   hasChild = (_: number, node: SpecializationFlatNode) => isExpandable(node);
+
+  search(searchQuery: string) {
+    this.dataSource = new SpecializationTreeDataSourceService(
+      this.treeControl,
+      this.specializationService,
+      searchQuery
+    );
+  }
 }

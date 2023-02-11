@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { SpecializationService } from '../../services/specialization.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { SpecializationTreeComponent } from '../specialization-tree/specialization-tree.component';
 
 @Component({
   selector: 'app-specialization-list',
@@ -9,6 +10,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class SpecializationListComponent {
   formGroup!: FormGroup;
+  @ViewChild(SpecializationTreeComponent)
+  specializationTree!: SpecializationTreeComponent;
 
   constructor(private _specializationService: SpecializationService) {
     this.formGroup = new FormGroup({
@@ -21,6 +24,7 @@ export class SpecializationListComponent {
   }
 
   onSearch() {
-    console.log(this.searchQuery);
+    console.debug('Searching', this.searchQuery);
+    this.specializationTree.search(this.searchQuery);
   }
 }

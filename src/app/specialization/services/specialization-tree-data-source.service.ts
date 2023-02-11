@@ -4,7 +4,6 @@ import {
   SelectionChange,
 } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, delay, map, merge } from 'rxjs';
 import { SpecializationService } from './specialization.service';
 import { Specialization } from '../domain/specialization';
@@ -22,9 +21,6 @@ export const getLevel = (node: SpecializationFlatNode) => node.level;
 
 export const isExpandable = (node: SpecializationFlatNode) => node.expandable;
 
-@Injectable({
-  providedIn: 'root',
-})
 export class SpecializationTreeDataSourceService
   implements DataSource<SpecializationFlatNode>
 {
@@ -41,10 +37,14 @@ export class SpecializationTreeDataSourceService
 
   constructor(
     private _treeControl: FlatTreeControl<SpecializationFlatNode>,
-    private _specializationService: SpecializationService
+    private _specializationService: SpecializationService,
+    searchQuery?: string
   ) {
-    this._specializationService
-      .getParents()
+    const specializations$ = searchQuery
+      ? _specializationService.search(searchQuery)
+      : _specializationService.getParents();
+
+    specializations$
       .pipe(
         map(specializations =>
           specializations.map(

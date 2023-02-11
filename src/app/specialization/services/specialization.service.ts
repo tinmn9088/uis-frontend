@@ -45,7 +45,7 @@ export class SpecializationService {
   }
 
   search(query: string): Observable<Specialization[]> {
-    const params = new HttpParams().set('query', query);
+    const params = new HttpParams().set('q', query);
     return this._http.get<Specialization[]>(`${this.MODULE_URL}/search`, {
       params: params,
     });
