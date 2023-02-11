@@ -55,6 +55,6 @@ export class PaginatorComponent implements OnChanges {
       this.matPaginator.getNumberOfPages(),
       this.INDEX_BUTTONS_DISPLAYED
     );
-    this.pageIndex = 0;
+    this.pageIndex = this.pageIndex || 0;
   }
 }
