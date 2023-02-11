@@ -8,9 +8,12 @@ import {
   AsyncSubject,
   BehaviorSubject,
   Observable,
+  debounce,
+  debounceTime,
   delay,
   map,
   merge,
+  pipe,
   tap,
 } from 'rxjs';
 import { SpecializationService } from './specialization.service';
@@ -29,6 +32,7 @@ export class SpecializationTreeDataSourceService
   implements DataSource<SpecializationFlatNode>
 {
   dataChange = new BehaviorSubject<SpecializationFlatNode[]>([]);
+  blockRepeatingTreeControlChanges = false;
 
   get data(): SpecializationFlatNode[] {
     return this.dataChange.value;
@@ -83,7 +87,16 @@ export class SpecializationTreeDataSourceService
   ): Observable<SpecializationFlatNode[]> {
     this._treeControl.expansionModel.changed.subscribe(
       (change: SelectionChange<SpecializationFlatNode>) => {
-        if (change.added || change.removed) {
+        if (
+          !this.blockRepeatingTreeControlChanges &&
+          (change.added || change.removed)
+        ) {
+          console.log(change);
+          this.blockRepeatingTreeControlChanges = true;
+
+          // fix repeating changes events
+          setTimeout(() => (this.blockRepeatingTreeControlChanges = false));
+
           this.handleTreeControl(change);
         }
       }
