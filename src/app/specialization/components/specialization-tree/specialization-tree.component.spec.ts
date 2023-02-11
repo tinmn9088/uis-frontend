@@ -4,10 +4,10 @@ import { SpecializationTreeComponent } from './specialization-tree.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import {
-  SpecializationFlatNode,
   getLevel,
   isExpandable,
 } from '../../services/specialization-tree-data-source.service';
+import { SpecializationFlatNode } from '../../domain/specialization-flat-node';
 
 describe('SpecializationTreeComponent', () => {
   let component: SpecializationTreeComponent;

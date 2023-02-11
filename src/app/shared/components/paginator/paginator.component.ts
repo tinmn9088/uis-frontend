@@ -1,9 +1,8 @@
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -15,7 +14,7 @@ import { PaginatorService } from '../../services/paginator.service';
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss'],
 })
-export class PaginatorComponent implements AfterViewInit {
+export class PaginatorComponent implements OnChanges {
   readonly INDEX_BUTTONS_DISPLAYED = 6;
 
   @Input() length!: number;
@@ -25,14 +24,10 @@ export class PaginatorComponent implements AfterViewInit {
   @ViewChild(MatPaginator) matPaginator!: MatPaginator;
   pageIndexes?: number[] = [];
 
-  constructor(
-    private _paginatorService: PaginatorService,
-    private _changeDetectorRef: ChangeDetectorRef
-  ) {}
+  constructor(private _paginatorService: PaginatorService) {}
 
-  ngAfterViewInit() {
-    this.updatePageIndexes();
-    this._changeDetectorRef.detectChanges();
+  ngOnChanges() {
+    setTimeout(() => this.updatePageIndexes(), 0);
   }
 
   onIndexButtonClick(index: number) {

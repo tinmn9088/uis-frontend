@@ -2,5 +2,5 @@ export interface SpecializationAddRequest {
   name: string;
   shortName: string;
   cipher: string;
-  parent?: number;
+  parentId?: number;
 }

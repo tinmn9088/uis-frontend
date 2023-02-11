@@ -39,7 +39,7 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
       name: new FormControl('', Validators.required),
       shortName: new FormControl('', Validators.required),
       cipher: new FormControl('', Validators.required),
-      parentId: new FormControl(''),
+      parentId: new FormControl(),
     });
   }
 
@@ -103,8 +103,9 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
       name: this.name || '',
       shortName: this.shortName || '',
       cipher: this.cipher || '',
+      parentId: this.parentId,
     };
-    if (this.parentId) addRequest.parent = this.parentId;
+    if (this.parentId) addRequest.parentId = this.parentId;
     console.debug('Add specialization request', addRequest);
 
     this._specializationService.add(addRequest).subscribe({

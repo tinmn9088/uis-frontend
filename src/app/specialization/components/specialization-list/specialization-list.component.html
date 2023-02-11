@@ -16,15 +16,20 @@
   </form>
 
   <div class="specialization-list__tree-container">
-    <app-specialization-tree class="specialization-list__tree">
+    <app-specialization-tree
+      class="specialization-list__tree"
+      [pageSize]="pageSize"
+      [pageNumber]="pageNumber"
+      (dataUpdated)="onDataUpdate($event)">
     </app-specialization-tree>
   </div>
 
   <div class="specialization-list__paginator-container">
     <app-paginator
       class="specialization-list__paginator"
-      [length]="100"
-      [pageSize]="10"
-      [pageIndex]="6"></app-paginator>
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="pageNumber"
+      (page)="onPageChange($event)"></app-paginator>
   </div>
 </div>

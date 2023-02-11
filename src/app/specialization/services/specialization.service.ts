@@ -6,6 +6,7 @@ import Modules from 'src/assets/modules.json';
 import { Observable, map } from 'rxjs';
 import { SpecializationAddRequest } from '../domain/specialization-add-request';
 import { Router } from '@angular/router';
+import { SpecializationPageableResponse } from '../domain/specialization-pageable-response';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +20,17 @@ export class SpecializationService {
     this._router.navigateByUrl(`${Modules.specialization.path}/${id}`);
   }
 
-  getParents(): Observable<Specialization[]> {
-    return this._http.get<Specialization[]>(`${this.MODULE_URL}/parents`);
+  getParents(
+    size?: number,
+    page?: number
+  ): Observable<SpecializationPageableResponse> {
+    let params = new HttpParams();
+    if (size) params = params.set('size', size);
+    if (page) params = params.set('page', page);
+    return this._http.get<SpecializationPageableResponse>(
+      `${this.MODULE_URL}/parents`,
+      { params: params }
+    );
   }
 
   getById(id: number): Observable<Specialization> {
@@ -44,10 +54,19 @@ export class SpecializationService {
     );
   }
 
-  search(query: string): Observable<Specialization[]> {
-    const params = new HttpParams().set('q', query);
-    return this._http.get<Specialization[]>(`${this.MODULE_URL}/search`, {
-      params: params,
-    });
+  search(
+    query: string,
+    size?: number,
+    page?: number
+  ): Observable<SpecializationPageableResponse> {
+    let params = new HttpParams().set('query', query);
+    if (size) params = params.set('size', size);
+    if (page) params = params.set('page', page);
+    return this._http.get<SpecializationPageableResponse>(
+      `${this.MODULE_URL}/search`,
+      {
+        params: params,
+      }
+    );
   }
 }

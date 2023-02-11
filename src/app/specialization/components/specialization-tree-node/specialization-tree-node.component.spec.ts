@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpecializationTreeNodeComponent } from './specialization-tree-node.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SpecializationFlatNode } from '../../services/specialization-tree-data-source.service';
+import { SpecializationFlatNode } from '../../domain/specialization-flat-node';
 
 describe('SpecializationTreeNodeComponent', () => {
   let component: SpecializationTreeNodeComponent;

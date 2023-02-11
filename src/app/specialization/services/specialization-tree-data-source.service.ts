@@ -4,23 +4,27 @@ import {
   SelectionChange,
 } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { BehaviorSubject, Observable, delay, map, merge } from 'rxjs';
+import {
+  AsyncSubject,
+  BehaviorSubject,
+  Observable,
+  delay,
+  map,
+  merge,
+  tap,
+} from 'rxjs';
 import { SpecializationService } from './specialization.service';
-import { Specialization } from '../domain/specialization';
-
-export class SpecializationFlatNode {
-  constructor(
-    public specialization: Specialization,
-    public level = 1,
-    public expandable = false,
-    public isLoading = false
-  ) {}
-}
+import { Injectable } from '@angular/core';
+import { SpecializationPageableResponse } from '../domain/specialization-pageable-response';
+import { SpecializationFlatNode } from '../domain/specialization-flat-node';
 
 export const getLevel = (node: SpecializationFlatNode) => node.level;
 
 export const isExpandable = (node: SpecializationFlatNode) => node.expandable;
 
+@Injectable({
+  providedIn: 'root',
+})
 export class SpecializationTreeDataSourceService
   implements DataSource<SpecializationFlatNode>
 {
@@ -37,17 +41,28 @@ export class SpecializationTreeDataSourceService
 
   constructor(
     private _treeControl: FlatTreeControl<SpecializationFlatNode>,
-    private _specializationService: SpecializationService,
-    searchQuery?: string
-  ) {
-    const specializations$ = searchQuery
-      ? _specializationService.search(searchQuery)
-      : _specializationService.getParents();
+    private _specializationService: SpecializationService
+  ) {}
 
-    specializations$
+  updateData(
+    searchQuery?: string,
+    size?: number,
+    page?: number
+  ): AsyncSubject<SpecializationPageableResponse> {
+    const response$ = searchQuery
+      ? this._specializationService.search(searchQuery, size, page)
+      : this._specializationService.getParents(size, page);
+
+    const subject = new AsyncSubject<SpecializationPageableResponse>();
+
+    response$
       .pipe(
-        map(specializations =>
-          specializations.map(
+        tap(response => {
+          subject.next(response);
+          subject.complete();
+        }),
+        map(response =>
+          response.content.map(
             specialization =>
               new SpecializationFlatNode(
                 specialization,
@@ -59,6 +74,8 @@ export class SpecializationTreeDataSourceService
         )
       )
       .subscribe(nodes => (this.data = nodes));
+
+    return subject;
   }
 
   connect(

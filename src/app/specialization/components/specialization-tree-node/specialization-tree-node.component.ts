@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SpecializationFlatNode } from '../../services/specialization-tree-data-source.service';
+import { SpecializationFlatNode } from '../../domain/specialization-flat-node';
 
 @Component({
   selector: 'app-specialization-tree-node[specializationNode]',

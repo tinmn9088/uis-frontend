@@ -6,11 +6,11 @@ import { SpecializationTreeComponent } from './components/specialization-tree/sp
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { SpecializationTreeNodeComponent } from './components/specialization-tree-node/specialization-tree-node.component';
 import {
-  SpecializationFlatNode,
   getLevel,
   isExpandable,
 } from './services/specialization-tree-data-source.service';
 import { SpecializationFormComponent } from './components/specialization-form/specialization-form.component';
+import { SpecializationFlatNode } from './domain/specialization-flat-node';
 
 @NgModule({
   declarations: [
