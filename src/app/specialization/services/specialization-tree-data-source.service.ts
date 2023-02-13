@@ -88,7 +88,6 @@ export class SpecializationTreeDataSourceService
           !this.blockRepeatingTreeControlChanges &&
           (change.added || change.removed)
         ) {
-          console.log(change);
           this.blockRepeatingTreeControlChanges = true;
 
           // fix repeating changes events

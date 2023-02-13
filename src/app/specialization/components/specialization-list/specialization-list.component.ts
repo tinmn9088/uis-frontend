@@ -1,16 +1,17 @@
-import { Component, ViewChild } from '@angular/core';
-import { SpecializationService } from '../../services/specialization.service';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SpecializationTreeComponent } from '../specialization-tree/specialization-tree.component';
 import { PageEvent } from '@angular/material/paginator';
 import { SpecializationPageableResponse } from '../../domain/specialization-pageable-response';
+import { HighlightTextService } from 'src/app/shared/services/highlight-text.service';
 
 @Component({
   selector: 'app-specialization-list',
   templateUrl: './specialization-list.component.html',
   styleUrls: ['./specialization-list.component.scss'],
 })
-export class SpecializationListComponent {
+export class SpecializationListComponent implements AfterViewInit {
+  private _resizeObserver: ResizeObserver;
   formGroup!: FormGroup;
   @ViewChild(SpecializationTreeComponent)
   specializationTree!: SpecializationTreeComponent;
@@ -18,14 +19,31 @@ export class SpecializationListComponent {
   pageSize = 6;
   pageNumber!: number;
 
-  constructor(private _specializationService: SpecializationService) {
+  constructor(public highlightTextService: HighlightTextService) {
     this.formGroup = new FormGroup({
       searchQuery: new FormControl(''),
+    });
+    this._resizeObserver = new ResizeObserver(entries => {
+      setTimeout(
+        () =>
+          this.highlightTextService.highlight(
+            this.searchQuery,
+            entries[0].target
+          ),
+        0
+      );
     });
   }
 
   get searchQuery(): string {
     return this.formGroup.get('searchQuery')?.value;
+  }
+
+  ngAfterViewInit() {
+    const tree = document.querySelector('.specialization-list__tree');
+    if (tree) {
+      this._resizeObserver.observe(tree);
+    }
   }
 
   onSearch() {
