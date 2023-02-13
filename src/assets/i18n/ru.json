@@ -1,0 +1,58 @@
+{
+  "module": {
+    "name": {
+      "categories": "Категории",
+      "disciplines": "Дисциплины",
+      "specializations": "Специальности",
+      "curricula": "Учебные планы"
+    }
+  },
+  "toolbar": {
+    "menu": {
+      "add": {
+        "category": "Добавить категорию",
+        "discipline": "Добавить дисциплину",
+        "specialization": "Добавить специальность",
+        "curricula": "Добавить учебный план"
+      },
+      "login": {
+        "show_profile": "Посмотреть профиль",
+        "change_language": "Сменить язык",
+        "settings": "Настройки",
+        "logout": "Выйти"
+      }
+    },
+    "login": {
+      "default": "Гость"
+    }
+  },
+  "sidenav": {
+    "add_button": "Добавить"
+  },
+  "specializations": {
+    "list": {
+      "search": {
+        "placeholder": "Поиск по: название, шифр"
+      }
+    },
+    "form": {
+      "add_title": "Добавить специальность",
+      "edit_title": "Cпециальность ",
+      "name_label": "Название",
+      "name_error": "Название обязательно",
+      "short_name_label": "Короткое название",
+      "short_name_error": "Короткое название обязательно",
+      "cipher_label": "Шифр",
+      "cipher_error": "Шифр обязателен",
+      "parent_label": "Родительная специальность",
+      "add_button": "Добавить",
+      "cancel_button": "Отмена",
+      "snackbar_success_message": "Добавлено"
+    },
+    "options": {
+      "search": "Поиск специалностей",
+      "add": "Добавить специальность",
+      "edit": "Изменить специальность"
+    }
+  }
+}

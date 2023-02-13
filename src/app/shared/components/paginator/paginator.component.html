@@ -1,0 +1,45 @@
+<mat-paginator
+  #paginator
+  class="hidden-mat-paginator"
+  (page)="onPageEvent($event)"
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex">
+</mat-paginator>
+
+<div class="paginator">
+  <button
+    mat-stroked-button
+    class="paginator__arrow-button"
+    [disabled]="!paginator.hasPreviousPage()"
+    (click)="paginator.previousPage()">
+    <i class="material-icons">chevron_left</i>
+  </button>
+
+  <div class="paginator__page-indexes">
+    <ng-container *ngFor="let i of pageIndexes">
+      <button
+        mat-stroked-button
+        class="paginator__index-button"
+        *ngIf="i !== pageIndex"
+        (click)="onIndexButtonClick(i)">
+        {{ i + 1 }}
+      </button>
+      <button
+        mat-raised-button
+        class="paginator__index-button"
+        *ngIf="i === pageIndex"
+        color="primary">
+        {{ i + 1 }}
+      </button>
+    </ng-container>
+  </div>
+
+  <button
+    mat-stroked-button
+    class="paginator__arrow-button"
+    [disabled]="!paginator.hasNextPage()"
+    (click)="paginator.nextPage()">
+    <i class="material-icons">chevron_right</i>
+  </button>
+</div>

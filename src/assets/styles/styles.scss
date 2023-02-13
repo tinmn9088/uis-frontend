@@ -1,0 +1,46 @@
+@use '@angular/material' as mat;
+@use 'themes/specialization';
+@use 'themes/user';
+
+@include mat.core();
+
+@include mat.all-component-themes(user.$light-theme);
+
+.specialization-theme {
+  @include mat.all-component-colors(specialization.$light-theme);
+}
+
+@import '../fonts/material-icons';
+@import '../fonts/roboto';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.hightlight-text {
+  background-color: yellow;
+}
+
+$scrollbar-width: 8px;
+
+::-webkit-scrollbar {
+  width: $scrollbar-width;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: $scrollbar-width;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.56);
+}

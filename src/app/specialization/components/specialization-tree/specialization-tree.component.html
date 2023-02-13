@@ -1,0 +1,41 @@
+<mat-tree
+  *ngIf="!isLoading; else loading"
+  [dataSource]="dataSource"
+  [treeControl]="treeControl"
+  class="tree">
+  <mat-tree-node
+    *matTreeNodeDef="let node"
+    matTreeNodePadding
+    class="tree__node">
+    <button mat-icon-button disabled></button>
+    <app-specialization-tree-node
+      [specializationNode]="node"
+      class="tree__node-content">
+    </app-specialization-tree-node>
+  </mat-tree-node>
+  <mat-tree-node
+    *matTreeNodeDef="let node; when: hasChild"
+    matTreeNodePadding
+    class="tree__node">
+    <button
+      mat-icon-button
+      [disabled]="node.isLoading"
+      [attr.aria-label]="'Toggle ' + node.specialization.name"
+      matTreeNodeToggle
+      class="tree__expand-button">
+      <mat-icon>
+        {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+      </mat-icon>
+    </button>
+    <app-specialization-tree-node
+      [specializationNode]="node"
+      class="tree__node-content">
+    </app-specialization-tree-node>
+  </mat-tree-node>
+</mat-tree>
+
+<ng-template #loading>
+  <div class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

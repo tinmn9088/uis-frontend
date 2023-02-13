@@ -1,0 +1,68 @@
+<form class="form" #form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div
+    class="form__container"
+    [ngStyle]="{ width: formContainerWidthPercents + '%' }">
+    <h3 class="form__title">
+      {{
+        editMode
+          ? (('specializations.form.edit_title' | translate) + name | uppercase)
+          : ('specializations.form.add_title' | translate | uppercase)
+      }}
+    </h3>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'specializations.form.name_label' | translate }}
+      </mat-label>
+      <input class="form__input" matInput formControlName="name" />
+      <mat-error class="form__error-message">
+        {{ 'specializations.form.name_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'specializations.form.short_name_label' | translate }}
+      </mat-label>
+      <input class="form__input" matInput formControlName="shortName" />
+      <mat-error class="form__error-message">
+        {{ 'specializations.form.short_name_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'specializations.form.cipher_label' | translate }}
+      </mat-label>
+      <input class="form__input" matInput formControlName="cipher" />
+      <mat-error class="form__error-message">
+        {{ 'specializations.form.cipher_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'specializations.form.parent_label' | translate }}
+      </mat-label>
+      <input class="form__input" matInput formControlName="parentId" />
+    </mat-form-field>
+
+    <div class="form__buttons">
+      <button
+        class="form__create-button"
+        mat-flat-button
+        color="primary"
+        [disabled]="formGroup.disabled">
+        {{ 'specializations.form.add_button' | translate }}
+      </button>
+      <button
+        class="form__cancel-button"
+        mat-flat-button
+        color="secondary"
+        type="button"
+        [disabled]="formGroup.disabled">
+        {{ 'specializations.form.cancel_button' | translate }}
+      </button>
+    </div>
+  </div>
+</form>

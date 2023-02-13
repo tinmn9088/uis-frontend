@@ -1,0 +1,50 @@
+{
+  "category": {
+    "name": "Category",
+    "themeCssClass": "category-theme",
+    "i18nName": "module.name.categories",
+    "path": "/categories",
+    "sidenavAddButtonPath": "",
+    "sidenavOptions": []
+  },
+  "discipline": {
+    "name": "Discipline",
+    "themeCssClass": "discipline-theme",
+    "i18nName": "module.name.disciplines",
+    "path": "/disciplines",
+    "sidenavAddButtonPath": "",
+    "sidenavOptions": []
+  },
+  "specialization": {
+    "name": "Specialization",
+    "themeCssClass": "specialization-theme",
+    "i18nName": "module.name.specializations",
+    "path": "/specializations",
+    "sidenavAddButtonPath": "/specializations/add",
+    "sidenavOptions": [
+      {
+        "title": "specializations.options.search",
+        "path": "/specializations/list"
+      },
+      {
+        "title": "specializations.options.add",
+        "path": "/specializations/add",
+        "groupId": 1
+      },
+      {
+        "title": "specializations.options.edit",
+        "path": "/specializations/0",
+        "pathRegex": "/specializations/\\d+",
+        "groupId": 1
+      }
+    ]
+  },
+  "curricula": {
+    "name": "Curricula",
+    "themeCssClass": "curricula-theme",
+    "i18nName": "module.name.curricula",
+    "path": "/curricula",
+    "sidenavAddButtonPath": "",
+    "sidenavOptions": []
+  }
+}

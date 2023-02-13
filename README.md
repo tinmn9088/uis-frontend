@@ -19,5 +19,6 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 #### VSCode
 
 Install:
-* [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) Extension
-* [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) Extension
+
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) Extension
+- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) Extension

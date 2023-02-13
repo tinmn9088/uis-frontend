@@ -1,0 +1,65 @@
+@use '@angular/material' as mat;
+
+@use '../colors/basic' as b;
+@use '../colors/specialization' as c;
+
+$light-blue-palette: (
+  50: c.$light-blue-50,
+  100: c.$light-blue-100,
+  200: c.$light-blue-200,
+  300: c.$light-blue-300,
+  400: c.$light-blue-400,
+  500: c.$light-blue-500,
+  600: c.$light-blue-600,
+  700: c.$light-blue-700,
+  800: c.$light-blue-800,
+  900: c.$light-blue-900,
+  contrast: (
+    50: b.$black,
+    100: b.$black,
+    200: b.$black,
+    300: b.$black,
+    400: b.$black,
+    500: b.$black,
+    600: b.$black,
+    700: b.$black,
+    800: b.$black,
+    900: b.$black,
+  ),
+);
+$dark-blue-palette: (
+  50: c.$dark-blue-50,
+  100: c.$dark-blue-100,
+  200: c.$dark-blue-200,
+  300: c.$dark-blue-300,
+  400: c.$dark-blue-400,
+  500: c.$dark-blue-600,
+  600: c.$dark-blue-600,
+  700: c.$dark-blue-700,
+  800: c.$dark-blue-800,
+  900: c.$dark-blue-900,
+  contrast: (
+    50: b.$black,
+    100: b.$black,
+    200: b.$black,
+    300: b.$white,
+    400: b.$white,
+    500: b.$white,
+    600: b.$white,
+    700: b.$white,
+    800: b.$white,
+    900: b.$white,
+  ),
+);
+
+$light-theme-primary: mat.define-palette($light-blue-palette, 900);
+$light-theme-accent: mat.define-palette($dark-blue-palette);
+
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-theme-primary,
+      accent: $light-theme-accent,
+    ),
+  )
+);

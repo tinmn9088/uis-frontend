@@ -1,0 +1,58 @@
+{
+  "module": {
+    "name": {
+      "categories": "Categories",
+      "disciplines": "Disciplines",
+      "specializations": "Specializations",
+      "curricula": "Curricula"
+    }
+  },
+  "toolbar": {
+    "menu": {
+      "add": {
+        "category": "Add category",
+        "discipline": "Add discipline",
+        "specialization": "Add specialization",
+        "curricula": "Add curricula"
+      },
+      "login": {
+        "show_profile": "Show profile",
+        "change_language": "Change language",
+        "settings": "Settings",
+        "logout": "Logout"
+      }
+    },
+    "login": {
+      "default": "Guest"
+    }
+  },
+  "sidenav": {
+    "add_button": "Create"
+  },
+  "specializations": {
+    "list": {
+      "search": {
+        "placeholder": "Search by: name, cipher"
+      }
+    },
+    "form": {
+      "add_title": "Add specialization",
+      "edit_title": "Specialization ",
+      "name_label": "Name",
+      "name_error": "Name required",
+      "short_name_label": "Short name",
+      "short_name_error": "Short name required",
+      "cipher_label": "Cipher",
+      "cipher_error": "Cipher required",
+      "parent_label": "Parent specialization",
+      "add_button": "Add",
+      "cancel_button": "Cancel",
+      "snackbar_success_message": "Added"
+    },
+    "options": {
+      "search": "Search specializations",
+      "add": "Add specialization",
+      "edit": "Edit specialization"
+    }
+  }
+}
