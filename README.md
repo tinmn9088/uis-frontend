@@ -8,6 +8,14 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## Configuration
+
+See [environments](src/environments).
+
+See [modules.json](src/assets/modules.json).
+
+See [i18n](src/assets/i18n).
+
 ## Development
 
 ### Launch
