@@ -29,6 +29,30 @@
   "sidenav": {
     "add_button": "Create"
   },
+  "disciplines": {
+    "list": {
+      "search": {
+        "placeholder": "Search by: name, short name"
+      }
+    },
+    "form": {
+      "add_title": "Add discipline",
+      "edit_title": "Discipline ",
+      "name_label": "Name",
+      "name_error": "Name required",
+      "short_name_label": "Short name",
+      "short_name_error": "Short name required",
+      "categories_label": "Categories",
+      "add_button": "Add",
+      "cancel_button": "Cancel",
+      "snackbar_success_message": "Added"
+    },
+    "options": {
+      "search": "Search disciplines",
+      "add": "Add discipline",
+      "edit": "Edit discipline"
+    }
+  },
   "specializations": {
     "list": {
       "search": {

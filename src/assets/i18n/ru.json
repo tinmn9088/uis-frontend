@@ -29,6 +29,30 @@
   "sidenav": {
     "add_button": "Добавить"
   },
+  "disciplines": {
+    "list": {
+      "search": {
+        "placeholder": "Поиск по: название, краткое название"
+      }
+    },
+    "form": {
+      "add_title": "Добавить дисциплину",
+      "edit_title": "Дисциплина ",
+      "name_label": "Название",
+      "name_error": "Название обязательно",
+      "short_name_label": "Короткое название",
+      "short_name_error": "Короткое название обязательно",
+      "categories_label": "Категории",
+      "add_button": "Добавить",
+      "cancel_button": "Отмена",
+      "snackbar_success_message": "Добавлено"
+    },
+    "options": {
+      "search": "Поиск дисциплин",
+      "add": "Добавить дисциплину",
+      "edit": "Изменить дисциплину"
+    }
+  },
   "specializations": {
     "list": {
       "search": {

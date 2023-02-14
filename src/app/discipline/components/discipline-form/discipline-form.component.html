@@ -1,0 +1,58 @@
+<form class="form" #form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div
+    class="form__container"
+    [ngStyle]="{ width: formContainerWidthPercents + '%' }">
+    <h3 class="form__title">
+      {{
+        editMode
+          ? (('disciplines.form.edit_title' | translate) + name | uppercase)
+          : ('disciplines.form.add_title' | translate | uppercase)
+      }}
+    </h3>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'disciplines.form.name_label' | translate }}
+      </mat-label>
+      <input class="form__input" matInput formControlName="name" />
+      <mat-error class="form__error-message">
+        {{ 'disciplines.form.name_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'disciplines.form.short_name_label' | translate }}
+      </mat-label>
+      <input class="form__input" matInput formControlName="shortName" />
+      <mat-error class="form__error-message">
+        {{ 'disciplines.form.short_name_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'disciplines.form.categories_label' | translate }}
+      </mat-label>
+      <input class="form__input" matInput formControlName="categories" />
+    </mat-form-field>
+
+    <div class="form__buttons">
+      <button
+        class="form__create-button"
+        mat-flat-button
+        color="primary"
+        [disabled]="formGroup.disabled">
+        {{ 'disciplines.form.add_button' | translate }}
+      </button>
+      <button
+        class="form__cancel-button"
+        mat-flat-button
+        color="secondary"
+        type="button"
+        [disabled]="formGroup.disabled">
+        {{ 'disciplines.form.cancel_button' | translate }}
+      </button>
+    </div>
+  </div>
+</form>

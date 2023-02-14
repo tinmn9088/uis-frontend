@@ -17,6 +17,7 @@ import { LanguageService } from './shared/services/language.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingRedirectComponent } from './app-routing-redirect/app-routing-redirect.component';
 import { SnackbarService } from './shared/services/snackbar.service';
+import { DisciplineModule } from './discipline/discipline.module';
 
 export function translateLoader(
   translate: TranslateService,
@@ -62,6 +63,7 @@ export class AppErrorHandler implements ErrorHandler {
     AppRoutingModule,
     SharedModule,
     SpecializationModule,
+    DisciplineModule,
     HttpClientModule,
   ],
   providers: [

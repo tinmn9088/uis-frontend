@@ -1,0 +1,33 @@
+<div class="discipline-list">
+  <form [formGroup]="formGroup" (ngSubmit)="onSearch()">
+    <div class="discipline-list__search-container">
+      <mat-form-field class="discipline-list__search" appearance="outline">
+        <input
+          placeholder="{{ 'disciplines.list.search.placeholder' | translate }}"
+          matInput
+          formControlName="searchQuery" />
+        <button *ngIf="searchQuery" matSuffix mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <div class="discipline-list__table-container">
+    <app-discipline-table
+      class="specialization-list__tree"
+      [pageSize]="pageSize"
+      [pageNumber]="pageNumber"
+      (dataUpdated)="onDataUpdate($event)">
+    </app-discipline-table>
+  </div>
+
+  <div class="discipline-list__paginator-container">
+    <app-paginator
+      class="discipline-list__paginator"
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="pageNumber"
+      (page)="onPageChange($event)"></app-paginator>
+  </div>
+</div>

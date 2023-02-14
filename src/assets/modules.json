@@ -12,8 +12,24 @@
     "themeCssClass": "discipline-theme",
     "i18nName": "module.name.disciplines",
     "path": "/disciplines",
-    "sidenavAddButtonPath": "",
-    "sidenavOptions": []
+    "sidenavAddButtonPath": "/disciplines/add",
+    "sidenavOptions": [
+      {
+        "title": "disciplines.options.search",
+        "path": "/disciplines/list"
+      },
+      {
+        "title": "disciplines.options.add",
+        "path": "/disciplines/add",
+        "groupId": 1
+      },
+      {
+        "title": "disciplines.options.edit",
+        "path": "/disciplines/0",
+        "pathRegex": "/disciplines/\\d+",
+        "groupId": 1
+      }
+    ]
   },
   "specialization": {
     "name": "Specialization",

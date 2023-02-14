@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use 'themes/specialization';
+@use 'themes/discipline';
 @use 'themes/user';
 
 @include mat.core();
@@ -8,6 +9,10 @@
 
 .specialization-theme {
   @include mat.all-component-colors(specialization.$light-theme);
+}
+
+.discipline-theme {
+  @include mat.all-component-colors(discipline.$light-theme);
 }
 
 @import '../fonts/material-icons';
