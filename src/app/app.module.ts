@@ -51,7 +51,8 @@ export class AppErrorHandler implements ErrorHandler {
   constructor(private _snackbarService: SnackbarService) {}
 
   handleError(error: Error) {
-    this._snackbarService.showError(error.message);
+    console.error(error);
+    if (error.message) this._snackbarService.showError(error.message);
   }
 }
 
