@@ -22,6 +22,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -53,6 +55,8 @@ const modules = [
   MatDividerModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
+  MatTableModule,
+  MatSortModule,
 ];
 
 const declarations = [ToolbarComponent, FrameComponent, PaginatorComponent];
