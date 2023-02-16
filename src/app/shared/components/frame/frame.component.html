@@ -15,7 +15,13 @@
       #drawer
       mode="side"
       opened="true">
-      <nav class="frame__sidenav-options">
+      <nav
+        class="frame__sidenav-options"
+        [ngStyle]="{
+          opacity: isContentHidden ? '0' : '1',
+          visibility: isContentHidden ? 'hidden' : 'visible',
+          transition: 'opacity 0.1s linear'
+        }">
         <a *ngIf="addButtonPath" routerLink="{{ addButtonPath }}">
           <button
             mat-raised-button
@@ -24,7 +30,7 @@
             {{ 'sidenav.add_button' | translate | uppercase }}
           </button>
         </a>
-        <ng-container *ngFor="let option of sidenavOptions">
+        <ng-container *ngFor="let option of sidenavOptions$ | async">
           <a
             class="frame__sidenav-option"
             mat-flat-button
@@ -45,7 +51,12 @@
 
     <mat-drawer-content
       class="frame__content"
-      [ngStyle]="{ height: contentHeightPixels + 'px' }">
+      [ngStyle]="{
+        height: contentHeightPixels + 'px',
+        opacity: isContentHidden ? '0' : '1',
+        visibility: isContentHidden ? 'hidden' : 'visible',
+        transition: 'opacity 0.1s linear'
+      }">
       <ng-content></ng-content>
     </mat-drawer-content>
   </mat-drawer-container>
