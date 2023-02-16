@@ -2,6 +2,11 @@
   <table
     mat-table
     [dataSource]="dataSource"
+    [ngStyle]="{
+      opacity: isLoading ? '0' : '1',
+      visibility: isLoading ? 'hidden' : 'visible',
+      transition: 'opacity 0.1s linear'
+    }"
     matSort
     (matSortChange)="onSortChange($event)">
     <!-- Name Column -->

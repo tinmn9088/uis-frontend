@@ -66,7 +66,7 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
               this.formGroup.patchValue({
                 name: discipline.name,
                 shortName: discipline.shortName,
-                categories: discipline.categoriesIds,
+                categories: discipline.categories,
               });
             },
           });
@@ -98,7 +98,7 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
       name: this.name || '',
       shortName: this.shortName || '',
     };
-    if (this.categories) addRequest.categoriesIds = this.categories;
+    if (this.categories) addRequest.categories = this.categories;
     console.debug('Add discipline request', addRequest);
 
     this._disciplineService.add(addRequest).subscribe({
