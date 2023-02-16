@@ -29,6 +29,11 @@
   "sidenav": {
     "add_button": "Добавить"
   },
+  "filtered_select": {
+    "placeholder": "Поиск ...",
+    "checkbox_select_all": "Выбрать все",
+    "checkbox_unselect_all": "Отменить выбор"
+  },
   "disciplines": {
     "list": {
       "search": {

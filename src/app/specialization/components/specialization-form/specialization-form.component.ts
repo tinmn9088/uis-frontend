@@ -11,6 +11,7 @@ import { SpecializationService } from '../../services/specialization.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SelectOption } from 'src/app/shared/domain/select-option';
 
 @Component({
   selector: 'app-specialization-form',
@@ -23,6 +24,7 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
   editMode!: boolean;
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
+  parentOptions!: SelectOption[];
   @ViewChild('form') form!: ElementRef;
 
   constructor(
@@ -78,6 +80,10 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
         },
       });
     }
+    this.parentOptions = [
+      { name: '1000', value: 1000 },
+      { name: '1100', value: 1100 },
+    ];
   }
 
   ngAfterViewInit() {

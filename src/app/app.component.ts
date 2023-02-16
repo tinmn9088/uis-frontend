@@ -1,10 +1,11 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ModuleService } from './shared/services/module.service';
 import { ModuleSidenavOption } from './shared/domain/module-sidenav-option';
 import { ModuleName } from './shared/domain/module-name';
 import { ModuleToolbarTab } from './shared/domain/module-tab';
+import { THEME_CSS_CLASS_TOKEN } from './app.module';
 
 @Component({
   selector: 'app-root',
@@ -14,14 +15,17 @@ import { ModuleToolbarTab } from './shared/domain/module-tab';
 export class AppComponent implements OnDestroy {
   private _pathChangeSubscription: Subscription;
   title = 'uis-frontend';
-  themeClass?: string;
   sidenavOptions!: ModuleSidenavOption[];
   activeOption?: ModuleSidenavOption;
   toolbarTabs: ModuleToolbarTab[];
   activeTab?: ModuleToolbarTab;
   addButtonPath?: string;
 
-  constructor(private _router: Router, private _moduleService: ModuleService) {
+  constructor(
+    private _router: Router,
+    private _moduleService: ModuleService,
+    @Inject(THEME_CSS_CLASS_TOKEN) public themeClass$: BehaviorSubject<string>
+  ) {
     this.toolbarTabs = [
       {
         title: this._moduleService.getI18N(ModuleName.Category),
@@ -49,7 +53,7 @@ export class AppComponent implements OnDestroy {
           if (!moduleName) {
             throw new Error(`No module found for "${currentPath}"`);
           }
-          this.themeClass = _moduleService.getThemeCssClass(moduleName);
+          this.themeClass$.next(_moduleService.getThemeCssClass(moduleName));
           this.sidenavOptions = _moduleService.getSidenavOptions(moduleName);
           this.activeOption = this.sidenavOptions.find(option =>
             this.isActiveOption(currentPath, option)

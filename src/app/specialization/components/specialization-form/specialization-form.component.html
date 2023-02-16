@@ -44,7 +44,10 @@
       <mat-label class="form__label">
         {{ 'specializations.form.parent_label' | translate }}
       </mat-label>
-      <input class="form__input" matInput formControlName="parentId" />
+      <app-filtered-select
+        class="form__select"
+        [options]="parentOptions"
+        formControlName="parentId"></app-filtered-select>
     </mat-form-field>
 
     <div class="form__buttons">

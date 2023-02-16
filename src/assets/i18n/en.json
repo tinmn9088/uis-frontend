@@ -29,6 +29,11 @@
   "sidenav": {
     "add_button": "Create"
   },
+  "filtered_select": {
+    "placeholder": "Search ...",
+    "checkbox_select_all": "Select all",
+    "checkbox_unselect_all": "Unselect all"
+  },
   "disciplines": {
     "list": {
       "search": {

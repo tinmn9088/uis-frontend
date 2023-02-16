@@ -24,12 +24,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { JoinPipe } from './pipes/join.pipe';
 import { PaginatorService } from './services/paginator.service';
 import { LanguageService } from './services/language.service';
+import { FilteredSelectComponent } from './components/filtered-select/filtered-select.component';
 
 const modules = [
   CommonModule,
@@ -57,16 +60,24 @@ const modules = [
   MatProgressSpinnerModule,
   MatTableModule,
   MatSortModule,
+  MatSelectModule,
+  MatCheckboxModule,
 ];
 
-const declarations = [ToolbarComponent, FrameComponent, PaginatorComponent];
+const declarations = [
+  ToolbarComponent,
+  FrameComponent,
+  PaginatorComponent,
+  JoinPipe,
+  FilteredSelectComponent,
+];
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
 @NgModule({
-  declarations: [...declarations, JoinPipe],
+  declarations: [...declarations],
   exports: [...modules, declarations, TranslateModule],
   imports: [
     ...modules,
