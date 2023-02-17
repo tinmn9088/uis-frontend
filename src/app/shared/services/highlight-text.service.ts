@@ -6,25 +6,30 @@ import { Injectable } from '@angular/core';
 export class HighlightTextService {
   readonly CLASS_NAME = 'hightlight-text';
 
-  highlight(text: string, element: Element) {
-    this.hightlightRecursive(text, element);
-  }
+  readonly TAGNAMES_TO_SKIP = ['mat-icon'];
 
-  hightlightRecursive(text: string, root: Element | null) {
-    if (!root) return;
-    const children = root.children;
+  highlight(text: string, element: Element | null) {
+    if (!element) return;
+    const children = element.children;
     if (children.length === 0) {
-      let innerHTML = root.innerHTML;
+      let innerHTML = element.innerHTML;
       if (text && innerHTML) {
         innerHTML = innerHTML.replaceAll(
-          text,
-          `<span class='${this.CLASS_NAME}'>${text}</span>`
+          new RegExp(text, 'gi'),
+          match => `<span class='${this.CLASS_NAME}'>${match}</span>`
         );
-        root.innerHTML = innerHTML;
+        element.innerHTML = innerHTML;
       }
     } else {
       for (let i = 0; i < children.length; i++) {
-        this.hightlightRecursive(text, children.item(i));
+        if (
+          this.TAGNAMES_TO_SKIP.filter(
+            tagName =>
+              tagName.toLocaleLowerCase() ===
+              children.item(i)?.tagName.toLocaleLowerCase()
+          ).length === 0
+        )
+          this.highlight(text, children.item(i));
       }
     }
   }
