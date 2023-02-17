@@ -22,6 +22,7 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { DisciplineModule } from './discipline/discipline.module';
 import { BehaviorSubject, filter } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { ModuleService } from './shared/services/module.service';
 
 export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('');
 
@@ -95,11 +96,15 @@ export class AppModule {
    */
   constructor(
     overlayContainer: OverlayContainer,
-    @Inject(THEME_CSS_CLASS_TOKEN) public themeClass$: BehaviorSubject<string>
+    @Inject(THEME_CSS_CLASS_TOKEN) public themeClass$: BehaviorSubject<string>,
+    moduleService: ModuleService
   ) {
     this.themeClass$
       .pipe(filter(themeClass => !!themeClass))
       .subscribe(themeClass => {
+        moduleService.getAllThemeCssClasses().forEach(themeClass => {
+          overlayContainer.getContainerElement().classList.remove(themeClass);
+        });
         overlayContainer.getContainerElement().classList.add(themeClass);
       });
   }
