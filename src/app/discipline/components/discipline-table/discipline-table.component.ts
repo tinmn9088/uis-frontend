@@ -11,6 +11,8 @@ import { DisciplineService } from '../../services/discipline.service';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Discipline } from '../../domain/discipline';
 import { tap } from 'rxjs';
+import { ModuleService } from 'src/app/shared/services/module.service';
+import { ModuleName } from 'src/app/shared/domain/module-name';
 
 @Component({
   selector: 'app-discipline-table',
@@ -18,16 +20,19 @@ import { tap } from 'rxjs';
   styleUrls: ['./discipline-table.component.scss'],
 })
 export class DisciplineTableComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'shortName', 'categories'];
-  isLoading = true;
-  @ViewChild(MatSort) sort!: MatSort;
   @Input() pageSize?: number;
   @Input() pageNumber?: number;
   @Output() dataUpdated = new EventEmitter<DisciplinePageableResponse>();
   @Output() sortChanged = new EventEmitter<Sort>();
+  displayedColumns: string[] = ['name', 'shortName', 'categories'];
+  isLoading = true;
   dataSource: Discipline[] = [];
+  @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private _disciplineService: DisciplineService) {}
+  constructor(
+    private _disciplineService: DisciplineService,
+    private _moduleService: ModuleService
+  ) {}
 
   ngOnInit() {
     this.search();
@@ -48,5 +53,11 @@ export class DisciplineTableComponent implements OnInit {
         this.isLoading = false;
         this.dataUpdated.emit(response);
       });
+  }
+
+  getLinkToFormPage(discipline: Discipline): string {
+    return `/${this._moduleService.getPath(ModuleName.Discipline)}/${
+      discipline.id
+    }`;
   }
 }
