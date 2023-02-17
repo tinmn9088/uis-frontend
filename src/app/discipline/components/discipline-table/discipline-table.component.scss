@@ -9,3 +9,12 @@
   width: 100%;
   margin: 48px 0 48px 0;
 }
+
+a {
+  text-decoration: none;
+  color: unset;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

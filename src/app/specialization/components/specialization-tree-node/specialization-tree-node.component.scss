@@ -31,3 +31,12 @@
     color: rgba(0, 0, 0, 0.54);
   }
 }
+
+a {
+  text-decoration: none;
+  color: unset;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

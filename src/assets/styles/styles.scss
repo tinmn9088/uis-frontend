@@ -31,15 +31,6 @@ body {
   background-color: yellow;
 }
 
-a {
-  text-decoration: none;
-  color: unset;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
 $scrollbar-width: 8px;
 
 ::-webkit-scrollbar {
