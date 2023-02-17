@@ -6,6 +6,7 @@ import {
   InjectionToken,
   Injector,
   NgModule,
+  NgZone,
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -55,11 +56,18 @@ export function translateLoader(
 
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {
-  constructor(private _snackbarService: SnackbarService) {}
+  constructor(
+    private _snackbarService: SnackbarService,
+    private _zone: NgZone
+  ) {}
 
   handleError(error: Error) {
     console.error(error);
-    if (error.message) this._snackbarService.showError(error.message);
+    if (error.message) {
+      this._zone.run(() => {
+        this._snackbarService.showError(error.message, '✕');
+      });
+    }
   }
 }
 
