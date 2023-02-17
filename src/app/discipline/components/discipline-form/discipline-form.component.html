@@ -34,7 +34,11 @@
       <mat-label class="form__label">
         {{ 'disciplines.form.categories_label' | translate }}
       </mat-label>
-      <input class="form__input" matInput formControlName="categories" />
+      <app-filtered-select
+        class="form__select"
+        [options]="categoriesOptions"
+        [multiple]="true"
+        formControlName="categories"></app-filtered-select>
     </mat-form-field>
 
     <div class="form__buttons">

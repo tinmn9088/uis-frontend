@@ -11,6 +11,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DisciplineAddRequest } from '../../domain/discipline-add-request copy';
+import { SelectOption } from 'src/app/shared/domain/select-option';
 
 @Component({
   selector: 'app-discipline-form',
@@ -23,6 +24,7 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
   editMode!: boolean;
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
+  categoriesOptions!: SelectOption[];
   @ViewChild('form') form!: ElementRef;
 
   constructor(
@@ -73,6 +75,10 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
         },
       });
     }
+    this.categoriesOptions = [
+      { name: 'Category 1', value: 1000 },
+      { name: 'Category 2', value: 1100 },
+    ];
   }
 
   ngAfterViewInit() {
