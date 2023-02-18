@@ -75,6 +75,7 @@
       "cipher_error": "Cipher required",
       "parent_label": "Parent specialization",
       "add_button": "Add",
+      "edit_button": "Edit",
       "cancel_button": "Cancel",
       "snackbar_success_message": "Added"
     },

@@ -75,6 +75,7 @@
       "cipher_error": "Шифр обязателен",
       "parent_label": "Родительная специальность",
       "add_button": "Добавить",
+      "edit_button": "Изменить",
       "cancel_button": "Отмена",
       "snackbar_success_message": "Добавлено"
     },
