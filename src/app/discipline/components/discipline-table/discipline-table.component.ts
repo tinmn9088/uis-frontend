@@ -11,8 +11,6 @@ import { DisciplineService } from '../../services/discipline.service';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Discipline } from '../../domain/discipline';
 import { tap } from 'rxjs';
-import { ModuleService } from 'src/app/shared/services/module.service';
-import { ModuleName } from 'src/app/shared/domain/module-name';
 
 @Component({
   selector: 'app-discipline-table',
@@ -29,10 +27,7 @@ export class DisciplineTableComponent implements OnInit {
   dataSource: Discipline[] = [];
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(
-    private _disciplineService: DisciplineService,
-    private _moduleService: ModuleService
-  ) {}
+  constructor(private _disciplineService: DisciplineService) {}
 
   ngOnInit() {
     this.search();
@@ -56,8 +51,6 @@ export class DisciplineTableComponent implements OnInit {
   }
 
   getLinkToFormPage(discipline: Discipline): string {
-    return `/${this._moduleService.getPath(ModuleName.Discipline)}/${
-      discipline.id
-    }`;
+    return this._disciplineService.getLinkToFormPage(discipline.id);
   }
 }

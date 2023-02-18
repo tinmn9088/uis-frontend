@@ -119,7 +119,10 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
             },
           });
         setTimeout(
-          () => this._disciplineService.navigateToViewPage(discipline.id),
+          () =>
+            this._router.navigateByUrl(
+              this._disciplineService.getLinkToFormPage(discipline.id)
+            ),
           2000
         );
       },
