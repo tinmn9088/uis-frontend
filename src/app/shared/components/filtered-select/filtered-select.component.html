@@ -5,7 +5,7 @@
   (selectionChange)="onSelectionChange()"
   [multiple]="multiple">
   <mat-form-field
-    class="form__field"
+    class="select__field"
     subscriptSizing="dynamic"
     appearance="fill"
     color="primary">
@@ -17,9 +17,9 @@
       [placeholder]="'filtered_select.placeholder' | translate" />
   </mat-form-field>
 
-  <div *ngIf="multiple" class="select-all">
+  <div *ngIf="multiple">
     <mat-checkbox
-      class="form__select-all-checkbox"
+      class="select__select-all-checkbox"
       [checked]="allOptionsSelected"
       [indeterminate]="!noneOptionsSelected && !allOptionsSelected"
       (change)="selectAllOptions($event.checked)">
@@ -34,11 +34,16 @@
 
   <div class="select__options-container">
     <mat-option class="select__option" *ngIf="!multiple"> -- </mat-option>
-    <mat-option
-      class="select__option"
-      *ngFor="let option of filteredSelectOptions"
-      [value]="option.value">
-      {{ option.name }}
-    </mat-option>
+    <ng-container *ngIf="!isLoading">
+      <mat-option
+        class="select__option"
+        *ngFor="let option of filteredSelectOptions"
+        [value]="option.value">
+        {{ option.name }}
+      </mat-option>
+    </ng-container>
+    <div class="loading" *ngIf="isLoading">
+      <mat-progress-bar mode="query"></mat-progress-bar>
+    </div>
   </div>
 </mat-select>

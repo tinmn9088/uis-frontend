@@ -1,11 +1,15 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Optional,
+  Output,
   Self,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -17,7 +21,7 @@ import {
   NgForm,
 } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { Subscription, filter } from 'rxjs';
+import { Subscription, debounceTime } from 'rxjs';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { MatSelect } from '@angular/material/select';
@@ -36,11 +40,28 @@ import { SelectOption } from '../../domain/select-option';
 })
 export class FilteredSelectComponent
   extends AbstractMatFormFieldControl<string>
-  implements OnInit, OnDestroy
+  implements OnInit, OnDestroy, OnChanges
 {
   private subscription!: Subscription;
   @Input() options!: SelectOption[];
   @Input() multiple = false;
+
+  /**
+   * Use `fi1terSelectOptions()` method.
+   * If 'false' then `isLoading` also should be controlled from outside.
+   */
+  @Input() isInternalFilterOn = true;
+
+  /**
+   * Progress bar is shown instead of options.
+   */
+  @Input() isLoading = false;
+
+  /**
+   * If `isInternalFilterOn` is 'false' then event fires no more frequently than 666 milliseconds.
+   */
+  @Output() filterChanged = new EventEmitter<string | null>();
+
   @ViewChild(MatSelect) matSelect!: MatSelect;
   @ViewChild(MatInput) matInput!: MatInput;
   selectControl = new FormControl();
@@ -72,10 +93,19 @@ export class FilteredSelectComponent
     this.subscription = this.selectControl.valueChanges.subscribe(value => {
       super.value = value;
     });
-    this.filteredSelectOptions = this.options.slice();
+    this.filteredSelectOptions = this.options?.slice() || [];
     this.filterControl.valueChanges
-      .pipe(filter(value => !!value))
-      .subscribe(value => this.filterSelectOptions(value as string));
+      .pipe(debounceTime(this.isInternalFilterOn ? 0 : 666))
+      .subscribe(value => {
+        this.filterChanged.emit(this.filterControl.value);
+        if (this.isInternalFilterOn) this.filterSelectOptions(value);
+      });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['options']?.currentValue) {
+      this.filterSelectOptions(this.filterControl.value);
+    }
   }
 
   override ngOnDestroy() {
@@ -102,14 +132,12 @@ export class FilteredSelectComponent
     this.focused = true;
   }
 
-  filterSelectOptions(value: string) {
-    const lowerCase = value.toLocaleLowerCase();
-    this.filteredSelectOptions = this.options.filter(option => {
-      return (
-        option.name.trim().toLocaleLowerCase().includes(lowerCase) ||
-        option.value.toString().trim().toLocaleLowerCase().includes(lowerCase)
-      );
-    });
+  filterSelectOptions(value: string | null) {
+    const lowerCase = value?.toLocaleLowerCase() || '';
+    this.filteredSelectOptions =
+      this.options?.filter(option => {
+        return option.name.trim().toLocaleLowerCase().includes(lowerCase);
+      }) || this.filteredSelectOptions;
   }
 
   selectAllOptions(select: boolean) {
