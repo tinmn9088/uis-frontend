@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment.development';
 import Modules from 'src/assets/modules.json';
 import { Observable, map } from 'rxjs';
 import { SpecializationAddRequest } from '../domain/specialization-add-request';
-import { Router } from '@angular/router';
 import { SpecializationPageableResponse } from '../domain/specialization-pageable-response';
 
 @Injectable({
@@ -14,10 +13,10 @@ import { SpecializationPageableResponse } from '../domain/specialization-pageabl
 export class SpecializationService {
   private readonly MODULE_URL = `http://${environment.backendUrl}${Modules.specialization.path}`;
 
-  constructor(private _http: HttpClient, private _router: Router) {}
+  constructor(private _http: HttpClient) {}
 
-  navigateToViewPage(id: number) {
-    this._router.navigateByUrl(`${Modules.specialization.path}/${id}`);
+  getLinkToFormPage(id: number) {
+    return `${Modules.specialization.path}/${id}`;
   }
 
   getParents(

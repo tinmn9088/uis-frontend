@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SpecializationFlatNode } from '../../domain/specialization-flat-node';
-import { ModuleService } from 'src/app/shared/services/module.service';
-import { ModuleName } from 'src/app/shared/domain/module-name';
+import { SpecializationService } from '../../services/specialization.service';
 
 @Component({
   selector: 'app-specialization-tree-node[specializationNode]',
@@ -13,11 +12,11 @@ export class SpecializationTreeNodeComponent implements OnInit {
   panelOpenState = false;
   linkToForm = '/';
 
-  constructor(private _moduleService: ModuleService) {}
+  constructor(private _specializationService: SpecializationService) {}
 
   ngOnInit() {
-    this.linkToForm = `/${this._moduleService.getPath(
-      ModuleName.Specialization
-    )}/${this.specializationNode.specialization.id}`;
+    this.linkToForm = this._specializationService.getLinkToFormPage(
+      this.specializationNode.specialization.id
+    );
   }
 }

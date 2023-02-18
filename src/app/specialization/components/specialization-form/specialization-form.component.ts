@@ -127,7 +127,9 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
           });
         setTimeout(
           () =>
-            this._specializationService.navigateToViewPage(specialization.id),
+            this._router.navigateByUrl(
+              this._specializationService.getLinkToFormPage(specialization.id)
+            ),
           2000
         );
       },
