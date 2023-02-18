@@ -49,6 +49,7 @@
       "short_name_error": "Short name required",
       "categories_label": "Categories",
       "add_button": "Add",
+      "edit_button": "Edit",
       "cancel_button": "Cancel",
       "snackbar_success_message": "Added"
     },

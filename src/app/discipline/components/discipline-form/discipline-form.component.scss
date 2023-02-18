@@ -18,11 +18,13 @@
     margin-bottom: 16px;
   }
 
-  &__create-button {
+  &__add-button,
+  &__edit-button {
     margin-right: 16px;
   }
 
-  &__create-button,
+  &__add-button,
+  &__edit-button,
   &__cancel-button {
     font-weight: bolder;
   }

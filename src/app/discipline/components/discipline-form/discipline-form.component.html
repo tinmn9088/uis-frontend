@@ -42,13 +42,25 @@
     </mat-form-field>
 
     <div class="form__buttons">
-      <button
-        class="form__create-button"
-        mat-flat-button
-        color="primary"
-        [disabled]="formGroup.disabled">
-        {{ 'disciplines.form.add_button' | translate }}
-      </button>
+      <ng-container *ngIf="!editMode; else editButton">
+        <button
+          class="form__add-button"
+          mat-flat-button
+          color="primary"
+          [disabled]="formGroup.disabled">
+          {{ 'disciplines.form.add_button' | translate }}
+        </button>
+      </ng-container>
+      <ng-template #editButton>
+        <button
+          class="form__edit-button"
+          mat-flat-button
+          color="primary"
+          [disabled]="formGroup.disabled">
+          {{ 'disciplines.form.edit_button' | translate }}
+        </button>
+      </ng-template>
+
       <button
         class="form__cancel-button"
         mat-flat-button
