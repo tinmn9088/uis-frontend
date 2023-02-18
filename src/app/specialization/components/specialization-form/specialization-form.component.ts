@@ -12,6 +12,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectOption } from 'src/app/shared/domain/select-option';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-specialization-form',
@@ -25,6 +26,7 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
   parentOptions!: SelectOption[];
+  areParentOptionsLoading = false;
   @ViewChild('form') form!: ElementRef;
 
   constructor(
@@ -80,10 +82,7 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
         },
       });
     }
-    this.parentOptions = [
-      { name: '1000', value: 1000 },
-      { name: '1100', value: 1100 },
-    ];
+    this.updateParentOptions();
   }
 
   ngAfterViewInit() {
@@ -138,6 +137,27 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
         this.formGroup.enable();
       },
     });
+  }
+
+  updateParentOptions(query?: string | null) {
+    this.areParentOptionsLoading = true;
+    this._specializationService
+      .search(query || '', 65535)
+      .pipe(
+        map(response => response.content),
+        map(specializations => {
+          return specializations.map(specialization => {
+            return {
+              name: specialization.name,
+              value: specialization,
+            } as SelectOption;
+          });
+        })
+      )
+      .subscribe(options => {
+        this.parentOptions = options;
+        this.areParentOptionsLoading = false;
+      });
   }
 
   private updateFormContainerWidth(formWidth: number) {

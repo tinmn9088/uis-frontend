@@ -47,6 +47,9 @@
       <app-filtered-select
         class="form__select"
         [options]="parentOptions"
+        [isInternalFilterOn]="false"
+        [isLoading]="areParentOptionsLoading"
+        (filterChanged)="updateParentOptions($event)"
         formControlName="parentId"></app-filtered-select>
     </mat-form-field>
 
