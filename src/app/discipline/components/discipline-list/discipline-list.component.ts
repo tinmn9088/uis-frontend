@@ -16,7 +16,7 @@ export class DisciplineListComponent implements AfterViewInit {
   @ViewChild(DisciplineTableComponent)
   disciplineTable!: DisciplineTableComponent;
   totalElements!: number;
-  pageSize = 6;
+  pageSize = 16;
   pageNumber!: number;
 
   constructor(public highlightTextService: HighlightTextService) {

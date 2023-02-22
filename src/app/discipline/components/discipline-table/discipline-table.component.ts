@@ -41,7 +41,7 @@ export class DisciplineTableComponent implements OnInit {
   search(searchQuery?: string) {
     this.isLoading = true;
     this._disciplineService
-      .search(searchQuery || '')
+      .search(searchQuery || '', this.pageSize, this.pageNumber)
       .pipe(tap(data => console.log(data)))
       .subscribe(response => {
         this.dataSource = response.content;
