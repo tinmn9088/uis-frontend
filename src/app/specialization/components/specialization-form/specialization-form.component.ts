@@ -142,7 +142,7 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
   updateParentOptions(query?: string | null) {
     this.areParentOptionsLoading = true;
     this._specializationService
-      .search(query || '', 65535)
+      .search(query || '')
       .pipe(
         map(response => response.content),
         map(specializations => {

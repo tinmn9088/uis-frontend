@@ -10,14 +10,27 @@
   }
 
   &__options-container {
-    max-height: 200px;
+    max-height: 144px;
     overflow-y: auto;
+  }
+
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 12px;
+  }
+
+  &__select-specify-category-message {
+    color: rgba(0, 0, 0, 0.66);
+    padding: 0 16px;
+    font-size: 0.9em;
+    font-style: italic;
   }
 }
 
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 12px;
+.hidden {
+  max-width: 0;
+  max-height: 0;
+  visibility: hidden;
 }

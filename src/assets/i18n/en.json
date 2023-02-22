@@ -48,6 +48,7 @@
       "short_name_label": "Short name",
       "short_name_error": "Short name required",
       "categories_label": "Categories",
+      "categories_select_specify_category": "... Specify category name",
       "add_button": "Add",
       "edit_button": "Edit",
       "cancel_button": "Cancel",

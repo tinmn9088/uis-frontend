@@ -24,6 +24,7 @@ import { DisciplineModule } from './discipline/discipline.module';
 import { BehaviorSubject, filter } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ModuleService } from './shared/services/module.service';
+import { CategoryModule } from './category/category.module';
 
 export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('');
 
@@ -78,6 +79,7 @@ export class AppErrorHandler implements ErrorHandler {
     BrowserModule,
     AppRoutingModule,
     SharedModule,
+    CategoryModule,
     SpecializationModule,
     DisciplineModule,
     HttpClientModule,

@@ -24,8 +24,10 @@ import { MatInput } from '@angular/material/input';
 import { Subscription, debounceTime } from 'rxjs';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { MatSelect } from '@angular/material/select';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { SelectOption } from '../../domain/select-option';
+
+declare type Option = SelectOption | SelectOption[] | undefined | null;
 
 @Component({
   selector: 'app-filtered-select[options]',
@@ -39,7 +41,7 @@ import { SelectOption } from '../../domain/select-option';
   ],
 })
 export class FilteredSelectComponent
-  extends AbstractMatFormFieldControl<string>
+  extends AbstractMatFormFieldControl<Option>
   implements OnInit, OnDestroy, OnChanges
 {
   private subscription!: Subscription;
@@ -66,8 +68,10 @@ export class FilteredSelectComponent
   @ViewChild(MatInput) matInput!: MatInput;
   selectControl = new FormControl();
   filterControl = new FormControl('');
-  filteredSelectOptions!: SelectOption[];
-  allOptionsSelected = false;
+  filteredOptions: SelectOption[] = [];
+  selectedOptions: SelectOption[] = [];
+  selectedOptionsChange: SelectOption[] = [];
+  areAllOptionsSelected = false;
   noneOptionsSelected = true;
 
   constructor(
@@ -93,18 +97,25 @@ export class FilteredSelectComponent
     this.subscription = this.selectControl.valueChanges.subscribe(value => {
       super.value = value;
     });
-    this.filteredSelectOptions = this.options?.slice() || [];
+    this.filteredOptions = this.options?.slice() || [];
     this.filterControl.valueChanges
       .pipe(debounceTime(this.isInternalFilterOn ? 0 : 666))
       .subscribe(value => {
+        if (this.multiple) {
+          this.updateSelectedAndFilteredOptions();
+        }
         this.filterChanged.emit(this.filterControl.value);
-        if (this.isInternalFilterOn) this.filterSelectOptions(value);
+        if (this.isInternalFilterOn) this.innerFilterOptions(value);
       });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['options']?.currentValue) {
-      this.filterSelectOptions(this.filterControl.value);
+      if (this.isInternalFilterOn) {
+        this.innerFilterOptions(this.filterControl.value);
+      } else {
+        this.filteredOptions = this.options.slice();
+      }
     }
   }
 
@@ -115,7 +126,7 @@ export class FilteredSelectComponent
     super.ngOnDestroy();
   }
 
-  override set value(value: string) {
+  override set value(value: Option) {
     this.selectControl.setValue(value);
     super.value = value;
   }
@@ -132,32 +143,71 @@ export class FilteredSelectComponent
     this.focused = true;
   }
 
-  filterSelectOptions(value: string | null) {
-    const lowerCase = value?.toLocaleLowerCase() || '';
-    this.filteredSelectOptions =
-      this.options?.filter(option => {
-        return option.name.trim().toLocaleLowerCase().includes(lowerCase);
-      }) || this.filteredSelectOptions;
-  }
-
   selectAllOptions(select: boolean) {
-    this.allOptionsSelected = select;
+    this.areAllOptionsSelected = select;
     this.noneOptionsSelected = !select;
     if (select) {
-      this.matSelect?.options.forEach(option => option.select());
+      this.selectedOptionsChange = this.options.slice();
+      this.value = this.options.map(option => option.value);
     } else {
-      this.matSelect?.options.forEach(option => option.deselect());
-      this.selectControl.setValue(undefined);
+      this.selectedOptionsChange = [];
+      this.value = undefined;
     }
   }
 
-  onSelectionChange() {
-    this.allOptionsSelected = this.matSelect?.options
+  onSelectionChange(change: MatSelectChange) {
+    this.areAllOptionsSelected = this.matSelect?.options
       .toArray()
       .every(option => option.selected);
     this.noneOptionsSelected = this.matSelect?.options
       .toArray()
       .every(option => !option.selected);
-    if (this.noneOptionsSelected) this.selectControl.setValue(undefined);
+    if (this.noneOptionsSelected) this.value = undefined;
+    if (this.multiple) {
+      const allOptions = [...this.selectedOptions, ...this.filteredOptions];
+      if ((change.value as any[]).length !== 0) {
+        this.selectedOptionsChange = allOptions?.filter(
+          this.isIn(change.value as any[])
+        );
+      }
+    }
   }
+
+  onClosed() {
+    this.updateSelectedAndFilteredOptions();
+  }
+
+  private innerFilterOptions(value: string | null) {
+    const lowerCase = value?.toLocaleLowerCase() || '';
+    this.filteredOptions =
+      this.options?.filter(option => {
+        return option.name.trim().toLocaleLowerCase().includes(lowerCase);
+      }) || this.filteredOptions;
+  }
+
+  private updateSelectedAndFilteredOptions() {
+    if (this.selectedOptionsChange.length > 0) {
+      this.selectedOptions = this.selectedOptionsChange;
+    }
+    this.selectedOptionsChange = [];
+    this.filteredOptions = this.options?.filter(
+      this.isNotIn(this.selectedOptions)
+    );
+  }
+
+  private isIn = (values: any[]) => {
+    return (optionToCheck: SelectOption) => {
+      return values
+        .map(value => JSON.stringify(value))
+        .includes(JSON.stringify(optionToCheck.value));
+    };
+  };
+
+  private isNotIn = (options: SelectOption[]) => {
+    return (optionToCheck: SelectOption) => {
+      return !options
+        .map(option => JSON.stringify(option.value))
+        .includes(JSON.stringify(optionToCheck.value));
+    };
+  };
 }

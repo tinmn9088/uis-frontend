@@ -10,8 +10,10 @@ import { DisciplineService } from '../../services/discipline.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DisciplineAddRequest } from '../../domain/discipline-add-request copy';
+import { DisciplineAddRequest } from '../../domain/discipline-add-request';
 import { SelectOption } from 'src/app/shared/domain/select-option';
+import { map } from 'rxjs';
+import { CategoryService } from 'src/app/category/services/category.service';
 
 @Component({
   selector: 'app-discipline-form',
@@ -24,11 +26,13 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
   editMode!: boolean;
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
-  categoriesOptions!: SelectOption[];
+  categoriesOptions?: SelectOption[];
+  areCategoriesOptionsLoading = true;
   @ViewChild('form') form!: ElementRef;
 
   constructor(
     private _disciplineService: DisciplineService,
+    private _categoryService: CategoryService,
     private _snackbarService: SnackbarService,
     private _translate: TranslateService,
     private _router: Router,
@@ -75,10 +79,7 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
         },
       });
     }
-    this.categoriesOptions = [
-      { name: 'Category 1', value: 1000 },
-      { name: 'Category 2', value: 1100 },
-    ];
+    this.updateCategoriesOptions();
   }
 
   ngAfterViewInit() {
@@ -131,6 +132,27 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
         this.formGroup.enable();
       },
     });
+  }
+
+  updateCategoriesOptions(query?: string | null) {
+    this.areCategoriesOptionsLoading = true;
+    this._categoryService
+      .search(query || '')
+      .pipe(
+        map(response => response.content),
+        map(categories => {
+          return categories.map(category => {
+            return {
+              name: category.name,
+              value: category.id,
+            } as SelectOption;
+          });
+        })
+      )
+      .subscribe(options => {
+        this.categoriesOptions = options;
+        this.areCategoriesOptionsLoading = false;
+      });
   }
 
   private updateFormContainerWidth(formWidth: number) {

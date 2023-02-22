@@ -4,7 +4,7 @@ import Modules from 'src/assets/modules.json';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Discipline } from '../domain/discipline';
-import { DisciplineAddRequest } from '../domain/discipline-add-request copy';
+import { DisciplineAddRequest } from '../domain/discipline-add-request';
 import { DisciplinePageableResponse } from '../domain/discipline-pageable-response';
 
 @Injectable({

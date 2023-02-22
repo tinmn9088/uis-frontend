@@ -48,6 +48,7 @@
       "short_name_label": "Короткое название",
       "short_name_error": "Короткое название обязательно",
       "categories_label": "Категории",
+      "categories_select_specify_category": "... Введите название категории",
       "add_button": "Добавить",
       "edit_button": "Изменить",
       "cancel_button": "Отмена",

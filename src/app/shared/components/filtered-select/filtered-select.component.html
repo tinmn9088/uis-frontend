@@ -2,8 +2,9 @@
   class="select"
   [formControl]="selectControl"
   (openedChange)="filterInput.focus()"
-  (selectionChange)="onSelectionChange()"
-  [multiple]="multiple">
+  (selectionChange)="onSelectionChange($event)"
+  [multiple]="multiple"
+  (closed)="onClosed()">
   <mat-form-field
     class="select__field"
     subscriptSizing="dynamic"
@@ -17,33 +18,65 @@
       [placeholder]="'filtered_select.placeholder' | translate" />
   </mat-form-field>
 
-  <div *ngIf="multiple">
-    <mat-checkbox
-      class="select__select-all-checkbox"
-      [checked]="allOptionsSelected"
-      [indeterminate]="!noneOptionsSelected && !allOptionsSelected"
-      (change)="selectAllOptions($event.checked)">
-      {{
-        (allOptionsSelected
-          ? 'filtered_select.checkbox_unselect_all'
-          : 'filtered_select.checkbox_select_all'
-        ) | translate
-      }}
-    </mat-checkbox>
-  </div>
-
   <div class="select__options-container">
-    <mat-option class="select__option" *ngIf="!multiple"> -- </mat-option>
+    <div
+      *ngIf="
+        multiple &&
+        !isLoading &&
+        (selectedOptions.length !== 0 || filteredOptions.length !== 0)
+      ">
+      <mat-checkbox
+        class="select__select-all-checkbox"
+        [checked]="areAllOptionsSelected"
+        [indeterminate]="!noneOptionsSelected && !areAllOptionsSelected"
+        (change)="selectAllOptions($event.checked)">
+        {{
+          (areAllOptionsSelected
+            ? 'filtered_select.checkbox_unselect_all'
+            : 'filtered_select.checkbox_select_all'
+          ) | translate
+        }}
+      </mat-checkbox>
+    </div>
+
+    <mat-option
+      class="select__option hidden"
+      *ngIf="selectedOptions.length === 0 && filteredOptions.length === 0"
+      [disabled]="true"></mat-option>
+
+    <mat-option
+      class="select__option"
+      *ngIf="!multiple || isLoading"
+      [disabled]="isLoading">
+      --
+    </mat-option>
     <ng-container *ngIf="!isLoading">
+      <ng-container *ngIf="multiple">
+        <mat-option
+          class="select__option"
+          *ngFor="let option of selectedOptions"
+          [value]="option.value">
+          {{ option.name }}
+        </mat-option>
+        <mat-divider *ngIf="selectedOptions.length > 0"></mat-divider>
+      </ng-container>
+
       <mat-option
         class="select__option"
-        *ngFor="let option of filteredSelectOptions"
+        *ngFor="let option of filteredOptions"
         [value]="option.value">
         {{ option.name }}
       </mat-option>
     </ng-container>
-    <div class="loading" *ngIf="isLoading">
+    <div class="select__loading" *ngIf="isLoading">
       <mat-progress-bar mode="query"></mat-progress-bar>
+    </div>
+    <div class="select__select-specify-category-message">
+      <span>{{
+        'disciplines.form.categories_select_specify_category'
+          | translate
+          | lowercase
+      }}</span>
     </div>
   </div>
 </mat-select>

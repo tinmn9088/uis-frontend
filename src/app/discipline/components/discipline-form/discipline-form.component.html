@@ -36,8 +36,11 @@
       </mat-label>
       <app-filtered-select
         class="form__select"
-        [options]="categoriesOptions"
+        [options]="categoriesOptions || []"
         [multiple]="true"
+        [isInternalFilterOn]="false"
+        [isLoading]="areCategoriesOptionsLoading"
+        (filterChanged)="updateCategoriesOptions($event)"
         formControlName="categories"></app-filtered-select>
     </mat-form-field>
 
