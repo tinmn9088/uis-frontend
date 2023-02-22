@@ -1,6 +1,4 @@
+import { PageableResponse } from 'src/app/shared/domain/pageable-response';
 import { Category } from './category';
 
-export interface CategoryPageableResponse {
-  content: Category[];
-  totalElements: number;
-}
+export type CategoryPageableResponse = PageableResponse<Category>;
