@@ -38,7 +38,13 @@
     "list": {
       "search": {
         "placeholder": "Search by: name, short name"
-      }
+      },
+      "columns": {
+        "name": "Name",
+        "short_name": "Short name",
+        "categories": "Categories"
+      },
+      "no_data_label": "No disciplines found."
     },
     "form": {
       "add_title": "Add discipline",

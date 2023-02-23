@@ -3,6 +3,7 @@ import { DisciplinePageableResponse } from '../../domain/discipline-pageable-res
 import { DisciplineService } from '../../services/discipline.service';
 import { Sort } from '@angular/material/sort';
 import { Discipline } from '../../domain/discipline';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-discipline-table',
@@ -36,6 +37,7 @@ export class DisciplineTableComponent implements OnInit {
     this.dataSource = [];
     this._disciplineService
       .search(searchQuery || '', this.pageSize, this.pageNumber, this.sort)
+      .pipe(delay(1000))
       .subscribe(response => {
         this.dataSource = response.content;
         this.isLoading = false;
