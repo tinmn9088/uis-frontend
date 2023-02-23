@@ -40,14 +40,14 @@ export class DisciplineListComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const tree = document.querySelector('.discipline-list__table');
-    if (tree) {
-      this._resizeObserver.observe(tree);
+    const table = document.querySelector('.discipline-list__table');
+    if (table) {
+      this._resizeObserver.observe(table);
     }
   }
 
   onSearch() {
-    setTimeout(() => this.disciplineTable.search(this.searchQuery), 0);
+    this.disciplineTable.search(this.searchQuery);
   }
 
   onDataUpdate(response: DisciplinePageableResponse) {
@@ -56,6 +56,10 @@ export class DisciplineListComponent implements AfterViewInit {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
-    setTimeout(() => this.disciplineTable.search(this.searchQuery), 0);
+    this.disciplineTable.search(this.searchQuery);
+  }
+
+  onSortChange() {
+    this.disciplineTable.search(this.searchQuery);
   }
 }

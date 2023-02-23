@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Discipline } from '../domain/discipline';
 import { DisciplineAddRequest } from '../domain/discipline-add-request';
 import { DisciplinePageableResponse } from '../domain/discipline-pageable-response';
+import { Sort } from '@angular/material/sort';
 
 @Injectable({
   providedIn: 'root',
@@ -30,11 +31,13 @@ export class DisciplineService {
   search(
     query: string,
     size?: number,
-    page?: number
+    page?: number,
+    sort?: Sort
   ): Observable<DisciplinePageableResponse> {
     let params = new HttpParams().set('query', query);
     if (size) params = params.set('size', size);
     if (page) params = params.set('page', page);
+    if (sort) params = params.set('sort', `${sort.active},${sort.direction}`);
     return this._http.get<DisciplinePageableResponse>(
       `${this.MODULE_URL}/search`,
       {

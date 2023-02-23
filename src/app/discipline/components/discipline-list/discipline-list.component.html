@@ -15,10 +15,11 @@
 
   <div class="discipline-list__table-container">
     <app-discipline-table
-      class="specialization-list__tree"
+      class="discipline-list__table"
       [pageSize]="pageSize"
       [pageNumber]="pageNumber"
-      (dataUpdated)="onDataUpdate($event)">
+      (dataUpdated)="onDataUpdate($event)"
+      (sortChanged)="onSortChange()">
     </app-discipline-table>
   </div>
 

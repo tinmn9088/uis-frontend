@@ -2,17 +2,19 @@
   <table
     mat-table
     [dataSource]="dataSource"
-    [ngStyle]="{
-      opacity: isLoading ? '0' : '1',
-      visibility: isLoading ? 'hidden' : 'visible',
-      transition: 'opacity 0.1s linear'
-    }"
     matSort
     (matSortChange)="onSortChange($event)">
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let discipline">
+      <td
+        mat-cell
+        *matCellDef="let discipline"
+        [ngStyle]="{
+          opacity: isLoading ? '0' : '1',
+          visibility: isLoading ? 'hidden' : 'visible',
+          transition: 'opacity 0.1s linear'
+        }">
         <a [routerLink]="getLinkToFormPage(discipline)">
           {{ discipline.name }}
         </a>
@@ -22,20 +24,24 @@
     <!-- Short name Column -->
     <ng-container matColumnDef="shortName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Short name</th>
-      <td mat-cell *matCellDef="let discipline">{{ discipline.shortName }}</td>
+      <td mat-cell *matCellDef="let discipline" [ngStyle]="getTableCellStyle()">
+        {{ discipline.shortName }}
+      </td>
     </ng-container>
 
     <!-- Categories Column -->
     <ng-container matColumnDef="categories">
       <th mat-header-cell *matHeaderCellDef>Categories</th>
-      <td mat-cell *matCellDef="let discipline">{{ discipline.categories }}</td>
+      <td mat-cell *matCellDef="let discipline" [ngStyle]="getTableCellStyle()">
+        {{ discipline.categories }}
+      </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let discipline; columns: displayedColumns"></tr>
   </table>
-</div>
 
-<div class="loading" *ngIf="isLoading">
-  <mat-spinner></mat-spinner>
+  <div class="table__loading" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
 </div>
