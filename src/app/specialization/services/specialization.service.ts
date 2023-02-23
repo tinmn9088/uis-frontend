@@ -6,6 +6,7 @@ import Modules from 'src/assets/modules.json';
 import { Observable, map } from 'rxjs';
 import { SpecializationAddRequest } from '../domain/specialization-add-request';
 import { SpecializationPageableResponse } from '../domain/specialization-pageable-response';
+import { SpecializationUpdateRequest } from '../domain/specialization-update-request';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,10 @@ export class SpecializationService {
   private readonly MODULE_URL = `http://${environment.backendUrl}${Modules.specialization.path}`;
 
   constructor(private _http: HttpClient) {}
+
+  getLinkToSearchPage() {
+    return `${Modules.specialization.path}`;
+  }
 
   getLinkToFormPage(id: number) {
     return `${Modules.specialization.path}/${id}`;
@@ -49,6 +54,16 @@ export class SpecializationService {
   add(specialization: SpecializationAddRequest): Observable<Specialization> {
     return this._http.post<Specialization>(
       `${this.MODULE_URL}`,
+      specialization
+    );
+  }
+
+  update(
+    id: number,
+    specialization: SpecializationUpdateRequest
+  ): Observable<Specialization> {
+    return this._http.put<Specialization>(
+      `${this.MODULE_URL}/${id}`,
       specialization
     );
   }

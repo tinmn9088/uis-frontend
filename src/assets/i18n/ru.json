@@ -86,7 +86,8 @@
       "add_button": "Добавить",
       "edit_button": "Изменить",
       "cancel_button": "Отмена",
-      "snackbar_success_message": "Добавлено"
+      "snackbar_add_success_message": "Добавлено",
+      "snackbar_update_success_message": "Обновлено"
     },
     "options": {
       "search": "Поиск специалностей",

@@ -1,8 +1,6 @@
-export interface Specialization {
-  id: number;
+export interface SpecializationUpdateRequest {
   name: string;
   shortName: string;
   cipher: string;
   parentId?: number;
-  hasChildren: boolean;
 }

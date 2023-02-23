@@ -59,7 +59,7 @@
           class="form__add-button"
           mat-flat-button
           color="primary"
-          [disabled]="formGroup.disabled">
+          [disabled]="formGroup.disabled || !formGroup.valid">
           {{ 'specializations.form.add_button' | translate }}
         </button>
       </ng-container>
@@ -68,19 +68,21 @@
           class="form__edit-button"
           mat-flat-button
           color="primary"
-          [disabled]="formGroup.disabled">
+          [disabled]="formGroup.disabled || !formGroup.valid">
           {{ 'specializations.form.edit_button' | translate }}
         </button>
       </ng-template>
 
-      <button
-        class="form__cancel-button"
-        mat-flat-button
-        color="secondary"
-        type="button"
-        [disabled]="formGroup.disabled">
-        {{ 'specializations.form.cancel_button' | translate }}
-      </button>
+      <a [routerLink]="getLinkToSearchPage()">
+        <button
+          class="form__cancel-button"
+          mat-flat-button
+          color="secondary"
+          type="button"
+          [disabled]="formGroup.disabled">
+          {{ 'specializations.form.cancel_button' | translate }}
+        </button>
+      </a>
     </div>
   </div>
 </form>
