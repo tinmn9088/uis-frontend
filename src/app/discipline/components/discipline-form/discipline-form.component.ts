@@ -14,6 +14,7 @@ import { DisciplineAddRequest } from '../../domain/discipline-add-request';
 import { SelectOption } from 'src/app/shared/domain/select-option';
 import { map } from 'rxjs';
 import { CategoryService } from 'src/app/category/services/category.service';
+import { DisciplineUpdateRequest } from '../../domain/discipline-update-request';
 
 @Component({
   selector: 'app-discipline-form',
@@ -101,31 +102,41 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
 
     this.formGroup.disable();
 
-    const addRequest: DisciplineAddRequest = {
+    const requestBody: DisciplineAddRequest | DisciplineUpdateRequest = {
       name: this.name || '',
       shortName: this.shortName || '',
+      categories: this.categories,
     };
-    if (this.categories) addRequest.categories = this.categories;
-    console.debug('Add discipline request', addRequest);
+    if (this.categories) requestBody.categories = this.categories;
+    console.debug('Request body', requestBody);
 
-    this._disciplineService.add(addRequest).subscribe({
+    const request$ =
+      this.editMode && this.id
+        ? this._disciplineService.update(this.id, requestBody)
+        : this._disciplineService.add(requestBody);
+
+    request$.subscribe({
       next: discipline => {
         console.debug('Received back', discipline);
         this._translate
-          .get('disciplines.form.snackbar_success_message')
+          .get(
+            this.editMode
+              ? 'disciplines.form.snackbar_update_success_message'
+              : 'disciplines.form.snackbar_add_success_message'
+          )
           .subscribe({
             next: message => {
               this._snackbarService.showSuccess(message);
               this.formGroup.enable();
             },
           });
-        setTimeout(
-          () =>
-            this._router.navigateByUrl(
-              this._disciplineService.getLinkToFormPage(discipline.id)
-            ),
-          2000
-        );
+        if (this.editMode) {
+          this.formGroup.patchValue(discipline, { emitEvent: true });
+        } else {
+          this._router.navigateByUrl(
+            this._disciplineService.getLinkToFormPage(discipline.id)
+          );
+        }
       },
       error: (reason: Error) => {
         this._snackbarService.showError(reason.message);
@@ -153,6 +164,10 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
         this.categoriesOptions = options;
         this.areCategoriesOptionsLoading = false;
       });
+  }
+
+  getLinkToSearchPage() {
+    return this._disciplineService.getLinkToSearchPage();
   }
 
   private updateFormContainerWidth(formWidth: number) {

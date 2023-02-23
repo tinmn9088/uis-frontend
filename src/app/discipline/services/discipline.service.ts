@@ -7,6 +7,7 @@ import { Discipline } from '../domain/discipline';
 import { DisciplineAddRequest } from '../domain/discipline-add-request';
 import { DisciplinePageableResponse } from '../domain/discipline-pageable-response';
 import { Sort } from '@angular/material/sort';
+import { DisciplineUpdateRequest } from '../domain/discipline-update-request';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,10 @@ export class DisciplineService {
   private readonly MODULE_URL = `http://${environment.backendUrl}${Modules.discipline.path}`;
 
   constructor(private _http: HttpClient) {}
+
+  getLinkToSearchPage() {
+    return `${Modules.discipline.path}`;
+  }
 
   getLinkToFormPage(id: number) {
     return `${Modules.discipline.path}/${id}`;
@@ -26,6 +31,13 @@ export class DisciplineService {
 
   add(discipline: DisciplineAddRequest): Observable<Discipline> {
     return this._http.post<Discipline>(`${this.MODULE_URL}`, discipline);
+  }
+
+  update(
+    id: number,
+    discipline: DisciplineUpdateRequest
+  ): Observable<Discipline> {
+    return this._http.put<Discipline>(`${this.MODULE_URL}/${id}`, discipline);
   }
 
   search(

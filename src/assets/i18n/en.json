@@ -58,7 +58,8 @@
       "add_button": "Add",
       "edit_button": "Edit",
       "cancel_button": "Cancel",
-      "snackbar_success_message": "Added"
+      "snackbar_add_success_message": "Added",
+      "snackbar_update_success_message": "Updated"
     },
     "options": {
       "search": "Search disciplines",
