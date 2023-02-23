@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SpecializationListComponent } from './specialization/components/specialization-list/specialization-list.component';
 import Modules from 'src/assets/modules.json';
 import { SpecializationFormComponent } from './specialization/components/specialization-form/specialization-form.component';
-import { AppRoutingRedirectComponent } from './app-routing-redirect/app-routing-redirect.component';
+import { AppRoutingRedirectComponent } from './shared/components/app-routing-redirect/app-routing-redirect.component';
 import { DisciplineListComponent } from './discipline/components/discipline-list/discipline-list.component';
 import { DisciplineFormComponent } from './discipline/components/discipline-form/discipline-form.component';
 

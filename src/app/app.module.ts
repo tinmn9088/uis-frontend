@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LOCATION_INITIALIZED } from '@angular/common';
 import { LanguageService } from './shared/services/language.service';
 import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingRedirectComponent } from './app-routing-redirect/app-routing-redirect.component';
+import { AppRoutingRedirectComponent } from './shared/components/app-routing-redirect/app-routing-redirect.component';
 import { SnackbarService } from './shared/services/snackbar.service';
 import { DisciplineModule } from './discipline/discipline.module';
 import { BehaviorSubject, filter } from 'rxjs';
