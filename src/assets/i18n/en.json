@@ -70,7 +70,8 @@
     "list": {
       "search": {
         "placeholder": "Search by: name, cipher"
-      }
+      },
+      "no_data_label": "No specializations found."
     },
     "form": {
       "add_title": "Add specialization",
