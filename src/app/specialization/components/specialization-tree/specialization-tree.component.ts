@@ -15,6 +15,7 @@ import { SpecializationFlatNode } from '../../domain/specialization-flat-node';
 })
 export class SpecializationTreeComponent implements OnInit {
   isLoading = true;
+  noFound = false;
   @Input() pageSize?: number;
   @Input() pageNumber?: number;
   @Output() dataUpdated = new EventEmitter<SpecializationPageableResponse>();
@@ -38,6 +39,7 @@ export class SpecializationTreeComponent implements OnInit {
       .subscribe(response => {
         this.dataUpdated.emit(response);
         this.isLoading = false;
+        this.noFound = response.totalElements === 0;
       });
   }
 }

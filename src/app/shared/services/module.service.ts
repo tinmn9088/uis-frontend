@@ -12,6 +12,15 @@ export class ModuleService {
     return module.themeCssClass;
   }
 
+  getAllThemeCssClasses(): string[] {
+    const names = this.getAllModuleNames();
+    const classes = [];
+    for (const name of names) {
+      classes.push(this.getModule(name).themeCssClass);
+    }
+    return classes;
+  }
+
   getI18N(name: ModuleName): string {
     const module = this.getModule(name);
     return module.i18nName;

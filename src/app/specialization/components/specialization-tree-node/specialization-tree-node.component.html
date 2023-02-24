@@ -11,7 +11,9 @@
         class="extansion-panel__progress-bar"></mat-progress-bar>
       <ng-container *ngIf="!specializationNode.isLoading">
         <mat-panel-title class="extansion-panel__header-title">
-          {{ specializationNode.specialization.name }}
+          <a [routerLink]="linkToForm">{{
+            specializationNode.specialization.name
+          }}</a>
         </mat-panel-title>
         <mat-panel-description
           class="extansion-panel__header-description"

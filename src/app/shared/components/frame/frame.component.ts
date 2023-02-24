@@ -2,7 +2,9 @@ import {
   AfterViewInit,
   Component,
   Input,
+  OnChanges,
   OnInit,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {
@@ -11,7 +13,7 @@ import {
   MatDrawerContent,
 } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { distinctUntilChanged } from 'rxjs';
+import { Subject, distinctUntilChanged } from 'rxjs';
 import { ModuleSidenavOption } from '../../domain/module-sidenav-option';
 
 @Component({
@@ -19,7 +21,7 @@ import { ModuleSidenavOption } from '../../domain/module-sidenav-option';
   templateUrl: './frame.component.html',
   styleUrls: ['./frame.component.scss'],
 })
-export class FrameComponent implements OnInit, AfterViewInit {
+export class FrameComponent implements OnInit, AfterViewInit, OnChanges {
   private readonly BREAKPOINT = '(min-width: 768px)';
   private readonly _breakpoint$ = this._breakpointObserver
     .observe([this.BREAKPOINT])
@@ -36,6 +38,8 @@ export class FrameComponent implements OnInit, AfterViewInit {
   @ViewChild(MatDrawerContainer) drawerContainer!: MatDrawerContainer;
   @ViewChild(MatDrawerContent) drawerContent!: MatDrawerContent;
   @ViewChild(MatDrawer) drawer!: MatDrawer;
+  sidenavOptions$ = new Subject<ModuleSidenavOption[]>();
+  isContentHidden = false;
 
   constructor(private _breakpointObserver: BreakpointObserver) {
     this._resizeObserver = new ResizeObserver(entries => {
@@ -52,6 +56,16 @@ export class FrameComponent implements OnInit, AfterViewInit {
     this._resizeObserver.observe(
       (this.drawerContainer as any)._element.nativeElement
     );
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['sidenavOptions']) {
+      this.isContentHidden = true;
+      setTimeout(() => {
+        this.sidenavOptions$.next(changes['sidenavOptions'].currentValue);
+        this.isContentHidden = false;
+      }, 100);
+    }
   }
 
   onDrawerOpenedStart() {

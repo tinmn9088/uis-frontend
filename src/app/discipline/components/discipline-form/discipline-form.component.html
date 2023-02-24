@@ -1,0 +1,79 @@
+<form class="form" #form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div
+    class="form__container"
+    [ngStyle]="{ width: formContainerWidthPercents + '%' }">
+    <h3 class="form__title">
+      {{
+        editMode
+          ? (('disciplines.form.edit_title' | translate) + name | uppercase)
+          : ('disciplines.form.add_title' | translate | uppercase)
+      }}
+    </h3>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'disciplines.form.name_label' | translate }}
+      </mat-label>
+      <input class="form__input" matInput formControlName="name" />
+      <mat-error class="form__error-message">
+        {{ 'disciplines.form.name_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'disciplines.form.short_name_label' | translate }}
+      </mat-label>
+      <input class="form__input" matInput formControlName="shortName" />
+      <mat-error class="form__error-message">
+        {{ 'disciplines.form.short_name_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'disciplines.form.categories_label' | translate }}
+      </mat-label>
+      <app-filtered-select
+        class="form__select"
+        [options]="categoriesOptions || []"
+        [multiple]="true"
+        [isInternalFilterOn]="false"
+        [isLoading]="areCategoriesOptionsLoading"
+        (filterChanged)="updateCategoriesOptions($event)"
+        formControlName="categories"></app-filtered-select>
+    </mat-form-field>
+
+    <div class="form__buttons">
+      <ng-container *ngIf="!editMode; else editButton">
+        <button
+          class="form__add-button"
+          mat-flat-button
+          color="primary"
+          [disabled]="formGroup.disabled || !formGroup.valid">
+          {{ 'disciplines.form.add_button' | translate }}
+        </button>
+      </ng-container>
+      <ng-template #editButton>
+        <button
+          class="form__edit-button"
+          mat-flat-button
+          color="primary"
+          [disabled]="formGroup.disabled || !formGroup.valid">
+          {{ 'disciplines.form.edit_button' | translate }}
+        </button>
+      </ng-template>
+
+      <a [routerLink]="getLinkToSearchPage()">
+        <button
+          class="form__cancel-button"
+          mat-flat-button
+          color="secondary"
+          type="button"
+          [disabled]="formGroup.disabled">
+          {{ 'disciplines.form.cancel_button' | translate }}
+        </button>
+      </a>
+    </div>
+  </div>
+</form>

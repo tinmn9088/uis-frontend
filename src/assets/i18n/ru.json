@@ -29,11 +29,50 @@
   "sidenav": {
     "add_button": "Добавить"
   },
+  "filtered_select": {
+    "placeholder": "Поиск ...",
+    "checkbox_select_all": "Выбрать все",
+    "checkbox_unselect_all": "Отменить выбор"
+  },
+  "disciplines": {
+    "list": {
+      "search": {
+        "placeholder": "Поиск по: название, краткое название"
+      },
+      "columns": {
+        "name": "Название",
+        "short_name": "Краткое название",
+        "categories": "Категории"
+      },
+      "no_data_label": "Дисциплин не найдено."
+    },
+    "form": {
+      "add_title": "Добавить дисциплину",
+      "edit_title": "Дисциплина ",
+      "name_label": "Название",
+      "name_error": "Название обязательно",
+      "short_name_label": "Короткое название",
+      "short_name_error": "Короткое название обязательно",
+      "categories_label": "Категории",
+      "categories_select_specify_category": "... Введите название категории",
+      "add_button": "Добавить",
+      "edit_button": "Изменить",
+      "cancel_button": "Отмена",
+      "snackbar_add_success_message": "Добавлено",
+      "snackbar_update_success_message": "Обновлено"
+    },
+    "options": {
+      "search": "Поиск дисциплин",
+      "add": "Добавить дисциплину",
+      "edit": "Изменить дисциплину"
+    }
+  },
   "specializations": {
     "list": {
       "search": {
         "placeholder": "Поиск по: название, шифр"
-      }
+      },
+      "no_data_label": "Специализаций не найдено."
     },
     "form": {
       "add_title": "Добавить специальность",
@@ -46,8 +85,10 @@
       "cipher_error": "Шифр обязателен",
       "parent_label": "Родительная специальность",
       "add_button": "Добавить",
+      "edit_button": "Изменить",
       "cancel_button": "Отмена",
-      "snackbar_success_message": "Добавлено"
+      "snackbar_add_success_message": "Добавлено",
+      "snackbar_update_success_message": "Обновлено"
     },
     "options": {
       "search": "Поиск специалностей",

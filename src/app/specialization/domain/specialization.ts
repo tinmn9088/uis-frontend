@@ -3,6 +3,6 @@ export interface Specialization {
   name: string;
   shortName: string;
   cipher: string;
-  parentId: number;
+  parentId?: number;
   hasChildren: boolean;
 }

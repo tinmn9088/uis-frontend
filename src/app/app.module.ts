@@ -1,9 +1,12 @@
 import {
   APP_INITIALIZER,
   ErrorHandler,
+  Inject,
   Injectable,
+  InjectionToken,
   Injector,
   NgModule,
+  NgZone,
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -15,8 +18,15 @@ import { TranslateService } from '@ngx-translate/core';
 import { LOCATION_INITIALIZED } from '@angular/common';
 import { LanguageService } from './shared/services/language.service';
 import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingRedirectComponent } from './app-routing-redirect/app-routing-redirect.component';
+import { AppRoutingRedirectComponent } from './shared/components/app-routing-redirect/app-routing-redirect.component';
 import { SnackbarService } from './shared/services/snackbar.service';
+import { DisciplineModule } from './discipline/discipline.module';
+import { BehaviorSubject, filter } from 'rxjs';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { ModuleService } from './shared/services/module.service';
+import { CategoryModule } from './category/category.module';
+
+export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('');
 
 export function translateLoader(
   translate: TranslateService,
@@ -47,10 +57,18 @@ export function translateLoader(
 
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {
-  constructor(private _snackbarService: SnackbarService) {}
+  constructor(
+    private _snackbarService: SnackbarService,
+    private _zone: NgZone
+  ) {}
 
   handleError(error: Error) {
-    this._snackbarService.showError(error.message);
+    console.error(error);
+    if (error.message) {
+      this._zone.run(() => {
+        this._snackbarService.showError(error.message, '✕');
+      });
+    }
   }
 }
 
@@ -61,7 +79,9 @@ export class AppErrorHandler implements ErrorHandler {
     BrowserModule,
     AppRoutingModule,
     SharedModule,
+    CategoryModule,
     SpecializationModule,
+    DisciplineModule,
     HttpClientModule,
   ],
   providers: [
@@ -72,6 +92,30 @@ export class AppErrorHandler implements ErrorHandler {
       multi: true,
     },
     { provide: ErrorHandler, useClass: AppErrorHandler },
+    {
+      provide: THEME_CSS_CLASS_TOKEN,
+      useValue: new BehaviorSubject(''),
+    },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  /**
+   * Since certain components are inside of a global overlay container, your theme may
+   * not be applied to them. In order to define the theme that will be used for overlay
+   * components, it is needed to specify it on the global `OverlayContainer` instance.
+   */
+  constructor(
+    overlayContainer: OverlayContainer,
+    @Inject(THEME_CSS_CLASS_TOKEN) public themeClass$: BehaviorSubject<string>,
+    moduleService: ModuleService
+  ) {
+    this.themeClass$
+      .pipe(filter(themeClass => !!themeClass))
+      .subscribe(themeClass => {
+        moduleService.getAllThemeCssClasses().forEach(themeClass => {
+          overlayContainer.getContainerElement().classList.remove(themeClass);
+        });
+        overlayContainer.getContainerElement().classList.add(themeClass);
+      });
+  }
+}

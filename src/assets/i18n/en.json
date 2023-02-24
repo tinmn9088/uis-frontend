@@ -29,11 +29,50 @@
   "sidenav": {
     "add_button": "Create"
   },
+  "filtered_select": {
+    "placeholder": "Search ...",
+    "checkbox_select_all": "Select all",
+    "checkbox_unselect_all": "Unselect all"
+  },
+  "disciplines": {
+    "list": {
+      "search": {
+        "placeholder": "Search by: name, short name"
+      },
+      "columns": {
+        "name": "Name",
+        "short_name": "Short name",
+        "categories": "Categories"
+      },
+      "no_data_label": "No disciplines found."
+    },
+    "form": {
+      "add_title": "Add discipline",
+      "edit_title": "Discipline ",
+      "name_label": "Name",
+      "name_error": "Name required",
+      "short_name_label": "Short name",
+      "short_name_error": "Short name required",
+      "categories_label": "Categories",
+      "categories_select_specify_category": "... Specify category name",
+      "add_button": "Add",
+      "edit_button": "Edit",
+      "cancel_button": "Cancel",
+      "snackbar_add_success_message": "Added",
+      "snackbar_update_success_message": "Updated"
+    },
+    "options": {
+      "search": "Search disciplines",
+      "add": "Add discipline",
+      "edit": "Edit discipline"
+    }
+  },
   "specializations": {
     "list": {
       "search": {
         "placeholder": "Search by: name, cipher"
-      }
+      },
+      "no_data_label": "No specializations found."
     },
     "form": {
       "add_title": "Add specialization",
@@ -46,8 +85,10 @@
       "cipher_error": "Cipher required",
       "parent_label": "Parent specialization",
       "add_button": "Add",
+      "edit_button": "Edit",
       "cancel_button": "Cancel",
-      "snackbar_success_message": "Added"
+      "snackbar_add_success_message": "Added",
+      "snackbar_update_success_message": "Updated"
     },
     "options": {
       "search": "Search specializations",

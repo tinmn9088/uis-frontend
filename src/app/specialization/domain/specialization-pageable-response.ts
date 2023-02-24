@@ -1,6 +1,4 @@
+import { PageableResponse } from 'src/app/shared/domain/pageable-response';
 import { Specialization } from './specialization';
 
-export interface SpecializationPageableResponse {
-  content: Specialization[];
-  totalElements: number;
-}
+export type SpecializationPageableResponse = PageableResponse<Specialization>;

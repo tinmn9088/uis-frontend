@@ -11,6 +11,9 @@ import { SpecializationService } from '../../services/specialization.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SelectOption } from 'src/app/shared/domain/select-option';
+import { map } from 'rxjs';
+import { SpecializationUpdateRequest } from '../../domain/specialization-update-request';
 
 @Component({
   selector: 'app-specialization-form',
@@ -23,6 +26,8 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
   editMode!: boolean;
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
+  parentOptions!: SelectOption[];
+  areParentOptionsLoading = false;
   @ViewChild('form') form!: ElementRef;
 
   constructor(
@@ -78,6 +83,7 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
         },
       });
     }
+    this.updateParentOptions();
   }
 
   ngAfterViewInit() {
@@ -99,37 +105,75 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
 
     this.formGroup.disable();
 
-    const addRequest: SpecializationAddRequest = {
-      name: this.name || '',
-      shortName: this.shortName || '',
-      cipher: this.cipher || '',
-      parentId: this.parentId,
-    };
-    if (this.parentId) addRequest.parentId = this.parentId;
-    console.debug('Add specialization request', addRequest);
+    const requestBody: SpecializationAddRequest | SpecializationUpdateRequest =
+      {
+        name: this.name || '',
+        shortName: this.shortName || '',
+        cipher: this.cipher || '',
+        parentId: this.parentId,
+      };
+    if (this.parentId) requestBody.parentId = this.parentId;
+    console.debug('Request body', requestBody);
 
-    this._specializationService.add(addRequest).subscribe({
+    const request$ =
+      this.editMode && this.id
+        ? this._specializationService.update(this.id, requestBody)
+        : this._specializationService.add(requestBody);
+
+    request$.subscribe({
       next: specialization => {
         console.debug('Received back', specialization);
         this._translate
-          .get('specializations.form.snackbar_success_message')
+          .get(
+            this.editMode
+              ? 'specializations.form.snackbar_update_success_message'
+              : 'specializations.form.snackbar_add_success_message'
+          )
           .subscribe({
             next: message => {
               this._snackbarService.showSuccess(message);
               this.formGroup.enable();
             },
           });
-        setTimeout(
-          () =>
-            this._specializationService.navigateToViewPage(specialization.id),
-          2000
-        );
+        if (this.editMode) {
+          if (!specialization.parentId) specialization.parentId = undefined;
+          this.formGroup.patchValue(specialization, { emitEvent: true });
+        } else {
+          this._router.navigateByUrl(
+            this._specializationService.getLinkToFormPage(specialization.id)
+          );
+        }
       },
       error: (reason: Error) => {
         this._snackbarService.showError(reason.message);
         this.formGroup.enable();
       },
     });
+  }
+
+  updateParentOptions(query?: string | null) {
+    this.areParentOptionsLoading = true;
+    this._specializationService
+      .search(query || '')
+      .pipe(
+        map(response => response.content),
+        map(specializations => {
+          return specializations.map(specialization => {
+            return {
+              name: specialization.name,
+              value: specialization,
+            } as SelectOption;
+          });
+        })
+      )
+      .subscribe(options => {
+        this.parentOptions = options;
+        this.areParentOptionsLoading = false;
+      });
+  }
+
+  getLinkToSearchPage() {
+    return this._specializationService.getLinkToSearchPage();
   }
 
   private updateFormContainerWidth(formWidth: number) {

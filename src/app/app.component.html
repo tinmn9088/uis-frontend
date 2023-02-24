@@ -1,5 +1,5 @@
 <app-frame
-  [ngClass]="themeClass"
+  [ngClass]="themeClass$ | async"
   [sidenavOptions]="sidenavOptions"
   [activeOption]="activeOption"
   [toolbarTabs]="toolbarTabs"

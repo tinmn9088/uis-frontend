@@ -5,8 +5,8 @@ import { environment } from 'src/environments/environment.development';
 import Modules from 'src/assets/modules.json';
 import { Observable, map } from 'rxjs';
 import { SpecializationAddRequest } from '../domain/specialization-add-request';
-import { Router } from '@angular/router';
 import { SpecializationPageableResponse } from '../domain/specialization-pageable-response';
+import { SpecializationUpdateRequest } from '../domain/specialization-update-request';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +14,14 @@ import { SpecializationPageableResponse } from '../domain/specialization-pageabl
 export class SpecializationService {
   private readonly MODULE_URL = `http://${environment.backendUrl}${Modules.specialization.path}`;
 
-  constructor(private _http: HttpClient, private _router: Router) {}
+  constructor(private _http: HttpClient) {}
 
-  navigateToViewPage(id: number) {
-    this._router.navigateByUrl(`${Modules.specialization.path}/${id}`);
+  getLinkToSearchPage() {
+    return `${Modules.specialization.path}`;
+  }
+
+  getLinkToFormPage(id: number) {
+    return `${Modules.specialization.path}/${id}`;
   }
 
   getParents(
@@ -50,6 +54,16 @@ export class SpecializationService {
   add(specialization: SpecializationAddRequest): Observable<Specialization> {
     return this._http.post<Specialization>(
       `${this.MODULE_URL}`,
+      specialization
+    );
+  }
+
+  update(
+    id: number,
+    specialization: SpecializationUpdateRequest
+  ): Observable<Specialization> {
+    return this._http.put<Specialization>(
+      `${this.MODULE_URL}/${id}`,
       specialization
     );
   }
