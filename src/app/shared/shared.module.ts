@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { FrameComponent } from './components/frame/frame.component';
+import { ModuleLayoutComponent } from './components/module-layout/module-layout.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -66,7 +66,7 @@ const modules = [
 
 const declarations = [
   ToolbarComponent,
-  FrameComponent,
+  ModuleLayoutComponent,
   PaginatorComponent,
   JoinPipe,
   FilteredSelectComponent,

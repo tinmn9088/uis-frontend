@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FrameComponent } from './frame.component';
+import { ModuleLayoutComponent } from './module-layout.component';
 import { SharedModule } from '../../shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('FrameComponent', () => {
-  let component: FrameComponent;
-  let fixture: ComponentFixture<FrameComponent>;
+describe('ModuleLayoutComponent', () => {
+  let component: ModuleLayoutComponent;
+  let fixture: ComponentFixture<ModuleLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SharedModule, RouterTestingModule],
-      declarations: [FrameComponent],
+      declarations: [ModuleLayoutComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FrameComponent);
+    fixture = TestBed.createComponent(ModuleLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

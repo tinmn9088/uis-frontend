@@ -17,11 +17,12 @@ import { Subject, distinctUntilChanged } from 'rxjs';
 import { ModuleSidenavOption } from '../../domain/module-sidenav-option';
 
 @Component({
-  selector: 'app-frame[sidenavOptions][activeOption][toolbarTabs][activeTab]',
-  templateUrl: './frame.component.html',
-  styleUrls: ['./frame.component.scss'],
+  selector:
+    'app-module-layout[sidenavOptions][activeOption][toolbarTabs][activeTab]',
+  templateUrl: './module-layout.component.html',
+  styleUrls: ['./module-layout.component.scss'],
 })
-export class FrameComponent implements OnInit, AfterViewInit, OnChanges {
+export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnChanges {
   private readonly BREAKPOINT = '(min-width: 768px)';
   private readonly _breakpoint$ = this._breakpointObserver
     .observe([this.BREAKPOINT])
