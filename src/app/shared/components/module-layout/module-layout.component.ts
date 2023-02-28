@@ -14,7 +14,7 @@ import {
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { BehaviorSubject, Subscription, distinctUntilChanged } from 'rxjs';
 import { ModuleSidenavOption } from '../../domain/module-sidenav-option';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ModuleService } from '../../services/module.service';
 import { ModuleName } from '../../domain/module-name';
 import { THEME_CSS_CLASS_TOKEN } from '../../shared.module';
@@ -72,9 +72,8 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     ];
     this._pathChangeSubscription = this._router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
+      if (event instanceof NavigationEnd) {
         const currentPath = event.url;
-        console.debug(`Current path: "${currentPath}"`);
 
         this.isContentHidden = true;
 
@@ -82,7 +81,6 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!moduleName) {
           throw new Error(`No module found for "${currentPath}"`);
         }
-        this.themeClass$.next(this._moduleService.getThemeCssClass(moduleName));
         this.sidenavOptions = this._moduleService.getSidenavOptions(moduleName);
         this.activeOption = this.sidenavOptions.find(option =>
           this.isActiveOption(currentPath, option)
