@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -33,6 +33,8 @@ import { JoinPipe } from './pipes/join.pipe';
 import { PaginatorService } from './services/paginator.service';
 import { LanguageService } from './services/language.service';
 import { FilteredSelectComponent } from './components/filtered-select/filtered-select.component';
+
+export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('themeClass');
 
 const modules = [
   CommonModule,

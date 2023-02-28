@@ -1,4 +1,4 @@
-<div class="frame">
+<div class="frame" [ngClass]="themeClass$ | async">
   <app-toolbar
     class="frame__toolbar"
     [tabs]="toolbarTabs"
@@ -30,7 +30,7 @@
             {{ 'sidenav.add_button' | translate | uppercase }}
           </button>
         </a>
-        <ng-container *ngFor="let option of sidenavOptions$ | async">
+        <ng-container *ngFor="let option of sidenavOptions">
           <a
             class="frame__sidenav-option"
             mat-flat-button
@@ -57,7 +57,7 @@
         visibility: isContentHidden ? 'hidden' : 'visible',
         transition: 'opacity 0.1s linear'
       }">
-      <ng-content></ng-content>
+      <router-outlet></router-outlet>
     </mat-drawer-content>
   </mat-drawer-container>
 </div>

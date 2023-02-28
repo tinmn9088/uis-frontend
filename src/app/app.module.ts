@@ -3,7 +3,6 @@ import {
   ErrorHandler,
   Inject,
   Injectable,
-  InjectionToken,
   Injector,
   NgModule,
   NgZone,
@@ -13,7 +12,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpecializationModule } from './specialization/specialization.module';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule, THEME_CSS_CLASS_TOKEN } from './shared/shared.module';
 import { TranslateService } from '@ngx-translate/core';
 import { LOCATION_INITIALIZED } from '@angular/common';
 import { LanguageService } from './shared/services/language.service';
@@ -25,8 +24,7 @@ import { BehaviorSubject, filter } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ModuleService } from './shared/services/module.service';
 import { CategoryModule } from './category/category.module';
-
-export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('');
+import { ModuleRoutingModule } from './shared/module-routing.module';
 
 export function translateLoader(
   translate: TranslateService,
@@ -83,6 +81,7 @@ export class AppErrorHandler implements ErrorHandler {
     SpecializationModule,
     DisciplineModule,
     HttpClientModule,
+    ModuleRoutingModule,
   ],
   providers: [
     {
