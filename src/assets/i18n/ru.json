@@ -34,6 +34,18 @@
     "checkbox_select_all": "Выбрать все",
     "checkbox_unselect_all": "Отменить выбор"
   },
+  "user": {
+    "login_form": {
+      "sign_in": "Вход",
+      "password_label": "Пароль",
+      "login_label": "Логин",
+      "required": "Необязательно",
+      "messages": {
+        "success": "Вход выполнен",
+        "error": "Ошибка"
+      }
+    }
+  },
   "disciplines": {
     "list": {
       "search": {

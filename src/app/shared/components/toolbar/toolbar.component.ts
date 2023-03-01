@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../../user/models/user.model';
+import { User } from '../../../user/models/user';
 import { Language } from '../../domain/language';
 import { LanguageService } from '../../services/language.service';
 import { ModuleToolbarTab } from '../../domain/module-tab';

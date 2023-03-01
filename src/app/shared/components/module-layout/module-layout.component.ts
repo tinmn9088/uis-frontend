@@ -55,20 +55,20 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.toolbarTabs = [
       {
-        title: this._moduleService.getI18N(ModuleName.Category),
-        path: this._moduleService.getPath(ModuleName.Category),
+        title: this._moduleService.getI18N(ModuleName.Category) || '',
+        path: this._moduleService.getPath(ModuleName.Category) || '',
       },
       {
-        title: this._moduleService.getI18N(ModuleName.Discipline),
-        path: this._moduleService.getPath(ModuleName.Discipline),
+        title: this._moduleService.getI18N(ModuleName.Discipline) || '',
+        path: this._moduleService.getPath(ModuleName.Discipline) || '',
       },
       {
-        title: this._moduleService.getI18N(ModuleName.Specialization),
-        path: this._moduleService.getPath(ModuleName.Specialization),
+        title: this._moduleService.getI18N(ModuleName.Specialization) || '',
+        path: this._moduleService.getPath(ModuleName.Specialization) || '',
       },
       {
-        title: this._moduleService.getI18N(ModuleName.Curricula),
-        path: this._moduleService.getPath(ModuleName.Curricula),
+        title: this._moduleService.getI18N(ModuleName.Curricula) || '',
+        path: this._moduleService.getPath(ModuleName.Curricula) || '',
       },
     ];
     this._pathChangeSubscription = this._router.events.subscribe(event => {
@@ -81,7 +81,8 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!moduleName) {
           throw new Error(`No module found for "${currentPath}"`);
         }
-        this.sidenavOptions = this._moduleService.getSidenavOptions(moduleName);
+        this.sidenavOptions =
+          this._moduleService.getSidenavOptions(moduleName) || [];
         this.activeOption = this.sidenavOptions.find(option =>
           this.isActiveOption(currentPath, option)
         );

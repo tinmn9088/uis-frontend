@@ -34,6 +34,18 @@
     "checkbox_select_all": "Select all",
     "checkbox_unselect_all": "Unselect all"
   },
+  "user": {
+    "login_form": {
+      "sign_in": "Sign in",
+      "password_label": "Password",
+      "login_label": "Login",
+      "required": "Required",
+      "messages": {
+        "success": "Authentication successful",
+        "error": "Authentication error"
+      }
+    }
+  },
   "disciplines": {
     "list": {
       "search": {

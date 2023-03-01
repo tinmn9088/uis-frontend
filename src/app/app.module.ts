@@ -25,6 +25,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { ModuleService } from './shared/services/module.service';
 import { CategoryModule } from './category/category.module';
 import { ModuleRoutingModule } from './shared/module-routing.module';
+import { UserModule } from './user/user.module';
 
 export function translateLoader(
   translate: TranslateService,
@@ -80,6 +81,7 @@ export class AppErrorHandler implements ErrorHandler {
     CategoryModule,
     SpecializationModule,
     DisciplineModule,
+    UserModule,
     HttpClientModule,
     ModuleRoutingModule,
   ],

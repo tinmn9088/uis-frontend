@@ -7,6 +7,10 @@
 
 @include mat.all-component-themes(user.$light-theme);
 
+.user-theme {
+  @include mat.all-component-colors(user.$light-theme);
+}
+
 .specialization-theme {
   @include mat.all-component-colors(specialization.$light-theme);
 }

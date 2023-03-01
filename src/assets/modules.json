@@ -1,4 +1,9 @@
 {
+  "user": {
+    "name": "User",
+    "themeCssClass": "user-theme",
+    "path": "/user"
+  },
   "category": {
     "name": "Category",
     "themeCssClass": "category-theme",

@@ -27,7 +27,9 @@ export class AppComponent implements OnDestroy {
         if (!moduleName) {
           throw new Error(`No module found for "${currentPath}"`);
         }
-        this.themeClass$.next(this._moduleService.getThemeCssClass(moduleName));
+        this.themeClass$.next(
+          this._moduleService.getThemeCssClass(moduleName) || ''
+        );
       }
     });
   }
