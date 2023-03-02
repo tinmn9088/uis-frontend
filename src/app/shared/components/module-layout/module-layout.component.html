@@ -1,14 +1,17 @@
-<div class="frame" [ngClass]="themeClass$ | async">
+<div class="layout" [ngClass]="themeClass$ | async">
   <app-toolbar
-    class="frame__toolbar"
+    class="layout__toolbar"
     [tabs]="toolbarTabs"
     [activeTab]="activeTab"
     [showTabs]="showToolbarTabs"
+    [showBurger]="true"
+    [showAddMenu]="true"
+    [user]="user"
     (menuButtonClick)="drawer.toggle()"></app-toolbar>
 
-  <mat-drawer-container class="frame__drawer-container" autosize>
+  <mat-drawer-container class="layout__drawer-container" autosize>
     <mat-drawer
-      class="frame__sidenav"
+      class="layout__sidenav"
       [ngClass]="sidenavFullsize ? 'fullsize' : ''"
       (openedStart)="onDrawerOpenedStart()"
       (closedStart)="onDrawerClosedStart()"
@@ -16,7 +19,7 @@
       mode="side"
       opened="true">
       <nav
-        class="frame__sidenav-options"
+        class="layout__sidenav-options"
         [ngStyle]="{
           opacity: isContentHidden ? '0' : '1',
           visibility: isContentHidden ? 'hidden' : 'visible',
@@ -25,14 +28,14 @@
         <a *ngIf="addButtonPath" routerLink="{{ addButtonPath }}">
           <button
             mat-raised-button
-            class="frame__sidenav-add-button"
+            class="layout__sidenav-add-button"
             color="primary">
             {{ 'sidenav.add_button' | translate | uppercase }}
           </button>
         </a>
         <ng-container *ngFor="let option of sidenavOptions">
           <a
-            class="frame__sidenav-option"
+            class="layout__sidenav-option"
             mat-flat-button
             *ngIf="!isSidenavOptionHidden(option)"
             color="{{ option === activeOption ? 'primary' : '' }}"
@@ -40,8 +43,8 @@
               'pointer-events': option === activeOption ? 'none' : 'auto'
             }"
             routerLink="{{ option.path }}">
-            <mat-icon class="frame__sidenav-option-icon">launch</mat-icon>
-            <span class="frame__sidenav-option-text">
+            <mat-icon class="layout__sidenav-option-icon">launch</mat-icon>
+            <span class="layout__sidenav-option-text">
               {{ option.title | translate }}
             </span>
           </a>
@@ -50,7 +53,7 @@
     </mat-drawer>
 
     <mat-drawer-content
-      class="frame__content"
+      class="layout__content"
       [ngStyle]="{
         height: contentHeightPixels + 'px',
         opacity: isContentHidden ? '0' : '1',

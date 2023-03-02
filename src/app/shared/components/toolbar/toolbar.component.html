@@ -4,6 +4,7 @@
       mat-icon-button
       class="toolbar__menu-button"
       aria-label="Menu button"
+      *ngIf="showBurger"
       (click)="onMenuClick()">
       <mat-icon>menu</mat-icon>
     </button>
@@ -17,6 +18,7 @@
     <span
       class="toolbar__button_with-arrow"
       aria-label="Add button"
+      *ngIf="showAddMenu"
       [matMenuTriggerFor]="addMenu">
       <mat-icon>add</mat-icon>
       <mat-icon class="toolbar__button-arrow">arrow_drop_down</mat-icon>
@@ -40,42 +42,44 @@
     </span>
 
     <mat-menu #loginMenu="matMenu" xPosition="before">
-      <div class="toolbar__login-menu-header">
-        <div class="toolbar__login-menu-header-image-container">
-          <div
-            class="toolbar__login-menu-header-image"
-            [ngStyle]="{
-              'background-image':
-                'url(' +
-                (user?.avatar || 'assets/images/avatar-person.svg') +
-                ')'
-            }"></div>
+      <ng-container *ngIf="user">
+        <div class="toolbar__login-menu-header">
+          <div class="toolbar__login-menu-header-image-container">
+            <div
+              class="toolbar__login-menu-header-image"
+              [ngStyle]="{
+                'background-image':
+                  'url(' +
+                  (user.avatar || 'assets/images/avatar-person.svg') +
+                  ')'
+              }"></div>
+          </div>
+          <div class="toolbar__login-menu-header-text">
+            <span class="toolbar__login-menu-header-login">
+              {{ user.login || 'toolbar.login.default' | translate }}
+            </span>
+            <span class="toolbar__login-menu-header-roles">
+              {{ user.roles | join : ', ' }}
+            </span>
+          </div>
         </div>
-        <div class="toolbar__login-menu-header-text">
-          <span class="toolbar__login-menu-header-login">
-            {{ user?.login || 'toolbar.login.default' | translate }}
-          </span>
-          <span class="toolbar__login-menu-header-roles">
-            {{ user?.roles | join : ', ' }}
-          </span>
-        </div>
-      </div>
 
-      <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
+      </ng-container>
 
-      <a mat-menu-item routerLink="'/'">
+      <a *ngIf="user" mat-menu-item routerLink="/">
         <mat-icon>account_circle</mat-icon>
         <span>{{ 'toolbar.menu.login.show_profile' | translate }}</span>
       </a>
-      <a mat-menu-item routerLink="'/'" [matMenuTriggerFor]="langMenu">
+      <a mat-menu-item routerLink="/" [matMenuTriggerFor]="langMenu">
         <mat-icon>language</mat-icon>
         <span>{{ 'toolbar.menu.login.change_language' | translate }}</span>
       </a>
-      <a mat-menu-item routerLink="'/'">
+      <a mat-menu-item routerLink="/">
         <mat-icon>settings</mat-icon>
         <span>{{ 'toolbar.menu.login.settings' | translate }}</span>
       </a>
-      <a mat-menu-item routerLink="'/'">
+      <a *ngIf="user" mat-menu-item routerLink="/">
         <mat-icon [ngStyle]="{ color: 'red' }">exit_to_app</mat-icon>
         <span [ngStyle]="{ color: 'red' }">
           {{ 'toolbar.menu.login.logout' | translate }}
@@ -110,7 +114,7 @@
   <nav
     mat-tab-nav-bar
     class="toolbar__tab-panel"
-    [ngStyle]="{ display: showTabs ? '' : 'none' }"
+    *ngIf="showTabs && tabs.length > 0"
     [tabPanel]="tabPanel">
     <a
       mat-tab-link

@@ -1,0 +1,13 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+
+  overflow: auto;
+  padding-bottom: 48px;
+  box-sizing: border-box;
+
+  min-height: 100vh;
+  max-height: 100vh;
+  min-width: 100vw;
+  max-width: 100vw;
+}

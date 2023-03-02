@@ -3,7 +3,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -15,11 +14,11 @@ import { ModuleToolbarTab } from '../../domain/module-tab';
 import { MatToolbar } from '@angular/material/toolbar';
 
 @Component({
-  selector: 'app-toolbar[tabs][activeTab]',
+  selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements OnInit, AfterViewInit {
+export class ToolbarComponent implements AfterViewInit {
   private _resizeObserver: ResizeObserver;
   readonly languages = Language;
   addMenuItems = [
@@ -29,10 +28,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     { text: 'toolbar.menu.add.curricula', path: '/' },
   ];
   compact = false;
-  user?: User;
-  @Input() tabs!: ModuleToolbarTab[];
+  @Input() user?: User;
+  @Input() tabs: ModuleToolbarTab[] = [];
   @Input() activeTab?: ModuleToolbarTab;
-  @Input() showTabs = true;
+  @Input() showTabs = false;
+  @Input() showBurger = false;
+  @Input() showAddMenu = false;
   @Output() menuButtonClick = new EventEmitter();
   @ViewChild(MatToolbar) matToolbar!: MatToolbar;
 
@@ -43,13 +44,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     this._resizeObserver = new ResizeObserver(entries => {
       this.onResize(entries[0]?.contentRect.width);
     });
-  }
-
-  ngOnInit() {
-    this.user = {
-      login: 'Пользователь1',
-      roles: ['admin', 'guest'],
-    };
   }
 
   ngAfterViewInit() {

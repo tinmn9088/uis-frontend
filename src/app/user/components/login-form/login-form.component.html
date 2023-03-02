@@ -53,11 +53,11 @@
         color="primary"
         [disabled]="formGroup.disabled">
         {{ 'user.login_form.sign_in' | translate }}
-        <mat-progress-bar
-          class="login-from__submit-button-progress-bar"
-          [ngStyle]="{ opacity: formGroup.disabled ? '' : '0' }"
-          mode="indeterminate"></mat-progress-bar>
       </button>
+      <mat-progress-bar
+        class="login-form__progress-bar"
+        [ngStyle]="{ visibility: formGroup.disabled ? 'visible' : 'hidden' }"
+        mode="indeterminate"></mat-progress-bar>
     </form>
   </mat-card>
 </div>
