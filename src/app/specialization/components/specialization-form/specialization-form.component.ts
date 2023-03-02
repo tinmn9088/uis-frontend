@@ -161,7 +161,7 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
           return specializations.map(specialization => {
             return {
               name: specialization.name,
-              value: specialization,
+              value: specialization.id,
             } as SelectOption;
           });
         })
