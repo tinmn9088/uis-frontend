@@ -2,7 +2,7 @@
   "user": {
     "name": "User",
     "themeCssClass": "user-theme",
-    "path": "/user"
+    "path": "/users"
   },
   "category": {
     "name": "Category",

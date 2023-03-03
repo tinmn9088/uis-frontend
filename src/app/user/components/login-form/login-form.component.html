@@ -1,6 +1,6 @@
 <div class="login-form">
   <h3 class="login-form__header">
-    {{ 'user.login_form.sign_in' | translate }}
+    {{ 'users.login_form.sign_in' | translate }}
   </h3>
 
   <mat-card class="login-form__card">
@@ -13,11 +13,11 @@
         appearance="fill"
         color="primary">
         <mat-label>
-          {{ 'user.login_form.login_label' | translate }}
+          {{ 'users.login_form.login_label' | translate }}
         </mat-label>
         <input matInput name="username" formControlName="username" />
         <mat-error>
-          {{ 'user.login_form.required' | translate }}
+          {{ 'users.login_form.required' | translate }}
         </mat-error>
       </mat-form-field>
       <mat-form-field
@@ -25,7 +25,7 @@
         appearance="fill"
         color="primary">
         <mat-label>{{
-          'user.login_form.password_label' | translate
+          'users.login_form.password_label' | translate
         }}</mat-label>
         <input
           matInput
@@ -44,7 +44,7 @@
           }}</mat-icon>
         </button>
         <mat-error>
-          {{ 'user.login_form.required' | translate }}
+          {{ 'users.login_form.required' | translate }}
         </mat-error>
       </mat-form-field>
       <button
@@ -52,7 +52,7 @@
         mat-flat-button
         color="primary"
         [disabled]="formGroup.disabled">
-        {{ 'user.login_form.sign_in' | translate }}
+        {{ 'users.login_form.sign_in' | translate }}
       </button>
       <mat-progress-bar
         class="login-form__progress-bar"

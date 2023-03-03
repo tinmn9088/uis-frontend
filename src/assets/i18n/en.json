@@ -34,7 +34,17 @@
     "checkbox_select_all": "Select all",
     "checkbox_unselect_all": "Unselect all"
   },
-  "user": {
+  "users": {
+    "list": {
+      "search": {
+        "placeholder": "Search by: username"
+      },
+      "columns": {
+        "username": "Username",
+        "roles": "Roles"
+      },
+      "no_data_label": "No users found."
+    },
     "login_form": {
       "sign_in": "Sign in",
       "password_label": "Password",
