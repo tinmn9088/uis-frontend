@@ -6,7 +6,7 @@ import { UserTableComponent } from './user/components/user-table/user-table.comp
 
 const routes: Routes = [
   {
-    path: 'users',
+    path: 'user',
     component: UserLayoutComponent,
     children: [
       {
