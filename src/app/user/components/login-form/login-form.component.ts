@@ -43,7 +43,7 @@ export class LoginFormComponent {
     this._userService.login(loginRequest).subscribe({
       next: () => {
         this._translate
-          .get('user.login_form.messages.success')
+          .get('users.login_form.messages.success')
           .pipe(delay(666))
           .subscribe(message => {
             this.formGroup.enable();
@@ -53,7 +53,7 @@ export class LoginFormComponent {
       },
       error: () => {
         this._translate
-          .get('user.login_form.messages.error')
+          .get('users.login_form.messages.error')
           .subscribe(message => {
             this.formGroup.enable();
             this._snackbarService.showError(message, '✕');
