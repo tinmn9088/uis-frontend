@@ -3,7 +3,9 @@
     {{ 'users.login_form.sign_in' | translate }}
   </h3>
 
-  <mat-card class="login-form__card">
+  <mat-card
+    class="login-form__card"
+    [ngStyle]="{ width: cardWidthPercents + '%' }">
     <form
       class="login-form__form"
       [formGroup]="formGroup"
