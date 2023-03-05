@@ -12,7 +12,7 @@ import { SpecializationUpdateRequest } from '../domain/specialization-update-req
   providedIn: 'root',
 })
 export class SpecializationService {
-  private readonly MODULE_URL = `http://${environment.backendUrl}${Modules.specialization.path}`;
+  private readonly MODULE_URL = `http://${environment.backendUrl}${Modules.specialization.resourcePath}`;
 
   constructor(private _http: HttpClient) {}
 
