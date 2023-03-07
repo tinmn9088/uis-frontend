@@ -1,8 +1,5 @@
 <div class="table">
   <table mat-table [dataSource]="dataSource">
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let discipline; columns: displayedColumns"></tr>
-
     <!-- Username Column -->
     <ng-container matColumnDef="username">
       <th mat-header-cell *matHeaderCellDef>
@@ -29,6 +26,12 @@
         {{ user.roles }}
       </td>
     </ng-container>
+
+    <tr
+      mat-header-row
+      class="table__column-header"
+      *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let discipline; columns: displayedColumns"></tr>
   </table>
 
   <div class="table__loading" *ngIf="isLoading">

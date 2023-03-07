@@ -4,9 +4,17 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { SharedModule } from '../shared/shared.module';
 import { UserLayoutComponent } from './components/user-layout/user-layout.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserRightsManagementComponent } from './components/user-rights-management/user-rights-management.component';
 
 @NgModule({
-  declarations: [LoginFormComponent, UserLayoutComponent, UserTableComponent],
+  declarations: [
+    LoginFormComponent,
+    UserLayoutComponent,
+    UserTableComponent,
+    UserListComponent,
+    UserRightsManagementComponent,
+  ],
   imports: [CommonModule, SharedModule],
 })
 export class UserModule {}

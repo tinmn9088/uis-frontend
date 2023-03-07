@@ -5,6 +5,7 @@ export const environment = {
   backendUrl: 'localhost:8080/api',
   localStorageKeys: {
     auth: 'auth',
+    user: 'user',
     language: 'lang',
   },
 };

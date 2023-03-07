@@ -2,10 +2,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { LoginRequest } from '../models/login-request';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { LoginResponse } from '../models/login-response';
 import Modules from 'src/assets/modules.json';
 import { UserPageableResponse } from '../domain/user-pageable-response';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,21 @@ export class UserService {
 
   constructor(private _http: HttpClient) {}
 
-  getLinkToSearchPage() {
+  get linkToSearchPage() {
     return `${Modules.user.path}`;
+  }
+
+  // TODO: return undefined if no user in localStorage
+  get user() {
+    const userString = localStorage.getItem(environment.localStorageKeys.user);
+    return userString ? JSON.parse(userString) : { login: 'User1' };
+  }
+
+  set user(user: User | undefined) {
+    localStorage.setItem(
+      environment.localStorageKeys.user,
+      JSON.stringify(user)
+    );
   }
 
   login(loginRequest: LoginRequest): Observable<LoginResponse> {

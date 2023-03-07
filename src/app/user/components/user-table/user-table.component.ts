@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { UserPageableResponse } from '../../domain/user-pageable-response';
@@ -8,7 +8,7 @@ import { UserPageableResponse } from '../../domain/user-pageable-response';
   templateUrl: './user-table.component.html',
   styleUrls: ['./user-table.component.scss'],
 })
-export class UserTableComponent {
+export class UserTableComponent implements OnInit {
   @Input() pageSize?: number;
   @Input() pageNumber?: number;
   @Output() dataUpdated = new EventEmitter<UserPageableResponse>();
@@ -28,7 +28,13 @@ export class UserTableComponent {
     this._userService
       .search(searchQuery || '', this.pageSize, this.pageNumber)
       .subscribe(response => {
-        this.dataSource = response.content;
+        this.dataSource = [
+          ...response.content,
+          ...response.content,
+          ...response.content,
+          ...response.content,
+          ...response.content,
+        ];
         this.isLoading = false;
         this.dataUpdated.emit(response);
       });

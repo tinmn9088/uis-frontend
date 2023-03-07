@@ -19,6 +19,7 @@ import { ModuleService } from '../../services/module.service';
 import { ModuleName } from '../../domain/module-name';
 import { THEME_CSS_CLASS_TOKEN } from '../../shared.module';
 import { User } from 'src/app/user/models/user';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-module-layout',
@@ -36,10 +37,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   sidenavFullsize = true;
   showToolbarTabs = true;
   isContentHidden = false;
-  user: User = {
-    login: 'User1',
-    roles: ['admin', 'user'],
-  };
+  user?: User;
   sidenavOptions!: ModuleSidenavOption[];
   activeOption?: ModuleSidenavOption;
   toolbarTabs!: ModuleSidenavOption[];
@@ -53,6 +51,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     private _breakpointObserver: BreakpointObserver,
     private _router: Router,
     private _moduleService: ModuleService,
+    private _userService: UserService,
     @Inject(THEME_CSS_CLASS_TOKEN) public themeClass$: BehaviorSubject<string>
   ) {
     this._resizeObserver = new ResizeObserver(entries => {
@@ -106,6 +105,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this._breakpoint$.subscribe(() => this.onBreakpointChange());
+    this.user = this._userService.user;
   }
 
   ngAfterViewInit() {

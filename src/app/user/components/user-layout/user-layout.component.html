@@ -1,4 +1,6 @@
-<div class="layout" [ngClass]="themeClass$ | async">
-  <app-toolbar class="layout__toolbar"></app-toolbar>
-  <router-outlet></router-outlet>
+<div class="user-layout" [ngClass]="themeClass$ | async">
+  <app-toolbar class="user-layout__toolbar" [user]="user"></app-toolbar>
+  <div class="user-layout__content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
