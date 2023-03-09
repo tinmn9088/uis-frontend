@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { LoginRequest } from '../models/login-request';
-import { Observable, tap } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
 import { LoginResponse } from '../models/login-response';
 import Modules from 'src/assets/modules.json';
 import { UserPageableResponse } from '../domain/user-pageable-response';
@@ -37,6 +37,7 @@ export class UserService {
     return this._http
       .post<LoginResponse>(`${this.URL}/auth/login`, loginRequest)
       .pipe(
+        shareReplay(), // to prevent the receiver of this Observable from accidentally triggering multiple POST requests
         tap(response => {
           console.debug('Authentication successful', response);
           localStorage.setItem(
