@@ -26,6 +26,7 @@ import { ModuleService } from './shared/services/module.service';
 import { CategoryModule } from './category/category.module';
 import { ModuleRoutingModule } from './shared/module-routing.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 export function translateLoader(
   translate: TranslateService,
@@ -75,6 +76,7 @@ export class AppErrorHandler implements ErrorHandler {
   declarations: [AppComponent, AppRoutingRedirectComponent],
   bootstrap: [AppComponent],
   imports: [
+    AuthModule,
     BrowserModule,
     AppRoutingModule,
     SharedModule,

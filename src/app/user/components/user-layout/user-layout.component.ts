@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { THEME_CSS_CLASS_TOKEN } from 'src/app/shared/shared.module';
 import { User } from '../../models/user';
-import { UserService } from '../../services/user.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-user-layout',
@@ -13,11 +13,11 @@ export class UserLayoutComponent implements OnInit {
   user?: User;
 
   constructor(
-    private _userService: UserService,
+    private _authService: AuthService,
     @Inject(THEME_CSS_CLASS_TOKEN) public themeClass$: BehaviorSubject<string>
   ) {}
 
   ngOnInit() {
-    this.user = this._userService.user;
+    this.user = this._authService.user;
   }
 }

@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { delay, distinctUntilChanged } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -26,7 +26,7 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _breakpointObserver: BreakpointObserver,
-    private _userService: UserService,
+    private _authService: AuthService,
     private _snackbarService: SnackbarService,
     private _router: Router,
     private _translate: TranslateService
@@ -54,7 +54,7 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
     }
     this.formGroup.disable();
     const loginRequest = { username: this.username, password: this.password };
-    this._userService.login(loginRequest).subscribe({
+    this._authService.login(loginRequest).subscribe({
       next: () => {
         this._translate
           .get('users.login_form.messages.success')
