@@ -22,7 +22,7 @@ export class UserService {
     size?: number,
     page?: number
   ): Observable<UserPageableResponse> {
-    let params = new HttpParams().set('query', query);
+    let params = new HttpParams().set('username', query);
     if (size) params = params.set('size', size);
     if (page) params = params.set('page', page);
     return this._http.get<UserPageableResponse>(`${this.URL}/users/search`, {

@@ -63,7 +63,7 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
           .subscribe(message => {
             this.formGroup.enable();
             this._snackbarService.showSuccess(message, SnackbarAction.Cross);
-            //this._router.navigateByUrl('/')
+            this._router.navigateByUrl('/user/list');
           });
       },
       error: () => {

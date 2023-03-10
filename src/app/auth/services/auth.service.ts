@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
-import { Auth } from 'src/app/user/models/auth';
 import { User } from 'src/app/user/models/user';
-import { LoginRequest } from 'src/app/user/models/login-request';
 import { Observable, shareReplay, tap } from 'rxjs';
-import { LoginResponse } from 'src/app/user/models/login-response';
+import { Auth } from '../domain/auth';
+import { LoginRequest } from '../domain/login-request';
+import { RefreshRequest } from '../domain/refresh-request';
 
 @Injectable({
   providedIn: 'root',
@@ -33,13 +33,34 @@ export class AuthService {
     return authString ? JSON.parse(authString) : {};
   }
 
-  login(loginRequest: LoginRequest): Observable<LoginResponse> {
+  /**
+   * Make login request and put response to local storage.
+   */
+  login(loginRequest: LoginRequest): Observable<Auth> {
     return this._http
-      .post<LoginResponse>(`${this.URL}/tokens/create`, loginRequest)
+      .post<Auth>(`${this.URL}/tokens/create`, loginRequest)
       .pipe(
         shareReplay(), // to prevent the receiver of this Observable from accidentally triggering multiple POST requests
         tap(response => {
           console.debug('Authentication successful', response);
+          localStorage.setItem(
+            environment.localStorageKeys.auth,
+            JSON.stringify(response)
+          );
+        })
+      );
+  }
+
+  /**
+   * Make refresh request and put response to local storage.
+   */
+  refresh(refreshRequest: RefreshRequest): Observable<Auth> {
+    return this._http
+      .post<Auth>(`${this.URL}/tokens/refresh`, refreshRequest)
+      .pipe(
+        shareReplay(), // to prevent the receiver of this Observable from accidentally triggering multiple POST requests
+        tap(response => {
+          console.debug('Refresh successful', response);
           localStorage.setItem(
             environment.localStorageKeys.auth,
             JSON.stringify(response)
