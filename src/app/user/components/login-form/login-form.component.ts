@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { delay, distinctUntilChanged } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
 
 @Component({
   selector: 'app-login-form',
@@ -61,7 +62,7 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
           .pipe(delay(666))
           .subscribe(message => {
             this.formGroup.enable();
-            this._snackbarService.showSuccess(message, '✕');
+            this._snackbarService.showSuccess(message, SnackbarAction.Cross);
             //this._router.navigateByUrl('/')
           });
       },
@@ -70,7 +71,7 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
           .get('users.login_form.messages.error')
           .subscribe(message => {
             this.formGroup.enable();
-            this._snackbarService.showError(message, '✕');
+            this._snackbarService.showError(message, SnackbarAction.Cross);
           });
       },
     });

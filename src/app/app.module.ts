@@ -27,6 +27,7 @@ import { CategoryModule } from './category/category.module';
 import { ModuleRoutingModule } from './shared/module-routing.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { SnackbarAction } from './shared/domain/snackbar-action';
 
 export function translateLoader(
   translate: TranslateService,
@@ -66,7 +67,7 @@ export class AppErrorHandler implements ErrorHandler {
     console.error(error);
     if (error.message) {
       this._zone.run(() => {
-        this._snackbarService.showError(error.message, '✕');
+        this._snackbarService.showError(error.message, SnackbarAction.Cross);
       });
     }
   }
