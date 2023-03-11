@@ -7,10 +7,12 @@ import { DisciplineListComponent } from '../discipline/components/discipline-lis
 import { DisciplineFormComponent } from '../discipline/components/discipline-form/discipline-form.component';
 import { NgModule } from '@angular/core';
 import { ModuleLayoutComponent } from './components/module-layout/module-layout.component';
+import { AuthGuard } from '../auth/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
+    canActivateChild: [AuthGuard],
     component: ModuleLayoutComponent,
     children: [
       {

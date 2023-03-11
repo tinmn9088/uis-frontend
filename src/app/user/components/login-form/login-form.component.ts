@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { delay, distinctUntilChanged } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -19,6 +19,7 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
     .pipe(distinctUntilChanged());
   cardWidthPercents = 66;
   passwordHidden = true;
+  redirectTo?: string;
 
   formGroup: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),
@@ -30,11 +31,16 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
     private _authService: AuthService,
     private _snackbarService: SnackbarService,
     private _router: Router,
+    private _activatedRoute: ActivatedRoute,
     private _translate: TranslateService
   ) {}
 
   ngOnInit() {
     this._breakpoint$.subscribe(() => this.onBreakpointChange());
+    this.redirectTo = this._activatedRoute.snapshot.queryParams['redirectTo'];
+    if (this.redirectTo) {
+      console.debug(`Will redirect back to: "${this.redirectTo}"`);
+    }
   }
 
   ngAfterViewInit() {
@@ -63,7 +69,7 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
           .subscribe(message => {
             this.formGroup.enable();
             this._snackbarService.showSuccess(message, SnackbarAction.Cross);
-            this._router.navigateByUrl('/user/list');
+            this._router.navigateByUrl(this.redirectTo || '/');
           });
       },
       error: () => {
