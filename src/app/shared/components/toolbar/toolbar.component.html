@@ -103,7 +103,7 @@
     </mat-menu>
   </mat-toolbar-row>
 
-  <mat-toolbar-row *ngIf="compact" class="toolbar__row-2">
+  <mat-toolbar-row *ngIf="compact && user" class="toolbar__row-2">
     <ng-container
       class="toolbar__row-2-tabs"
       *ngTemplateOutlet="tabsTemplate"></ng-container>
