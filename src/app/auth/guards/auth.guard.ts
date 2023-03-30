@@ -83,7 +83,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
    * @param url current url
    */
   private navigateToAuthPage(url: string) {
-    this._authService.auth = undefined;
     this._router.navigate(this._authService.AUTH_PAGE_PATH, {
       queryParams: { redirectTo: url },
     });

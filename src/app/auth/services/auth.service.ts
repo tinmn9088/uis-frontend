@@ -18,20 +18,12 @@ export class AuthService {
 
   constructor(private _http: HttpClient) {}
 
-  // TODO: return undefined if no user in localStorage
   get user() {
     const userString = localStorage.getItem(environment.localStorageKeys.user);
-    return userString ? JSON.parse(userString) : { login: 'User1' };
+    return userString ? JSON.parse(userString) : undefined;
   }
 
-  /**
-   * Pass anything falsy to remove item from local storage.
-   */
-  set user(user: User | undefined) {
-    if (!user) {
-      localStorage.removeItem(environment.localStorageKeys.auth);
-      return;
-    }
+  set user(user: User) {
     localStorage.setItem(
       environment.localStorageKeys.user,
       JSON.stringify(user)
@@ -43,14 +35,7 @@ export class AuthService {
     return authString ? JSON.parse(authString) : undefined;
   }
 
-  /**
-   * Pass anything falsy to remove item from local storage.
-   */
-  set auth(auth: Auth | undefined) {
-    if (!auth) {
-      localStorage.removeItem(environment.localStorageKeys.auth);
-      return;
-    }
+  set auth(auth: Auth) {
     localStorage.setItem(
       environment.localStorageKeys.auth,
       JSON.stringify(auth)
@@ -68,6 +53,7 @@ export class AuthService {
         tap(response => {
           console.debug('Authentication successful', response);
           this.auth = response;
+          this.user = { login: loginRequest.username, roles: [] };
         })
       );
   }
@@ -88,5 +74,13 @@ export class AuthService {
           this.auth = response;
         })
       );
+  }
+
+  /**
+   * Remove auth and user from local storage.
+   */
+  logout() {
+    localStorage.removeItem(environment.localStorageKeys.auth);
+    localStorage.removeItem(environment.localStorageKeys.user);
   }
 }

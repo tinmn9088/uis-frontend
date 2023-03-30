@@ -12,6 +12,7 @@ import { Language } from '../../domain/language';
 import { LanguageService } from '../../services/language.service';
 import { ModuleToolbarTab } from '../../domain/module-tab';
 import { MatToolbar } from '@angular/material/toolbar';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -39,6 +40,7 @@ export class ToolbarComponent implements AfterViewInit {
 
   constructor(
     public languageService: LanguageService,
+    private _authService: AuthService,
     private _router: Router
   ) {
     this._resizeObserver = new ResizeObserver(entries => {
@@ -62,5 +64,10 @@ export class ToolbarComponent implements AfterViewInit {
 
   onResize(width: number) {
     this.compact = width < 960;
+  }
+
+  onLogout() {
+    this._authService.logout();
+    this._router.navigateByUrl('/');
   }
 }

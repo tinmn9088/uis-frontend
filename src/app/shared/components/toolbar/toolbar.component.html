@@ -79,7 +79,7 @@
         <mat-icon>settings</mat-icon>
         <span>{{ 'toolbar.menu.login.settings' | translate }}</span>
       </a>
-      <a *ngIf="user" mat-menu-item routerLink="/">
+      <a *ngIf="user" mat-menu-item (click)="onLogout()">
         <mat-icon [ngStyle]="{ color: 'red' }">exit_to_app</mat-icon>
         <span [ngStyle]="{ color: 'red' }">
           {{ 'toolbar.menu.login.logout' | translate }}
