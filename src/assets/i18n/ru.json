@@ -32,7 +32,8 @@
   "filtered_select": {
     "placeholder": "Поиск ...",
     "checkbox_select_all": "Выбрать все",
-    "checkbox_unselect_all": "Отменить выбор"
+    "checkbox_unselect_all": "Отменить выбор",
+    "cannot_load_options": "Не удалось загрузить"
   },
   "users": {
     "list": {
@@ -41,7 +42,9 @@
       },
       "columns": {
         "username": "Имя пользователя",
-        "roles": "Роли"
+        "roles": "Роли",
+        "last_activity": "Последняя активность",
+        "creation_time": "Дата создания"
       },
       "no_data_label": "Пользователей не найдено."
     },
@@ -54,6 +57,15 @@
         "success": "Вход выполнен",
         "error": "Ошибка"
       }
+    },
+    "user_edit_dialog": {
+      "title": "Пользователь",
+      "cancel_button": "Отмена",
+      "delete_button": "Удалить пользователя"
+    },
+    "user_rights_management": {
+      "role_select_label": "Название роли",
+      "current_roles_label": "Текущие роли"
     }
   },
   "disciplines": {

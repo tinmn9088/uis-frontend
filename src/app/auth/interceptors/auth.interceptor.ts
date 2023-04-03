@@ -5,9 +5,10 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Auth } from '../domain/auth';
+import { Router } from '@angular/router';
 
 /**
  * Puts `Authorization` header with JWT in each request.
@@ -16,7 +17,7 @@ import { Auth } from '../domain/auth';
 export class AuthInterceptor implements HttpInterceptor {
   static readonly NOT_ADD_AUTHORIZATION_HEADER = 'Not-Add-Authorization';
 
-  constructor(private _authService: AuthService) {}
+  constructor(private _authService: AuthService, private _router: Router) {}
 
   intercept(
     req: HttpRequest<unknown>,
@@ -39,7 +40,14 @@ export class AuthInterceptor implements HttpInterceptor {
     if (auth) {
       console.debug('`Authorization` header added.');
     }
-    return next.handle(modifiedReq);
+    return next.handle(modifiedReq).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          this.navigateToAuthPage();
+        }
+        return throwError(() => error);
+      })
+    );
   }
 
   private addAuthorizationHeader<T>(
@@ -51,6 +59,14 @@ export class AuthInterceptor implements HttpInterceptor {
         'Authorization',
         `${auth.tokenType} ${auth.accessToken}`
       ),
+    });
+  }
+  /**
+   * @param url request url
+   */
+  private navigateToAuthPage() {
+    this._router.navigate(this._authService.AUTH_PAGE_PATH, {
+      queryParams: { redirectTo: this._router.url },
     });
   }
 }

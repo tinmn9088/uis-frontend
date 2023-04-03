@@ -37,7 +37,7 @@
       class="toolbar__button_with-arrow underline-on"
       aria-label="Login button"
       [matMenuTriggerFor]="loginMenu">
-      {{ user?.login || 'toolbar.login.default' | translate }}
+      {{ user?.username || 'toolbar.login.default' | translate }}
       <mat-icon class="toolbar__button-arrow">arrow_drop_down</mat-icon>
     </span>
 
@@ -56,10 +56,10 @@
           </div>
           <div class="toolbar__login-menu-header-text">
             <span class="toolbar__login-menu-header-login">
-              {{ user.login || 'toolbar.login.default' | translate }}
+              {{ user.username || 'toolbar.login.default' | translate }}
             </span>
             <span class="toolbar__login-menu-header-roles">
-              {{ user.roles | join : ', ' }}
+              {{ getUserRolesNames() | join : ', ' }}
             </span>
           </div>
         </div>

@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { THEME_CSS_CLASS_TOKEN } from 'src/app/shared/shared.module';
-import { User } from '../../models/user';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from '../../domain/user';
 
 @Component({
   selector: 'app-user-layout',

@@ -6,6 +6,8 @@ import { UserLayoutComponent } from './components/user-layout/user-layout.compon
 import { UserTableComponent } from './components/user-table/user-table.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserRightsManagementComponent } from './components/user-rights-management/user-rights-management.component';
+import { UserEditFormComponent } from './components/user-edit-form/user-edit-form.component';
+import { UserEditDialogComponent } from './components/user-edit-dialog/user-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { UserRightsManagementComponent } from './components/user-rights-manageme
     UserTableComponent,
     UserListComponent,
     UserRightsManagementComponent,
+    UserEditFormComponent,
+    UserEditDialogComponent,
   ],
   imports: [CommonModule, SharedModule],
 })

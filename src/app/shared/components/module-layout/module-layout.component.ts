@@ -18,8 +18,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { ModuleService } from '../../services/module.service';
 import { ModuleName } from '../../domain/module-name';
 import { THEME_CSS_CLASS_TOKEN } from '../../shared.module';
-import { User } from 'src/app/user/models/user';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from 'src/app/user/domain/user';
 
 @Component({
   selector: 'app-module-layout',

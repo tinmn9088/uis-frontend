@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { User } from '../../models/user';
 import { UserPageableResponse } from '../../domain/user-pageable-response';
+import { UserEditDialogComponent } from '../user-edit-dialog/user-edit-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { User } from '../../domain/user';
 
 @Component({
   selector: 'app-user-table',
@@ -12,11 +14,19 @@ export class UserTableComponent implements OnInit {
   @Input() pageSize?: number;
   @Input() pageNumber?: number;
   @Output() dataUpdated = new EventEmitter<UserPageableResponse>();
-  displayedColumns: string[] = ['username', 'roles'];
+  displayedColumns: string[] = [
+    'username',
+    'roles',
+    'lastActivity',
+    'creationTime',
+  ];
   isLoading = true;
   dataSource: User[] = [];
 
-  constructor(private _userService: UserService) {}
+  constructor(
+    private _userService: UserService,
+    private _matDialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.search();
@@ -28,13 +38,7 @@ export class UserTableComponent implements OnInit {
     this._userService
       .search(searchQuery || '', this.pageSize, this.pageNumber)
       .subscribe(response => {
-        this.dataSource = [
-          ...response.content,
-          ...response.content,
-          ...response.content,
-          ...response.content,
-          ...response.content,
-        ];
+        this.dataSource = response.content;
         this.isLoading = false;
         this.dataUpdated.emit(response);
       });
@@ -46,5 +50,13 @@ export class UserTableComponent implements OnInit {
       visibility: this.isLoading ? 'hidden' : 'visible',
       transition: 'opacity 0.1s linear',
     };
+  }
+
+  getUserRolesNames(user: User): string[] | undefined {
+    return user.roles.map(role => role.name);
+  }
+
+  openUserEditDialog(user: User) {
+    this._matDialog.open(UserEditDialogComponent, { data: { user } });
   }
 }

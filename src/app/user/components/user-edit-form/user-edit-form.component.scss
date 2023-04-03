@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  flex-direction: column;
+
+  &__title-username {
+    font-weight: bolder;
+  }
+
+  &__rights-management {
+    flex-grow: 1;
+    margin: 0 24px;
+
+    &-title {
+      margin: 0;
+    }
+  }
+
+  &__delete-button {
+    width: fit-content;
+  }
+}

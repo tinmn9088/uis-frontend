@@ -1,12 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
-import { User } from 'src/app/user/models/user';
-import { Observable, shareReplay, tap } from 'rxjs';
+import { Observable, shareReplay, tap, mergeMap, map } from 'rxjs';
 import { Auth } from '../domain/auth';
 import { LoginRequest } from '../domain/login-request';
 import { RefreshRequest } from '../domain/refresh-request';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
+import { User } from 'src/app/user/domain/user';
+import { JWT_HELPER_SERVICE_TOKEN } from '../auth.module';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +19,12 @@ export class AuthService {
 
   readonly AUTH_PAGE_PATH = ['user', 'login'];
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient,
+    private _userService: UserService,
+    @Inject(JWT_HELPER_SERVICE_TOKEN)
+    private _jwtHelperService: JwtHelperService
+  ) {}
 
   get user() {
     const userString = localStorage.getItem(environment.localStorageKeys.user);
@@ -46,14 +54,24 @@ export class AuthService {
    * Make login request and put response to local storage.
    */
   login(loginRequest: LoginRequest): Observable<Auth> {
+    let headers = new HttpHeaders();
+    headers = headers.append(AuthInterceptor.NOT_ADD_AUTHORIZATION_HEADER, '');
+
     return this._http
-      .post<Auth>(`${this.URL}/tokens/create`, loginRequest)
+      .post<Auth>(`${this.URL}/tokens/create`, loginRequest, { headers })
       .pipe(
         shareReplay(), // to prevent the receiver of this Observable from accidentally triggering multiple POST requests
-        tap(response => {
-          console.debug('Authentication successful', response);
-          this.auth = response;
-          this.user = { login: loginRequest.username, roles: [] };
+        mergeMap(authResponse => {
+          console.debug('Authentication successful', authResponse);
+          this.auth = authResponse;
+          const tokenPayload = this._jwtHelperService.decodeToken(
+            authResponse.accessToken
+          );
+          const userId = tokenPayload['user_id'];
+          return this._userService.getById(userId).pipe(
+            tap(userResponse => (this.user = userResponse)),
+            map(() => authResponse)
+          );
         })
       );
   }

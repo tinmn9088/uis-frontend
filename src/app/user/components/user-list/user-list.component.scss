@@ -43,6 +43,15 @@
     min-width: 50%;
     max-width: 100%;
   }
+
+  &__form-container {
+    padding: 5px;
+  }
+  
+  &__form {
+    display: flex;
+    height: 100%;
+  }
 }
 
 :host {

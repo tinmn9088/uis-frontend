@@ -1,3 +1,31 @@
-<mat-card class="rights-management-card">
-  <p>user-rights-management works!</p>
-</mat-card>
+<form class="form" [formGroup]="formGroup">
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label class="form__label">
+      {{ 'users.user_rights_management.role_select_label' | translate }}
+    </mat-label>
+    <app-filtered-select
+      class="form__select"
+      [options]="roleOptions"
+      [isInternalFilterOn]="false"
+      [isLoading]="areOptionsLoading"
+      (filterChanged)="updateOptions($event)"
+      formControlName="roleId"></app-filtered-select>
+  </mat-form-field>
+
+  <p class="form__roles-list-title">Current roles</p>
+  <div class="form__roles-list">
+    <ng-container *ngFor="let role of user.roles">
+      <div class="form__roles-list-item">
+        <span class="form__roles-list-role-title">{{ role.name }}</span>
+        <button
+          class="form__roles-list-role-delete-button"
+          mat-icon-button
+          disabled="true"
+          color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </div>
+</form>

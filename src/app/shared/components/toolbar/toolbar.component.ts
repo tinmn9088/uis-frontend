@@ -7,12 +7,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../../user/models/user';
 import { Language } from '../../domain/language';
 import { LanguageService } from '../../services/language.service';
 import { ModuleToolbarTab } from '../../domain/module-tab';
 import { MatToolbar } from '@angular/material/toolbar';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from 'src/app/user/domain/user';
 
 @Component({
   selector: 'app-toolbar',
@@ -69,5 +69,9 @@ export class ToolbarComponent implements AfterViewInit {
   onLogout() {
     this._authService.logout();
     this._router.navigateByUrl('/');
+  }
+
+  getUserRolesNames(): string[] | undefined {
+    return this.user?.roles.map(role => role.name);
   }
 }

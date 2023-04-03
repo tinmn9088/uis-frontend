@@ -32,7 +32,8 @@
   "filtered_select": {
     "placeholder": "Search ...",
     "checkbox_select_all": "Select all",
-    "checkbox_unselect_all": "Unselect all"
+    "checkbox_unselect_all": "Unselect all",
+    "cannot_load_options": "Failed to load options"
   },
   "users": {
     "list": {
@@ -41,7 +42,9 @@
       },
       "columns": {
         "username": "Username",
-        "roles": "Roles"
+        "roles": "Roles",
+        "last_activity": "Last Activity",
+        "creation_time": "Creation Time"
       },
       "no_data_label": "No users found."
     },
@@ -54,6 +57,16 @@
         "success": "Authentication successful",
         "error": "Authentication error"
       }
+    },
+    "user_edit_dialog": {
+      "title": "User",
+      "cancel_button": "Cancel",
+      "delete_button": "Delete user"
+    },
+    "user_rights_management": {
+      "role_select_label": "Role name",
+      "current_roles_label": "Current roles"
+
     }
   },
   "disciplines": {
