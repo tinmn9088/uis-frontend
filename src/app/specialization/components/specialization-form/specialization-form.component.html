@@ -40,7 +40,11 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="form__field" appearance="outline" color="primary">
+    <mat-form-field
+      class="form__field"
+      appearance="outline"
+      color="primary"
+      *ngIf="!areNotPermissionsPresent">
       <mat-label class="form__label">
         {{ 'specializations.form.parent_label' | translate }}
       </mat-label>
@@ -59,7 +63,9 @@
           class="form__add-button"
           mat-flat-button
           color="primary"
-          [disabled]="formGroup.disabled || !formGroup.valid">
+          [disabled]="
+            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+          ">
           {{ 'specializations.form.add_button' | translate }}
         </button>
       </ng-container>
@@ -68,7 +74,9 @@
           class="form__edit-button"
           mat-flat-button
           color="primary"
-          [disabled]="formGroup.disabled || !formGroup.valid">
+          [disabled]="
+            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+          ">
           {{ 'specializations.form.edit_button' | translate }}
         </button>
       </ng-template>

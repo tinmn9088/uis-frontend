@@ -10,6 +10,7 @@ import { User } from 'src/app/user/domain/user';
 import { JWT_HELPER_SERVICE_TOKEN } from '../auth.module';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserService } from 'src/app/user/services/user.service';
+import { Permission } from '../domain/permission';
 
 @Injectable({
   providedIn: 'root',
@@ -63,11 +64,12 @@ export class AuthService {
         shareReplay(), // to prevent the receiver of this Observable from accidentally triggering multiple POST requests
         mergeMap(authResponse => {
           console.debug('Authentication successful', authResponse);
-          this.auth = authResponse;
           const tokenPayload = this._jwtHelperService.decodeToken(
             authResponse.accessToken
           );
           const userId = tokenPayload['user_id'];
+          const permissions = tokenPayload['authorities'];
+          this.auth = Object.assign(authResponse, { permissions });
           return this._userService.getById(userId).pipe(
             tap(userResponse => (this.user = userResponse)),
             map(() => authResponse)
@@ -100,5 +102,12 @@ export class AuthService {
   logout() {
     localStorage.removeItem(environment.localStorageKeys.auth);
     localStorage.removeItem(environment.localStorageKeys.user);
+  }
+
+  hasUserPermissions(permissionsNeeded: Permission[]): boolean {
+    const currentUserPermissions = this.auth?.permissions;
+    return permissionsNeeded.every(permission =>
+      currentUserPermissions?.includes(permission)
+    );
   }
 }
