@@ -15,6 +15,7 @@ describe('UserRightsManagementComponent', () => {
 
     fixture = TestBed.createComponent(UserRightsManagementComponent);
     component = fixture.componentInstance;
+    component.user = { id: 1, username: 'testuser', roles: [] };
     fixture.detectChanges();
   });
 

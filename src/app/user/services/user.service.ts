@@ -34,4 +34,17 @@ export class UserService {
       params: params,
     });
   }
+
+  grantRole(userId: number, roleId: number): Observable<void> {
+    return this._http.post<void>(
+      `${this.MODULE_URL}/${userId}/roles/${roleId}`,
+      null
+    );
+  }
+
+  revokeRole(userId: number, roleId: number): Observable<void> {
+    return this._http.delete<void>(
+      `${this.MODULE_URL}/${userId}/roles/${roleId}`
+    );
+  }
 }

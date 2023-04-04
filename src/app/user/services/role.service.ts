@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import Modules from 'src/assets/modules.json';
 import { environment } from 'src/environments/environment.development';
 import { RolePageableResponse } from '../domain/role-pageable-response';
 
@@ -9,7 +8,7 @@ import { RolePageableResponse } from '../domain/role-pageable-response';
   providedIn: 'root',
 })
 export class RoleService {
-  private readonly URL = `http://${environment.backendUrl}`;
+  private readonly URL = `http://${environment.backendUrl}/roles`;
 
   constructor(private _http: HttpClient) {}
 
@@ -21,7 +20,7 @@ export class RoleService {
     let params = new HttpParams().set('name', query);
     if (size) params = params.set('size', size);
     if (page) params = params.set('page', page);
-    return this._http.get<RolePageableResponse>(`${this.URL}/roles/search`, {
+    return this._http.get<RolePageableResponse>(`${this.URL}/search`, {
       params: params,
     });
   }

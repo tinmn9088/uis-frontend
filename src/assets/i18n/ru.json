@@ -65,7 +65,12 @@
     },
     "user_rights_management": {
       "role_select_label": "Название роли",
-      "current_roles_label": "Текущие роли"
+      "current_roles_label": "Текущие роли",
+      "no_roles_label": "У пользователя нет ролей",
+      "grant_role_button": "Добавить роль",
+      "role_granted_message": "Роль добавлена",
+      "role_revoked_message": "Роль удалена",
+      "role_change_error_message": "Не удалось изменить роли у пользователя"
     }
   },
   "disciplines": {

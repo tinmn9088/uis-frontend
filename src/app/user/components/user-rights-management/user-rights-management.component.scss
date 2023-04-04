@@ -3,9 +3,15 @@
     width: 100%;
   }
 
-  &__roles-list {    
+  &__roles-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__roles-list {
     &-title {
-      margin: 0;
+      text-align: center;
     }
 
     &-item {
@@ -24,10 +30,8 @@
       transform: scale(0.8);
     }
   }
-}
 
-.form__roles-list-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  &__no-roles-label {
+    text-align: center;
+  }
 }

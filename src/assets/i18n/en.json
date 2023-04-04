@@ -65,8 +65,12 @@
     },
     "user_rights_management": {
       "role_select_label": "Role name",
-      "current_roles_label": "Current roles"
-
+      "current_roles_label": "Current roles",
+      "no_roles_label": "User has no roles",
+      "grant_role_button": "Grant role",
+      "role_granted_message": "Role granted",
+      "role_revoked_message": "Role revoked",
+      "role_change_error_message": "Role changle failed"
     }
   },
   "disciplines": {

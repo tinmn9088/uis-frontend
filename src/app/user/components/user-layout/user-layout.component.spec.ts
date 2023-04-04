@@ -7,6 +7,8 @@ import {
   THEME_CSS_CLASS_TOKEN,
 } from 'src/app/shared/shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { JWT_HELPER_SERVICE_TOKEN } from 'src/app/auth/auth.module';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 describe('UserLayoutComponent', () => {
   let component: UserLayoutComponent;
@@ -20,6 +22,10 @@ describe('UserLayoutComponent', () => {
         {
           provide: THEME_CSS_CLASS_TOKEN,
           useValue: new BehaviorSubject(''),
+        },
+        {
+          provide: JWT_HELPER_SERVICE_TOKEN,
+          useValue: new JwtHelperService(),
         },
       ],
     }).compileComponents();
