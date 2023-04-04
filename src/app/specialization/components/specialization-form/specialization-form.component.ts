@@ -24,7 +24,6 @@ import { Permission } from 'src/app/auth/domain/permission';
 })
 export class SpecializationFormComponent implements OnInit, AfterViewInit {
   private _resizeObserver: ResizeObserver;
-  Permission = Permission;
   id?: number;
   editMode!: boolean;
   formContainerWidthPercents?: number;
@@ -46,7 +45,6 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
       Permission.SPECIALIZATION_UPDATE,
       Permission.SPECIALIZATION_CREATE,
     ]);
-    console.log(this.areNotPermissionsPresent);
 
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);

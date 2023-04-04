@@ -83,7 +83,8 @@
         "short_name": "Short name",
         "categories": "Categories"
       },
-      "no_data_label": "No disciplines found."
+      "no_data_label": "No disciplines found.",
+      "no_permission_label": "Not allowed"
     },
     "form": {
       "add_title": "Add discipline",
@@ -111,7 +112,8 @@
       "search": {
         "placeholder": "Search by: name, cipher"
       },
-      "no_data_label": "No specializations found."
+      "no_data_label": "No specializations found.",
+      "no_permission_label": "Not allowed"
     },
     "form": {
       "add_title": "Add specialization",

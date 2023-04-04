@@ -4,6 +4,8 @@ import { SpecializationTreeComponent } from '../specialization-tree/specializati
 import { PageEvent } from '@angular/material/paginator';
 import { SpecializationPageableResponse } from '../../domain/specialization-pageable-response';
 import { HighlightTextService } from 'src/app/shared/services/highlight-text.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-specialization-list',
@@ -17,11 +19,22 @@ export class SpecializationListComponent implements AfterViewInit {
   specializationTree!: SpecializationTreeComponent;
   totalElements!: number;
   pageSize = 6;
+  arePermissionsPresent: boolean;
   pageNumber!: number;
 
-  constructor(public highlightTextService: HighlightTextService) {
+  constructor(
+    public highlightTextService: HighlightTextService,
+    private _authService: AuthService
+  ) {
+    this.arePermissionsPresent = this._authService.hasUserPermissions([
+      Permission.SPECIALIZATION_SEARCH,
+    ]);
+
     this.formGroup = new FormGroup({
-      searchQuery: new FormControl(''),
+      searchQuery: new FormControl({
+        value: '',
+        disabled: !this.arePermissionsPresent,
+      }),
     });
     this._resizeObserver = new ResizeObserver(entries => {
       setTimeout(
