@@ -1,9 +1,16 @@
 {
+  "user": {
+    "name": "User",
+    "themeCssClass": "user-theme",
+    "path": "/user",
+    "resourcePath": "/users"
+  },
   "category": {
     "name": "Category",
     "themeCssClass": "category-theme",
     "i18nName": "module.name.categories",
-    "path": "/categories",
+    "path": "/category",
+    "resourcePath": "/categories",
     "sidenavAddButtonPath": "",
     "sidenavOptions": []
   },
@@ -11,22 +18,23 @@
     "name": "Discipline",
     "themeCssClass": "discipline-theme",
     "i18nName": "module.name.disciplines",
-    "path": "/disciplines",
+    "path": "/discipline",
+    "resourcePath": "/disciplines",
     "sidenavAddButtonPath": "/disciplines/add",
     "sidenavOptions": [
       {
         "title": "disciplines.options.search",
-        "path": "/disciplines/list"
+        "path": "/discipline/list"
       },
       {
         "title": "disciplines.options.add",
-        "path": "/disciplines/add",
+        "path": "/discipline/add",
         "groupId": 1
       },
       {
         "title": "disciplines.options.edit",
-        "path": "/disciplines/0",
-        "pathRegex": "/disciplines/\\d+",
+        "path": "/discipline/0",
+        "pathRegex": "/discipline/\\d+",
         "groupId": 1
       }
     ]
@@ -35,22 +43,23 @@
     "name": "Specialization",
     "themeCssClass": "specialization-theme",
     "i18nName": "module.name.specializations",
-    "path": "/specializations",
-    "sidenavAddButtonPath": "/specializations/add",
+    "path": "/specialization",
+    "resourcePath": "/specializations",
+    "sidenavAddButtonPath": "/specialization/add",
     "sidenavOptions": [
       {
         "title": "specializations.options.search",
-        "path": "/specializations/list"
+        "path": "/specialization/list"
       },
       {
         "title": "specializations.options.add",
-        "path": "/specializations/add",
+        "path": "/specialization/add",
         "groupId": 1
       },
       {
         "title": "specializations.options.edit",
-        "path": "/specializations/0",
-        "pathRegex": "/specializations/\\d+",
+        "path": "/specialization/0",
+        "pathRegex": "/specialization/\\d+",
         "groupId": 1
       }
     ]
@@ -60,6 +69,7 @@
     "themeCssClass": "curricula-theme",
     "i18nName": "module.name.curricula",
     "path": "/curricula",
+    "resourcePath": "/curricula",
     "sidenavAddButtonPath": "",
     "sidenavOptions": []
   }

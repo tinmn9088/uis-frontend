@@ -14,6 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SelectOption } from 'src/app/shared/domain/select-option';
 import { map } from 'rxjs';
 import { SpecializationUpdateRequest } from '../../domain/specialization-update-request';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-specialization-form',
@@ -27,23 +29,39 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
   parentOptions!: SelectOption[];
+  areNotPermissionsPresent: boolean;
   areParentOptionsLoading = false;
   @ViewChild('form') form!: ElementRef;
 
   constructor(
     private _specializationService: SpecializationService,
+    private _authService: AuthService,
     private _snackbarService: SnackbarService,
     private _translate: TranslateService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {
+    this.areNotPermissionsPresent = !this._authService.hasUserPermissions([
+      Permission.SPECIALIZATION_UPDATE,
+      Permission.SPECIALIZATION_CREATE,
+    ]);
+
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
     });
     this.formGroup = new FormGroup({
-      name: new FormControl('', Validators.required),
-      shortName: new FormControl('', Validators.required),
-      cipher: new FormControl('', Validators.required),
+      name: new FormControl(
+        { value: '', disabled: this.areNotPermissionsPresent },
+        Validators.required
+      ),
+      shortName: new FormControl(
+        { value: '', disabled: this.areNotPermissionsPresent },
+        Validators.required
+      ),
+      cipher: new FormControl(
+        { value: '', disabled: this.areNotPermissionsPresent },
+        Validators.required
+      ),
       parentId: new FormControl(),
     });
   }
@@ -161,7 +179,7 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
           return specializations.map(specialization => {
             return {
               name: specialization.name,
-              value: specialization,
+              value: specialization.id,
             } as SelectOption;
           });
         })

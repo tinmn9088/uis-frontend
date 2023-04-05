@@ -1,0 +1,38 @@
+<div class="user-list">
+  <form [formGroup]="formGroup" (ngSubmit)="onSearch()">
+    <div class="user-list__search-container">
+      <mat-form-field class="user-list__search" appearance="outline">
+        <input
+          placeholder="{{ 'users.list.search.placeholder' | translate }}"
+          matInput
+          formControlName="searchQuery" />
+        <button *ngIf="searchQuery" matSuffix mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <div class="user-list__content-container">
+    <div class="user-list__table-and-paginator-container">
+      <div class="user-list__table-container">
+        <app-user-table
+          class="user-list__table"
+          [pageSize]="pageSize"
+          [pageNumber]="pageNumber"
+          (dataUpdated)="onDataUpdate($event)"
+          (sortChanged)="onSortChange()">
+        </app-user-table>
+      </div>
+
+      <div class="user-list__paginator-container">
+        <app-paginator
+          class="user-list__paginator"
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageIndex]="pageNumber"
+          (page)="onPageChange($event)"></app-paginator>
+      </div>
+    </div>
+  </div>
+</div>

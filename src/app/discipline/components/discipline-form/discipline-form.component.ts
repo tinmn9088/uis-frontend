@@ -15,6 +15,8 @@ import { SelectOption } from 'src/app/shared/domain/select-option';
 import { map } from 'rxjs';
 import { CategoryService } from 'src/app/category/services/category.service';
 import { DisciplineUpdateRequest } from '../../domain/discipline-update-request';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-discipline-form',
@@ -28,23 +30,36 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
   categoriesOptions?: SelectOption[];
+  areNotPermissionsPresent: boolean;
   areCategoriesOptionsLoading = true;
   @ViewChild('form') form!: ElementRef;
 
   constructor(
     private _disciplineService: DisciplineService,
     private _categoryService: CategoryService,
+    private _authService: AuthService,
     private _snackbarService: SnackbarService,
     private _translate: TranslateService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {
+    this.areNotPermissionsPresent = !this._authService.hasUserPermissions([
+      Permission.DISCIPLINE_UPDATE,
+      Permission.DISCIPLINE_CREATE,
+    ]);
+
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
     });
     this.formGroup = new FormGroup({
-      name: new FormControl('', Validators.required),
-      shortName: new FormControl('', Validators.required),
+      name: new FormControl(
+        { value: '', disabled: this.areNotPermissionsPresent },
+        Validators.required
+      ),
+      shortName: new FormControl(
+        { value: '', disabled: this.areNotPermissionsPresent },
+        Validators.required
+      ),
       categories: new FormControl(),
     });
   }

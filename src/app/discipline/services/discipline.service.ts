@@ -13,7 +13,7 @@ import { DisciplineUpdateRequest } from '../domain/discipline-update-request';
   providedIn: 'root',
 })
 export class DisciplineService {
-  private readonly MODULE_URL = `http://${environment.backendUrl}${Modules.discipline.path}`;
+  private readonly MODULE_URL = `http://${environment.backendUrl}${Modules.discipline.resourcePath}`;
 
   constructor(private _http: HttpClient) {}
 

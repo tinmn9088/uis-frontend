@@ -4,9 +4,6 @@
     [dataSource]="dataSource"
     matSort
     (matSortChange)="onSortChange($event)">
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let discipline; columns: displayedColumns"></tr>
-
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -45,6 +42,9 @@
         {{ discipline.categories }}
       </td>
     </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let discipline; columns: displayedColumns"></tr>
   </table>
 
   <div class="table__loading" *ngIf="isLoading">

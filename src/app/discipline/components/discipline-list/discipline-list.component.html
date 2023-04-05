@@ -1,7 +1,7 @@
-<div class="discipline-list">
+<div class="list">
   <form [formGroup]="formGroup" (ngSubmit)="onSearch()">
-    <div class="discipline-list__search-container">
-      <mat-form-field class="discipline-list__search" appearance="outline">
+    <div class="list__search-container">
+      <mat-form-field class="list__search" appearance="outline">
         <input
           placeholder="{{ 'disciplines.list.search.placeholder' | translate }}"
           matInput
@@ -13,22 +13,30 @@
     </div>
   </form>
 
-  <div class="discipline-list__table-container">
-    <app-discipline-table
-      class="discipline-list__table"
-      [pageSize]="pageSize"
-      [pageNumber]="pageNumber"
-      (dataUpdated)="onDataUpdate($event)"
-      (sortChanged)="onSortChange()">
-    </app-discipline-table>
-  </div>
+  <ng-container *ngIf="arePermissionsPresent; else noPermission">
+    <div class="list__table-container">
+      <app-discipline-table
+        class="list__table"
+        [pageSize]="pageSize"
+        [pageNumber]="pageNumber"
+        (dataUpdated)="onDataUpdate($event)"
+        (sortChanged)="onSortChange()">
+      </app-discipline-table>
+    </div>
 
-  <div class="discipline-list__paginator-container">
-    <app-paginator
-      class="discipline-list__paginator"
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      [pageIndex]="pageNumber"
-      (page)="onPageChange($event)"></app-paginator>
-  </div>
+    <div class="list__paginator-container">
+      <app-paginator
+        class="list__paginator"
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        [pageIndex]="pageNumber"
+        (page)="onPageChange($event)"></app-paginator>
+    </div>
+  </ng-container>
+  <ng-template #noPermission>
+    <div class="list__no-permission">
+      <mat-icon class="list__no-permission-icon">error_outline</mat-icon>
+      {{ 'disciplines.list.no_permission_label' | translate }}
+    </div>
+  </ng-template>
 </div>

@@ -3,23 +3,23 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../../user/models/user.model';
 import { Language } from '../../domain/language';
 import { LanguageService } from '../../services/language.service';
 import { ModuleToolbarTab } from '../../domain/module-tab';
 import { MatToolbar } from '@angular/material/toolbar';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from 'src/app/user/domain/user';
 
 @Component({
-  selector: 'app-toolbar[tabs][activeTab]',
+  selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements OnInit, AfterViewInit {
+export class ToolbarComponent implements AfterViewInit {
   private _resizeObserver: ResizeObserver;
   readonly languages = Language;
   addMenuItems = [
@@ -29,27 +29,23 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     { text: 'toolbar.menu.add.curricula', path: '/' },
   ];
   compact = false;
-  user?: User;
-  @Input() tabs!: ModuleToolbarTab[];
+  @Input() user?: User;
+  @Input() tabs: ModuleToolbarTab[] = [];
   @Input() activeTab?: ModuleToolbarTab;
-  @Input() showTabs = true;
+  @Input() showTabs = false;
+  @Input() showBurger = false;
+  @Input() showAddMenu = false;
   @Output() menuButtonClick = new EventEmitter();
   @ViewChild(MatToolbar) matToolbar!: MatToolbar;
 
   constructor(
     public languageService: LanguageService,
+    private _authService: AuthService,
     private _router: Router
   ) {
     this._resizeObserver = new ResizeObserver(entries => {
       this.onResize(entries[0]?.contentRect.width);
     });
-  }
-
-  ngOnInit() {
-    this.user = {
-      login: 'Пользователь1',
-      roles: ['admin', 'guest'],
-    };
   }
 
   ngAfterViewInit() {
@@ -68,5 +64,14 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
 
   onResize(width: number) {
     this.compact = width < 960;
+  }
+
+  onLogout() {
+    this._authService.logout();
+    this._router.navigateByUrl('/');
+  }
+
+  getUserRolesNames(): string[] | undefined {
+    return this.user?.roles.map(role => role.name);
   }
 }

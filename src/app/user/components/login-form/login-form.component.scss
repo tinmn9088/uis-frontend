@@ -1,0 +1,31 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  margin: 48px;
+
+  &__card {
+    padding: 24px;
+  }
+
+  &__field {
+    margin-bottom: 24px;
+  }
+
+  &__header {
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__progress-bar {
+    transform: translate(0, -4px);
+    border-radius: 1em;
+  }
+}

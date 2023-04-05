@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>
+  {{ ('users.user_edit_dialog.title' | translate) + ': ' }}
+  <span class="title-username">{{ data.user.username }}</span>
+</h2>
+<mat-dialog-content class="content">
+  <app-user-edit-form
+    class="content__user-form"
+    [user]="data.user"></app-user-edit-form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button [mat-dialog-close]="true" cdkFocusInitial>
+    {{ 'users.user_edit_dialog.cancel_button' | translate }}
+  </button>
+</mat-dialog-actions>

@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { FrameComponent } from './components/frame/frame.component';
+import { ModuleLayoutComponent } from './components/module-layout/module-layout.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,6 +26,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -33,6 +36,8 @@ import { JoinPipe } from './pipes/join.pipe';
 import { PaginatorService } from './services/paginator.service';
 import { LanguageService } from './services/language.service';
 import { FilteredSelectComponent } from './components/filtered-select/filtered-select.component';
+
+export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('themeClass');
 
 const modules = [
   CommonModule,
@@ -62,11 +67,14 @@ const modules = [
   MatSortModule,
   MatSelectModule,
   MatCheckboxModule,
+  MatCardModule,
+  MatRippleModule,
+  MatDialogModule,
 ];
 
 const declarations = [
   ToolbarComponent,
-  FrameComponent,
+  ModuleLayoutComponent,
   PaginatorComponent,
   JoinPipe,
   FilteredSelectComponent,

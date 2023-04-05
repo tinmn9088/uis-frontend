@@ -1,0 +1,49 @@
+<form class="form" [formGroup]="formGroup">
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label class="form__label">
+      {{ 'users.user_rights_management.role_select_label' | translate }}
+    </mat-label>
+    <app-filtered-select
+      #roleSelect
+      class="form__select"
+      [options]="roleOptions"
+      [isInternalFilterOn]="false"
+      [isLoading]="areOptionsLoading"
+      (filterChanged)="updateOptions($event)"
+      formControlName="roleId"></app-filtered-select>
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="roleSelect.empty"
+    (click)="onGrantRole()">
+    {{ 'users.user_rights_management.grant_role_button' | translate }}
+  </button>
+
+  <ng-container *ngIf="user.roles && user.roles.length > 0; else noRolesLabel">
+    <p class="form__roles-list-title">
+      {{ 'users.user_rights_management.current_roles_label' | translate }}
+    </p>
+    <div class="form__roles-list">
+      <ng-container *ngFor="let role of user.roles">
+        <div class="form__roles-list-item">
+          <span class="form__roles-list-role-title">{{ role.name }}</span>
+          <button
+            class="form__roles-list-role-delete-button"
+            mat-icon-button
+            color="warn"
+            (click)="onRevokeRole(role.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-template #noRolesLabel>
+    <p class="form__no-roles-label">
+      {{ 'users.user_rights_management.no_roles_label' | translate }}
+    </p>
+  </ng-template>
+</form>

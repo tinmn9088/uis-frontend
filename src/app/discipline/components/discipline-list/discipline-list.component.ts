@@ -4,6 +4,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { HighlightTextService } from 'src/app/shared/services/highlight-text.service';
 import { DisciplinePageableResponse } from '../../domain/discipline-pageable-response';
 import { DisciplineTableComponent } from '../discipline-table/discipline-table.component';
+import { Permission } from 'src/app/auth/domain/permission';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-discipline-list',
@@ -17,11 +19,21 @@ export class DisciplineListComponent implements AfterViewInit {
   disciplineTable!: DisciplineTableComponent;
   totalElements!: number;
   pageSize = 16;
+  arePermissionsPresent: boolean;
   pageNumber!: number;
 
-  constructor(public highlightTextService: HighlightTextService) {
+  constructor(
+    public highlightTextService: HighlightTextService,
+    private _authService: AuthService
+  ) {
+    this.arePermissionsPresent = this._authService.hasUserPermissions([
+      Permission.DISCIPLINE_SEARCH,
+    ]);
     this.formGroup = new FormGroup({
-      searchQuery: new FormControl(''),
+      searchQuery: new FormControl({
+        value: '',
+        disabled: !this.arePermissionsPresent,
+      }),
     });
     this._resizeObserver = new ResizeObserver(entries => {
       setTimeout(

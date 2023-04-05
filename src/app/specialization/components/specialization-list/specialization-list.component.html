@@ -1,7 +1,7 @@
-<div class="specialization-list">
+<div class="list">
   <form [formGroup]="formGroup" (ngSubmit)="onSearch()">
-    <div class="specialization-list__search-container">
-      <mat-form-field class="specialization-list__search" appearance="outline">
+    <div class="list__search-container">
+      <mat-form-field class="list__search" appearance="outline">
         <input
           placeholder="{{
             'specializations.list.search.placeholder' | translate
@@ -15,21 +15,29 @@
     </div>
   </form>
 
-  <div class="specialization-list__tree-container">
-    <app-specialization-tree
-      class="specialization-list__tree"
-      [pageSize]="pageSize"
-      [pageNumber]="pageNumber"
-      (dataUpdated)="onDataUpdate($event)">
-    </app-specialization-tree>
-  </div>
+  <ng-container *ngIf="arePermissionsPresent; else noPermission">
+    <div class="list__tree-container">
+      <app-specialization-tree
+        class="list__tree"
+        [pageSize]="pageSize"
+        [pageNumber]="pageNumber"
+        (dataUpdated)="onDataUpdate($event)">
+      </app-specialization-tree>
+    </div>
 
-  <div class="specialization-list__paginator-container">
-    <app-paginator
-      class="specialization-list__paginator"
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      [pageIndex]="pageNumber"
-      (page)="onPageChange($event)"></app-paginator>
-  </div>
+    <div class="list__paginator-container">
+      <app-paginator
+        class="list__paginator"
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        [pageIndex]="pageNumber"
+        (page)="onPageChange($event)"></app-paginator>
+    </div>
+  </ng-container>
+  <ng-template #noPermission>
+    <div class="list__no-permission">
+      <mat-icon class="list__no-permission-icon">error_outline</mat-icon>
+      {{ 'specializations.list.no_permission_label' | translate }}
+    </div>
+  </ng-template>
 </div>

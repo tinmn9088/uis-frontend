@@ -32,7 +32,46 @@
   "filtered_select": {
     "placeholder": "Search ...",
     "checkbox_select_all": "Select all",
-    "checkbox_unselect_all": "Unselect all"
+    "checkbox_unselect_all": "Unselect all",
+    "cannot_load_options": "Failed to load options"
+  },
+  "users": {
+    "list": {
+      "search": {
+        "placeholder": "Search by: username"
+      },
+      "columns": {
+        "username": "Username",
+        "roles": "Roles",
+        "last_activity": "Last Activity",
+        "creation_time": "Creation Time"
+      },
+      "no_data_label": "No users found."
+    },
+    "login_form": {
+      "sign_in": "Sign in",
+      "password_label": "Password",
+      "login_label": "Login",
+      "required": "Required",
+      "messages": {
+        "success": "Authentication successful",
+        "error": "Authentication error"
+      }
+    },
+    "user_edit_dialog": {
+      "title": "User",
+      "cancel_button": "Cancel",
+      "delete_button": "Delete user"
+    },
+    "user_rights_management": {
+      "role_select_label": "Role name",
+      "current_roles_label": "Current roles",
+      "no_roles_label": "User has no roles",
+      "grant_role_button": "Grant role",
+      "role_granted_message": "Role granted",
+      "role_revoked_message": "Role revoked",
+      "role_change_error_message": "Role changle failed"
+    }
   },
   "disciplines": {
     "list": {
@@ -44,7 +83,8 @@
         "short_name": "Short name",
         "categories": "Categories"
       },
-      "no_data_label": "No disciplines found."
+      "no_data_label": "No disciplines found.",
+      "no_permission_label": "Not allowed"
     },
     "form": {
       "add_title": "Add discipline",
@@ -72,7 +112,8 @@
       "search": {
         "placeholder": "Search by: name, cipher"
       },
-      "no_data_label": "No specializations found."
+      "no_data_label": "No specializations found.",
+      "no_permission_label": "Not allowed"
     },
     "form": {
       "add_title": "Add specialization",

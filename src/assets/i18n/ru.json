@@ -32,7 +32,46 @@
   "filtered_select": {
     "placeholder": "Поиск ...",
     "checkbox_select_all": "Выбрать все",
-    "checkbox_unselect_all": "Отменить выбор"
+    "checkbox_unselect_all": "Отменить выбор",
+    "cannot_load_options": "Не удалось загрузить"
+  },
+  "users": {
+    "list": {
+      "search": {
+        "placeholder": "Поиск по: имя пользователя"
+      },
+      "columns": {
+        "username": "Имя пользователя",
+        "roles": "Роли",
+        "last_activity": "Последняя активность",
+        "creation_time": "Дата создания"
+      },
+      "no_data_label": "Пользователей не найдено."
+    },
+    "login_form": {
+      "sign_in": "Вход",
+      "password_label": "Пароль",
+      "login_label": "Логин",
+      "required": "Необязательно",
+      "messages": {
+        "success": "Вход выполнен",
+        "error": "Ошибка"
+      }
+    },
+    "user_edit_dialog": {
+      "title": "Пользователь",
+      "cancel_button": "Отмена",
+      "delete_button": "Удалить пользователя"
+    },
+    "user_rights_management": {
+      "role_select_label": "Название роли",
+      "current_roles_label": "Текущие роли",
+      "no_roles_label": "У пользователя нет ролей",
+      "grant_role_button": "Добавить роль",
+      "role_granted_message": "Роль добавлена",
+      "role_revoked_message": "Роль удалена",
+      "role_change_error_message": "Не удалось изменить роли у пользователя"
+    }
   },
   "disciplines": {
     "list": {
@@ -44,7 +83,8 @@
         "short_name": "Краткое название",
         "categories": "Категории"
       },
-      "no_data_label": "Дисциплин не найдено."
+      "no_data_label": "Дисциплин не найдено.",
+      "no_permission_label": "Недостаточно прав"
     },
     "form": {
       "add_title": "Добавить дисциплину",
@@ -72,7 +112,8 @@
       "search": {
         "placeholder": "Поиск по: название, шифр"
       },
-      "no_data_label": "Специализаций не найдено."
+      "no_data_label": "Специализаций не найдено.",
+      "no_permission_label": "Недостаточно прав"
     },
     "form": {
       "add_title": "Добавить специальность",
