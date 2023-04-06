@@ -80,12 +80,12 @@
       }
     ]
   },
-  "curricula": {
-    "name": "Curricula",
-    "themeCssClass": "curricula-theme",
+  "curriculum": {
+    "name": "Curriculum",
+    "themeCssClass": "curriculum-theme",
     "i18nName": "module.name.curricula",
-    "path": "/curricula",
-    "resourcePath": "/curricula",
+    "path": "/curriculum",
+    "resourcePath": "/curriculums",
     "sidenavAddButtonPath": "",
     "sidenavOptions": []
   }

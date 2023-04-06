@@ -71,8 +71,8 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
         path: this._moduleService.getPath(ModuleName.Specialization) || '',
       },
       {
-        title: this._moduleService.getI18N(ModuleName.Curricula) || '',
-        path: this._moduleService.getPath(ModuleName.Curricula) || '',
+        title: this._moduleService.getI18N(ModuleName.Curriculum) || '',
+        path: this._moduleService.getPath(ModuleName.Curriculum) || '',
       },
     ];
     this._pathChangeSubscription = this._router.events.subscribe(event => {
