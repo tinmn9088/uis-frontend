@@ -10,9 +10,25 @@
     "themeCssClass": "category-theme",
     "i18nName": "module.name.categories",
     "path": "/category",
-    "resourcePath": "/categories",
-    "sidenavAddButtonPath": "",
-    "sidenavOptions": []
+    "resourcePath": "/tags",
+    "sidenavAddButtonPath": "/category/add",
+    "sidenavOptions": [
+      {
+        "title": "category.options.search",
+        "path": "/category/list"
+      },
+      {
+        "title": "category.options.add",
+        "path": "/category/add",
+        "groupId": 1
+      },
+      {
+        "title": "category.options.edit",
+        "path": "/category/0",
+        "pathRegex": "/category/\\d+",
+        "groupId": 1
+      }
+    ]
   },
   "discipline": {
     "name": "Discipline",
@@ -20,7 +36,7 @@
     "i18nName": "module.name.disciplines",
     "path": "/discipline",
     "resourcePath": "/disciplines",
-    "sidenavAddButtonPath": "/disciplines/add",
+    "sidenavAddButtonPath": "/discipline/add",
     "sidenavOptions": [
       {
         "title": "disciplines.options.search",

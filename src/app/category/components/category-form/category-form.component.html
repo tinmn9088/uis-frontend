@@ -1,0 +1,77 @@
+<form class="form" #form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div
+    class="form__container"
+    [ngStyle]="{ width: formContainerWidthPercents + '%' }">
+    <h3 class="form__title">
+      {{
+        editMode
+          ? (('categories.form.edit_title' | translate) + ' ' + name
+            | uppercase)
+          : ('categories.form.add_title' | translate | uppercase)
+      }}
+    </h3>
+
+    <mat-form-field class="form__field" appearance="outline" color="primary">
+      <mat-label class="form__label">
+        {{ 'categories.form.name_label' | translate }}
+      </mat-label>
+      <input class="form__input" matInput formControlName="name" />
+      <mat-error class="form__error-message">
+        {{ 'categories.form.name_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      class="form__field"
+      appearance="outline"
+      color="primary"
+      *ngIf="!areNotPermissionsPresent">
+      <mat-label class="form__label">
+        {{ 'categories.form.parent_label' | translate }}
+      </mat-label>
+      <app-filtered-select
+        class="form__select"
+        [options]="parentOptions"
+        [isInternalFilterOn]="false"
+        [isLoading]="areParentOptionsLoading"
+        (filterChanged)="updateParentOptions($event)"
+        formControlName="parentId"></app-filtered-select>
+    </mat-form-field>
+
+    <div class="form__buttons">
+      <ng-container *ngIf="!editMode; else editButton">
+        <button
+          class="form__add-button"
+          mat-flat-button
+          color="primary"
+          [disabled]="
+            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+          ">
+          {{ 'categories.form.add_button' | translate }}
+        </button>
+      </ng-container>
+      <ng-template #editButton>
+        <button
+          class="form__edit-button"
+          mat-flat-button
+          color="primary"
+          [disabled]="
+            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+          ">
+          {{ 'categories.form.edit_button' | translate }}
+        </button>
+      </ng-template>
+
+      <a [routerLink]="getLinkToSearchPage()">
+        <button
+          class="form__cancel-button"
+          mat-flat-button
+          color="secondary"
+          type="button"
+          [disabled]="formGroup.disabled">
+          {{ 'categories.form.cancel_button' | translate }}
+        </button>
+      </a>
+    </div>
+  </div>
+</form>

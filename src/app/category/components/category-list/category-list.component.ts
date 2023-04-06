@@ -1,24 +1,23 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SpecializationTreeComponent } from '../specialization-tree/specialization-tree.component';
-import { PageEvent } from '@angular/material/paginator';
-import { SpecializationPageableResponse } from '../../domain/specialization-pageable-response';
+import { CategoryTreeComponent } from '../category-tree/category-tree.component';
 import { HighlightTextService } from 'src/app/shared/services/highlight-text.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Permission } from 'src/app/auth/domain/permission';
+import { CategoryPageableResponse } from '../../domain/category-pageable-response';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-specialization-list',
-  templateUrl: './specialization-list.component.html',
-  styleUrls: ['./specialization-list.component.scss'],
+  selector: 'app-category-list',
+  templateUrl: './category-list.component.html',
+  styleUrls: ['./category-list.component.scss'],
 })
-export class SpecializationListComponent implements AfterViewInit {
+export class CategoryListComponent implements AfterViewInit {
   private _resizeObserver: ResizeObserver;
   formGroup!: FormGroup;
-  @ViewChild(SpecializationTreeComponent)
-  specializationTree!: SpecializationTreeComponent;
+  @ViewChild(CategoryTreeComponent)
+  categoryTree!: CategoryTreeComponent;
   totalElements!: number;
-  pageSize = 6;
+  pageSize = 16;
   arePermissionsPresent: boolean;
   pageNumber!: number;
 
@@ -26,9 +25,7 @@ export class SpecializationListComponent implements AfterViewInit {
     public highlightTextService: HighlightTextService,
     private _authService: AuthService
   ) {
-    this.arePermissionsPresent = this._authService.hasUserPermissions([
-      Permission.SPECIALIZATION_SEARCH,
-    ]);
+    this.arePermissionsPresent = true; // TODO: add check
 
     this.formGroup = new FormGroup({
       searchQuery: new FormControl({
@@ -60,15 +57,15 @@ export class SpecializationListComponent implements AfterViewInit {
   }
 
   onSearch() {
-    setTimeout(() => this.specializationTree.search(this.searchQuery), 0);
+    setTimeout(() => this.categoryTree.search(this.searchQuery), 0);
   }
 
-  onDataUpdate(response: SpecializationPageableResponse) {
+  onDataUpdate(response: CategoryPageableResponse) {
     this.totalElements = response.totalElements;
   }
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
-    setTimeout(() => this.specializationTree.search(this.searchQuery), 0);
+    setTimeout(() => this.categoryTree.search(this.searchQuery), 0);
   }
 }

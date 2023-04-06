@@ -73,6 +73,32 @@
       "role_change_error_message": "Role changle failed"
     }
   },
+  "categories": {
+    "list": {
+      "search": {
+        "placeholder": "Search by: name"
+      },
+      "no_data_label": "No categories found.",
+      "no_permission_label": "Not allowed"
+    },
+    "form": {
+      "add_title": "Add category",
+      "edit_title": "Category ",
+      "name_label": "Name",
+      "name_error": "Name required",
+      "parent_label": "Parent category",
+      "add_button": "Add",
+      "edit_button": "Edit",
+      "cancel_button": "Cancel",
+      "snackbar_add_success_message": "Added",
+      "snackbar_update_success_message": "Updated"
+    },
+    "options": {
+      "search": "Search categories",
+      "add": "Add category",
+      "edit": "Edit category"
+    }
+  },
   "disciplines": {
     "list": {
       "search": {

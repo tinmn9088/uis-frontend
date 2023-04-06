@@ -73,6 +73,32 @@
       "role_change_error_message": "Не удалось изменить роли у пользователя"
     }
   },
+  "category": {
+    "list": {
+      "search": {
+        "placeholder": "Поиск по: название"
+      },
+      "no_data_label": "Категорий не найдено.",
+      "no_permission_label": "Недостаточно прав"
+    },
+    "form": {
+      "add_title": "Добавить категорию",
+      "edit_title": "Категория",
+      "name_label": "Название",
+      "name_error": "Название обязательно",
+      "parent_label": "Родительная категория",
+      "add_button": "Добавить",
+      "edit_button": "Изменить",
+      "cancel_button": "Отмена",
+      "snackbar_add_success_message": "Добавлено",
+      "snackbar_update_success_message": "Обновлено"
+    },
+    "options": {
+      "search": "Поиск категорий",
+      "add": "Добавить категорию",
+      "edit": "Изменить категорию"
+    }
+  },
   "disciplines": {
     "list": {
       "search": {
@@ -112,7 +138,7 @@
       "search": {
         "placeholder": "Поиск по: название, шифр"
       },
-      "no_data_label": "Специализаций не найдено.",
+      "no_data_label": "Специальностей не найдено.",
       "no_permission_label": "Недостаточно прав"
     },
     "form": {
@@ -132,7 +158,7 @@
       "snackbar_update_success_message": "Обновлено"
     },
     "options": {
-      "search": "Поиск специалностей",
+      "search": "Поиск специальностей",
       "add": "Добавить специальность",
       "edit": "Изменить специальность"
     }
