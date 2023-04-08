@@ -1,0 +1,65 @@
+@use '@angular/material' as mat;
+
+@use '../colors/basic' as b;
+@use '../colors/gold' as c;
+
+$light-gold-palette: (
+  50: c.$light-gold-50,
+  100: c.$light-gold-100,
+  200: c.$light-gold-200,
+  300: c.$light-gold-300,
+  400: c.$light-gold-400,
+  500: c.$light-gold-500,
+  600: c.$light-gold-600,
+  700: c.$light-gold-700,
+  800: c.$light-gold-800,
+  900: c.$light-gold-900,
+  contrast: (
+    50: b.$black,
+    100: b.$black,
+    200: b.$black,
+    300: b.$black,
+    400: b.$black,
+    500: b.$black,
+    600: b.$black,
+    700: b.$black,
+    800: b.$black,
+    900: b.$black,
+  ),
+);
+$dark-gold-palette: (
+  50: c.$dark-gold-50,
+  100: c.$dark-gold-100,
+  200: c.$dark-gold-200,
+  300: c.$dark-gold-300,
+  400: c.$dark-gold-400,
+  500: c.$dark-gold-600,
+  600: c.$dark-gold-600,
+  700: c.$dark-gold-700,
+  800: c.$dark-gold-800,
+  900: c.$dark-gold-900,
+  contrast: (
+    50: b.$black,
+    100: b.$black,
+    200: b.$black,
+    300: b.$white,
+    400: b.$white,
+    500: b.$white,
+    600: b.$white,
+    700: b.$white,
+    800: b.$white,
+    900: b.$white,
+  ),
+);
+
+$light-theme-primary: mat.define-palette($light-gold-palette, 500);
+$light-theme-accent: mat.define-palette($dark-gold-palette);
+
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-theme-primary,
+      accent: $light-theme-accent,
+    ),
+  )
+);
