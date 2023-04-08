@@ -39,7 +39,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     private _router: Router,
     private _route: ActivatedRoute
   ) {
-    this.areNotPermissionsPresent = true; // TODO: check permissions
+    this.areNotPermissionsPresent = false; // TODO: check permissions
 
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
