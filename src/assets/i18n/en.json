@@ -162,5 +162,38 @@
       "add": "Add specialization",
       "edit": "Edit specialization"
     }
+  },
+  "curriculum": {
+    "list": {
+      "columns": {
+        "id": "Id",
+        "approval_date": "Approval date",
+        "admission_year": "Admission year",
+        "specialization_id": "Specialization id"
+      },
+      "no_data_label": "No curricula found.",
+      "no_permission_label": "Not allowed"
+    },
+    "form": {
+      "add_title": "Add curriculum",
+      "edit_title": "Curriculum",
+      "approval_date_label": "Approval date",
+      "approval_date_error": "Approval date required",
+      "admission_year_label": "Admission year",
+      "admission_year_error": "Admission year required",
+      "specialization_label": "Specialization",
+      "specialization_error": "Specialization required",
+      "add_button": "Add",
+      "edit_button": "Edit",
+      "apply_button": "Apply",
+      "cancel_button": "Cancel",
+      "snackbar_add_success_message": "Added",
+      "snackbar_update_success_message": "Updated"
+    },
+    "options": {
+      "search": "Search curricula",
+      "add": "Add curriculum",
+      "edit": "Edit curriculum"
+    }
   }
 }

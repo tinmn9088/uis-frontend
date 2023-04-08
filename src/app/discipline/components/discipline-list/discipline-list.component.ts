@@ -52,7 +52,7 @@ export class DisciplineListComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const table = document.querySelector('.discipline-list__table');
+    const table = document.querySelector('.list__table');
     if (table) {
       this._resizeObserver.observe(table);
     }

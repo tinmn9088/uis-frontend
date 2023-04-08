@@ -27,8 +27,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -70,6 +71,8 @@ const modules = [
   MatCardModule,
   MatRippleModule,
   MatDialogModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
 ];
 
 const declarations = [
@@ -97,6 +100,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
   ],
-  providers: [PaginatorService, LanguageService],
+  providers: [
+    PaginatorService,
+    LanguageService,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
 })
 export class SharedModule {}

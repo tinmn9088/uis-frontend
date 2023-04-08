@@ -162,5 +162,38 @@
       "add": "Добавить специальность",
       "edit": "Изменить специальность"
     }
+  },
+  "curriculum": {
+    "list": {
+      "columns": {
+        "id": "Id",
+        "approval_date": "Дата утверждения",
+        "admission_year": "Год поступления",
+        "specialization_id": "Id специальности"
+      },
+      "no_data_label": "Учебных планов не найдено.",
+      "no_permission_label": "Недостаточно прав"
+    },
+    "form": {
+      "add_title": "Добавить учебный план",
+      "edit_title": "Учебный план",
+      "approval_date_label": "Дата утверждения",
+      "approval_date_error": "Дата утверждения обязательна",
+      "admission_year_label": "Год поступления",
+      "admission_year_error": "Год поступления обязателен",
+      "specialization_label": "Специальность",
+      "specialization_error": "Специальность обязательна",
+      "add_button": "Добавить",
+      "edit_button": "Изменить",
+      "apply_button": "Применить",
+      "cancel_button": "Отмена",
+      "snackbar_add_success_message": "Добавлено",
+      "snackbar_update_success_message": "Обновлено"
+    },
+    "options": {
+      "search": "Поиск учебных планов",
+      "add": "Добавить учебный план",
+      "edit": "Изменить учебный план"
+    }
   }
 }

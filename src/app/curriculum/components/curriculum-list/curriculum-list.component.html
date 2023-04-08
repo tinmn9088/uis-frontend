@@ -1,0 +1,28 @@
+<div class="list">
+  <ng-container *ngIf="arePermissionsPresent; else noPermission">
+    <div class="list__table-container">
+      <app-curriculum-table
+        class="list__table"
+        [pageSize]="pageSize"
+        [pageNumber]="pageNumber"
+        (dataUpdated)="onDataUpdate($event)"
+        (sortChanged)="onSortChange()">
+      </app-curriculum-table>
+    </div>
+
+    <div class="list__paginator-container">
+      <app-paginator
+        class="list__paginator"
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        [pageIndex]="pageNumber"
+        (page)="onPageChange($event)"></app-paginator>
+    </div>
+  </ng-container>
+  <ng-template #noPermission>
+    <div class="list__no-permission">
+      <mat-icon class="list__no-permission-icon">error_outline</mat-icon>
+      {{ 'curriculum.list.no_permission_label' | translate }}
+    </div>
+  </ng-template>
+</div>
