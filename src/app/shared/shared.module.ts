@@ -37,6 +37,8 @@ import { JoinPipe } from './pipes/join.pipe';
 import { PaginatorService } from './services/paginator.service';
 import { LanguageService } from './services/language.service';
 import { FilteredSelectComponent } from './components/filtered-select/filtered-select.component';
+import { EmptyComponent } from './components/empty/empty.component';
+import { DatepickerYearHeaderComponent } from './components/datepicker-year-header/datepicker-year-header.component';
 
 export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('themeClass');
 
@@ -81,6 +83,7 @@ const declarations = [
   PaginatorComponent,
   JoinPipe,
   FilteredSelectComponent,
+  DatepickerYearHeaderComponent,
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -88,7 +91,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [...declarations],
+  declarations: [...declarations, EmptyComponent],
   exports: [...modules, declarations, TranslateModule],
   imports: [
     ...modules,

@@ -19,7 +19,6 @@
         matInput
         [matDatepicker]="approvalDate"
         formControlName="approvalDate" />
-      <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle
         matIconSuffix
         [for]="approvalDate"></mat-datepicker-toggle>
@@ -47,11 +46,15 @@
         matInput
         [matDatepicker]="admissionYear"
         formControlName="admissionYear" />
-      <mat-hint>YYYY</mat-hint>
       <mat-datepicker-toggle
         matIconSuffix
         [for]="admissionYear"></mat-datepicker-toggle>
-      <mat-datepicker #admissionYear startView="year"> </mat-datepicker>
+      <mat-datepicker
+        #admissionYear
+        startView="multi-year"
+        [calendarHeaderComponent]="datepickerYearHeader"
+        (yearSelected)="onYearSelected($event, admissionYear)">
+      </mat-datepicker>
       <mat-error class="form__error-message">
         {{ 'curriculum.form.admission_year_error' | translate }}
       </mat-error>
@@ -63,7 +66,7 @@
       color="primary"
       *ngIf="!areNotPermissionsPresent">
       <mat-label class="form__label">
-        {{ 'curriculum.form.parent_label' | translate }}
+        {{ 'curriculum.form.specialization_label' | translate }}
       </mat-label>
       <app-filtered-select
         class="form__select"

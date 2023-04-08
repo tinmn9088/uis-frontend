@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Inject,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -12,11 +13,19 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Permission } from 'src/app/auth/domain/permission';
 import { CurriculumAddRequest } from '../../domain/curriculum-add-request';
 import { CurriculumUpdateRequest } from '../../domain/curriculum-update-request';
 import { map } from 'rxjs';
 import { SpecializationService } from 'src/app/specialization/services/specialization.service';
+import { MatDatepicker } from '@angular/material/datepicker';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatDateFormats,
+} from '@angular/material/core';
+import { LanguageService } from 'src/app/shared/services/language.service';
+import { DatepickerYearHeaderComponent } from 'src/app/shared/components/datepicker-year-header/datepicker-year-header.component';
 
 @Component({
   selector: 'app-curriculum-form',
@@ -25,6 +34,7 @@ import { SpecializationService } from 'src/app/specialization/services/specializ
 })
 export class CurriculumFormComponent implements OnInit, AfterViewInit {
   private _resizeObserver: ResizeObserver;
+  datepickerYearHeader = DatepickerYearHeaderComponent;
   id?: number;
   editMode!: boolean;
   formContainerWidthPercents?: number;
@@ -41,7 +51,11 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     private _snackbarService: SnackbarService,
     private _translate: TranslateService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _languageService: LanguageService,
+    private _adapter: DateAdapter<unknown>,
+    @Inject(MAT_DATE_LOCALE) private _locale: string,
+    @Inject(MAT_DATE_FORMATS) private _matDateFormats: MatDateFormats
   ) {
     this.areNotPermissionsPresent = false; // TODO: add check
 
@@ -66,7 +80,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   }
 
   get admissionYear(): number {
-    return this.formGroup.get('admissionYear')?.value;
+    return (this.formGroup.get('admissionYear')?.value as Date).getFullYear();
   }
 
   get specializationId(): number {
@@ -92,6 +106,8 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
       });
     }
     this.updateSpecializationOptions();
+    this._locale = this._languageService.getLanguage();
+    this._adapter.setLocale(this._locale);
   }
 
   ngAfterViewInit() {
@@ -180,6 +196,11 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
 
   getLinkToSearchPage() {
     return this._curriculumService.getLinkToSearchPage();
+  }
+
+  onYearSelected(date: Date, matDatepicker: MatDatepicker<unknown>) {
+    this.formGroup.get('admissionYear')?.patchValue(date);
+    matDatepicker.close();
   }
 
   private updateFormContainerWidth(formWidth: number) {
