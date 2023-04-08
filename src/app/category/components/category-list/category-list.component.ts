@@ -5,6 +5,7 @@ import { HighlightTextService } from 'src/app/shared/services/highlight-text.ser
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CategoryPageableResponse } from '../../domain/category-pageable-response';
 import { PageEvent } from '@angular/material/paginator';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-category-list',
@@ -25,7 +26,9 @@ export class CategoryListComponent implements AfterViewInit {
     public highlightTextService: HighlightTextService,
     private _authService: AuthService
   ) {
-    this.arePermissionsPresent = true; // TODO: add check
+    this.arePermissionsPresent = this._authService.hasUserPermissions([
+      Permission.TAG_GET,
+    ]);
 
     this.formGroup = new FormGroup({
       searchQuery: new FormControl({

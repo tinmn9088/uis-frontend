@@ -18,14 +18,10 @@ import { CurriculumUpdateRequest } from '../../domain/curriculum-update-request'
 import { map } from 'rxjs';
 import { SpecializationService } from 'src/app/specialization/services/specialization.service';
 import { MatDatepicker } from '@angular/material/datepicker';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-  MatDateFormats,
-} from '@angular/material/core';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { LanguageService } from 'src/app/shared/services/language.service';
 import { DatepickerYearHeaderComponent } from 'src/app/shared/components/datepicker-year-header/datepicker-year-header.component';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-curriculum-form',
@@ -54,10 +50,15 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     private _route: ActivatedRoute,
     private _languageService: LanguageService,
     private _adapter: DateAdapter<unknown>,
-    @Inject(MAT_DATE_LOCALE) private _locale: string,
-    @Inject(MAT_DATE_FORMATS) private _matDateFormats: MatDateFormats
+    @Inject(MAT_DATE_LOCALE) private _locale: string
   ) {
-    this.areNotPermissionsPresent = false; // TODO: add check
+    this.editMode = !this._router.url.endsWith('add');
+    this.areNotPermissionsPresent = this.editMode
+      ? !this._authService.hasUserPermissions([
+          Permission.CURRICULUM_GET,
+          Permission.CURRICULUM_UPDATE,
+        ])
+      : !this._authService.hasUserPermissions([Permission.CURRICULUM_CREATE]);
 
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
@@ -88,7 +89,6 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.editMode = !this._router.url.endsWith('add');
     if (this.editMode) {
       this._route.params.subscribe({
         next: params => {

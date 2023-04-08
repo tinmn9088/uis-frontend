@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SelectOption } from 'src/app/shared/domain/select-option';
 import { CategoryAddRequest } from '../../domain/category-add-request';
 import { map, of } from 'rxjs';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-category-form',
@@ -39,7 +40,13 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     private _router: Router,
     private _route: ActivatedRoute
   ) {
-    this.areNotPermissionsPresent = false; // TODO: check permissions
+    this.editMode = !this._router.url.endsWith('add');
+    this.areNotPermissionsPresent = this.editMode
+      ? !this._authService.hasUserPermissions([
+          Permission.TAG_GET,
+          Permission.TAG_UPDATE,
+        ])
+      : !this._authService.hasUserPermissions([Permission.TAG_CREATE]);
 
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
@@ -62,7 +69,6 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.editMode = !this._router.url.endsWith('add');
     if (this.editMode) {
       this._route.params.subscribe({
         next: params => {

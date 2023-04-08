@@ -4,6 +4,7 @@ import { HighlightTextService } from 'src/app/shared/services/highlight-text.ser
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CurriculumPageableResponse } from '../../domain/curriculum-pageable-response';
 import { PageEvent } from '@angular/material/paginator';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-curriculum-list',
@@ -22,7 +23,9 @@ export class CurriculumListComponent {
     public highlightTextService: HighlightTextService,
     private _authService: AuthService
   ) {
-    this.arePermissionsPresent = true; // TODO: add check
+    this.arePermissionsPresent = this._authService.hasUserPermissions([
+      Permission.CURRICULUM_GET,
+    ]);
   }
 
   onDataUpdate(response: CurriculumPageableResponse) {
