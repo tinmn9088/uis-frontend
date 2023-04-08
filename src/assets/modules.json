@@ -14,16 +14,16 @@
     "sidenavAddButtonPath": "/category/add",
     "sidenavOptions": [
       {
-        "title": "category.options.search",
+        "title": "categories.options.search",
         "path": "/category/list"
       },
       {
-        "title": "category.options.add",
+        "title": "categories.options.add",
         "path": "/category/add",
         "groupId": 1
       },
       {
-        "title": "category.options.edit",
+        "title": "categories.options.edit",
         "path": "/category/0",
         "pathRegex": "/category/\\d+",
         "groupId": 1
