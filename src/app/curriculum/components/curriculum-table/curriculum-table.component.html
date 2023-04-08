@@ -6,7 +6,7 @@
     (matSortChange)="onSortChange($event)">
     <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <th mat-header-cell *matHeaderCellDef>
         {{ 'curriculum.list.columns.id' | translate }}
       </th>
       <td
@@ -45,7 +45,7 @@
 
     <!-- Specialization id Column -->
     <ng-container matColumnDef="specializationId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <th mat-header-cell *matHeaderCellDef>
         {{ 'curriculum.list.columns.specialization_id' | translate }}
       </th>
       <td mat-cell *matCellDef="let curriculum" [ngStyle]="getTableCellStyle()">

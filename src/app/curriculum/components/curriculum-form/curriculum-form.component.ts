@@ -71,7 +71,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
         { value: '', disabled: this.areNotPermissionsPresent },
         Validators.required
       ),
-      specializationId: new FormControl(),
+      specializationId: new FormControl(undefined, Validators.required),
     });
   }
 

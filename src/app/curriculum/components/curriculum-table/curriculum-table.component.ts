@@ -40,7 +40,7 @@ export class CurriculumTableComponent implements OnInit {
     this.isLoading = true;
     this.dataSource = [];
     this._curriculumService
-      .search(searchQuery || '', this.pageSize, this.pageNumber, this.sort)
+      .getAll(searchQuery || '', this.pageSize, this.pageNumber) // TODO: call search()
       .subscribe(response => {
         this.dataSource = response.content;
         this.isLoading = false;

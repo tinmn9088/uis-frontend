@@ -31,9 +31,10 @@ export class CurriculumListComponent {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
-    // this.curriculumTable.search(this.searchQuery);
+    this.curriculumTable.search(); // TODO: pass search query
   }
 
+  // TODO: implement
   onSortChange() {
     // this.curriculumTable.search(this.searchQuery);
   }
