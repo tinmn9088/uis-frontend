@@ -23,10 +23,10 @@ export class ToolbarComponent implements AfterViewInit {
   private _resizeObserver: ResizeObserver;
   readonly languages = Language;
   addMenuItems = [
-    { text: 'toolbar.menu.add.category', path: '/' },
-    { text: 'toolbar.menu.add.discipline', path: '/' },
-    { text: 'toolbar.menu.add.specialization', path: '/' },
-    { text: 'toolbar.menu.add.curricula', path: '/' },
+    { text: 'toolbar.menu.add.category', path: '/category/add' },
+    { text: 'toolbar.menu.add.discipline', path: '/discipline/add' },
+    { text: 'toolbar.menu.add.specialization', path: '/specialization/add' },
+    { text: 'toolbar.menu.add.curricula', path: '/curriculum/add' },
   ];
   compact = false;
   @Input() user?: User;

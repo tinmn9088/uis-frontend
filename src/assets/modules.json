@@ -86,7 +86,7 @@
     "i18nName": "module.name.curricula",
     "path": "/curriculum",
     "resourcePath": "/curriculums",
-    "sidenavAddButtonPath": "",
+    "sidenavAddButtonPath": "/curriculum/add",
     "sidenavOptions": [
       {
         "title": "curriculum.options.search",
