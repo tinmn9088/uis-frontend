@@ -15,6 +15,7 @@
         {{ 'curriculum.form.approval_date_label' | translate }}
       </mat-label>
       <input
+        class="form__input"
         matInput
         [matDatepicker]="approvalDate"
         formControlName="approvalDate" />
@@ -42,6 +43,7 @@
         {{ 'curriculum.form.admission_year_label' | translate }}
       </mat-label>
       <input
+        class="form__input"
         matInput
         [matDatepicker]="admissionYear"
         formControlName="admissionYear" />

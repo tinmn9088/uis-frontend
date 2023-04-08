@@ -87,6 +87,22 @@
     "path": "/curriculum",
     "resourcePath": "/curriculums",
     "sidenavAddButtonPath": "",
-    "sidenavOptions": []
+    "sidenavOptions": [
+      {
+        "title": "curriculum.options.search",
+        "path": "/curriculum/list"
+      },
+      {
+        "title": "curriculum.options.add",
+        "path": "/curriculum/add",
+        "groupId": 1
+      },
+      {
+        "title": "curriculum.options.edit",
+        "path": "/curriculum/0",
+        "pathRegex": "/curriculum/\\d+",
+        "groupId": 1
+      }
+    ]
   }
 }

@@ -41,11 +41,6 @@
       </div>
 
       <mat-option
-        class="select__option hidden"
-        *ngIf="selectedOptions.length === 0 && filteredOptions.length === 0"
-        [disabled]="true"></mat-option>
-
-      <mat-option
         class="select__option"
         *ngIf="!multiple || isLoading"
         [disabled]="isLoading">
@@ -72,6 +67,12 @@
       <div class="select__loading" *ngIf="isLoading">
         <mat-progress-bar mode="query"></mat-progress-bar>
       </div>
+
+      <mat-option
+        class="select__option hidden"
+        *ngIf="selectedOptions.length === 0 && filteredOptions.length === 0"
+        [disabled]="true"></mat-option>
+
       <div class="select__select-specify">
         <span>...</span>
       </div>

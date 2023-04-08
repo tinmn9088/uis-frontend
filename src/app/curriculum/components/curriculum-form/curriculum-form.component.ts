@@ -43,10 +43,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     private _router: Router,
     private _route: ActivatedRoute
   ) {
-    this.areNotPermissionsPresent = !this._authService.hasUserPermissions([
-      Permission.CURRICULUM_UPDATE,
-      Permission.CURRICULUM_CREATE,
-    ]);
+    this.areNotPermissionsPresent = false; // TODO: add check
 
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
