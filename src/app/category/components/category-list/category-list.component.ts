@@ -27,7 +27,7 @@ export class CategoryListComponent implements AfterViewInit {
     private _authService: AuthService
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
-      Permission.TAG_GET,
+      Permission.TAG_READ,
     ]);
 
     this.formGroup = new FormGroup({

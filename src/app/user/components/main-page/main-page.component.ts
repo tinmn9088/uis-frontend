@@ -37,6 +37,7 @@ export class MainPageComponent implements OnInit {
         (moduleName &&
           this._moduleService.getAllRequiredPermissions(moduleName)) ||
         [];
+
       const themeCssClass = {} as any;
       if (module.themeCssClass) themeCssClass[module.themeCssClass] = true;
       return {
@@ -46,7 +47,8 @@ export class MainPageComponent implements OnInit {
             ? `${module.path}/list`
             : module.path || '',
         themeCssClass: themeCssClass,
-        options: module.sidenavOptions || [],
+        options:
+          module.sidenavOptions?.filter(option => !option.pathRegex) || [],
         isAllowed: this._authService.hasUserPermissions(requiredPermissions),
       };
     });

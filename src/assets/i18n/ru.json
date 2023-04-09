@@ -83,7 +83,7 @@
       "role_change_error_message": "Не удалось изменить роли у пользователя"
     }
   },
-  "category": {
+  "categories": {
     "list": {
       "search": {
         "placeholder": "Поиск по: название"

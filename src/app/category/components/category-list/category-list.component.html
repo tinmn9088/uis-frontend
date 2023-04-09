@@ -3,7 +3,7 @@
     <div class="list__search-container">
       <mat-form-field class="list__search" appearance="outline">
         <input
-          placeholder="{{ 'category.list.search.placeholder' | translate }}"
+          placeholder="{{ 'categories.list.search.placeholder' | translate }}"
           matInput
           formControlName="searchQuery" />
         <button *ngIf="searchQuery" matSuffix mat-icon-button>
@@ -35,7 +35,7 @@
   <ng-template #noPermission>
     <div class="list__no-permission">
       <mat-icon class="list__no-permission-icon">error_outline</mat-icon>
-      {{ 'category.list.no_permission_label' | translate }}
+      {{ 'categories.list.no_permission_label' | translate }}
     </div>
   </ng-template>
 </div>

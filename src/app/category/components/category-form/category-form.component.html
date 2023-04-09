@@ -5,18 +5,19 @@
     <h3 class="form__title">
       {{
         editMode
-          ? (('category.form.edit_title' | translate) + ' ' + name | uppercase)
-          : ('category.form.add_title' | translate | uppercase)
+          ? (('categories.form.edit_title' | translate) + ' ' + name
+            | uppercase)
+          : ('categories.form.add_title' | translate | uppercase)
       }}
     </h3>
 
     <mat-form-field class="form__field" appearance="outline" color="primary">
       <mat-label class="form__label">
-        {{ 'category.form.name_label' | translate }}
+        {{ 'categories.form.name_label' | translate }}
       </mat-label>
       <input class="form__input" matInput formControlName="name" />
       <mat-error class="form__error-message">
-        {{ 'category.form.name_error' | translate }}
+        {{ 'categories.form.name_error' | translate }}
       </mat-error>
     </mat-form-field>
 
@@ -26,7 +27,7 @@
       color="primary"
       *ngIf="!areNotPermissionsPresent">
       <mat-label class="form__label">
-        {{ 'category.form.parent_label' | translate }}
+        {{ 'categories.form.parent_label' | translate }}
       </mat-label>
       <app-filtered-select
         class="form__select"
@@ -46,7 +47,7 @@
           [disabled]="
             areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
           ">
-          {{ 'category.form.add_button' | translate }}
+          {{ 'categories.form.add_button' | translate }}
         </button>
       </ng-container>
       <ng-template #editButton>
@@ -57,7 +58,7 @@
           [disabled]="
             areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
           ">
-          {{ 'category.form.edit_button' | translate }}
+          {{ 'categories.form.edit_button' | translate }}
         </button>
       </ng-template>
 
@@ -68,7 +69,7 @@
           color="secondary"
           type="button"
           [disabled]="formGroup.disabled">
-          {{ 'category.form.cancel_button' | translate }}
+          {{ 'categories.form.cancel_button' | translate }}
         </button>
       </a>
     </div>

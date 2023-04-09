@@ -17,18 +17,18 @@
     "sidenavAddButtonPath": "/category/add",
     "sidenavOptions": [
       {
-        "title": "category.options.search",
+        "title": "categories.options.search",
         "path": "/category/list",
-        "requiredPermissions": ["TAG_GET"]
+        "requiredPermissions": ["TAG_READ"]
       },
       {
-        "title": "category.options.add",
+        "title": "categories.options.add",
         "path": "/category/add",
         "groupId": 1,
         "requiredPermissions": ["TAG_CREATE"]
       },
       {
-        "title": "category.options.edit",
+        "title": "categories.options.edit",
         "path": "/category/0",
         "pathRegex": "/category/\\d+",
         "groupId": 1,

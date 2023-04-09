@@ -43,7 +43,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     this.editMode = !this._router.url.endsWith('add');
     this.areNotPermissionsPresent = this.editMode
       ? !this._authService.hasUserPermissions([
-          Permission.TAG_GET,
+          Permission.TAG_READ,
           Permission.TAG_UPDATE,
         ])
       : !this._authService.hasUserPermissions([Permission.TAG_CREATE]);
