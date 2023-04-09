@@ -1,6 +1,7 @@
 {
   "module": {
     "name": {
+      "users": "Users",
       "categories": "Categories",
       "disciplines": "Disciplines",
       "specializations": "Specializations",
@@ -36,6 +37,15 @@
     "cannot_load_options": "Failed to load options"
   },
   "users": {
+    "main": {
+      "cards": {
+        "subtitle": "Options",
+        "open_button": "Open"
+      },
+      "no_modules_label": "No modules available",
+      "login_label": "Login to see more",
+      "login_button_text": "Login"
+    },
     "list": {
       "search": {
         "placeholder": "Search by: username"

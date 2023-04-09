@@ -1,6 +1,7 @@
+import { PermissionRequiring } from 'src/app/auth/domain/permission-requiring';
 import { ModuleSidenavOption } from './module-sidenav-option';
 
-export interface Module {
+export interface Module extends PermissionRequiring {
   name?: string;
   path?: string;
   themeCssClass?: string;

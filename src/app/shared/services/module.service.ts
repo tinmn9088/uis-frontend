@@ -3,6 +3,7 @@ import { ModuleName } from '../domain/module-name';
 import Modules from 'src/assets/modules.json';
 import { ModuleSidenavOption } from '../domain/module-sidenav-option';
 import { Module } from '../domain/module';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,22 @@ export class ModuleService {
   getPath(name: ModuleName): string | undefined {
     const module = this.getModule(name);
     return module.path;
+  }
+
+  getRequiredPermissions(name: ModuleName): Permission[] {
+    const module = this.getModule(name);
+    return module.requiredPermissions;
+  }
+
+  getAllRequiredPermissions(name: ModuleName): Permission[] {
+    const module = this.getModule(name);
+    const allRequiredPermissions = new Set(module.requiredPermissions);
+    module.sidenavOptions?.map(option =>
+      option.requiredPermissions.forEach(permission =>
+        allRequiredPermissions.add(permission)
+      )
+    );
+    return [...allRequiredPermissions];
   }
 
   getSidenavAddButtonPath(name: ModuleName): string | undefined {
@@ -66,7 +83,7 @@ export class ModuleService {
   }
 
   getModule(name: ModuleName): Module {
-    return Modules[name];
+    return Modules[name] as Module;
   }
 
   getAllModuleNames(): ModuleName[] {

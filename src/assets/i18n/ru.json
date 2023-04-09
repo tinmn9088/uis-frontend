@@ -1,6 +1,7 @@
 {
   "module": {
     "name": {
+      "users": "Пользователи",
       "categories": "Категории",
       "disciplines": "Дисциплины",
       "specializations": "Специальности",
@@ -36,6 +37,15 @@
     "cannot_load_options": "Не удалось загрузить"
   },
   "users": {
+    "main": {
+      "cards": {
+        "subtitle": "Опции",
+        "open_button": "Открыть"
+      },
+      "no_modules_label": "Нет доступных модулей",
+      "login_label": "Войдите, чтобы увидеть больше",
+      "login_button_text": "Войти"
+    },
     "list": {
       "search": {
         "placeholder": "Поиск по: имя пользователя"
