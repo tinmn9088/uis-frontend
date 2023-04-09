@@ -138,6 +138,7 @@
       "search": {
         "placeholder": "Search by: name, cipher"
       },
+      "edit_button": "Edit",
       "no_data_label": "No specializations found.",
       "no_permission_label": "Not allowed"
     },

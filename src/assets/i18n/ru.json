@@ -138,6 +138,7 @@
       "search": {
         "placeholder": "Поиск по: название, шифр"
       },
+      "edit_button": "Редактировать",
       "no_data_label": "Специальностей не найдено.",
       "no_permission_label": "Недостаточно прав"
     },

@@ -34,5 +34,10 @@
         specializationNode.specialization.cipher
       }}</span>
     </p>
+    <p class="extansion-panel__row" *ngIf="arePermissionsPresent">
+      <button mat-flat-button color="primary" [routerLink]="linkToForm">
+        {{ 'specializations.list.edit_button' | translate }}
+      </button>
+    </p>
   </mat-expansion-panel>
 </mat-accordion>
