@@ -62,19 +62,8 @@ export class AuthService {
       .post<Auth>(`${this.URL}/tokens/create`, loginRequest, { headers })
       .pipe(
         shareReplay(), // to prevent the receiver of this Observable from accidentally triggering multiple POST requests
-        mergeMap(authResponse => {
-          console.debug('Authentication successful', authResponse);
-          const tokenPayload = this._jwtHelperService.decodeToken(
-            authResponse.accessToken
-          );
-          const userId = tokenPayload['user_id'];
-          const permissions = tokenPayload['authorities'];
-          this.auth = Object.assign(authResponse, { permissions });
-          return this._userService.getById(userId).pipe(
-            tap(userResponse => (this.user = userResponse)),
-            map(() => authResponse)
-          );
-        })
+        tap(() => console.debug('Logged in successfully')),
+        mergeMap(auth => this.processAuthResponse(auth))
       );
   }
 
@@ -89,10 +78,8 @@ export class AuthService {
       .post<Auth>(`${this.URL}/tokens/refresh`, refreshRequest, { headers })
       .pipe(
         shareReplay(), // to prevent the receiver of this Observable from accidentally triggering multiple POST requests
-        tap(response => {
-          console.debug('Refresh successful', response);
-          this.auth = response;
-        })
+        tap(() => console.debug('Refresh token used')),
+        mergeMap(auth => this.processAuthResponse(auth))
       );
   }
 
@@ -102,6 +89,24 @@ export class AuthService {
   logout() {
     localStorage.removeItem(environment.localStorageKeys.auth);
     localStorage.removeItem(environment.localStorageKeys.user);
+  }
+
+  processAuthResponse(auth: Auth): Observable<Auth> {
+    const { userId, permissions } = this.parseAccessToken(auth.accessToken);
+    const completeAuth = Object.assign(auth, { permissions });
+    completeAuth.refreshToken = '2';
+    this.auth = completeAuth;
+    return this._userService.getById(userId).pipe(
+      tap(userResponse => (this.user = userResponse)),
+      map(() => auth)
+    );
+  }
+
+  parseAccessToken(token: string): { userId: number; permissions: string[] } {
+    const tokenPayload = this._jwtHelperService.decodeToken(token);
+    const userId = tokenPayload['user_id'];
+    const permissions = tokenPayload['authorities'];
+    return { userId, permissions };
   }
 
   hasUserPermissions(permissionsNeeded: Permission[]): boolean {

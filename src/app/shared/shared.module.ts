@@ -41,6 +41,9 @@ import { EmptyComponent } from './components/empty/empty.component';
 import { DatepickerYearHeaderComponent } from './components/datepicker-year-header/datepicker-year-header.component';
 
 export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('themeClass');
+export const REFRESH_JWT_REQUEST_COUNT_TOKEN = new InjectionToken<string>(
+  'refreshJwtRequestCount'
+);
 
 const modules = [
   CommonModule,
