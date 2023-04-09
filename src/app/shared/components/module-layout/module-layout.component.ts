@@ -95,7 +95,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
         const moduleName = this._moduleService.getModuleNameByPath(currentPath);
         if (!moduleName) {
-          throw new Error(`No module found for "${currentPath}"`);
+          return;
         }
         this.sidenavOptions =
           this._moduleService.getSidenavOptions(moduleName) || [];
