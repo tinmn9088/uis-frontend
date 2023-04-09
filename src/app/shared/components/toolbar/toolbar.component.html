@@ -67,7 +67,7 @@
         <mat-divider></mat-divider>
       </ng-container>
 
-      <a *ngIf="user" mat-menu-item routerLink="/" disabled>
+      <a *ngIf="user" mat-menu-item (click)="onShowProfile()">
         <mat-icon>account_circle</mat-icon>
         <span>{{ 'toolbar.menu.login.show_profile' | translate }}</span>
       </a>

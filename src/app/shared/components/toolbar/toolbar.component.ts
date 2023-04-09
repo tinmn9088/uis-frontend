@@ -66,6 +66,10 @@ export class ToolbarComponent implements AfterViewInit {
     this.compact = width < 960;
   }
 
+  onShowProfile() {
+    this._router.navigateByUrl('/user/main');
+  }
+
   onLogout() {
     this._authService.logout();
     this._router.navigateByUrl('/');

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { ModuleName } from 'src/app/shared/domain/module-name';
 import { ModuleSidenavOption } from 'src/app/shared/domain/module-sidenav-option';
 import { ModuleService } from 'src/app/shared/services/module.service';
 
@@ -30,17 +31,20 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit() {
     this.cards = this._moduleService.getAllModules().map(module => {
-      const moduleNameIsPresent =
+      const moduleName =
         module.path && this._moduleService.getModuleNameByPath(module.path);
       const requiredPermissions =
-        (moduleNameIsPresent &&
-          this._moduleService.getAllRequiredPermissions(moduleNameIsPresent)) ||
+        (moduleName &&
+          this._moduleService.getAllRequiredPermissions(moduleName)) ||
         [];
       const themeCssClass = {} as any;
       if (module.themeCssClass) themeCssClass[module.themeCssClass] = true;
       return {
         i18nName: module.i18nName || '',
-        path: module.path || '',
+        path:
+          moduleName === ModuleName.User
+            ? `${module.path}/list`
+            : module.path || '',
         themeCssClass: themeCssClass,
         options: module.sidenavOptions || [],
         isAllowed: this._authService.hasUserPermissions(requiredPermissions),
