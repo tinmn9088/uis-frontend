@@ -7,6 +7,7 @@ import { Curriculum } from '../domain/curriculum';
 import { CurriculumAddRequest } from '../domain/curriculum-add-request';
 import { CurriculumUpdateRequest } from '../domain/curriculum-update-request';
 import { CurriculumPageableResponse } from '../domain/curriculum-pageable-response';
+import { Sort } from '@angular/material/sort';
 
 @Injectable({
   providedIn: 'root',
@@ -40,13 +41,14 @@ export class CurriculumService {
   }
 
   getAll(
-    query: string,
     size?: number,
-    page?: number
+    page?: number,
+    sort?: Sort
   ): Observable<CurriculumPageableResponse> {
-    let params = new HttpParams().set('query', query);
+    let params = new HttpParams();
     if (size) params = params.set('size', size);
     if (page) params = params.set('page', page);
+    if (sort) params = params.set('sort', `${sort.active},${sort.direction}`);
     return this._http.get<CurriculumPageableResponse>(`${this.MODULE_URL}`, {
       params: params,
     });

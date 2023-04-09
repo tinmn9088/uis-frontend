@@ -27,7 +27,7 @@ export class CurriculumTableComponent implements OnInit {
   constructor(private _curriculumService: CurriculumService) {}
 
   ngOnInit() {
-    this.search();
+    this.getAll();
   }
 
   onSortChange(sort: Sort) {
@@ -36,11 +36,11 @@ export class CurriculumTableComponent implements OnInit {
     this.sortChanged.emit(sort);
   }
 
-  search(searchQuery?: string) {
+  getAll() {
     this.isLoading = true;
     this.dataSource = [];
     this._curriculumService
-      .getAll(searchQuery || '', this.pageSize, this.pageNumber) // TODO: call search()
+      .getAll(this.pageSize, this.pageNumber, this.sort)
       .subscribe(response => {
         this.dataSource = response.content;
         this.isLoading = false;

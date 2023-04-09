@@ -34,11 +34,10 @@ export class CurriculumListComponent {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
-    this.curriculumTable.search(); // TODO: pass search query
+    this.curriculumTable.getAll();
   }
 
-  // TODO: implement
   onSortChange() {
-    // this.curriculumTable.search(this.searchQuery);
+    this.curriculumTable.getAll();
   }
 }
