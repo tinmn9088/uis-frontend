@@ -63,7 +63,8 @@
         "username": "Имя пользователя",
         "roles": "Роли",
         "last_activity": "Последняя активность",
-        "creation_time": "Дата создания"
+        "creation_time": "Дата создания",
+        "operations": "Действия"
       },
       "no_data_label": "Пользователей не найдено."
     },

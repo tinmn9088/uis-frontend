@@ -49,6 +49,22 @@
       </td>
     </ng-container>
 
+    <!-- Operations Column -->
+    <ng-container matColumnDef="operations">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'users.list.columns.operations' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let user" [ngStyle]="getTableCellStyle()">
+        <button
+          class="table__edit-button"
+          mat-icon-button
+          (click)="openUserEditDialog(user)"
+          color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
     <tr
       mat-header-row
       class="table__column-header"

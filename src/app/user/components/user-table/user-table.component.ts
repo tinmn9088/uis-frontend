@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { UserPageableResponse } from '../../domain/user-pageable-response';
 import { UserEditDialogComponent } from '../user-edit-dialog/user-edit-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../domain/user';
 
 @Component({
@@ -11,6 +11,7 @@ import { User } from '../../domain/user';
   styleUrls: ['./user-table.component.scss'],
 })
 export class UserTableComponent implements OnInit {
+  private _dialogRef?: MatDialogRef<UserEditDialogComponent, unknown>;
   @Input() pageSize?: number;
   @Input() pageNumber?: number;
   @Output() dataUpdated = new EventEmitter<UserPageableResponse>();
@@ -19,6 +20,7 @@ export class UserTableComponent implements OnInit {
     'roles',
     'lastActivity',
     'creationTime',
+    'operations',
   ];
   isLoading = true;
   dataSource: User[] = [];
@@ -57,6 +59,11 @@ export class UserTableComponent implements OnInit {
   }
 
   openUserEditDialog(user: User) {
-    this._matDialog.open(UserEditDialogComponent, { data: { user } });
+    this._dialogRef = this._matDialog.open(UserEditDialogComponent, {
+      data: { user },
+    });
+    this._dialogRef.afterClosed().subscribe(() => {
+      this.search();
+    });
   }
 }

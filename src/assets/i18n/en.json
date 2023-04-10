@@ -63,7 +63,8 @@
         "username": "Username",
         "roles": "Roles",
         "last_activity": "Last Activity",
-        "creation_time": "Creation Time"
+        "creation_time": "Creation Time",
+        "operations": "Operations"
       },
       "no_data_label": "No users found."
     },
