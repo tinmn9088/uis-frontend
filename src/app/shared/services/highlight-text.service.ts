@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class HighlightTextService {
   readonly CLASS_NAME = 'hightlight-text';
 
-  readonly TAGNAMES_TO_SKIP = ['mat-icon'];
+  readonly TAGNAMES_TO_SKIP = ['mat-icon', 'thead'];
 
   highlight(text: string, element: Element | null) {
     if (!element) return;

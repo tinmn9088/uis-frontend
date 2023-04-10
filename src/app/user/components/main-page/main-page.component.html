@@ -1,13 +1,13 @@
 <div class="list">
   <ng-container *ngIf="allowedCards.length > 0; else noPermission">
     <ng-container *ngFor="let card of cards">
-      <mat-card
-        class="list__card"
-        [ngClass]="card.themeCssClass"
-        *ngIf="card.isAllowed">
+      <mat-card class="list__card" [ngClass]="card.themeCssClass">
         <mat-card-header>
           <mat-card-title class="list__card-title">
             {{ card.i18nName | translate }}
+            <mat-icon *ngIf="!card.isAllowed" class="list__card-title-icon">
+              highlight_off
+            </mat-icon>
           </mat-card-title>
           <mat-card-subtitle
             class="list__card-subtitle"
@@ -15,7 +15,9 @@
             {{ 'users.main.cards.subtitle' | translate }}
           </mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content class="list__card-content-container">
+        <mat-card-content
+          class="list__card-content-container"
+          [ngClass]="{ disabled: !card.isAllowed }">
           <div class="list__sidenav-options-list">
             <p class="list__sidenav-option" *ngFor="let option of card.options">
               <mat-icon class="list__sidenav-option-icon">launch</mat-icon>
@@ -25,7 +27,9 @@
             </p>
           </div>
         </mat-card-content>
-        <mat-card-actions [align]="'end'">
+        <mat-card-actions
+          [align]="'end'"
+          [ngClass]="{ disabled: !card.isAllowed }">
           <button mat-flat-button color="primary" [routerLink]="card.path">
             {{ 'users.main.cards.open_button' | translate }}
           </button>

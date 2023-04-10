@@ -1,5 +1,10 @@
 <div class="user-layout" [ngClass]="themeClass$ | async">
-  <app-toolbar class="user-layout__toolbar" [user]="user"></app-toolbar>
+  <app-toolbar
+    class="user-layout__toolbar"
+    [user]="user"
+    [tabs]="toolbarTabs"
+    [activeTab]="activeTab"
+    [showTabs]="true"></app-toolbar>
   <div class="user-layout__content">
     <router-outlet></router-outlet>
   </div>

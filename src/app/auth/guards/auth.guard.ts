@@ -10,6 +10,8 @@ import { Observable, catchError, map, of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { JWT_HELPER_SERVICE_TOKEN } from '../auth.module';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * - Checks if there is authorization data.
@@ -21,6 +23,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(
     private _authService: AuthService,
+    private _snackbarService: SnackbarService,
+    private _translateService: TranslateService,
     @Inject(JWT_HELPER_SERVICE_TOKEN)
     private _jwtHelperService: JwtHelperService,
     private _router: Router
@@ -69,7 +73,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       console.debug('Access JWT is expired. Try to refresh ...');
       return this._authService.refresh({ refreshToken }).pipe(
         catchError(() => {
-          this.navigateToAuthPage(url);
+          this.navigateToAuthPage(url, true);
           return of(false);
         }),
         map(() => true)
@@ -82,7 +86,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   /**
    * @param url current url
    */
-  private navigateToAuthPage(url: string) {
+  private navigateToAuthPage(url: string, sessionExpired = false) {
+    this._translateService
+      .get(
+        sessionExpired ? 'auth.session_expired' : 'auth.authentication_needed'
+      )
+      .subscribe(message => {
+        this._snackbarService.showInfo(message);
+      });
     this._router.navigate(this._authService.AUTH_PAGE_PATH, {
       queryParams: { redirectTo: url },
     });

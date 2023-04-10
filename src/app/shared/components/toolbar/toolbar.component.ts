@@ -30,7 +30,12 @@ export class ToolbarComponent implements AfterViewInit {
   ];
   compact = false;
   @Input() user?: User;
+
+  /**
+   * Is passed through TranslateService pipeline.
+   */
   @Input() tabs: ToolbarTab[] = [];
+
   @Input() activeTab?: ToolbarTab;
   @Input() showTabs = false;
   @Input() showBurger = false;

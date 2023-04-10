@@ -36,7 +36,16 @@
     "checkbox_unselect_all": "Unselect all",
     "cannot_load_options": "Failed to load options"
   },
+  "auth": {
+    "authentication_needed": "Need to login",
+    "session_expired": "Session expired"
+  },
   "users": {
+    "toolbarTabs": {
+      "profile": "Profile",
+      "users": "Users",
+      "roles": "Roles"
+    },
     "main": {
       "cards": {
         "subtitle": "Options",
@@ -64,7 +73,7 @@
       "login_label": "Login",
       "required": "Required",
       "messages": {
-        "success": "Authentication successful",
+        "success": "Logged in successfully",
         "error": "Authentication error"
       }
     },

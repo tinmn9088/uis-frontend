@@ -36,7 +36,16 @@
     "checkbox_unselect_all": "Отменить выбор",
     "cannot_load_options": "Не удалось загрузить"
   },
+  "auth": {
+    "authentication_needed": "Необходимо войти",
+    "session_expired": "Сессия истекла"
+  },
   "users": {
+    "toolbarTabs": {
+      "profile": "Профиль",
+      "users": "Пользователи",
+      "roles": "Роли"
+    },
     "main": {
       "cards": {
         "subtitle": "Опции",
