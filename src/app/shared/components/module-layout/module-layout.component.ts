@@ -20,6 +20,7 @@ import { ModuleName } from '../../domain/module-name';
 import { THEME_CSS_CLASS_TOKEN } from '../../shared.module';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/user/domain/user';
+import { ToolbarTab } from '../../domain/toolbar-tab';
 
 @Component({
   selector: 'app-module-layout',
@@ -40,8 +41,8 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   user?: User;
   sidenavOptions!: ModuleSidenavOption[];
   activeOption?: ModuleSidenavOption;
-  toolbarTabs!: ModuleSidenavOption[];
-  activeTab?: ModuleSidenavOption;
+  toolbarTabs!: ToolbarTab[];
+  activeTab?: ToolbarTab;
   addButtonPath?: string;
   @ViewChild(MatDrawerContainer) drawerContainer!: MatDrawerContainer;
   @ViewChild(MatDrawerContent) drawerContent!: MatDrawerContent;

@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { Language } from '../../domain/language';
 import { LanguageService } from '../../services/language.service';
-import { ModuleToolbarTab } from '../../domain/module-tab';
+import { ToolbarTab } from '../../domain/toolbar-tab';
 import { MatToolbar } from '@angular/material/toolbar';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/user/domain/user';
@@ -30,8 +30,8 @@ export class ToolbarComponent implements AfterViewInit {
   ];
   compact = false;
   @Input() user?: User;
-  @Input() tabs: ModuleToolbarTab[] = [];
-  @Input() activeTab?: ModuleToolbarTab;
+  @Input() tabs: ToolbarTab[] = [];
+  @Input() activeTab?: ToolbarTab;
   @Input() showTabs = false;
   @Input() showBurger = false;
   @Input() showAddMenu = false;
@@ -52,7 +52,7 @@ export class ToolbarComponent implements AfterViewInit {
     this._resizeObserver.observe(this.matToolbar._elementRef.nativeElement);
   }
 
-  onTabClick(tab: ModuleToolbarTab) {
+  onTabClick(tab: ToolbarTab) {
     this._router
       .navigateByUrl(tab.path)
       .catch(() => this._router.navigateByUrl('/'));
