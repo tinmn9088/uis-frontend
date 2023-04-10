@@ -1,7 +1,9 @@
 @use '@angular/material' as mat;
 @use 'themes/default';
+@use 'themes/category';
 @use 'themes/specialization';
 @use 'themes/discipline';
+@use 'themes/curriculum';
 @use 'themes/user';
 
 @include mat.core();
@@ -12,12 +14,20 @@
   @include mat.all-component-colors(user.$light-theme);
 }
 
+.category-theme {
+  @include mat.all-component-colors(category.$light-theme);
+}
+
 .specialization-theme {
   @include mat.all-component-colors(specialization.$light-theme);
 }
 
 .discipline-theme {
   @include mat.all-component-colors(discipline.$light-theme);
+}
+
+.curriculum-theme {
+  @include mat.all-component-colors(curriculum.$light-theme);
 }
 
 @import '../fonts/material-icons';

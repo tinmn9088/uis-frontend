@@ -1,0 +1,8 @@
+<ng-container *ngIf="!categoryNode.isLoading; else loading">
+  <a [routerLink]="linkToForm">{{ categoryNode.category.name }}</a>
+</ng-container>
+<ng-template #loading>
+  <mat-progress-bar
+    *ngIf="categoryNode.isLoading"
+    mode="indeterminate"></mat-progress-bar>
+</ng-template>

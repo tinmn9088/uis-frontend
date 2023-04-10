@@ -24,12 +24,11 @@ export class AppComponent implements OnDestroy {
         console.debug(`Current path: "${currentPath}"`);
 
         const moduleName = this._moduleService.getModuleNameByPath(currentPath);
-        if (!moduleName) {
-          throw new Error(`No module found for "${currentPath}"`);
+        if (moduleName) {
+          this.themeClass$.next(
+            this._moduleService.getThemeCssClass(moduleName) || ''
+          );
         }
-        this.themeClass$.next(
-          this._moduleService.getThemeCssClass(moduleName) || ''
-        );
       }
     });
   }

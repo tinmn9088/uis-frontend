@@ -27,8 +27,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -36,8 +37,13 @@ import { JoinPipe } from './pipes/join.pipe';
 import { PaginatorService } from './services/paginator.service';
 import { LanguageService } from './services/language.service';
 import { FilteredSelectComponent } from './components/filtered-select/filtered-select.component';
+import { EmptyComponent } from './components/empty/empty.component';
+import { DatepickerYearHeaderComponent } from './components/datepicker-year-header/datepicker-year-header.component';
 
 export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('themeClass');
+export const REFRESH_JWT_REQUEST_COUNT_TOKEN = new InjectionToken<string>(
+  'refreshJwtRequestCount'
+);
 
 const modules = [
   CommonModule,
@@ -70,6 +76,8 @@ const modules = [
   MatCardModule,
   MatRippleModule,
   MatDialogModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
 ];
 
 const declarations = [
@@ -78,6 +86,7 @@ const declarations = [
   PaginatorComponent,
   JoinPipe,
   FilteredSelectComponent,
+  DatepickerYearHeaderComponent,
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -85,7 +94,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [...declarations],
+  declarations: [...declarations, EmptyComponent],
   exports: [...modules, declarations, TranslateModule],
   imports: [
     ...modules,
@@ -97,6 +106,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
   ],
-  providers: [PaginatorService, LanguageService],
+  providers: [
+    PaginatorService,
+    LanguageService,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
 })
 export class SharedModule {}

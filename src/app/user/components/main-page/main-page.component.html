@@ -1,0 +1,50 @@
+<div class="list">
+  <ng-container *ngIf="allowedCards.length > 0; else noPermission">
+    <ng-container *ngFor="let card of cards">
+      <mat-card
+        class="list__card"
+        [ngClass]="card.themeCssClass"
+        *ngIf="card.isAllowed">
+        <mat-card-header>
+          <mat-card-title class="list__card-title">
+            {{ card.i18nName | translate }}
+          </mat-card-title>
+          <mat-card-subtitle
+            class="list__card-subtitle"
+            *ngIf="card.options.length > 0">
+            {{ 'users.main.cards.subtitle' | translate }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="list__card-content-container">
+          <div class="list__sidenav-options-list">
+            <p class="list__sidenav-option" *ngFor="let option of card.options">
+              <mat-icon class="list__sidenav-option-icon">launch</mat-icon>
+              <a [routerLink]="option.path">
+                {{ option.title | translate }}
+              </a>
+            </p>
+          </div>
+        </mat-card-content>
+        <mat-card-actions [align]="'end'">
+          <button mat-flat-button color="primary" [routerLink]="card.path">
+            {{ 'users.main.cards.open_button' | translate }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </ng-container>
+  </ng-container>
+  <ng-template #noPermission>
+    <div class="list__no-permission">
+      <div class="list__no-permission-label">
+        <mat-icon class="list__no-permission-icon">error_outline</mat-icon>
+        {{ 'users.main.no_modules_label' | translate }}
+      </div>
+      <div class="list__login-suggestion">
+        {{ 'users.main.login_label' | translate }}
+        <button mat-flat-button color="primary" (click)="navigateToAuthPage()">
+          {{ 'users.main.login_button_text' | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>

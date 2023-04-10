@@ -1,6 +1,7 @@
 {
   "module": {
     "name": {
+      "users": "Users",
       "categories": "Categories",
       "disciplines": "Disciplines",
       "specializations": "Specializations",
@@ -13,7 +14,7 @@
         "category": "Add category",
         "discipline": "Add discipline",
         "specialization": "Add specialization",
-        "curricula": "Add curricula"
+        "curricula": "Add curriculum"
       },
       "login": {
         "show_profile": "Show profile",
@@ -36,6 +37,15 @@
     "cannot_load_options": "Failed to load options"
   },
   "users": {
+    "main": {
+      "cards": {
+        "subtitle": "Options",
+        "open_button": "Open"
+      },
+      "no_modules_label": "No modules available",
+      "login_label": "Login to see more",
+      "login_button_text": "Login"
+    },
     "list": {
       "search": {
         "placeholder": "Search by: username"
@@ -71,6 +81,32 @@
       "role_granted_message": "Role granted",
       "role_revoked_message": "Role revoked",
       "role_change_error_message": "Role changle failed"
+    }
+  },
+  "categories": {
+    "list": {
+      "search": {
+        "placeholder": "Search by: name"
+      },
+      "no_data_label": "No categories found.",
+      "no_permission_label": "Not allowed"
+    },
+    "form": {
+      "add_title": "Add category",
+      "edit_title": "Category ",
+      "name_label": "Name",
+      "name_error": "Name required",
+      "parent_label": "Parent category",
+      "add_button": "Add",
+      "edit_button": "Edit",
+      "cancel_button": "Cancel",
+      "snackbar_add_success_message": "Added",
+      "snackbar_update_success_message": "Updated"
+    },
+    "options": {
+      "search": "Search categories",
+      "add": "Add category",
+      "edit": "Edit category"
     }
   },
   "disciplines": {
@@ -112,6 +148,7 @@
       "search": {
         "placeholder": "Search by: name, cipher"
       },
+      "edit_button": "Edit",
       "no_data_label": "No specializations found.",
       "no_permission_label": "Not allowed"
     },
@@ -135,6 +172,39 @@
       "search": "Search specializations",
       "add": "Add specialization",
       "edit": "Edit specialization"
+    }
+  },
+  "curriculum": {
+    "list": {
+      "columns": {
+        "id": "Id",
+        "approval_date": "Approval date",
+        "admission_year": "Admission year",
+        "specialization_id": "Specialization id"
+      },
+      "no_data_label": "No curricula found.",
+      "no_permission_label": "Not allowed"
+    },
+    "form": {
+      "add_title": "Add curriculum",
+      "edit_title": "Curriculum",
+      "approval_date_label": "Approval date",
+      "approval_date_error": "Approval date required",
+      "admission_year_label": "Admission year",
+      "admission_year_error": "Admission year required",
+      "specialization_label": "Specialization",
+      "specialization_error": "Specialization required",
+      "add_button": "Add",
+      "edit_button": "Edit",
+      "apply_button": "Apply",
+      "cancel_button": "Cancel",
+      "snackbar_add_success_message": "Added",
+      "snackbar_update_success_message": "Updated"
+    },
+    "options": {
+      "search": "Search curricula",
+      "add": "Add curriculum",
+      "edit": "Edit curriculum"
     }
   }
 }

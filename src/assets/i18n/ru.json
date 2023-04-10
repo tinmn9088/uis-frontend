@@ -1,6 +1,7 @@
 {
   "module": {
     "name": {
+      "users": "Пользователи",
       "categories": "Категории",
       "disciplines": "Дисциплины",
       "specializations": "Специальности",
@@ -36,6 +37,15 @@
     "cannot_load_options": "Не удалось загрузить"
   },
   "users": {
+    "main": {
+      "cards": {
+        "subtitle": "Опции",
+        "open_button": "Открыть"
+      },
+      "no_modules_label": "Нет доступных модулей",
+      "login_label": "Войдите, чтобы увидеть больше",
+      "login_button_text": "Войти"
+    },
     "list": {
       "search": {
         "placeholder": "Поиск по: имя пользователя"
@@ -71,6 +81,32 @@
       "role_granted_message": "Роль добавлена",
       "role_revoked_message": "Роль удалена",
       "role_change_error_message": "Не удалось изменить роли у пользователя"
+    }
+  },
+  "categories": {
+    "list": {
+      "search": {
+        "placeholder": "Поиск по: название"
+      },
+      "no_data_label": "Категорий не найдено.",
+      "no_permission_label": "Недостаточно прав"
+    },
+    "form": {
+      "add_title": "Добавить категорию",
+      "edit_title": "Категория",
+      "name_label": "Название",
+      "name_error": "Название обязательно",
+      "parent_label": "Родительная категория",
+      "add_button": "Добавить",
+      "edit_button": "Изменить",
+      "cancel_button": "Отмена",
+      "snackbar_add_success_message": "Добавлено",
+      "snackbar_update_success_message": "Обновлено"
+    },
+    "options": {
+      "search": "Поиск категорий",
+      "add": "Добавить категорию",
+      "edit": "Изменить категорию"
     }
   },
   "disciplines": {
@@ -112,7 +148,8 @@
       "search": {
         "placeholder": "Поиск по: название, шифр"
       },
-      "no_data_label": "Специализаций не найдено.",
+      "edit_button": "Редактировать",
+      "no_data_label": "Специальностей не найдено.",
       "no_permission_label": "Недостаточно прав"
     },
     "form": {
@@ -132,9 +169,42 @@
       "snackbar_update_success_message": "Обновлено"
     },
     "options": {
-      "search": "Поиск специалностей",
+      "search": "Поиск специальностей",
       "add": "Добавить специальность",
       "edit": "Изменить специальность"
+    }
+  },
+  "curriculum": {
+    "list": {
+      "columns": {
+        "id": "Id",
+        "approval_date": "Дата утверждения",
+        "admission_year": "Год поступления",
+        "specialization_id": "Id специальности"
+      },
+      "no_data_label": "Учебных планов не найдено.",
+      "no_permission_label": "Недостаточно прав"
+    },
+    "form": {
+      "add_title": "Добавить учебный план",
+      "edit_title": "Учебный план",
+      "approval_date_label": "Дата утверждения",
+      "approval_date_error": "Дата утверждения обязательна",
+      "admission_year_label": "Год поступления",
+      "admission_year_error": "Год поступления обязателен",
+      "specialization_label": "Специальность",
+      "specialization_error": "Специальность обязательна",
+      "add_button": "Добавить",
+      "edit_button": "Изменить",
+      "apply_button": "Применить",
+      "cancel_button": "Отмена",
+      "snackbar_add_success_message": "Добавлено",
+      "snackbar_update_success_message": "Обновлено"
+    },
+    "options": {
+      "search": "Поиск учебных планов",
+      "add": "Добавить учебный план",
+      "edit": "Изменить учебный план"
     }
   }
 }

@@ -23,7 +23,7 @@ describe('UserEditDialogComponent', () => {
 
     fixture = TestBed.createComponent(UserEditDialogComponent);
     component = fixture.componentInstance;
-    component.data = { user: { id: 1, username: 'testuser', roles: [] } };
+    component.data = { user: { id: 1, username: 'TestUser', roles: [] } };
     fixture.detectChanges();
   });
 

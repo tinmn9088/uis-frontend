@@ -8,6 +8,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { UserRightsManagementComponent } from './components/user-rights-management/user-rights-management.component';
 import { UserEditFormComponent } from './components/user-edit-form/user-edit-form.component';
 import { UserEditDialogComponent } from './components/user-edit-dialog/user-edit-dialog.component';
+import { MainPageComponent } from './components/main-page/main-page.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { UserEditDialogComponent } from './components/user-edit-dialog/user-edit
     UserRightsManagementComponent,
     UserEditFormComponent,
     UserEditDialogComponent,
+    MainPageComponent,
   ],
   imports: [CommonModule, SharedModule],
 })

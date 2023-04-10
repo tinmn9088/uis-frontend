@@ -12,7 +12,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpecializationModule } from './specialization/specialization.module';
-import { SharedModule, THEME_CSS_CLASS_TOKEN } from './shared/shared.module';
+import {
+  REFRESH_JWT_REQUEST_COUNT_TOKEN,
+  SharedModule,
+  THEME_CSS_CLASS_TOKEN,
+} from './shared/shared.module';
 import { TranslateService } from '@ngx-translate/core';
 import { LOCATION_INITIALIZED } from '@angular/common';
 import { LanguageService } from './shared/services/language.service';
@@ -28,6 +32,7 @@ import { ModuleRoutingModule } from './shared/module-routing.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { SnackbarAction } from './shared/domain/snackbar-action';
+import { CurriculumModule } from './curriculum/curriculum.module';
 
 export function translateLoader(
   translate: TranslateService,
@@ -84,6 +89,7 @@ export class AppErrorHandler implements ErrorHandler {
     CategoryModule,
     SpecializationModule,
     DisciplineModule,
+    CurriculumModule,
     UserModule,
     HttpClientModule,
     ModuleRoutingModule,
@@ -99,6 +105,10 @@ export class AppErrorHandler implements ErrorHandler {
     {
       provide: THEME_CSS_CLASS_TOKEN,
       useValue: new BehaviorSubject(''),
+    },
+    {
+      provide: REFRESH_JWT_REQUEST_COUNT_TOKEN,
+      useValue: new BehaviorSubject(0),
     },
   ],
 })

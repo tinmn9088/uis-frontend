@@ -2,17 +2,39 @@
   "user": {
     "name": "User",
     "themeCssClass": "user-theme",
+    "i18nName": "module.name.users",
     "path": "/user",
-    "resourcePath": "/users"
+    "resourcePath": "/users",
+    "requiredPermissions": ["USER_READ", "USER_SEARCH"]
   },
   "category": {
     "name": "Category",
     "themeCssClass": "category-theme",
     "i18nName": "module.name.categories",
     "path": "/category",
-    "resourcePath": "/categories",
-    "sidenavAddButtonPath": "",
-    "sidenavOptions": []
+    "resourcePath": "/tags",
+    "requiredPermissions": [],
+    "sidenavAddButtonPath": "/category/add",
+    "sidenavOptions": [
+      {
+        "title": "categories.options.search",
+        "path": "/category/list",
+        "requiredPermissions": ["TAG_READ"]
+      },
+      {
+        "title": "categories.options.add",
+        "path": "/category/add",
+        "groupId": 1,
+        "requiredPermissions": ["TAG_CREATE"]
+      },
+      {
+        "title": "categories.options.edit",
+        "path": "/category/0",
+        "pathRegex": "/category/\\d+",
+        "groupId": 1,
+        "requiredPermissions": ["TAG_UPDATE"]
+      }
+    ]
   },
   "discipline": {
     "name": "Discipline",
@@ -20,22 +42,26 @@
     "i18nName": "module.name.disciplines",
     "path": "/discipline",
     "resourcePath": "/disciplines",
-    "sidenavAddButtonPath": "/disciplines/add",
+    "requiredPermissions": [],
+    "sidenavAddButtonPath": "/discipline/add",
     "sidenavOptions": [
       {
         "title": "disciplines.options.search",
-        "path": "/discipline/list"
+        "path": "/discipline/list",
+        "requiredPermissions": ["DISCIPLINE_GET", "DISCIPLINE_SEARCH"]
       },
       {
         "title": "disciplines.options.add",
         "path": "/discipline/add",
-        "groupId": 1
+        "groupId": 1,
+        "requiredPermissions": ["DISCIPLINE_CREATE"]
       },
       {
         "title": "disciplines.options.edit",
         "path": "/discipline/0",
         "pathRegex": "/discipline/\\d+",
-        "groupId": 1
+        "groupId": 1,
+        "requiredPermissions": ["DISCIPLINE_UPDATE"]
       }
     ]
   },
@@ -45,32 +71,56 @@
     "i18nName": "module.name.specializations",
     "path": "/specialization",
     "resourcePath": "/specializations",
+    "requiredPermissions": [],
     "sidenavAddButtonPath": "/specialization/add",
     "sidenavOptions": [
       {
         "title": "specializations.options.search",
-        "path": "/specialization/list"
+        "path": "/specialization/list",
+        "requiredPermissions": ["SPECIALIZATION_GET", "SPECIALIZATION_SEARCH"]
       },
       {
         "title": "specializations.options.add",
         "path": "/specialization/add",
-        "groupId": 1
+        "groupId": 1,
+        "requiredPermissions": ["SPECIALIZATION_CREATE"]
       },
       {
         "title": "specializations.options.edit",
         "path": "/specialization/0",
         "pathRegex": "/specialization/\\d+",
-        "groupId": 1
+        "groupId": 1,
+        "requiredPermissions": ["SPECIALIZATION_UPDATE"]
       }
     ]
   },
-  "curricula": {
-    "name": "Curricula",
-    "themeCssClass": "curricula-theme",
+  "curriculum": {
+    "name": "Curriculum",
+    "themeCssClass": "curriculum-theme",
     "i18nName": "module.name.curricula",
-    "path": "/curricula",
-    "resourcePath": "/curricula",
-    "sidenavAddButtonPath": "",
-    "sidenavOptions": []
+    "path": "/curriculum",
+    "resourcePath": "/curriculums",
+    "requiredPermissions": [],
+    "sidenavAddButtonPath": "/curriculum/add",
+    "sidenavOptions": [
+      {
+        "title": "curriculum.options.search",
+        "path": "/curriculum/list",
+        "requiredPermissions": ["CURRICULUM_GET"]
+      },
+      {
+        "title": "curriculum.options.add",
+        "path": "/curriculum/add",
+        "groupId": 1,
+        "requiredPermissions": ["CURRICULUM_CREATE"]
+      },
+      {
+        "title": "curriculum.options.edit",
+        "path": "/curriculum/0",
+        "pathRegex": "/curriculum/\\d+",
+        "groupId": 1,
+        "requiredPermissions": ["CURRICULUM_UPDATE"]
+      }
+    ]
   }
 }

@@ -1,0 +1,41 @@
+<div class="list">
+  <form [formGroup]="formGroup" (ngSubmit)="onSearch()">
+    <div class="list__search-container">
+      <mat-form-field class="list__search" appearance="outline">
+        <input
+          placeholder="{{ 'categories.list.search.placeholder' | translate }}"
+          matInput
+          formControlName="searchQuery" />
+        <button *ngIf="searchQuery" matSuffix mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <ng-container *ngIf="arePermissionsPresent; else noPermission">
+    <div class="list__tree-container">
+      <app-category-tree
+        class="list__tree"
+        [pageSize]="pageSize"
+        [pageNumber]="pageNumber"
+        (dataUpdated)="onDataUpdate($event)">
+      </app-category-tree>
+    </div>
+
+    <div class="list__paginator-container">
+      <app-paginator
+        class="list__paginator"
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        [pageIndex]="pageNumber"
+        (page)="onPageChange($event)"></app-paginator>
+    </div>
+  </ng-container>
+  <ng-template #noPermission>
+    <div class="list__no-permission">
+      <mat-icon class="list__no-permission-icon">error_outline</mat-icon>
+      {{ 'categories.list.no_permission_label' | translate }}
+    </div>
+  </ng-template>
+</div>

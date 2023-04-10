@@ -8,6 +8,10 @@ import { DisciplineFormComponent } from '../discipline/components/discipline-for
 import { NgModule } from '@angular/core';
 import { ModuleLayoutComponent } from './components/module-layout/module-layout.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
+import { CategoryListComponent } from '../category/components/category-list/category-list.component';
+import { CategoryFormComponent } from '../category/components/category-form/category-form.component';
+import { CurriculumListComponent } from '../curriculum/components/curriculum-list/curriculum-list.component';
+import { CurriculumFormComponent } from '../curriculum/components/curriculum-form/curriculum-form.component';
 
 const routes: Routes = [
   {
@@ -15,6 +19,19 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
     component: ModuleLayoutComponent,
     children: [
+      {
+        path: Modules.category.path.slice(1),
+        children: [
+          {
+            path: '',
+            component: AppRoutingRedirectComponent,
+            data: { redirectTo: 'list' },
+          },
+          { path: 'list', component: CategoryListComponent },
+          { path: 'add', component: CategoryFormComponent },
+          { path: ':id', component: CategoryFormComponent },
+        ],
+      },
       {
         path: Modules.specialization.path.slice(1),
         children: [
@@ -39,6 +56,19 @@ const routes: Routes = [
           { path: 'list', component: DisciplineListComponent },
           { path: 'add', component: DisciplineFormComponent },
           { path: ':id', component: DisciplineFormComponent },
+        ],
+      },
+      {
+        path: Modules.curriculum.path.slice(1),
+        children: [
+          {
+            path: '',
+            component: AppRoutingRedirectComponent,
+            data: { redirectTo: 'list' },
+          },
+          { path: 'list', component: CurriculumListComponent },
+          { path: 'add', component: CurriculumFormComponent },
+          { path: ':id', component: CurriculumFormComponent },
         ],
       },
     ],

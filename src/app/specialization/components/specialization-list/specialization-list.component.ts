@@ -53,7 +53,7 @@ export class SpecializationListComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const tree = document.querySelector('.specialization-list__tree');
+    const tree = document.querySelector('.list__tree');
     if (tree) {
       this._resizeObserver.observe(tree);
     }

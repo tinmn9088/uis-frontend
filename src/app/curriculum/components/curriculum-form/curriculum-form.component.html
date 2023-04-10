@@ -1,0 +1,119 @@
+<form class="form" #form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div
+    class="form__container"
+    [ngStyle]="{ width: formContainerWidthPercents + '%' }">
+    <h3 class="form__title">
+      {{
+        editMode
+          ? ('curriculum.form.edit_title' | translate)
+          : ('curriculum.form.add_title' | translate | uppercase)
+      }}
+    </h3>
+
+    <mat-form-field appearance="outline" class="form__field">
+      <mat-label>
+        {{ 'curriculum.form.approval_date_label' | translate }}
+      </mat-label>
+      <input
+        class="form__input"
+        matInput
+        [matDatepicker]="approvalDate"
+        formControlName="approvalDate" />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="approvalDate"></mat-datepicker-toggle>
+      <mat-datepicker #approvalDate>
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel>
+            {{ 'curriculum.form.cancel_button' | translate }}
+          </button>
+          <button mat-raised-button color="primary" matDatepickerApply>
+            {{ 'curriculum.form.apply_button' | translate }}
+          </button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+      <mat-error class="form__error-message">
+        {{ 'curriculum.form.approval_date_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form__field">
+      <mat-label>
+        {{ 'curriculum.form.admission_year_label' | translate }}
+      </mat-label>
+      <input
+        class="form__input"
+        matInput
+        [matDatepicker]="admissionYear"
+        formControlName="admissionYear" />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="admissionYear"></mat-datepicker-toggle>
+      <mat-datepicker
+        #admissionYear
+        startView="multi-year"
+        [calendarHeaderComponent]="datepickerYearHeader"
+        (yearSelected)="onYearSelected($event, admissionYear)">
+      </mat-datepicker>
+      <mat-error class="form__error-message">
+        {{ 'curriculum.form.admission_year_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      class="form__field"
+      appearance="outline"
+      color="primary"
+      *ngIf="!areNotPermissionsPresent">
+      <mat-label class="form__label">
+        {{ 'curriculum.form.specialization_label' | translate }}
+      </mat-label>
+      <app-filtered-select
+        class="form__select"
+        [options]="specializationOptions"
+        [isInternalFilterOn]="false"
+        [isLoading]="areParentOptionsLoading"
+        (filterChanged)="updateSpecializationOptions($event)"
+        formControlName="specializationId"></app-filtered-select>
+      <mat-error class="form__error-message">
+        {{ 'curriculum.form.specialization_error' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form__buttons">
+      <ng-container *ngIf="!editMode; else editButton">
+        <button
+          class="form__add-button"
+          mat-flat-button
+          color="primary"
+          [disabled]="
+            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+          ">
+          {{ 'curriculum.form.add_button' | translate }}
+        </button>
+      </ng-container>
+      <ng-template #editButton>
+        <button
+          class="form__edit-button"
+          mat-flat-button
+          color="primary"
+          [disabled]="
+            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+          ">
+          {{ 'curriculum.form.edit_button' | translate }}
+        </button>
+      </ng-template>
+
+      <a [routerLink]="getLinkToSearchPage()">
+        <button
+          class="form__cancel-button"
+          mat-flat-button
+          color="secondary"
+          type="button"
+          [disabled]="formGroup.disabled">
+          {{ 'curriculum.form.cancel_button' | translate }}
+        </button>
+      </a>
+    </div>
+  </div>
+</form>

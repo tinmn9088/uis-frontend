@@ -1,0 +1,40 @@
+.list {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  padding: 0 8px 0 8px;
+
+  &__table-container {
+    flex-grow: 1;
+    overflow: scroll;
+  }
+
+  &__paginator-container {
+    box-shadow: 0px -3px 6px rgba(0, 0, 0, 6%);
+    padding: 16px;
+  }
+
+  &__paginator-container {
+    display: flex;
+    background-color: white;
+  }
+
+  &__paginator {
+    min-width: 50%;
+    max-width: 100%;
+  }
+
+  &__no-permission {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.56);
+
+    &-icon {
+      margin-right: 10px;
+    }
+  }
+}

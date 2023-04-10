@@ -1,19 +1,19 @@
 @use '@angular/material' as mat;
 
 @use '../colors/basic' as b;
-@use '../colors/discipline' as c;
+@use '../colors/blue' as c;
 
-$light-purple-palette: (
-  50: c.$light-purple-50,
-  100: c.$light-purple-100,
-  200: c.$light-purple-200,
-  300: c.$light-purple-300,
-  400: c.$light-purple-400,
-  500: c.$light-purple-500,
-  600: c.$light-purple-600,
-  700: c.$light-purple-700,
-  800: c.$light-purple-800,
-  900: c.$light-purple-900,
+$light-blue-palette: (
+  50: c.$light-blue-50,
+  100: c.$light-blue-100,
+  200: c.$light-blue-200,
+  300: c.$light-blue-300,
+  400: c.$light-blue-400,
+  500: c.$light-blue-500,
+  600: c.$light-blue-600,
+  700: c.$light-blue-700,
+  800: c.$light-blue-800,
+  900: c.$light-blue-900,
   contrast: (
     50: b.$black,
     100: b.$black,
@@ -27,17 +27,17 @@ $light-purple-palette: (
     900: b.$black,
   ),
 );
-$dark-purple-palette: (
-  50: c.$dark-purple-50,
-  100: c.$dark-purple-100,
-  200: c.$dark-purple-200,
-  300: c.$dark-purple-300,
-  400: c.$dark-purple-400,
-  500: c.$dark-purple-600,
-  600: c.$dark-purple-600,
-  700: c.$dark-purple-700,
-  800: c.$dark-purple-800,
-  900: c.$dark-purple-900,
+$dark-blue-palette: (
+  50: c.$dark-blue-50,
+  100: c.$dark-blue-100,
+  200: c.$dark-blue-200,
+  300: c.$dark-blue-300,
+  400: c.$dark-blue-400,
+  500: c.$dark-blue-600,
+  600: c.$dark-blue-600,
+  700: c.$dark-blue-700,
+  800: c.$dark-blue-800,
+  900: c.$dark-blue-900,
   contrast: (
     50: b.$black,
     100: b.$black,
@@ -52,8 +52,8 @@ $dark-purple-palette: (
   ),
 );
 
-$light-theme-primary: mat.define-palette($light-purple-palette, 900);
-$light-theme-accent: mat.define-palette($dark-purple-palette);
+$light-theme-primary: mat.define-palette($light-blue-palette, 500);
+$light-theme-accent: mat.define-palette($dark-blue-palette);
 
 $light-theme: mat.define-light-theme(
   (
