@@ -94,7 +94,6 @@ export class AuthService {
   processAuthResponse(auth: Auth): Observable<Auth> {
     const { userId, permissions } = this.parseAccessToken(auth.accessToken);
     const completeAuth = Object.assign(auth, { permissions });
-    completeAuth.refreshToken = '2';
     this.auth = completeAuth;
     return this._userService.getById(userId).pipe(
       tap(userResponse => (this.user = userResponse)),
