@@ -138,7 +138,8 @@
         "snackbar_create_success_message": "Роль создана",
         "snackbar_update_success_message": "Роль обновлена",
         "snackbar_create_fail_message": "Не удалось создать роль",
-        "snackbar_update_fail_message": "Не удалось изменить роль"
+        "snackbar_update_fail_message": "Не удалось изменить роль",
+        "no_permission_scopes_label": "Не удалось получить список прав."
       }
     }
   },

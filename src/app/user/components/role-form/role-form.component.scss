@@ -22,5 +22,21 @@
     &-icon {
       margin-right: 10px;
     }
+
+    &__no-permission-scopes-label {
+      text-align: center;
+    }
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  &__spinner {
+    max-width: 48px;
+    max-height: 48px;
   }
 }

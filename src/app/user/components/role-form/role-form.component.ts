@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { PermissionService } from '../../services/permission.service';
 import { Role } from '../../domain/role';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -11,6 +18,8 @@ import { map, distinctUntilChanged, delay } from 'rxjs';
 import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
 import { RoleCreateRequest } from '../../domain/role-create-request';
 import { RoleUpdateRequest } from '../../domain/role-update-request';
+import { PermissionScope } from '../../domain/permission-scope';
+import { MatSelectionList } from '@angular/material/list';
 
 @Component({
   selector: 'app-role-form',
@@ -22,6 +31,9 @@ export class RoleFormComponent implements OnInit {
   areNotPermissionsPresent: boolean;
   editMode!: boolean;
   passwordHidden = true;
+  permissionScopes?: PermissionScope[];
+  arePermissionScopesLoading = false;
+  @ViewChild(MatSelectionList) matSelectionList?: MatSelectionList;
   @Input() role?: Role;
   @Output() roleCreatedUpdated = new EventEmitter<Role>();
   @Output() formInvalid = new EventEmitter<boolean>();
@@ -37,14 +49,16 @@ export class RoleFormComponent implements OnInit {
       Permission.ROLE_CREATE,
       Permission.PERMISSION_GET,
     ]);
+  }
 
+  ngOnInit() {
+    this.editMode = !!this.role;
     this.formGroup = new FormGroup({
       name: new FormControl(
         { value: '', disabled: this.areNotPermissionsPresent },
         Validators.required
       ),
     });
-
     this.formGroup.valueChanges
       .pipe(
         map(() => this.formGroup.invalid),
@@ -53,10 +67,14 @@ export class RoleFormComponent implements OnInit {
       .subscribe(invalid => {
         this.formInvalid.emit(invalid);
       });
-  }
+    this.arePermissionScopesLoading = true;
+    this._permissionService.getAllScopes().subscribe(scopes => {
+      this.permissionScopes = scopes;
+      this.arePermissionScopesLoading = false;
+    });
 
-  ngOnInit() {
-    this.editMode = !!this.role;
+    // to emit valueChanges event
+    this.formGroup.patchValue({ name: this.role?.name }, { emitEvent: true });
   }
 
   get name() {
@@ -70,7 +88,10 @@ export class RoleFormComponent implements OnInit {
     this.formGroup.disable();
     const requestBody: RoleCreateRequest | RoleUpdateRequest = {
       name: this.name,
-      permissionIds: [],
+      permissionIds:
+        this.matSelectionList?.selectedOptions.selected.map(
+          option => option.value
+        ) || [],
     };
 
     const request$ =

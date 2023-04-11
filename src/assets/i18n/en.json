@@ -138,7 +138,8 @@
         "snackbar_create_success_message": "Role created",
         "snackbar_update_success_message": "Role updated",
         "snackbar_create_fail_message": "Failed to create role",
-        "snackbar_update_fail_message": "Failed to update role"
+        "snackbar_update_fail_message": "Failed to update role",
+        "no_permission_scopes_label": "No permission scopes."
       }
     }
   },

@@ -13,4 +13,39 @@
       {{ 'users.roles.form.required' | translate }}
     </mat-error>
   </mat-form-field>
+
+  <ng-container
+    *ngIf="
+      permissionScopes && permissionScopes.length > 0;
+      else noPermissionScopesLabel
+    ">
+    <mat-selection-list #permissionsSelect>
+      <ng-container *ngFor="let permissionScope of permissionScopes">
+        <div mat-subheader>
+          {{ (permissionScope.scope | uppercase) + ':' }}
+        </div>
+        <mat-list-option
+          *ngFor="let permissionAction of permissionScope.actions"
+          [value]="permissionAction.id"
+          [selected]="role?.permissionIds?.includes(permissionAction.id)">
+          <div matListItemTitle>{{ permissionAction.name | uppercase }}</div>
+        </mat-list-option>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-selection-list>
+  </ng-container>
+
+  <ng-template #noPermissionScopesLabel>
+    <p
+      class="form__no-permission-scopes-label"
+      *ngIf="!arePermissionScopesLoading; else loading">
+      {{ 'users.roles.form.no_permission_scopes_label' | translate }}
+    </p>
+  </ng-template>
 </form>
+
+<ng-template #loading>
+  <div class="loading">
+    <mat-spinner class="loading__spinner"></mat-spinner>
+  </div>
+</ng-template>
