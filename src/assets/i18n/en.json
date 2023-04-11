@@ -110,6 +110,31 @@
       "role_granted_message": "Role granted",
       "role_revoked_message": "Role revoked",
       "role_change_error_message": "Role changle failed"
+    },
+    "roles": {
+      "list": {
+        "search": {
+          "placeholder": "Search by: name"
+        },
+        "columns": {
+          "id": "Id",
+          "name": "Name",
+          "permission_ids": "Permission Ids",
+          "operations": "Operations"
+        },
+        "create_button": "Create role",
+        "no_permission_label": "Not allowed",
+        "no_data_label": "No roles found."
+      },
+      "form": {
+        "no_permission_label": "Not allowed",
+        "name_label": "Name",
+        "required": "Required",
+        "edit_button": "Edit",
+        "cancel_button": "Cancel",
+        "snackbar_add_success_message": "Added",
+        "snackbar_update_success_message": "Updated"
+      }
     }
   },
   "categories": {

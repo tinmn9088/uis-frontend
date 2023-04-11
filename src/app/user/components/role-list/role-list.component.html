@@ -4,9 +4,9 @@
       class="list__create-button"
       mat-flat-button
       color="primary"
-      (click)="openUserCreateDialog()">
-      <mat-icon>person_add</mat-icon>
-      {{ 'users.list.create_button' | translate }}
+      (click)="openRoleFormDialog()">
+      <mat-icon>supervised_user_circle</mat-icon>
+      {{ 'users.roles.list.create_button' | translate }}
     </button>
   </div>
 
@@ -14,7 +14,7 @@
     <div class="list__search-container">
       <mat-form-field class="list__search" appearance="outline">
         <input
-          placeholder="{{ 'users.list.search.placeholder' | translate }}"
+          placeholder="{{ 'users.roles.list.search.placeholder' | translate }}"
           matInput
           formControlName="searchQuery" />
         <button *ngIf="searchQuery" matSuffix mat-icon-button>
@@ -29,13 +29,13 @@
     *ngIf="arePermissionsPresent; else noPermission">
     <div class="list__table-and-paginator-container">
       <div class="list__table-container">
-        <app-user-table
+        <app-role-table
           class="list__table"
           [pageSize]="pageSize"
           [pageNumber]="pageNumber"
           (dataUpdated)="onDataUpdate($event)"
           (sortChanged)="onSortChange()">
-        </app-user-table>
+        </app-role-table>
       </div>
 
       <div class="list__paginator-container">
@@ -52,7 +52,7 @@
   <ng-template #noPermission>
     <div class="list__no-permission">
       <mat-icon class="list__no-permission-icon">error_outline</mat-icon>
-      {{ 'users.list.no_permission_label' | translate }}
+      {{ 'users.roles.list.no_permission_label' | translate }}
     </div>
   </ng-template>
 </div>

@@ -12,6 +12,9 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import { UserCreateFormComponent } from './components/user-create-form/user-create-form.component';
 import { UserCreateDialogComponent } from './components/user-create-dialog/user-create-dialog.component';
 import { RoleFormComponent } from './components/role-form/role-form.component';
+import { RoleListComponent } from './components/role-list/role-list.component';
+import { RoleFormDialogComponent } from './components/role-form-dialog/role-form-dialog.component';
+import { RoleTableComponent } from './components/role-table/role-table.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { RoleFormComponent } from './components/role-form/role-form.component';
     UserCreateFormComponent,
     UserCreateDialogComponent,
     RoleFormComponent,
+    RoleListComponent,
+    RoleFormDialogComponent,
+    RoleTableComponent,
   ],
   imports: [CommonModule, SharedModule],
 })

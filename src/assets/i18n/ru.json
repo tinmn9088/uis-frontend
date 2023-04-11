@@ -110,6 +110,31 @@
       "role_granted_message": "Роль добавлена",
       "role_revoked_message": "Роль удалена",
       "role_change_error_message": "Не удалось изменить роли у пользователя"
+    },
+    "roles": {
+      "list": {
+        "search": {
+          "placeholder": "Поиск по: название"
+        },
+        "columns": {
+          "id": "Id",
+          "name": "Название",
+          "permission_ids": "Id прав",
+          "operations": "Действия"
+        },
+        "create_button": "Создать роль",
+        "no_permission_label": "Недостаточно прав",
+        "no_data_label": "Ролей не найдено."
+      },
+      "form": {
+        "no_permission_label": "Недостаточно прав",
+        "name_label": "Название",
+        "required": "Обязательно",
+        "edit_button": "Изменить",
+        "cancel_button": "Отмена",
+        "snackbar_create_success_message": "Создано",
+        "snackbar_update_success_message": "Обновлено"
+      }
     }
   },
   "categories": {
