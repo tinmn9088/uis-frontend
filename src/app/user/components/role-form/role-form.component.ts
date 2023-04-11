@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { PermissionService } from '../../services/permission.service';
 import { Role } from '../../domain/role';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -17,10 +17,10 @@ import { RoleUpdateRequest } from '../../domain/role-update-request';
   templateUrl: './role-form.component.html',
   styleUrls: ['./role-form.component.scss'],
 })
-export class RoleFormComponent {
+export class RoleFormComponent implements OnInit {
   formGroup!: FormGroup;
   areNotPermissionsPresent: boolean;
-  editMode: boolean;
+  editMode!: boolean;
   passwordHidden = true;
   @Input() role?: Role;
   @Output() roleCreatedUpdated = new EventEmitter<Role>();
@@ -33,7 +33,6 @@ export class RoleFormComponent {
     private _translate: TranslateService,
     private _snackbarService: SnackbarService
   ) {
-    this.editMode = !!this.role;
     this.areNotPermissionsPresent = !this._authService.hasUserPermissions([
       Permission.ROLE_CREATE,
       Permission.PERMISSION_GET,
@@ -54,6 +53,10 @@ export class RoleFormComponent {
       .subscribe(invalid => {
         this.formInvalid.emit(invalid);
       });
+  }
+
+  ngOnInit() {
+    this.editMode = !!this.role;
   }
 
   get name() {
@@ -80,8 +83,8 @@ export class RoleFormComponent {
         this._translate
           .get(
             this.editMode
-              ? 'users.roles.form.snackbar_create_success_message'
-              : 'users.roles.form.snackbar_update_success_message'
+              ? 'users.roles.form.snackbar_update_success_message'
+              : 'users.roles.form.snackbar_create_success_message'
           )
           .pipe(delay(666))
           .subscribe(message => {
@@ -93,8 +96,8 @@ export class RoleFormComponent {
         this._translate
           .get(
             this.editMode
-              ? 'users.roles.form.snackbar_create_fail_message'
-              : 'users.roles.form.snackbar_update_fail_message'
+              ? 'users.roles.form.snackbar_update_fail_message'
+              : 'users.roles.form.snackbar_create_fail_message'
           )
           .subscribe(message => {
             this.formGroup.enable();

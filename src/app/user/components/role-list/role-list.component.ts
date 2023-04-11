@@ -66,7 +66,7 @@ export class RoleListComponent {
 
   openRoleFormDialog() {
     this._dialogRef = this._matDialog.open(RoleFormDialogComponent, {
-      data: {},
+      data: { role: undefined },
     });
     this._dialogRef.afterClosed().subscribe(() => {
       this.searchQuery = '';

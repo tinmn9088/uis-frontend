@@ -48,15 +48,7 @@ export class RoleTableComponent implements OnInit {
     };
   }
 
-  openRoleCreateDialog() {
-    this.openRoleFormDialog();
-  }
-
   openRoleEditDialog(role: Role) {
-    this.openRoleFormDialog(role);
-  }
-
-  private openRoleFormDialog(role?: Role) {
     this._dialogRef = this._matDialog.open(RoleFormDialogComponent, {
       data: { role },
     });

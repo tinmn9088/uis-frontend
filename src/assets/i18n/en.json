@@ -135,8 +135,8 @@
         "edit_button": "Edit",
         "create_button": "Create",
         "cancel_button": "Cancel",
-        "snackbar_create_success_message": "Added",
-        "snackbar_update_success_message": "Updated",
+        "snackbar_create_success_message": "Role created",
+        "snackbar_update_success_message": "Role updated",
         "snackbar_create_fail_message": "Failed to create role",
         "snackbar_update_fail_message": "Failed to update role"
       }

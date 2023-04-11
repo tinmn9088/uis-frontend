@@ -11,6 +11,7 @@
 <mat-dialog-content class="content">
   <app-role-form
     class="content__role-form"
+    [role]="data.role"
     (formInvalid)="isFormInvalid = $event"
     (roleCreatedUpdated)="onCreatedUpdated()"></app-role-form>
 </mat-dialog-content>
