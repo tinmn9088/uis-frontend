@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RoleService } from '../../services/role.service';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { SelectOption } from 'src/app/shared/domain/select-option';
 import { FormControl, FormGroup } from '@angular/forms';
 import { User } from '../../domain/user';
@@ -23,6 +23,8 @@ export class UserRightsManagementComponent implements OnInit {
   areOptionsLoading = false;
   formGroup!: FormGroup;
   @Input() user!: User;
+  @Input() disabled = false;
+  @Input() areRolesLoading = false;
   @Output() roleGranted = new EventEmitter<RoleChangeEvent>();
   @Output() roleRevoked = new EventEmitter<RoleChangeEvent>();
 
@@ -33,7 +35,7 @@ export class UserRightsManagementComponent implements OnInit {
     private _translate: TranslateService
   ) {
     this.formGroup = new FormGroup({
-      roleId: new FormControl(),
+      roleId: new FormControl({ value: '', disabled: this.disabled }),
     });
   }
 
@@ -67,47 +69,45 @@ export class UserRightsManagementComponent implements OnInit {
     const roleId = this.formGroup.get('roleId')?.value;
     if (!roleId) return;
 
-    this._userService
-      .grantRole(userId, roleId)
-      .pipe(tap(() => this.roleGranted.emit({ userId, roleId })))
-      .subscribe({
-        next: () =>
-          this._translate
-            .get('users.user_rights_management.role_granted_message')
-            .subscribe(message => {
-              this._snackbarService.showSuccess(message);
-            }),
-        error: error => {
-          this._translate
-            .get('users.user_rights_management.role_change_error_message')
-            .subscribe(message => {
-              console.error(error);
-              this._snackbarService.showError(message);
-            });
-        },
-      });
+    this._userService.grantRole(userId, roleId).subscribe({
+      next: () => {
+        this.roleGranted.emit({ userId, roleId });
+        this._translate
+          .get('users.user_rights_management.role_granted_message')
+          .subscribe(message => {
+            this._snackbarService.showSuccess(message);
+          });
+      },
+      error: error => {
+        this._translate
+          .get('users.user_rights_management.role_change_error_message')
+          .subscribe(message => {
+            console.error(error);
+            this._snackbarService.showError(message);
+          });
+      },
+    });
   }
 
   onRevokeRole(roleId: number) {
     const userId = this.user.id;
-    this._userService
-      .revokeRole(userId, roleId)
-      .pipe(tap(() => this.roleRevoked.emit({ userId, roleId })))
-      .subscribe({
-        next: () =>
-          this._translate
-            .get('users.user_rights_management.role_revoked_message')
-            .subscribe(message => {
-              this._snackbarService.showSuccess(message);
-            }),
-        error: error => {
-          this._translate
-            .get('users.user_rights_management.role_change_error_message')
-            .subscribe(message => {
-              console.error(error);
-              this._snackbarService.showError(message);
-            });
-        },
-      });
+    this._userService.revokeRole(userId, roleId).subscribe({
+      next: () => {
+        this.roleRevoked.emit({ userId, roleId });
+        this._translate
+          .get('users.user_rights_management.role_revoked_message')
+          .subscribe(message => {
+            this._snackbarService.showSuccess(message);
+          });
+      },
+      error: error => {
+        this._translate
+          .get('users.user_rights_management.role_change_error_message')
+          .subscribe(message => {
+            console.error(error);
+            this._snackbarService.showError(message);
+          });
+      },
+    });
   }
 }

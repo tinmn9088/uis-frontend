@@ -9,12 +9,15 @@ import { UserService } from '../../services/user.service';
 })
 export class UserEditFormComponent {
   @Input() user!: User;
+  isUserLoading = false;
 
   constructor(private _userService: UserService) {}
 
   onUserUpdate() {
-    this._userService
-      .getById(this.user.id)
-      .subscribe(updatedUser => (this.user = updatedUser));
+    this.isUserLoading = true;
+    this._userService.getById(this.user.id).subscribe(updatedUser => {
+      this.user = updatedUser;
+      this.isUserLoading = false;
+    });
   }
 }

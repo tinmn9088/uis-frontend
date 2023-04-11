@@ -25,7 +25,7 @@
     <p class="form__roles-list-title">
       {{ 'users.user_rights_management.current_roles_label' | translate }}
     </p>
-    <div class="form__roles-list">
+    <div class="form__roles-list" *ngIf="!areRolesLoading; else loading">
       <ng-container *ngFor="let role of user.roles">
         <div class="form__roles-list-item">
           <span class="form__roles-list-role-title">{{ role.name }}</span>
@@ -42,8 +42,14 @@
     </div>
   </ng-container>
   <ng-template #noRolesLabel>
-    <p class="form__no-roles-label">
+    <p class="form__no-roles-label" *ngIf="!areRolesLoading; else loading">
       {{ 'users.user_rights_management.no_roles_label' | translate }}
     </p>
   </ng-template>
 </form>
+
+<ng-template #loading>
+  <div class="loading">
+    <mat-spinner class="loading__spinner"></mat-spinner>
+  </div>
+</ng-template>
