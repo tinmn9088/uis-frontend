@@ -70,7 +70,11 @@
 
       <mat-option
         class="select__option hidden"
-        *ngIf="selectedOptions.length === 0 && filteredOptions.length === 0"
+        *ngIf="
+          multiple &&
+          selectedOptions.length === 0 &&
+          filteredOptions.length === 0
+        "
         [disabled]="true"></mat-option>
 
       <div class="select__select-specify">
