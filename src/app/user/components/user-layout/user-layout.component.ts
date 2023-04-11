@@ -44,7 +44,6 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
         requiredPermissions: [Permission.ROLE_CREATE, Permission.ROLE_READ],
       },
     ];
-    console.log(this.toolbarTabs);
 
     this._pathChangeSubscription = this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
