@@ -1,4 +1,4 @@
-.user-list {
+.list {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -7,6 +7,11 @@
   &__search {
     min-width: fit-content;
     width: 60%;
+  }
+
+  &__create-button-container {
+    display: flex;
+    flex-direction: row-reverse;
   }
 
   &__content-container {

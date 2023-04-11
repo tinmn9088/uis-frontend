@@ -1,7 +1,18 @@
-<div class="user-list">
+<div class="list">
+  <div class="list__create-button-container">
+    <button
+      class="list__create-button"
+      mat-flat-button
+      color="primary"
+      (click)="openUserCreateDialog()">
+      <mat-icon>person_add</mat-icon>
+      {{ 'users.list.create_button' | translate }}
+    </button>
+  </div>
+
   <form [formGroup]="formGroup" (ngSubmit)="onSearch()">
-    <div class="user-list__search-container">
-      <mat-form-field class="user-list__search" appearance="outline">
+    <div class="list__search-container">
+      <mat-form-field class="list__search" appearance="outline">
         <input
           placeholder="{{ 'users.list.search.placeholder' | translate }}"
           matInput
@@ -13,11 +24,11 @@
     </div>
   </form>
 
-  <div class="user-list__content-container">
-    <div class="user-list__table-and-paginator-container">
-      <div class="user-list__table-container">
+  <div class="list__content-container">
+    <div class="list__table-and-paginator-container">
+      <div class="list__table-container">
         <app-user-table
-          class="user-list__table"
+          class="list__table"
           [pageSize]="pageSize"
           [pageNumber]="pageNumber"
           (dataUpdated)="onDataUpdate($event)"
@@ -25,9 +36,9 @@
         </app-user-table>
       </div>
 
-      <div class="user-list__paginator-container">
+      <div class="list__paginator-container">
         <app-paginator
-          class="user-list__paginator"
+          class="list__paginator"
           [length]="totalElements"
           [pageSize]="pageSize"
           [pageIndex]="pageNumber"

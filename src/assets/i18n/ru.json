@@ -66,17 +66,34 @@
         "creation_time": "Дата создания",
         "operations": "Действия"
       },
+      "create_button": "Создать пользователя",
       "no_data_label": "Пользователей не найдено."
     },
     "login_form": {
       "sign_in": "Вход",
       "password_label": "Пароль",
       "login_label": "Логин",
-      "required": "Необязательно",
+      "required": "Обязательно",
       "messages": {
         "success": "Вход выполнен",
         "error": "Ошибка"
       }
+    },
+    "user_create_form": {
+      "password_label": "Пароль",
+      "username_label": "Имя пользователя",
+      "required": "Обязательно",
+      "weak_password": "Слабый пароль",
+      "password_tooltip": "Пароль должен содержать не менее 8 символов, 1 заглавной буквы, 1 цифры, 1 специального символа.",
+      "messages": {
+        "success": "Пользователь создан",
+        "error": "Ошибка при создании"
+      }
+    },
+    "user_create_dialog": {
+      "title": "Создать пользователя",
+      "create_button": "Создать пользователя",
+      "cancel_button": "Отмена"
     },
     "user_edit_dialog": {
       "title": "Пользователь",

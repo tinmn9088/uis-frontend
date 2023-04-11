@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>
+  {{ 'users.user_create_dialog.title' | translate }}
+</h2>
+<mat-dialog-content class="content">
+  <app-user-create-form
+    class="content__user-form"
+    (formInvalid)="isFormInvalid = $event"
+    (userCreated)="onCreated()"></app-user-create-form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button [mat-dialog-close]="true">
+    {{ 'users.user_create_dialog.cancel_button' | translate }}
+  </button>
+  <button
+    mat-flat-button
+    (click)="onCreateButtonClicked()"
+    color="primary"
+    [disabled]="isFormInvalid">
+    {{ 'users.user_create_dialog.create_button' | translate }}
+  </button>
+</mat-dialog-actions>

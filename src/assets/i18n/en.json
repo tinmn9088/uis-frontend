@@ -66,6 +66,7 @@
         "creation_time": "Creation Time",
         "operations": "Operations"
       },
+      "create_button": "Create user",
       "no_data_label": "No users found."
     },
     "login_form": {
@@ -77,6 +78,22 @@
         "success": "Logged in successfully",
         "error": "Authentication error"
       }
+    },
+    "user_create_form": {
+      "password_label": "Password",
+      "username_label": "Username",
+      "required": "Required",
+      "weak_password": "Weak password",
+      "password_tooltip": "Password must contain at least 8 characters, 1 uppercase characters, 1 digit characters, 1 special characters.",
+      "messages": {
+        "success": "Created successfully",
+        "error": "Failed to create"
+      }
+    },
+    "user_create_dialog": {
+      "title": "Create user",
+      "create_button": "Create user",
+      "cancel_button": "Cancel"
     },
     "user_edit_dialog": {
       "title": "User",

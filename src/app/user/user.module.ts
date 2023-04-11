@@ -9,6 +9,8 @@ import { UserRightsManagementComponent } from './components/user-rights-manageme
 import { UserEditFormComponent } from './components/user-edit-form/user-edit-form.component';
 import { UserEditDialogComponent } from './components/user-edit-dialog/user-edit-dialog.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
+import { UserCreateFormComponent } from './components/user-create-form/user-create-form.component';
+import { UserCreateDialogComponent } from './components/user-create-dialog/user-create-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { MainPageComponent } from './components/main-page/main-page.component';
     UserEditFormComponent,
     UserEditDialogComponent,
     MainPageComponent,
+    UserCreateFormComponent,
+    UserCreateDialogComponent,
   ],
   imports: [CommonModule, SharedModule],
 })

@@ -30,6 +30,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -78,6 +79,7 @@ const modules = [
   MatDialogModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatTooltipModule,
 ];
 
 const declarations = [
