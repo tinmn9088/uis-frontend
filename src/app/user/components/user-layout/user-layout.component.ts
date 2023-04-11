@@ -7,6 +7,7 @@ import { ToolbarTab } from 'src/app/shared/domain/toolbar-tab';
 import { ModuleService } from 'src/app/shared/services/module.service';
 import { ModuleName } from 'src/app/shared/domain/module-name';
 import { NavigationEnd, Router } from '@angular/router';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-user-layout',
@@ -26,25 +27,25 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
     @Inject(THEME_CSS_CLASS_TOKEN) public themeClass$: BehaviorSubject<string>
   ) {
     const userModulePath = this._moduleService.getPath(ModuleName.User);
-    const userModuleRequiredPermissions =
-      this._moduleService.getRequiredPermissions(ModuleName.User);
     this.toolbarTabs = [
       {
         title: 'users.toolbarTabs.profile',
         path: `${userModulePath}/main`,
-        requiredPermissions: userModuleRequiredPermissions,
+        requiredPermissions: [],
       },
       {
         title: 'users.toolbarTabs.users',
         path: `${userModulePath}/list`,
-        requiredPermissions: userModuleRequiredPermissions,
+        requiredPermissions: [Permission.USER_READ],
       },
       {
         title: 'users.toolbarTabs.roles',
-        path: `${userModulePath}`,
-        requiredPermissions: userModuleRequiredPermissions,
+        path: `${userModulePath}/role`,
+        requiredPermissions: [Permission.ROLE_CREATE, Permission.ROLE_READ],
       },
     ];
+    console.log(this.toolbarTabs);
+
     this._pathChangeSubscription = this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentPath = event.url;

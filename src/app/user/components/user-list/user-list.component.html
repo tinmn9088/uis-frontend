@@ -24,7 +24,9 @@
     </div>
   </form>
 
-  <div class="list__content-container">
+  <div
+    class="list__content-container"
+    *ngIf="arePermissionsPresent; else noPermission">
     <div class="list__table-and-paginator-container">
       <div class="list__table-container">
         <app-user-table
@@ -46,4 +48,11 @@
       </div>
     </div>
   </div>
+
+  <ng-template #noPermission>
+    <div class="list__no-permission">
+      <mat-icon class="list__no-permission-icon">error_outline</mat-icon>
+      {{ 'disciplines.list.no_permission_label' | translate }}
+    </div>
+  </ng-template>
 </div>

@@ -11,6 +11,7 @@ import { UserEditDialogComponent } from './components/user-edit-dialog/user-edit
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { UserCreateFormComponent } from './components/user-create-form/user-create-form.component';
 import { UserCreateDialogComponent } from './components/user-create-dialog/user-create-dialog.component';
+import { RoleFormComponent } from './components/role-form/role-form.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { UserCreateDialogComponent } from './components/user-create-dialog/user-
     MainPageComponent,
     UserCreateFormComponent,
     UserCreateDialogComponent,
+    RoleFormComponent,
   ],
   imports: [CommonModule, SharedModule],
 })

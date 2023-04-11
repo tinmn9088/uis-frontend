@@ -5,6 +5,8 @@ import { UserPageableResponse } from '../../domain/user-pageable-response';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserCreateDialogComponent } from '../user-create-dialog/user-create-dialog.component';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-user-list',
@@ -19,10 +21,22 @@ export class UserListComponent {
   totalElements!: number;
   pageSize = 16;
   pageNumber!: number;
+  arePermissionsPresent: boolean;
 
-  constructor(private _matDialog: MatDialog) {
+  constructor(
+    private _matDialog: MatDialog,
+    private _authService: AuthService
+  ) {
+    this.arePermissionsPresent = this._authService.hasUserPermissions([
+      Permission.USER_READ,
+      Permission.USER_SEARCH,
+    ]);
+
     this.formGroup = new FormGroup({
-      searchQuery: new FormControl(''),
+      searchQuery: new FormControl({
+        value: '',
+        disabled: !this.arePermissionsPresent,
+      }),
     });
   }
 

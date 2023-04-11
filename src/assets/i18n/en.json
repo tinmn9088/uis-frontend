@@ -67,6 +67,7 @@
         "operations": "Operations"
       },
       "create_button": "Create user",
+      "no_permission_label": "Not allowed",
       "no_data_label": "No users found."
     },
     "login_form": {
@@ -80,6 +81,7 @@
       }
     },
     "user_create_form": {
+      "no_permission_label": "Not allowed",
       "password_label": "Password",
       "username_label": "Username",
       "required": "Required",

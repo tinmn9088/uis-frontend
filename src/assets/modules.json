@@ -5,7 +5,7 @@
     "i18nName": "module.name.users",
     "path": "/user",
     "resourcePath": "/users",
-    "requiredPermissions": ["USER_READ", "USER_SEARCH"]
+    "requiredPermissions": ["USER_READ"]
   },
   "category": {
     "name": "Category",

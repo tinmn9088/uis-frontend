@@ -8,9 +8,12 @@
   }
 
   &__no-data-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
     color: rgba(0, 0, 0, 0.66);
     font-style: italic;
-    margin: 24px 0;
   }
 
   &__loading,

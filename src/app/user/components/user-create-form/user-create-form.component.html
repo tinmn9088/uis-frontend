@@ -1,4 +1,9 @@
 <form class="form" [formGroup]="formGroup">
+  <div class="form__no-permission" *ngIf="areNotPermissionsPresent">
+    <mat-icon class="form__no-permission-icon">error_outline</mat-icon>
+    {{ 'users.user_create_form.no_permission_label' | translate }}
+  </div>
+
   <mat-form-field class="form__field" appearance="fill" color="primary">
     <mat-label>
       {{ 'users.user_create_form.username_label' | translate }}

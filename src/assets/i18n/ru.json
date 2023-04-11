@@ -67,6 +67,7 @@
         "operations": "Действия"
       },
       "create_button": "Создать пользователя",
+      "no_permission_label": "Недостаточно прав",
       "no_data_label": "Пользователей не найдено."
     },
     "login_form": {
@@ -80,6 +81,7 @@
       }
     },
     "user_create_form": {
+      "no_permission_label": "Недостаточно прав",
       "password_label": "Пароль",
       "username_label": "Имя пользователя",
       "required": "Обязательно",
