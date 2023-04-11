@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,9 +13,14 @@ import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
 })
-export class LoginFormComponent implements OnInit, AfterViewInit {
+export class LoginFormComponent implements OnInit {
   private readonly _breakpoint$ = this._breakpointObserver
-    .observe([Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large])
+    .observe([
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ])
     .pipe(distinctUntilChanged());
   cardWidthPercents = 66;
   passwordHidden = true;
@@ -41,10 +46,6 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
     if (this.redirectTo) {
       console.debug(`Will redirect back to: "${this.redirectTo}"`);
     }
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => this.onBreakpointChange(), 0);
   }
 
   get username() {
@@ -86,7 +87,10 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
   private onBreakpointChange() {
     const isSmall = this._breakpointObserver.isMatched(Breakpoints.Small);
     const isMedium = this._breakpointObserver.isMatched(Breakpoints.Medium);
-    const isLarge = this._breakpointObserver.isMatched(Breakpoints.Large);
+    const isLarge = this._breakpointObserver.isMatched([
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]);
 
     if (isSmall) {
       this.cardWidthPercents = 80;
