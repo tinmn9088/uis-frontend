@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginFormComponent } from './user/components/login-form/login-form.component';
+import { LoginFormComponent } from './auth/components/login-form/login-form.component';
 import { UserLayoutComponent } from './user/components/user-layout/user-layout.component';
 import { UserListComponent } from './user/components/user-list/user-list.component';
 import { AuthGuard } from './auth/guards/auth.guard';
