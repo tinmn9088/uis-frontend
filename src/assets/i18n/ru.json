@@ -128,12 +128,17 @@
       },
       "form": {
         "no_permission_label": "Недостаточно прав",
+        "create_title": "Создать роль",
+        "edit_title": "Изменить роль",
         "name_label": "Название",
         "required": "Обязательно",
+        "create_button": "Создать",
         "edit_button": "Изменить",
         "cancel_button": "Отмена",
         "snackbar_create_success_message": "Создано",
-        "snackbar_update_success_message": "Обновлено"
+        "snackbar_update_success_message": "Обновлено",
+        "snackbar_create_fail_message": "Не удалось создать роль",
+        "snackbar_update_fail_message": "Не удалось изменить роль"
       }
     }
   },
