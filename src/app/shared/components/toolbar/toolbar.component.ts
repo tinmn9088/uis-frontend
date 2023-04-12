@@ -45,7 +45,7 @@ export class ToolbarComponent implements AfterViewInit {
 
   constructor(
     public languageService: LanguageService,
-    private _authService: AuthService,
+    public authService: AuthService,
     private _router: Router
   ) {
     this._resizeObserver = new ResizeObserver(entries => {
@@ -76,7 +76,7 @@ export class ToolbarComponent implements AfterViewInit {
   }
 
   onLogout() {
-    this._authService.logout();
+    this.authService.logout();
     this._router.navigateByUrl('/');
   }
 

@@ -116,14 +116,16 @@
     class="toolbar__tab-panel"
     *ngIf="showTabs && tabs.length > 0"
     [tabPanel]="tabPanel">
-    <a
-      mat-tab-link
-      class="toolbar__tab"
-      *ngFor="let tab of tabs"
-      (click)="onTabClick(tab)"
-      [active]="activeTab === tab">
-      {{ tab.title | translate | uppercase }}
-    </a>
+    <ng-container *ngFor="let tab of tabs">
+      <a
+        mat-tab-link
+        *ngIf="authService.hasUserPermissions(tab.requiredPermissions)"
+        class="toolbar__tab"
+        (click)="onTabClick(tab)"
+        [active]="activeTab === tab">
+        {{ tab.title | translate | uppercase }}
+      </a>
+    </ng-container>
   </nav>
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 </ng-template>
