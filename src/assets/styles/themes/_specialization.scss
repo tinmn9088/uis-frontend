@@ -1,19 +1,19 @@
 @use '@angular/material' as mat;
 
 @use '../colors/basic' as b;
-@use '../colors/green' as c;
+@use '../colors/crimson' as c;
 
-$light-green-palette: (
-  50: c.$light-green-50,
-  100: c.$light-green-100,
-  200: c.$light-green-200,
-  300: c.$light-green-300,
-  400: c.$light-green-400,
-  500: c.$light-green-500,
-  600: c.$light-green-600,
-  700: c.$light-green-700,
-  800: c.$light-green-800,
-  900: c.$light-green-900,
+$light-crimson-palette: (
+  50: c.$light-crimson-50,
+  100: c.$light-crimson-100,
+  200: c.$light-crimson-200,
+  300: c.$light-crimson-300,
+  400: c.$light-crimson-400,
+  500: c.$light-crimson-500,
+  600: c.$light-crimson-600,
+  700: c.$light-crimson-700,
+  800: c.$light-crimson-800,
+  900: c.$light-crimson-900,
   contrast: (
     50: b.$black,
     100: b.$black,
@@ -27,17 +27,17 @@ $light-green-palette: (
     900: b.$black,
   ),
 );
-$dark-green-palette: (
-  50: c.$dark-green-50,
-  100: c.$dark-green-100,
-  200: c.$dark-green-200,
-  300: c.$dark-green-300,
-  400: c.$dark-green-400,
-  500: c.$dark-green-600,
-  600: c.$dark-green-600,
-  700: c.$dark-green-700,
-  800: c.$dark-green-800,
-  900: c.$dark-green-900,
+$dark-crimson-palette: (
+  50: c.$dark-crimson-50,
+  100: c.$dark-crimson-100,
+  200: c.$dark-crimson-200,
+  300: c.$dark-crimson-300,
+  400: c.$dark-crimson-400,
+  500: c.$dark-crimson-600,
+  600: c.$dark-crimson-600,
+  700: c.$dark-crimson-700,
+  800: c.$dark-crimson-800,
+  900: c.$dark-crimson-900,
   contrast: (
     50: b.$black,
     100: b.$black,
@@ -52,8 +52,8 @@ $dark-green-palette: (
   ),
 );
 
-$light-theme-primary: mat.define-palette($light-green-palette, 900);
-$light-theme-accent: mat.define-palette($dark-green-palette);
+$light-theme-primary: mat.define-palette($light-crimson-palette, 500);
+$light-theme-accent: mat.define-palette($dark-crimson-palette);
 
 $light-theme: mat.define-light-theme(
   (
