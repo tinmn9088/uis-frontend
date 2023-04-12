@@ -6,7 +6,6 @@ import { UserListComponent } from './user/components/user-list/user-list.compone
 import { AuthGuard } from './auth/guards/auth.guard';
 import { MainPageComponent } from './user/components/main-page/main-page.component';
 import { AppRoutingRedirectComponent } from './shared/components/app-routing-redirect/app-routing-redirect.component';
-import { RoleFormComponent } from './user/components/role-form/role-form.component';
 import { RoleListComponent } from './user/components/role-list/role-list.component';
 
 const routes: Routes = [
@@ -39,6 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'role',
+        canActivate: [AuthGuard],
         children: [
           {
             path: '',
