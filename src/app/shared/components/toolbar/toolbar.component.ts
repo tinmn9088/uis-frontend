@@ -29,7 +29,6 @@ export class ToolbarComponent implements AfterViewInit {
     { text: 'toolbar.menu.add.curricula', path: '/curriculum/add' },
   ];
   compact = false;
-  @Input() user?: User;
 
   /**
    * Is passed through TranslateService pipeline.
@@ -37,6 +36,10 @@ export class ToolbarComponent implements AfterViewInit {
   @Input() tabs: ToolbarTab[] = [];
 
   @Input() activeTab?: ToolbarTab;
+
+  /**
+   * `false` by default.
+   */
   @Input() showTabs = false;
   @Input() showBurger = false;
   @Input() showAddMenu = false;
@@ -51,6 +54,10 @@ export class ToolbarComponent implements AfterViewInit {
     this._resizeObserver = new ResizeObserver(entries => {
       this.onResize(entries[0]?.contentRect.width);
     });
+  }
+
+  get user(): User | undefined {
+    return this.authService.user;
   }
 
   ngAfterViewInit() {
