@@ -1,6 +1,6 @@
 export interface Category {
   id: number;
   name: string;
-  parent?: { id: number };
+  parentId?: number;
   hasChildren: boolean;
 }

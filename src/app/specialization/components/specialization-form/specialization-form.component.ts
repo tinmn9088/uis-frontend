@@ -151,11 +151,9 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
               ? 'specializations.form.snackbar_update_success_message'
               : 'specializations.form.snackbar_add_success_message'
           )
-          .subscribe({
-            next: message => {
-              this._snackbarService.showSuccess(message);
-              this.formGroup.enable();
-            },
+          .subscribe(message => {
+            this._snackbarService.showSuccess(message);
+            this.formGroup.enable();
           });
         if (this.editMode) {
           if (!specialization.parentId) specialization.parentId = undefined;

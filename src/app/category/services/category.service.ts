@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { CategoryAddRequest } from '../domain/category-add-request';
 import { Category } from '../domain/category';
+import { CategoryUpdateRequest } from '../domain/category-update-request';
 
 @Injectable({
   providedIn: 'root',
@@ -68,5 +69,9 @@ export class CategoryService {
 
   add(category: CategoryAddRequest): Observable<Category> {
     return this._http.post<Category>(`${this.MODULE_URL}`, category);
+  }
+
+  update(id: number, category: CategoryUpdateRequest): Observable<Category> {
+    return this._http.put<Category>(`${this.MODULE_URL}/${id}`, category);
   }
 }
