@@ -1,7 +1,10 @@
 <div class="list">
   <ng-container *ngIf="allowedCards.length > 0; else noPermission">
     <ng-container *ngFor="let card of cards">
-      <mat-card class="list__card" [ngClass]="card.themeCssClass">
+      <mat-card
+        *ngIf="card.isAllowed"
+        class="list__card"
+        [ngClass]="card.themeCssClass">
         <mat-card-header>
           <mat-card-title class="list__card-title">
             {{ card.i18nName | translate }}
