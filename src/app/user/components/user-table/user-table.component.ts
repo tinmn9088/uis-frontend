@@ -5,9 +5,6 @@ import { UserEditDialogComponent } from '../user-edit-dialog/user-edit-dialog.co
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../domain/user';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'app-user-table',
@@ -32,9 +29,6 @@ export class UserTableComponent implements OnInit {
   constructor(
     private _userService: UserService,
     private _authService: AuthService,
-    private _router: Router,
-    private _translate: TranslateService,
-    private _snackbarService: SnackbarService,
     private _matDialog: MatDialog
   ) {}
 
@@ -72,13 +66,12 @@ export class UserTableComponent implements OnInit {
     });
     this._dialogRef.afterClosed().subscribe(() => {
       if (this._authService.user.id === user.id) {
-        this._router
-          .navigate(this._authService.AUTH_PAGE_PATH)
-          .then(() => this._authService.logout())
-          .then(() =>
-            this._translate
-              .get('auth.authentication_needed')
-              .subscribe(message => this._snackbarService.showInfo(message))
+        this._authService
+          .refresh({
+            refreshToken: this._authService.auth.refreshToken,
+          })
+          .subscribe(() =>
+            console.debug('Information about current user refreshed')
           );
       }
       this.search();
