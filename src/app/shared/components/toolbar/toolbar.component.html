@@ -59,7 +59,7 @@
               {{ user.username || 'toolbar.login.default' | translate }}
             </span>
             <span class="toolbar__login-menu-header-roles">
-              {{ getUserRolesNames() | join : ', ' }}
+              {{ getUserRolesNames() | join : ', ' | truncate }}
             </span>
           </div>
         </div>

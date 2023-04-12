@@ -41,6 +41,7 @@ import { LanguageService } from './services/language.service';
 import { FilteredSelectComponent } from './components/filtered-select/filtered-select.component';
 import { EmptyComponent } from './components/empty/empty.component';
 import { DatepickerYearHeaderComponent } from './components/datepicker-year-header/datepicker-year-header.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('themeClass');
 export const REFRESH_JWT_REQUEST_COUNT_TOKEN = new InjectionToken<string>(
@@ -98,7 +99,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [...declarations, EmptyComponent],
+  declarations: [...declarations, EmptyComponent, TruncatePipe],
   exports: [...modules, declarations, TranslateModule],
   imports: [
     ...modules,
