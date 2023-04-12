@@ -22,6 +22,7 @@ export class UserListComponent {
   pageSize = 16;
   pageNumber!: number;
   arePermissionsPresent: boolean;
+  canUserCreateUser: boolean;
 
   constructor(
     private _matDialog: MatDialog,
@@ -30,6 +31,9 @@ export class UserListComponent {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.USER_READ,
       Permission.USER_SEARCH,
+    ]);
+    this.canUserCreateUser = this._authService.hasUserPermissions([
+      Permission.USER_CREATE,
     ]);
 
     this.formGroup = new FormGroup({

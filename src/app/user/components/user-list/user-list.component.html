@@ -1,5 +1,5 @@
 <div class="list">
-  <div class="list__create-button-container">
+  <div class="list__create-button-container" *ngIf="canUserCreateUser">
     <button
       class="list__create-button"
       mat-flat-button

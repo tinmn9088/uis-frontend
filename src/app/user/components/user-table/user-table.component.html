@@ -6,9 +6,12 @@
         {{ 'users.list.columns.username' | translate }}
       </th>
       <td mat-cell *matCellDef="let user" [ngStyle]="getTableCellStyle()">
-        <a (click)="openUserEditDialog(user)">
+        <a *ngIf="canUserModifyUser" (click)="openUserEditDialog(user)">
           {{ user.username }}
         </a>
+        <span *ngIf="!canUserModifyUser">
+          {{ user.username }}
+        </span>
       </td>
     </ng-container>
 
@@ -48,13 +51,20 @@
         {{ 'users.list.columns.operations' | translate }}
       </th>
       <td mat-cell *matCellDef="let user" [ngStyle]="getTableCellStyle()">
-        <button
-          class="table__edit-button"
-          mat-icon-button
-          (click)="openUserEditDialog(user)"
-          color="primary">
-          <mat-icon>edit</mat-icon>
-        </button>
+        <div
+          #tooltip="matTooltip"
+          matTooltip="{{ 'users.list.no_permission_label' | translate }}"
+          [matTooltipPosition]="'right'"
+          [matTooltipDisabled]="canUserModifyUser">
+          <button
+            class="table__edit-button"
+            mat-icon-button
+            [disabled]="!canUserModifyUser"
+            (click)="openUserEditDialog(user)"
+            color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
       </td>
     </ng-container>
 

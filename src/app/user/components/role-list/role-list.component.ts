@@ -22,6 +22,7 @@ export class RoleListComponent {
   pageSize = 16;
   pageNumber!: number;
   arePermissionsPresent: boolean;
+  canUserCreateRole: boolean;
 
   constructor(
     private _matDialog: MatDialog,
@@ -29,6 +30,9 @@ export class RoleListComponent {
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.ROLE_READ,
+    ]);
+    this.canUserCreateRole = this._authService.hasUserPermissions([
+      Permission.ROLE_CREATE,
     ]);
 
     this.formGroup = new FormGroup({

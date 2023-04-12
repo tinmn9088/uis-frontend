@@ -5,6 +5,7 @@ import { UserEditDialogComponent } from '../user-edit-dialog/user-edit-dialog.co
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../domain/user';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-user-table',
@@ -25,12 +26,17 @@ export class UserTableComponent implements OnInit {
   ];
   isLoading = true;
   dataSource: User[] = [];
+  canUserModifyUser: boolean;
 
   constructor(
     private _userService: UserService,
     private _authService: AuthService,
     private _matDialog: MatDialog
-  ) {}
+  ) {
+    this.canUserModifyUser = this._authService.hasUserPermissions([
+      Permission.USER_MANAGE_ROLES,
+    ]);
+  }
 
   ngOnInit() {
     this.search();
