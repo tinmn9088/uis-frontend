@@ -17,6 +17,8 @@ import {
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { CategoryService } from './category.service';
 import { CategoryPageableResponse } from '../domain/category-pageable-response';
+import { TranslateService } from '@ngx-translate/core';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 export const getLevel = (node: CategoryFlatNode) => node.level;
 
@@ -42,7 +44,9 @@ export class CategoryTreeDataSourceService
 
   constructor(
     private _treeControl: FlatTreeControl<CategoryFlatNode>,
-    private _categoryService: CategoryService
+    private _categoryService: CategoryService,
+    private _translate: TranslateService,
+    private _snackbarService: SnackbarService
   ) {}
 
   updateData(
@@ -120,35 +124,49 @@ export class CategoryTreeDataSourceService
     const index = this.data.indexOf(node);
 
     if (expand) {
+      node.failedToLoadChildren = false;
       node.isLoading = true;
 
       this._categoryService
         .getChildren(node.category.id)
         .pipe(delay(200))
-        .subscribe(children => {
-          console.debug('Children received', children);
+        .subscribe({
+          next: children => {
+            console.debug('Children received', children);
 
-          if (!children || children.length === 0) {
+            if (!children || children.length === 0) {
+              this.dataChange.next(this.data);
+              node.isLoading = false;
+              return;
+            }
+
+            const nodes = children.map(
+              specialization =>
+                new CategoryFlatNode(
+                  specialization,
+                  node.level + 1,
+                  specialization.hasChildren
+                )
+            );
+
+            console.debug(`New nodes added`, nodes);
+
+            this.data.splice(index + 1, 0, ...nodes);
+
             this.dataChange.next(this.data);
             node.isLoading = false;
-            return;
-          }
-
-          const nodes = children.map(
-            specialization =>
-              new CategoryFlatNode(
-                specialization,
-                node.level + 1,
-                specialization.hasChildren
-              )
-          );
-
-          console.debug(`New nodes added`, nodes);
-
-          this.data.splice(index + 1, 0, ...nodes);
-
-          this.dataChange.next(this.data);
-          node.isLoading = false;
+          },
+          error: () => {
+            node.failedToLoadChildren = true;
+            node.isLoading = false;
+            this._translate
+              .get('categories.list.failed_to_retrieve_children_message')
+              .subscribe(message => {
+                this._snackbarService.showError(
+                  `${message} [${node.category.name}]`
+                );
+              });
+          },
         });
     } else {
       let count = 0;

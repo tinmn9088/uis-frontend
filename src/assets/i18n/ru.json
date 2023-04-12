@@ -149,7 +149,8 @@
         "placeholder": "Поиск по: название"
       },
       "no_data_label": "Категорий не найдено.",
-      "no_permission_label": "Недостаточно прав"
+      "no_permission_label": "Недостаточно прав",
+      "failed_to_retrieve_children_message": "Не удалось получить дочерние категории"
     },
     "form": {
       "add_title": "Добавить категорию",
@@ -210,7 +211,8 @@
       },
       "edit_button": "Редактировать",
       "no_data_label": "Специальностей не найдено.",
-      "no_permission_label": "Недостаточно прав"
+      "no_permission_label": "Недостаточно прав",
+      "failed_to_retrieve_children_message": "Не удалось получить дочерние специальности"
     },
     "form": {
       "add_title": "Добавить специальность",

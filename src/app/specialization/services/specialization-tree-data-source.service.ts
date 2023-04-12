@@ -17,6 +17,8 @@ import { SpecializationService } from './specialization.service';
 import { Injectable } from '@angular/core';
 import { SpecializationPageableResponse } from '../domain/specialization-pageable-response';
 import { SpecializationFlatNode } from '../domain/specialization-flat-node';
+import { TranslateService } from '@ngx-translate/core';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 export const getLevel = (node: SpecializationFlatNode) => node.level;
 
@@ -42,7 +44,9 @@ export class SpecializationTreeDataSourceService
 
   constructor(
     private _treeControl: FlatTreeControl<SpecializationFlatNode>,
-    private _specializationService: SpecializationService
+    private _specializationService: SpecializationService,
+    private _translate: TranslateService,
+    private _snackbarService: SnackbarService
   ) {}
 
   updateData(
@@ -122,35 +126,49 @@ export class SpecializationTreeDataSourceService
     const index = this.data.indexOf(node);
 
     if (expand) {
+      node.failedToLoadChildren = false;
       node.isLoading = true;
 
       this._specializationService
         .getChildren(node.specialization.id)
         .pipe(delay(200))
-        .subscribe(children => {
-          console.debug('Children received', children);
+        .subscribe({
+          next: children => {
+            console.debug('Children received', children);
 
-          if (!children || children.length === 0) {
+            if (!children || children.length === 0) {
+              this.dataChange.next(this.data);
+              node.isLoading = false;
+              return;
+            }
+
+            const nodes = children.map(
+              specialization =>
+                new SpecializationFlatNode(
+                  specialization,
+                  node.level + 1,
+                  specialization.hasChildren
+                )
+            );
+
+            console.debug(`New nodes added`, nodes);
+
+            this.data.splice(index + 1, 0, ...nodes);
+
             this.dataChange.next(this.data);
             node.isLoading = false;
-            return;
-          }
-
-          const nodes = children.map(
-            specialization =>
-              new SpecializationFlatNode(
-                specialization,
-                node.level + 1,
-                specialization.hasChildren
-              )
-          );
-
-          console.debug(`New nodes added`, nodes);
-
-          this.data.splice(index + 1, 0, ...nodes);
-
-          this.dataChange.next(this.data);
-          node.isLoading = false;
+          },
+          error: () => {
+            node.failedToLoadChildren = true;
+            node.isLoading = false;
+            this._translate
+              .get('categories.list.failed_to_retrieve_children_message')
+              .subscribe(message => {
+                this._snackbarService.showError(
+                  `${message} [${node.specialization.name}]`
+                );
+              });
+          },
         });
     } else {
       let count = 0;

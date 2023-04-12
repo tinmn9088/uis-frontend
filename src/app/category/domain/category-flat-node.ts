@@ -5,6 +5,7 @@ export class CategoryFlatNode {
     public category: Category,
     public level = 1,
     public expandable = false,
-    public isLoading = false
+    public isLoading = false,
+    public failedToLoadChildren = false
   ) {}
 }

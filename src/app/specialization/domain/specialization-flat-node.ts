@@ -5,6 +5,7 @@ export class SpecializationFlatNode {
     public specialization: Specialization,
     public level = 1,
     public expandable = false,
-    public isLoading = false
+    public isLoading = false,
+    public failedToLoadChildren = false
   ) {}
 }

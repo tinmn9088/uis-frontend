@@ -149,7 +149,8 @@
         "placeholder": "Search by: name"
       },
       "no_data_label": "No categories found.",
-      "no_permission_label": "Not allowed"
+      "no_permission_label": "Not allowed",
+      "failed_to_retrieve_children_message": "Failed to retireve children categories"
     },
     "form": {
       "add_title": "Add category",
@@ -210,7 +211,8 @@
       },
       "edit_button": "Edit",
       "no_data_label": "No specializations found.",
-      "no_permission_label": "Not allowed"
+      "no_permission_label": "Not allowed",
+      "failed_to_retrieve_children_message": "Failed to retireve children specializations"
     },
     "form": {
       "add_title": "Add specialization",
