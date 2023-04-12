@@ -1,5 +1,6 @@
 <div class="list">
-  <ng-container *ngIf="allowedCards.length > 0; else noPermission">
+  <ng-container
+    *ngIf="!!authService.auth && allowedCards.length > 0; else noPermission">
     <ng-container *ngFor="let card of cards">
       <mat-card
         *ngIf="card.isAllowed"
@@ -46,7 +47,7 @@
         <mat-icon class="list__no-permission-icon">error_outline</mat-icon>
         {{ 'users.main.no_modules_label' | translate }}
       </div>
-      <div class="list__login-suggestion">
+      <div class="list__login-suggestion" *ngIf="!authService.auth">
         {{ 'users.main.login_label' | translate }}
         <button mat-flat-button color="primary" (click)="navigateToAuthPage()">
           {{ 'users.main.login_button_text' | translate }}
