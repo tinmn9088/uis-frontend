@@ -4,6 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpStatusCode,
 } from '@angular/common/http';
 import {
   Observable,
@@ -44,7 +45,10 @@ export class AuthInterceptor implements HttpInterceptor {
     const modifiedRequest = this.modifyRequest(request);
     return next.handle(modifiedRequest).pipe(
       catchError(error => {
-        if (error.status === 401 && this._refreshJwtRequestCount$.value === 0) {
+        if (
+          error.status === HttpStatusCode.Unauthorized &&
+          this._refreshJwtRequestCount$.value === 0
+        ) {
           const refreshToken = this._authService.auth.refreshToken;
           this._refreshJwtRequestCount$.next(
             this._refreshJwtRequestCount$.value + 1

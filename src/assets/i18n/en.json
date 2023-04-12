@@ -38,7 +38,18 @@
   },
   "auth": {
     "authentication_needed": "Need to login",
-    "session_expired": "Session expired"
+    "session_expired": "Session expired",
+    "login_form": {
+      "sign_in": "Sign in",
+      "password_label": "Password",
+      "login_label": "Login",
+      "required": "Required",
+      "messages": {
+        "success": "Logged in successfully",
+        "invalid_request_error": "Invalid login or password",
+        "server_error": "Try again later"
+      }
+    }
   },
   "users": {
     "toolbarTabs": {
@@ -69,16 +80,6 @@
       "create_button": "Create user",
       "no_permission_label": "Not allowed",
       "no_data_label": "No users found."
-    },
-    "login_form": {
-      "sign_in": "Sign in",
-      "password_label": "Password",
-      "login_label": "Login",
-      "required": "Required",
-      "messages": {
-        "success": "Logged in successfully",
-        "error": "Authentication error"
-      }
     },
     "user_create_form": {
       "no_permission_label": "Not allowed",
