@@ -141,6 +141,10 @@
         "snackbar_update_fail_message": "Не удалось изменить роль",
         "no_permission_scopes_label": "Не удалось получить список прав."
       }
+    },
+    "options": {
+      "user_management": "Управление пользователями",
+      "role_management": "Управление ролями"
     }
   },
   "categories": {

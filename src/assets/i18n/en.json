@@ -141,6 +141,10 @@
         "snackbar_update_fail_message": "Failed to update role",
         "no_permission_scopes_label": "No permission scopes."
       }
+    },
+    "options": {
+      "user_management": "Users management",
+      "role_management": "Roles management"
     }
   },
   "categories": {
