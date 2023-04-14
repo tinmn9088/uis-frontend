@@ -9,6 +9,7 @@ import {
   AsyncSubject,
   BehaviorSubject,
   Observable,
+  Subscription,
   delay,
   map,
   merge,
@@ -30,6 +31,7 @@ export const isExpandable = (node: CategoryFlatNode) => node.expandable;
 export class CategoryTreeDataSourceService
   implements DataSource<CategoryFlatNode>
 {
+  private _expansionModelChangeSubscription!: Subscription;
   dataChange = new BehaviorSubject<CategoryFlatNode[]>([]);
   blockRepeatingTreeControlChanges = false;
 
@@ -84,31 +86,35 @@ export class CategoryTreeDataSourceService
   }
 
   connect(collectionViewer: CollectionViewer): Observable<CategoryFlatNode[]> {
-    this._treeControl.expansionModel.changed.subscribe(
-      (change: SelectionChange<CategoryFlatNode>) => {
-        if (
-          !this.blockRepeatingTreeControlChanges &&
-          (change.added || change.removed)
-        ) {
-          this.blockRepeatingTreeControlChanges = true;
+    this._expansionModelChangeSubscription =
+      this._treeControl.expansionModel.changed.subscribe(
+        (change: SelectionChange<CategoryFlatNode>) => {
+          if (
+            !this.blockRepeatingTreeControlChanges &&
+            (change.added || change.removed)
+          ) {
+            this.blockRepeatingTreeControlChanges = true;
 
-          // fix repeating changes events
-          setTimeout(() => (this.blockRepeatingTreeControlChanges = false));
+            // fix repeating changes events
+            setTimeout(() => (this.blockRepeatingTreeControlChanges = false));
 
-          this.handleTreeControl(change);
+            this.handleTreeControl(change);
+          }
         }
-      }
-    );
+      );
 
     return merge(collectionViewer.viewChange, this.dataChange).pipe(
       map(() => this.data)
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  disconnect(_: CollectionViewer): void {}
+  disconnect(): void {
+    this._expansionModelChangeSubscription.unsubscribe();
+  }
 
   handleTreeControl(change: SelectionChange<CategoryFlatNode>) {
+    console.log('CategoryFlatNode', change);
+
     if (change.added) {
       change.added.forEach(node => this.toggleNode(node, true));
     }

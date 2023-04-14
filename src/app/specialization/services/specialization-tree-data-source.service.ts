@@ -8,6 +8,7 @@ import {
   AsyncSubject,
   BehaviorSubject,
   Observable,
+  Subscription,
   delay,
   map,
   merge,
@@ -30,6 +31,7 @@ export const isExpandable = (node: SpecializationFlatNode) => node.expandable;
 export class SpecializationTreeDataSourceService
   implements DataSource<SpecializationFlatNode>
 {
+  private _expansionModelChangeSubscription!: Subscription;
   dataChange = new BehaviorSubject<SpecializationFlatNode[]>([]);
   blockRepeatingTreeControlChanges = false;
 
@@ -86,29 +88,31 @@ export class SpecializationTreeDataSourceService
   connect(
     collectionViewer: CollectionViewer
   ): Observable<SpecializationFlatNode[]> {
-    this._treeControl.expansionModel.changed.subscribe(
-      (change: SelectionChange<SpecializationFlatNode>) => {
-        if (
-          !this.blockRepeatingTreeControlChanges &&
-          (change.added || change.removed)
-        ) {
-          this.blockRepeatingTreeControlChanges = true;
+    this._expansionModelChangeSubscription =
+      this._treeControl.expansionModel.changed.subscribe(
+        (change: SelectionChange<SpecializationFlatNode>) => {
+          if (
+            !this.blockRepeatingTreeControlChanges &&
+            (change.added || change.removed)
+          ) {
+            this.blockRepeatingTreeControlChanges = true;
 
-          // fix repeating changes events
-          setTimeout(() => (this.blockRepeatingTreeControlChanges = false));
+            // fix repeating changes events
+            setTimeout(() => (this.blockRepeatingTreeControlChanges = false));
 
-          this.handleTreeControl(change);
+            this.handleTreeControl(change);
+          }
         }
-      }
-    );
+      );
 
     return merge(collectionViewer.viewChange, this.dataChange).pipe(
       map(() => this.data)
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  disconnect(_: CollectionViewer): void {}
+  disconnect(): void {
+    this._expansionModelChangeSubscription.unsubscribe();
+  }
 
   handleTreeControl(change: SelectionChange<SpecializationFlatNode>) {
     if (change.added) {
