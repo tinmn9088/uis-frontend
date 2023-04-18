@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { HighlightTextService } from 'src/app/shared/services/highlight-text.service';
 import { DisciplinePageableResponse } from '../../domain/discipline-pageable-response';
 import { DisciplineTableComponent } from '../discipline-table/discipline-table.component';
 import { Permission } from 'src/app/auth/domain/permission';
@@ -12,8 +11,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   templateUrl: './discipline-list.component.html',
   styleUrls: ['./discipline-list.component.scss'],
 })
-export class DisciplineListComponent implements AfterViewInit {
-  private _resizeObserver: ResizeObserver;
+export class DisciplineListComponent {
   formGroup!: FormGroup;
   @ViewChild(DisciplineTableComponent)
   disciplineTable!: DisciplineTableComponent;
@@ -22,10 +20,7 @@ export class DisciplineListComponent implements AfterViewInit {
   arePermissionsPresent: boolean;
   pageNumber!: number;
 
-  constructor(
-    public highlightTextService: HighlightTextService,
-    private _authService: AuthService
-  ) {
+  constructor(private _authService: AuthService) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.DISCIPLINE_SEARCH,
     ]);
@@ -35,27 +30,10 @@ export class DisciplineListComponent implements AfterViewInit {
         disabled: !this.arePermissionsPresent,
       }),
     });
-    this._resizeObserver = new ResizeObserver(entries => {
-      setTimeout(
-        () =>
-          this.highlightTextService.highlight(
-            this.searchQuery,
-            entries[0].target
-          ),
-        0
-      );
-    });
   }
 
   get searchQuery(): string {
     return this.formGroup.get('searchQuery')?.value;
-  }
-
-  ngAfterViewInit() {
-    const table = document.querySelector('.list__table');
-    if (table) {
-      this._resizeObserver.observe(table);
-    }
   }
 
   onSearch() {
@@ -68,10 +46,10 @@ export class DisciplineListComponent implements AfterViewInit {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
-    this.disciplineTable.search(this.searchQuery);
+    setTimeout(() => this.disciplineTable.search(this.searchQuery));
   }
 
   onSortChange() {
-    this.disciplineTable.search(this.searchQuery);
+    setTimeout(() => this.disciplineTable.search(this.searchQuery));
   }
 }

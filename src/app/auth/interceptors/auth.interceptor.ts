@@ -4,6 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpStatusCode,
 } from '@angular/common/http';
 import {
   Observable,
@@ -18,6 +19,8 @@ import { AuthService } from '../services/auth.service';
 import { Auth } from '../domain/auth';
 import { Router } from '@angular/router';
 import { REFRESH_JWT_REQUEST_COUNT_TOKEN } from 'src/app/shared/shared.module';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Puts `Authorization` header with JWT in each request.
@@ -29,6 +32,8 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private _authService: AuthService,
     private _router: Router,
+    private _snackbarService: SnackbarService,
+    private _translateService: TranslateService,
     @Inject(REFRESH_JWT_REQUEST_COUNT_TOKEN)
     private _refreshJwtRequestCount$: BehaviorSubject<number>
   ) {}
@@ -40,7 +45,10 @@ export class AuthInterceptor implements HttpInterceptor {
     const modifiedRequest = this.modifyRequest(request);
     return next.handle(modifiedRequest).pipe(
       catchError(error => {
-        if (error.status === 401 && this._refreshJwtRequestCount$.value === 0) {
+        if (
+          error.status === HttpStatusCode.Unauthorized &&
+          this._refreshJwtRequestCount$.value === 0
+        ) {
           const refreshToken = this._authService.auth.refreshToken;
           this._refreshJwtRequestCount$.next(
             this._refreshJwtRequestCount$.value + 1
@@ -99,6 +107,9 @@ export class AuthInterceptor implements HttpInterceptor {
    * @param url request url
    */
   private navigateToAuthPage() {
+    this._translateService.get('auth.session_expired').subscribe(message => {
+      this._snackbarService.showInfo(message);
+    });
     this._router.navigate(this._authService.AUTH_PAGE_PATH, {
       queryParams: { redirectTo: this._router.url },
     });

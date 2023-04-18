@@ -60,7 +60,7 @@ export class CategoryListComponent implements AfterViewInit {
   }
 
   onSearch() {
-    setTimeout(() => this.categoryTree.search(this.searchQuery), 0);
+    setTimeout(() => this.categoryTree.search(this.searchQuery));
   }
 
   onDataUpdate(response: CategoryPageableResponse) {
@@ -69,6 +69,6 @@ export class CategoryListComponent implements AfterViewInit {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
-    setTimeout(() => this.categoryTree.search(this.searchQuery), 0);
+    setTimeout(() => this.categoryTree.search(this.searchQuery));
   }
 }

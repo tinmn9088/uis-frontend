@@ -36,11 +36,17 @@ export class ModuleService {
     return module.path;
   }
 
+  /**
+   * @returns required permissions for module only
+   */
   getRequiredPermissions(name: ModuleName): Permission[] {
     const module = this.getModule(name);
     return module.requiredPermissions;
   }
 
+  /**
+   * @returns required permissions for module and sidenav options
+   */
   getAllRequiredPermissions(name: ModuleName): Permission[] {
     const module = this.getModule(name);
     const allRequiredPermissions = new Set(module.requiredPermissions);

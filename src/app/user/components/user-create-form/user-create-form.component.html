@@ -1,0 +1,48 @@
+<form class="form" [formGroup]="formGroup">
+  <div class="form__no-permission" *ngIf="areNotPermissionsPresent">
+    <mat-icon class="form__no-permission-icon">error_outline</mat-icon>
+    {{ 'users.user_create_form.no_permission_label' | translate }}
+  </div>
+
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label>
+      {{ 'users.user_create_form.username_label' | translate }}
+    </mat-label>
+    <input matInput name="username" formControlName="username" />
+    <mat-error>
+      {{ 'users.user_create_form.required' | translate }}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label>
+      {{ 'users.user_create_form.password_label' | translate }}
+    </mat-label>
+    <input
+      matInput
+      [type]="passwordHidden ? 'password' : 'text'"
+      name="password"
+      formControlName="password" />
+    <button
+      type="button"
+      tabindex="-1"
+      mat-icon-button
+      matSuffix
+      (click)="passwordHidden = !passwordHidden"
+      [disabled]="formGroup.disabled"
+      #tooltip="matTooltip"
+      matTooltip="{{ 'users.user_create_form.password_tooltip' | translate }}"
+      [matTooltipPosition]="'right'">
+      <mat-icon>
+        {{ passwordHidden ? 'visibility_off' : 'visibility' }}
+      </mat-icon>
+    </button>
+    <mat-error>
+      {{
+        (password.length === 0
+          ? 'users.user_create_form.required'
+          : 'users.user_create_form.weak_password'
+        ) | translate
+      }}
+    </mat-error>
+  </mat-form-field>
+</form>

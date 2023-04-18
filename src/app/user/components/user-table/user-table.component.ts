@@ -2,8 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { UserPageableResponse } from '../../domain/user-pageable-response';
 import { UserEditDialogComponent } from '../user-edit-dialog/user-edit-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../domain/user';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-user-table',
@@ -11,6 +13,7 @@ import { User } from '../../domain/user';
   styleUrls: ['./user-table.component.scss'],
 })
 export class UserTableComponent implements OnInit {
+  private _dialogRef?: MatDialogRef<UserEditDialogComponent, unknown>;
   @Input() pageSize?: number;
   @Input() pageNumber?: number;
   @Output() dataUpdated = new EventEmitter<UserPageableResponse>();
@@ -19,14 +22,21 @@ export class UserTableComponent implements OnInit {
     'roles',
     'lastActivity',
     'creationTime',
+    'operations',
   ];
   isLoading = true;
   dataSource: User[] = [];
+  canUserModifyUser: boolean;
 
   constructor(
     private _userService: UserService,
+    private _authService: AuthService,
     private _matDialog: MatDialog
-  ) {}
+  ) {
+    this.canUserModifyUser = this._authService.hasUserPermissions([
+      Permission.USER_MANAGE_ROLES,
+    ]);
+  }
 
   ngOnInit() {
     this.search();
@@ -57,6 +67,20 @@ export class UserTableComponent implements OnInit {
   }
 
   openUserEditDialog(user: User) {
-    this._matDialog.open(UserEditDialogComponent, { data: { user } });
+    this._dialogRef = this._matDialog.open(UserEditDialogComponent, {
+      data: { user },
+    });
+    this._dialogRef.afterClosed().subscribe(() => {
+      if (this._authService.user.id === user.id) {
+        this._authService
+          .refresh({
+            refreshToken: this._authService.auth.refreshToken,
+          })
+          .subscribe(() =>
+            console.debug('Information about current user refreshed')
+          );
+      }
+      this.search();
+    });
   }
 }

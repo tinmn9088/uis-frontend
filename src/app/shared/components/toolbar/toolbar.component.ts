@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { Language } from '../../domain/language';
 import { LanguageService } from '../../services/language.service';
-import { ModuleToolbarTab } from '../../domain/module-tab';
+import { ToolbarTab } from '../../domain/toolbar-tab';
 import { MatToolbar } from '@angular/material/toolbar';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/user/domain/user';
@@ -29,9 +29,17 @@ export class ToolbarComponent implements AfterViewInit {
     { text: 'toolbar.menu.add.curricula', path: '/curriculum/add' },
   ];
   compact = false;
-  @Input() user?: User;
-  @Input() tabs: ModuleToolbarTab[] = [];
-  @Input() activeTab?: ModuleToolbarTab;
+
+  /**
+   * Is passed through TranslateService pipeline.
+   */
+  @Input() tabs: ToolbarTab[] = [];
+
+  @Input() activeTab?: ToolbarTab;
+
+  /**
+   * `false` by default.
+   */
   @Input() showTabs = false;
   @Input() showBurger = false;
   @Input() showAddMenu = false;
@@ -40,7 +48,7 @@ export class ToolbarComponent implements AfterViewInit {
 
   constructor(
     public languageService: LanguageService,
-    private _authService: AuthService,
+    public authService: AuthService,
     private _router: Router
   ) {
     this._resizeObserver = new ResizeObserver(entries => {
@@ -48,11 +56,15 @@ export class ToolbarComponent implements AfterViewInit {
     });
   }
 
+  get user(): User | undefined {
+    return this.authService.user;
+  }
+
   ngAfterViewInit() {
     this._resizeObserver.observe(this.matToolbar._elementRef.nativeElement);
   }
 
-  onTabClick(tab: ModuleToolbarTab) {
+  onTabClick(tab: ToolbarTab) {
     this._router
       .navigateByUrl(tab.path)
       .catch(() => this._router.navigateByUrl('/'));
@@ -71,7 +83,7 @@ export class ToolbarComponent implements AfterViewInit {
   }
 
   onLogout() {
-    this._authService.logout();
+    this.authService.logout();
     this._router.navigateByUrl('/');
   }
 

@@ -17,6 +17,7 @@ import { CategoryService } from 'src/app/category/services/category.service';
 import { DisciplineUpdateRequest } from '../../domain/discipline-update-request';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
+import { Category } from 'src/app/category/domain/category';
 
 @Component({
   selector: 'app-discipline-form',
@@ -75,9 +76,8 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
     return this.formGroup.get('shortName')?.value;
   }
 
-  get categories(): number[] {
-    // TODO: change form input
-    return [];
+  get categories(): Category[] {
+    return this.formGroup.get('categories')?.value;
   }
 
   ngOnInit() {
@@ -90,7 +90,7 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
               this.formGroup.patchValue({
                 name: discipline.name,
                 shortName: discipline.shortName,
-                categories: discipline.categories,
+                categories: discipline.tags.map(tag => tag.id),
               });
             },
           });
@@ -122,9 +122,9 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
     const requestBody: DisciplineAddRequest | DisciplineUpdateRequest = {
       name: this.name || '',
       shortName: this.shortName || '',
-      categories: this.categories,
+      tags: this.categories,
     };
-    if (this.categories) requestBody.categories = this.categories;
+    if (this.categories) requestBody.tags = this.categories;
     console.debug('Request body', requestBody);
 
     const request$ =
@@ -187,8 +187,17 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
     return this._disciplineService.getLinkToSearchPage();
   }
 
+  /**
+   * Breakpoints:
+   * * `width` > 1080 - __33%__
+   * * `width` > 768 & `width` <= 1080 - __50%__
+   * * `width` > 600 & `width` <= 768 - __66%__
+   * * `width` <= 600 - __100%__
+   */
   private updateFormContainerWidth(formWidth: number) {
-    if (formWidth > 786) this.formContainerWidthPercents = 50;
+    if (formWidth > 1080) this.formContainerWidthPercents = 33;
+    else if (formWidth > 768 && formWidth <= 1080)
+      this.formContainerWidthPercents = 50;
     else if (formWidth > 600 && formWidth <= 786)
       this.formContainerWidthPercents = 66;
     else if (formWidth <= 600) this.formContainerWidthPercents = 100;

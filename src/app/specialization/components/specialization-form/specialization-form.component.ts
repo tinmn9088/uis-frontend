@@ -151,11 +151,9 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
               ? 'specializations.form.snackbar_update_success_message'
               : 'specializations.form.snackbar_add_success_message'
           )
-          .subscribe({
-            next: message => {
-              this._snackbarService.showSuccess(message);
-              this.formGroup.enable();
-            },
+          .subscribe(message => {
+            this._snackbarService.showSuccess(message);
+            this.formGroup.enable();
           });
         if (this.editMode) {
           if (!specialization.parentId) specialization.parentId = undefined;
@@ -198,8 +196,17 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
     return this._specializationService.getLinkToSearchPage();
   }
 
+  /**
+   * Breakpoints:
+   * * `width` > 1080 - __33%__
+   * * `width` > 768 & `width` <= 1080 - __50%__
+   * * `width` > 600 & `width` <= 768 - __66%__
+   * * `width` <= 600 - __100%__
+   */
   private updateFormContainerWidth(formWidth: number) {
-    if (formWidth > 786) this.formContainerWidthPercents = 50;
+    if (formWidth > 1080) this.formContainerWidthPercents = 33;
+    else if (formWidth > 768 && formWidth <= 1080)
+      this.formContainerWidthPercents = 50;
     else if (formWidth > 600 && formWidth <= 786)
       this.formContainerWidthPercents = 66;
     else if (formWidth <= 600) this.formContainerWidthPercents = 100;

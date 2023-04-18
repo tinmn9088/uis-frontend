@@ -25,6 +25,10 @@ export class SnackbarService {
     return this.showMessageAndAction(`❌ ${message}`, action);
   }
 
+  showInfo(message: string, action?: string): MatSnackBarRef<TextOnlySnackBar> {
+    return this.showMessageAndAction(`❕ ${message}`, action);
+  }
+
   private showMessageAndAction(message: string, action?: string) {
     return this._snackBar.open(message, action, {
       verticalPosition: 'bottom',

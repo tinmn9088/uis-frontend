@@ -18,8 +18,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { ModuleService } from '../../services/module.service';
 import { ModuleName } from '../../domain/module-name';
 import { THEME_CSS_CLASS_TOKEN } from '../../shared.module';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { User } from 'src/app/user/domain/user';
+import { ToolbarTab } from '../../domain/toolbar-tab';
 
 @Component({
   selector: 'app-module-layout',
@@ -37,11 +36,10 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   sidenavFullsize = true;
   showToolbarTabs = true;
   isContentHidden = false;
-  user?: User;
   sidenavOptions!: ModuleSidenavOption[];
   activeOption?: ModuleSidenavOption;
-  toolbarTabs!: ModuleSidenavOption[];
-  activeTab?: ModuleSidenavOption;
+  toolbarTabs!: ToolbarTab[];
+  activeTab?: ToolbarTab;
   addButtonPath?: string;
   @ViewChild(MatDrawerContainer) drawerContainer!: MatDrawerContainer;
   @ViewChild(MatDrawerContent) drawerContent!: MatDrawerContent;
@@ -51,7 +49,6 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     private _breakpointObserver: BreakpointObserver,
     private _router: Router,
     private _moduleService: ModuleService,
-    private _authService: AuthService,
     @Inject(THEME_CSS_CLASS_TOKEN) public themeClass$: BehaviorSubject<string>
   ) {
     this._resizeObserver = new ResizeObserver(entries => {
@@ -117,7 +114,6 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this._breakpoint$.subscribe(() => this.onBreakpointChange());
-    this.user = this._authService.user;
   }
 
   ngAfterViewInit() {

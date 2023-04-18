@@ -1,0 +1,42 @@
+.form {
+  display: flex;
+  flex-direction: column;
+
+  &__field {
+    margin-top: 12px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__no-permission {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.56);
+
+    &-icon {
+      margin-right: 10px;
+    }
+
+    &__no-permission-scopes-label {
+      text-align: center;
+    }
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  &__spinner {
+    max-width: 48px;
+    max-height: 48px;
+  }
+}

@@ -30,6 +30,11 @@
     margin-left: 30px;
     color: rgba(0, 0, 0, 0.54);
   }
+
+  &__failed-icon {
+    margin-right: 5px;
+    color: crimson;
+  }
 }
 
 a {

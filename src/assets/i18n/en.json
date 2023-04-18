@@ -36,7 +36,27 @@
     "checkbox_unselect_all": "Unselect all",
     "cannot_load_options": "Failed to load options"
   },
+  "auth": {
+    "authentication_needed": "Need to login",
+    "session_expired": "Session expired",
+    "login_form": {
+      "sign_in": "Sign in",
+      "password_label": "Password",
+      "login_label": "Login",
+      "required": "Required",
+      "messages": {
+        "success": "Logged in successfully",
+        "invalid_request_error": "Invalid login or password",
+        "server_error": "Try again later"
+      }
+    }
+  },
   "users": {
+    "toolbarTabs": {
+      "profile": "Profile",
+      "users": "Users",
+      "roles": "Roles"
+    },
     "main": {
       "cards": {
         "subtitle": "Options",
@@ -54,19 +74,29 @@
         "username": "Username",
         "roles": "Roles",
         "last_activity": "Last Activity",
-        "creation_time": "Creation Time"
+        "creation_time": "Creation Time",
+        "operations": "Operations"
       },
+      "create_button": "Create user",
+      "no_permission_label": "Not allowed",
       "no_data_label": "No users found."
     },
-    "login_form": {
-      "sign_in": "Sign in",
+    "user_create_form": {
+      "no_permission_label": "Not allowed",
       "password_label": "Password",
-      "login_label": "Login",
+      "username_label": "Username",
       "required": "Required",
+      "weak_password": "Weak password",
+      "password_tooltip": "Password must contain at least 8 characters, 1 uppercase characters, 1 digit characters, 1 special characters.",
       "messages": {
-        "success": "Authentication successful",
-        "error": "Authentication error"
+        "success": "Created successfully",
+        "error": "Failed to create"
       }
+    },
+    "user_create_dialog": {
+      "title": "Create user",
+      "create_button": "Create user",
+      "cancel_button": "Cancel"
     },
     "user_edit_dialog": {
       "title": "User",
@@ -81,6 +111,41 @@
       "role_granted_message": "Role granted",
       "role_revoked_message": "Role revoked",
       "role_change_error_message": "Role changle failed"
+    },
+    "roles": {
+      "list": {
+        "search": {
+          "placeholder": "Search by: name"
+        },
+        "columns": {
+          "id": "Id",
+          "name": "Name",
+          "permission_ids": "Permission Ids",
+          "operations": "Operations"
+        },
+        "create_button": "Create role",
+        "no_permission_label": "Not allowed",
+        "no_data_label": "No roles found."
+      },
+      "form": {
+        "no_permission_label": "Not allowed",
+        "create_title": "Create role",
+        "edit_title": "Edit role",
+        "name_label": "Name",
+        "required": "Required",
+        "edit_button": "Edit",
+        "create_button": "Create",
+        "cancel_button": "Cancel",
+        "snackbar_create_success_message": "Role created",
+        "snackbar_update_success_message": "Role updated",
+        "snackbar_create_fail_message": "Failed to create role",
+        "snackbar_update_fail_message": "Failed to update role",
+        "no_permission_scopes_label": "No permission scopes."
+      }
+    },
+    "options": {
+      "user_management": "Users management",
+      "role_management": "Roles management"
     }
   },
   "categories": {
@@ -89,7 +154,8 @@
         "placeholder": "Search by: name"
       },
       "no_data_label": "No categories found.",
-      "no_permission_label": "Not allowed"
+      "no_permission_label": "Not allowed",
+      "failed_to_retrieve_children_message": "Failed to retireve children categories"
     },
     "form": {
       "add_title": "Add category",
@@ -150,7 +216,8 @@
       },
       "edit_button": "Edit",
       "no_data_label": "No specializations found.",
-      "no_permission_label": "Not allowed"
+      "no_permission_label": "Not allowed",
+      "failed_to_retrieve_children_message": "Failed to retireve children specializations"
     },
     "form": {
       "add_title": "Add specialization",

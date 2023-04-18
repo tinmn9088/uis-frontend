@@ -1,6 +1,11 @@
 <form class="form">
   <section class="form__rights-management-container">
-    <app-user-rights-management [user]="user" class="form__rights-management">
+    <app-user-rights-management
+      [user]="user"
+      class="form__rights-management"
+      [areRolesLoading]="isUserLoading"
+      (roleGranted)="onUserUpdate()"
+      (roleRevoked)="onUserUpdate()">
     </app-user-rights-management>
   </section>
 </form>

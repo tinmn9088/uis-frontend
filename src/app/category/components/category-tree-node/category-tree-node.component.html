@@ -1,5 +1,12 @@
 <ng-container *ngIf="!categoryNode.isLoading; else loading">
-  <a [routerLink]="linkToForm">{{ categoryNode.category.name }}</a>
+  <div class="node__container">
+    <mat-icon
+      *ngIf="categoryNode.failedToLoadChildren"
+      class="node__failed-icon">
+      error_outline
+    </mat-icon>
+    <a [routerLink]="linkToForm">{{ categoryNode.category.name }}</a>
+  </div>
 </ng-container>
 <ng-template #loading>
   <mat-progress-bar

@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { CurriculumTableComponent } from '../curriculum-table/curriculum-table.component';
-import { HighlightTextService } from 'src/app/shared/services/highlight-text.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CurriculumPageableResponse } from '../../domain/curriculum-pageable-response';
 import { PageEvent } from '@angular/material/paginator';
@@ -19,10 +18,7 @@ export class CurriculumListComponent {
   arePermissionsPresent: boolean;
   pageNumber!: number;
 
-  constructor(
-    public highlightTextService: HighlightTextService,
-    private _authService: AuthService
-  ) {
+  constructor(private _authService: AuthService) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.CURRICULUM_GET,
     ]);
@@ -34,10 +30,10 @@ export class CurriculumListComponent {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
-    this.curriculumTable.getAll();
+    setTimeout(() => this.curriculumTable.getAll());
   }
 
   onSortChange() {
-    this.curriculumTable.getAll();
+    setTimeout(() => this.curriculumTable.getAll());
   }
 }

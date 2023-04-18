@@ -9,6 +9,7 @@ import {
   AsyncSubject,
   BehaviorSubject,
   Observable,
+  Subscription,
   delay,
   map,
   merge,
@@ -17,6 +18,8 @@ import {
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { CategoryService } from './category.service';
 import { CategoryPageableResponse } from '../domain/category-pageable-response';
+import { TranslateService } from '@ngx-translate/core';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 export const getLevel = (node: CategoryFlatNode) => node.level;
 
@@ -28,6 +31,7 @@ export const isExpandable = (node: CategoryFlatNode) => node.expandable;
 export class CategoryTreeDataSourceService
   implements DataSource<CategoryFlatNode>
 {
+  private _expansionModelChangeSubscription!: Subscription;
   dataChange = new BehaviorSubject<CategoryFlatNode[]>([]);
   blockRepeatingTreeControlChanges = false;
 
@@ -42,7 +46,9 @@ export class CategoryTreeDataSourceService
 
   constructor(
     private _treeControl: FlatTreeControl<CategoryFlatNode>,
-    private _categoryService: CategoryService
+    private _categoryService: CategoryService,
+    private _translate: TranslateService,
+    private _snackbarService: SnackbarService
   ) {}
 
   updateData(
@@ -80,31 +86,35 @@ export class CategoryTreeDataSourceService
   }
 
   connect(collectionViewer: CollectionViewer): Observable<CategoryFlatNode[]> {
-    this._treeControl.expansionModel.changed.subscribe(
-      (change: SelectionChange<CategoryFlatNode>) => {
-        if (
-          !this.blockRepeatingTreeControlChanges &&
-          (change.added || change.removed)
-        ) {
-          this.blockRepeatingTreeControlChanges = true;
+    this._expansionModelChangeSubscription =
+      this._treeControl.expansionModel.changed.subscribe(
+        (change: SelectionChange<CategoryFlatNode>) => {
+          if (
+            !this.blockRepeatingTreeControlChanges &&
+            (change.added || change.removed)
+          ) {
+            this.blockRepeatingTreeControlChanges = true;
 
-          // fix repeating changes events
-          setTimeout(() => (this.blockRepeatingTreeControlChanges = false));
+            // fix repeating changes events
+            setTimeout(() => (this.blockRepeatingTreeControlChanges = false));
 
-          this.handleTreeControl(change);
+            this.handleTreeControl(change);
+          }
         }
-      }
-    );
+      );
 
     return merge(collectionViewer.viewChange, this.dataChange).pipe(
       map(() => this.data)
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  disconnect(_: CollectionViewer): void {}
+  disconnect(): void {
+    this._expansionModelChangeSubscription.unsubscribe();
+  }
 
   handleTreeControl(change: SelectionChange<CategoryFlatNode>) {
+    console.log('CategoryFlatNode', change);
+
     if (change.added) {
       change.added.forEach(node => this.toggleNode(node, true));
     }
@@ -120,35 +130,49 @@ export class CategoryTreeDataSourceService
     const index = this.data.indexOf(node);
 
     if (expand) {
+      node.failedToLoadChildren = false;
       node.isLoading = true;
 
       this._categoryService
         .getChildren(node.category.id)
         .pipe(delay(200))
-        .subscribe(children => {
-          console.debug('Children received', children);
+        .subscribe({
+          next: children => {
+            console.debug('Children received', children);
 
-          if (!children || children.length === 0) {
+            if (!children || children.length === 0) {
+              this.dataChange.next(this.data);
+              node.isLoading = false;
+              return;
+            }
+
+            const nodes = children.map(
+              specialization =>
+                new CategoryFlatNode(
+                  specialization,
+                  node.level + 1,
+                  specialization.hasChildren
+                )
+            );
+
+            console.debug(`New nodes added`, nodes);
+
+            this.data.splice(index + 1, 0, ...nodes);
+
             this.dataChange.next(this.data);
             node.isLoading = false;
-            return;
-          }
-
-          const nodes = children.map(
-            specialization =>
-              new CategoryFlatNode(
-                specialization,
-                node.level + 1,
-                specialization.hasChildren
-              )
-          );
-
-          console.debug(`New nodes added`, nodes);
-
-          this.data.splice(index + 1, 0, ...nodes);
-
-          this.dataChange.next(this.data);
-          node.isLoading = false;
+          },
+          error: () => {
+            node.failedToLoadChildren = true;
+            node.isLoading = false;
+            this._translate
+              .get('categories.list.failed_to_retrieve_children_message')
+              .subscribe(message => {
+                this._snackbarService.showError(
+                  `${message} [${node.category.name}]`
+                );
+              });
+          },
         });
     } else {
       let count = 0;

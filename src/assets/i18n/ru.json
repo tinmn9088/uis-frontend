@@ -36,7 +36,27 @@
     "checkbox_unselect_all": "Отменить выбор",
     "cannot_load_options": "Не удалось загрузить"
   },
+  "auth": {
+    "authentication_needed": "Необходимо войти",
+    "session_expired": "Сессия истекла",
+    "login_form": {
+      "sign_in": "Вход",
+      "password_label": "Пароль",
+      "login_label": "Логин",
+      "required": "Обязательно",
+      "messages": {
+        "success": "Вход выполнен",
+        "invalid_request_error": "Неверный логин или пароль",
+        "server_error": "Попробуйте позже"
+      }
+    }
+  },
   "users": {
+    "toolbarTabs": {
+      "profile": "Профиль",
+      "users": "Пользователи",
+      "roles": "Роли"
+    },
     "main": {
       "cards": {
         "subtitle": "Опции",
@@ -54,19 +74,29 @@
         "username": "Имя пользователя",
         "roles": "Роли",
         "last_activity": "Последняя активность",
-        "creation_time": "Дата создания"
+        "creation_time": "Дата создания",
+        "operations": "Действия"
       },
+      "create_button": "Создать пользователя",
+      "no_permission_label": "Недостаточно прав",
       "no_data_label": "Пользователей не найдено."
     },
-    "login_form": {
-      "sign_in": "Вход",
+    "user_create_form": {
+      "no_permission_label": "Недостаточно прав",
       "password_label": "Пароль",
-      "login_label": "Логин",
-      "required": "Необязательно",
+      "username_label": "Имя пользователя",
+      "required": "Обязательно",
+      "weak_password": "Слабый пароль",
+      "password_tooltip": "Пароль должен содержать не менее 8 символов, 1 заглавной буквы, 1 цифры, 1 специального символа.",
       "messages": {
-        "success": "Вход выполнен",
-        "error": "Ошибка"
+        "success": "Пользователь создан",
+        "error": "Ошибка при создании"
       }
+    },
+    "user_create_dialog": {
+      "title": "Создать пользователя",
+      "create_button": "Создать пользователя",
+      "cancel_button": "Отмена"
     },
     "user_edit_dialog": {
       "title": "Пользователь",
@@ -81,6 +111,41 @@
       "role_granted_message": "Роль добавлена",
       "role_revoked_message": "Роль удалена",
       "role_change_error_message": "Не удалось изменить роли у пользователя"
+    },
+    "roles": {
+      "list": {
+        "search": {
+          "placeholder": "Поиск по: название"
+        },
+        "columns": {
+          "id": "Id",
+          "name": "Название",
+          "permission_ids": "Id прав",
+          "operations": "Действия"
+        },
+        "create_button": "Создать роль",
+        "no_permission_label": "Недостаточно прав",
+        "no_data_label": "Ролей не найдено."
+      },
+      "form": {
+        "no_permission_label": "Недостаточно прав",
+        "create_title": "Создать роль",
+        "edit_title": "Изменить роль",
+        "name_label": "Название",
+        "required": "Обязательно",
+        "create_button": "Создать",
+        "edit_button": "Изменить",
+        "cancel_button": "Отмена",
+        "snackbar_create_success_message": "Роль создана",
+        "snackbar_update_success_message": "Роль обновлена",
+        "snackbar_create_fail_message": "Не удалось создать роль",
+        "snackbar_update_fail_message": "Не удалось изменить роль",
+        "no_permission_scopes_label": "Не удалось получить список прав."
+      }
+    },
+    "options": {
+      "user_management": "Управление пользователями",
+      "role_management": "Управление ролями"
     }
   },
   "categories": {
@@ -89,7 +154,8 @@
         "placeholder": "Поиск по: название"
       },
       "no_data_label": "Категорий не найдено.",
-      "no_permission_label": "Недостаточно прав"
+      "no_permission_label": "Недостаточно прав",
+      "failed_to_retrieve_children_message": "Не удалось получить дочерние категории"
     },
     "form": {
       "add_title": "Добавить категорию",
@@ -150,7 +216,8 @@
       },
       "edit_button": "Редактировать",
       "no_data_label": "Специальностей не найдено.",
-      "no_permission_label": "Недостаточно прав"
+      "no_permission_label": "Недостаточно прав",
+      "failed_to_retrieve_children_message": "Не удалось получить дочерние специальности"
     },
     "form": {
       "add_title": "Добавить специальность",

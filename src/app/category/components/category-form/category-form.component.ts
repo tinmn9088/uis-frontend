@@ -13,8 +13,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectOption } from 'src/app/shared/domain/select-option';
 import { CategoryAddRequest } from '../../domain/category-add-request';
-import { map, of } from 'rxjs';
+import { map } from 'rxjs';
 import { Permission } from 'src/app/auth/domain/permission';
+import { CategoryUpdateRequest } from '../../domain/category-update-request';
 
 @Component({
   selector: 'app-category-form',
@@ -75,9 +76,11 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
           this.id = parseInt(params['id']);
           this._categoryService.getById(this.id).subscribe({
             next: category => {
+              console.log(category);
+
               this.formGroup.patchValue({
                 name: category.name,
-                parentId: category.parent?.id,
+                parentId: category.parentId,
               });
             },
           });
@@ -106,14 +109,16 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
 
     this.formGroup.disable();
 
-    const requestBody: CategoryAddRequest = {
+    const requestBody: CategoryAddRequest | CategoryUpdateRequest = {
       name: this.name || '',
-      parent: { id: this.parentId },
+      parentId: this.parentId,
     };
     console.debug('Request body', requestBody);
 
     const request$ =
-      this.editMode && this.id ? of() : this._categoryService.add(requestBody);
+      this.editMode && this.id
+        ? this._categoryService.update(this.id, requestBody)
+        : this._categoryService.add(requestBody);
 
     request$.subscribe({
       next: category => {
@@ -124,14 +129,12 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
               ? 'categories.form.snackbar_update_success_message'
               : 'categories.form.snackbar_add_success_message'
           )
-          .subscribe({
-            next: message => {
-              this._snackbarService.showSuccess(message);
-              this.formGroup.enable();
-            },
+          .subscribe(message => {
+            this._snackbarService.showSuccess(message);
+            this.formGroup.enable();
           });
         if (this.editMode) {
-          if (!category.parent) category.parent = undefined;
+          if (!category.parentId) category.parentId = undefined;
           this.formGroup.patchValue(category, { emitEvent: true });
         } else {
           this._router.navigateByUrl(
@@ -171,8 +174,17 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     return this._categoryService.getLinkToSearchPage();
   }
 
+  /**
+   * Breakpoints:
+   * * `width` > 1080 - __33%__
+   * * `width` > 768 & `width` <= 1080 - __50%__
+   * * `width` > 600 & `width` <= 768 - __66%__
+   * * `width` <= 600 - __100%__
+   */
   private updateFormContainerWidth(formWidth: number) {
-    if (formWidth > 786) this.formContainerWidthPercents = 50;
+    if (formWidth > 1080) this.formContainerWidthPercents = 33;
+    else if (formWidth > 768 && formWidth <= 1080)
+      this.formContainerWidthPercents = 50;
     else if (formWidth > 600 && formWidth <= 786)
       this.formContainerWidthPercents = 66;
     else if (formWidth <= 600) this.formContainerWidthPercents = 100;

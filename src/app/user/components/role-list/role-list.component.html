@@ -1,0 +1,58 @@
+<div class="list">
+  <div class="list__create-button-container" *ngIf="canUserCreateRole">
+    <button
+      class="list__create-button"
+      mat-flat-button
+      color="primary"
+      (click)="openRoleFormDialog()">
+      <mat-icon>supervised_user_circle</mat-icon>
+      {{ 'users.roles.list.create_button' | translate }}
+    </button>
+  </div>
+
+  <form [formGroup]="formGroup" (ngSubmit)="onSearch()">
+    <div class="list__search-container">
+      <mat-form-field class="list__search" appearance="outline">
+        <input
+          placeholder="{{ 'users.roles.list.search.placeholder' | translate }}"
+          matInput
+          formControlName="searchQuery" />
+        <button *ngIf="searchQuery" matSuffix mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <div
+    class="list__content-container"
+    *ngIf="arePermissionsPresent; else noPermission">
+    <div class="list__table-and-paginator-container">
+      <div class="list__table-container">
+        <app-role-table
+          class="list__table"
+          [pageSize]="pageSize"
+          [pageNumber]="pageNumber"
+          (dataUpdated)="onDataUpdate($event)"
+          (sortChanged)="onSortChange()">
+        </app-role-table>
+      </div>
+
+      <div class="list__paginator-container">
+        <app-paginator
+          class="list__paginator"
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageIndex]="pageNumber"
+          (page)="onPageChange($event)"></app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noPermission>
+    <div class="list__no-permission">
+      <mat-icon class="list__no-permission-icon">error_outline</mat-icon>
+      {{ 'users.roles.list.no_permission_label' | translate }}
+    </div>
+  </ng-template>
+</div>

@@ -20,8 +20,8 @@ export class MainPageComponent implements OnInit {
   }[] = [];
 
   constructor(
+    public authService: AuthService,
     private _moduleService: ModuleService,
-    private _authService: AuthService,
     private _router: Router
   ) {}
 
@@ -49,12 +49,12 @@ export class MainPageComponent implements OnInit {
         themeCssClass: themeCssClass,
         options:
           module.sidenavOptions?.filter(option => !option.pathRegex) || [],
-        isAllowed: this._authService.hasUserPermissions(requiredPermissions),
+        isAllowed: this.authService.hasUserPermissions(requiredPermissions),
       };
     });
   }
 
   navigateToAuthPage() {
-    this._router.navigate(this._authService.AUTH_PAGE_PATH);
+    this._router.navigate(this.authService.AUTH_PAGE_PATH);
   }
 }

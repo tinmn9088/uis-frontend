@@ -60,7 +60,7 @@ export class SpecializationListComponent implements AfterViewInit {
   }
 
   onSearch() {
-    setTimeout(() => this.specializationTree.search(this.searchQuery), 0);
+    setTimeout(() => this.specializationTree.search(this.searchQuery));
   }
 
   onDataUpdate(response: SpecializationPageableResponse) {
@@ -69,6 +69,6 @@ export class SpecializationListComponent implements AfterViewInit {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
-    setTimeout(() => this.specializationTree.search(this.searchQuery), 0);
+    setTimeout(() => this.specializationTree.search(this.searchQuery));
   }
 }

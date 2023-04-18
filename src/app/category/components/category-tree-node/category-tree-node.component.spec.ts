@@ -22,7 +22,7 @@ describe('CategoryTreeNodeComponent', () => {
       id: 1,
       name: 'TestName',
       hasChildren: false,
-      parent: { id: 2 },
+      parentId: 2,
     });
     fixture.detectChanges();
   });

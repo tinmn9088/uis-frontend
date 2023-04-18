@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginFormComponent } from './components/login-form/login-form.component';
+import { LoginFormComponent } from '../auth/components/login-form/login-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { UserLayoutComponent } from './components/user-layout/user-layout.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
@@ -9,6 +9,12 @@ import { UserRightsManagementComponent } from './components/user-rights-manageme
 import { UserEditFormComponent } from './components/user-edit-form/user-edit-form.component';
 import { UserEditDialogComponent } from './components/user-edit-dialog/user-edit-dialog.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
+import { UserCreateFormComponent } from './components/user-create-form/user-create-form.component';
+import { UserCreateDialogComponent } from './components/user-create-dialog/user-create-dialog.component';
+import { RoleFormComponent } from './components/role-form/role-form.component';
+import { RoleListComponent } from './components/role-list/role-list.component';
+import { RoleFormDialogComponent } from './components/role-form-dialog/role-form-dialog.component';
+import { RoleTableComponent } from './components/role-table/role-table.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +26,12 @@ import { MainPageComponent } from './components/main-page/main-page.component';
     UserEditFormComponent,
     UserEditDialogComponent,
     MainPageComponent,
+    UserCreateFormComponent,
+    UserCreateDialogComponent,
+    RoleFormComponent,
+    RoleListComponent,
+    RoleFormDialogComponent,
+    RoleTableComponent,
   ],
   imports: [CommonModule, SharedModule],
 })

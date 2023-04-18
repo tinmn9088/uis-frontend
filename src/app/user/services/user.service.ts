@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import Modules from 'src/assets/modules.json';
 import { UserPageableResponse } from '../domain/user-pageable-response';
 import { User } from '../domain/user';
+import { UserCreateRequest } from '../domain/user-create-request';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,10 @@ export class UserService {
 
   getById(id: number): Observable<User> {
     return this._http.get<User>(`${this.MODULE_URL}/${id}`);
+  }
+
+  create(userCreateRequest: UserCreateRequest): Observable<User> {
+    return this._http.post<User>(`${this.MODULE_URL}`, userCreateRequest);
   }
 
   search(

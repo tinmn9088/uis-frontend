@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,15 +7,21 @@ import { delay, distinctUntilChanged } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
 })
-export class LoginFormComponent implements OnInit, AfterViewInit {
+export class LoginFormComponent implements OnInit {
   private readonly _breakpoint$ = this._breakpointObserver
-    .observe([Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large])
+    .observe([
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ])
     .pipe(distinctUntilChanged());
   cardWidthPercents = 66;
   passwordHidden = true;
@@ -43,10 +49,6 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => this.onBreakpointChange(), 0);
-  }
-
   get username() {
     return this.formGroup.get('username')?.value;
   }
@@ -64,7 +66,7 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
     this._authService.login(loginRequest).subscribe({
       next: () => {
         this._translate
-          .get('users.login_form.messages.success')
+          .get('auth.login_form.messages.success')
           .pipe(delay(666))
           .subscribe(message => {
             this.formGroup.enable();
@@ -72,9 +74,13 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
             this._router.navigateByUrl(this.redirectTo || '/');
           });
       },
-      error: () => {
+      error: (error: HttpErrorResponse) => {
         this._translate
-          .get('users.login_form.messages.error')
+          .get(
+            error.status === HttpStatusCode.NotFound
+              ? 'auth.login_form.messages.invalid_request_error'
+              : 'auth.login_form.messages.server_error'
+          )
           .subscribe(message => {
             this.formGroup.enable();
             this._snackbarService.showError(message, SnackbarAction.Cross);
@@ -86,7 +92,10 @@ export class LoginFormComponent implements OnInit, AfterViewInit {
   private onBreakpointChange() {
     const isSmall = this._breakpointObserver.isMatched(Breakpoints.Small);
     const isMedium = this._breakpointObserver.isMatched(Breakpoints.Medium);
-    const isLarge = this._breakpointObserver.isMatched(Breakpoints.Large);
+    const isLarge = this._breakpointObserver.isMatched([
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]);
 
     if (isSmall) {
       this.cardWidthPercents = 80;

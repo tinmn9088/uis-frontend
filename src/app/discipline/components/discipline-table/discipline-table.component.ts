@@ -3,6 +3,8 @@ import { DisciplinePageableResponse } from '../../domain/discipline-pageable-res
 import { DisciplineService } from '../../services/discipline.service';
 import { Sort } from '@angular/material/sort';
 import { Discipline } from '../../domain/discipline';
+import { CategoryService } from 'src/app/category/services/category.service';
+import { Category } from 'src/app/category/domain/category';
 
 @Component({
   selector: 'app-discipline-table',
@@ -19,7 +21,10 @@ export class DisciplineTableComponent implements OnInit {
   isLoading = true;
   dataSource: Discipline[] = [];
 
-  constructor(private _disciplineService: DisciplineService) {}
+  constructor(
+    private _disciplineService: DisciplineService,
+    private _categoryService: CategoryService
+  ) {}
 
   ngOnInit() {
     this.search();
@@ -43,8 +48,12 @@ export class DisciplineTableComponent implements OnInit {
       });
   }
 
-  getLinkToFormPage(discipline: Discipline): string {
-    return this._disciplineService.getLinkToFormPage(discipline.id);
+  getLinkToFormPage(disciplineId: number): string {
+    return this._disciplineService.getLinkToFormPage(disciplineId);
+  }
+
+  getLinkToCategoryFormPage(categoryId: number): string {
+    return this._categoryService.getLinkToFormPage(categoryId);
   }
 
   getTableCellStyle() {
