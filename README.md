@@ -4,6 +4,16 @@
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+## Deployment
+
+1. Start with the production build: `ng build`
+
+1. Copy everything within the output folder (`dist/project-name/`) to a folder on the server.
+
+1. Configure the server to redirect requests for missing files to _index.html_.
+
+See [Angular - Deployment](https://angular.io/guide/deployment#basic-deployment-to-a-remote-server).
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
