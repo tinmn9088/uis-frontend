@@ -24,6 +24,7 @@ import { CategoryUpdateRequest } from '../../domain/category-update-request';
 })
 export class CategoryFormComponent implements OnInit, AfterViewInit {
   private _resizeObserver: ResizeObserver;
+  private _parentId?: number;
   id?: number;
   editMode!: boolean;
   formContainerWidthPercents?: number;
@@ -76,8 +77,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
           this.id = parseInt(params['id']);
           this._categoryService.getById(this.id).subscribe({
             next: category => {
-              console.log(category);
-
+              this._parentId = category.parentId;
               this.formGroup.patchValue({
                 name: category.name,
                 parentId: category.parentId,
@@ -165,8 +165,29 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(options => {
-        this.parentOptions = options;
-        this.areParentOptionsLoading = false;
+        if (
+          this.editMode &&
+          this._parentId &&
+          !options.find(option => option.value === this._parentId)
+        ) {
+          this._categoryService
+            .getById(this._parentId)
+            .pipe(
+              map(parentCategory => {
+                return {
+                  name: parentCategory.name,
+                  value: parentCategory.id,
+                } as SelectOption;
+              })
+            )
+            .subscribe(parentOption => {
+              this.parentOptions = [parentOption, ...options];
+              this.areParentOptionsLoading = false;
+            });
+        } else {
+          this.parentOptions = options;
+          this.areParentOptionsLoading = false;
+        }
       });
   }
 

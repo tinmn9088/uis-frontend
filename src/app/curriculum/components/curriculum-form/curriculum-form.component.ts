@@ -30,6 +30,7 @@ import { Permission } from 'src/app/auth/domain/permission';
 })
 export class CurriculumFormComponent implements OnInit, AfterViewInit {
   private _resizeObserver: ResizeObserver;
+  private _specializationId?: number;
   datepickerYearHeader = DatepickerYearHeaderComponent;
   id?: number;
   editMode!: boolean;
@@ -95,6 +96,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
           this.id = parseInt(params['id']);
           this._curriculumService.getById(this.id).subscribe({
             next: curriculum => {
+              this._specializationId = curriculum.specializationId;
               this.formGroup.patchValue({
                 approvalDate: curriculum.approvalDate,
                 admissionYear: curriculum.admissionYear,
@@ -189,8 +191,29 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(options => {
-        this.specializationOptions = options;
-        this.areParentOptionsLoading = false;
+        if (
+          this.editMode &&
+          this._specializationId &&
+          !options.find(option => option.value === this._specializationId)
+        ) {
+          this._specializationService
+            .getById(this._specializationId)
+            .pipe(
+              map(specialization => {
+                return {
+                  name: specialization.name,
+                  value: specialization.id,
+                } as SelectOption;
+              })
+            )
+            .subscribe(specializationOption => {
+              this.specializationOptions = [specializationOption, ...options];
+              this.areParentOptionsLoading = false;
+            });
+        } else {
+          this.specializationOptions = options;
+          this.areParentOptionsLoading = false;
+        }
       });
   }
 

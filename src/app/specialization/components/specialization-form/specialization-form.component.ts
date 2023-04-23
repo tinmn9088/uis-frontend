@@ -24,6 +24,7 @@ import { Permission } from 'src/app/auth/domain/permission';
 })
 export class SpecializationFormComponent implements OnInit, AfterViewInit {
   private _resizeObserver: ResizeObserver;
+  private _parentId?: number;
   id?: number;
   editMode!: boolean;
   formContainerWidthPercents?: number;
@@ -94,6 +95,7 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
           this.id = parseInt(params['id']);
           this._specializationService.getById(this.id).subscribe({
             next: specialization => {
+              this._parentId = specialization.parentId;
               this.formGroup.patchValue({
                 name: specialization.name,
                 shortName: specialization.shortName,
@@ -187,8 +189,29 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(options => {
-        this.parentOptions = options;
-        this.areParentOptionsLoading = false;
+        if (
+          this.editMode &&
+          this._parentId &&
+          !options.find(option => option.value === this._parentId)
+        ) {
+          this._specializationService
+            .getById(this._parentId)
+            .pipe(
+              map(parentSpecialization => {
+                return {
+                  name: parentSpecialization.name,
+                  value: parentSpecialization.id,
+                } as SelectOption;
+              })
+            )
+            .subscribe(parentOption => {
+              this.parentOptions = [parentOption, ...options];
+              this.areParentOptionsLoading = false;
+            });
+        } else {
+          this.parentOptions = options;
+          this.areParentOptionsLoading = false;
+        }
       });
   }
 
