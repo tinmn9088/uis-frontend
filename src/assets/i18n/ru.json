@@ -36,6 +36,14 @@
     "checkbox_unselect_all": "Отменить выбор",
     "cannot_load_options": "Не удалось загрузить"
   },
+  "list_management": {
+    "add_button": "Добавить",
+    "add_button_tooltip": "Добавить выбранное",
+    "add_button_error_tooltip": "Уже добавлено",
+    "delete_button": "Удалить",
+    "delete_button_tooltip": "Удалить выбранные",
+    "empty_list": "Пусто."
+  },
   "auth": {
     "authentication_needed": "Необходимо войти",
     "session_expired": "Сессия истекла",

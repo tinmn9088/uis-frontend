@@ -24,7 +24,7 @@ import { MatInput } from '@angular/material/input';
 import { Subscription, debounceTime } from 'rxjs';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { MatSelect } from '@angular/material/select';
 import { SelectOption } from '../../domain/select-option';
 
 declare type Option = SelectOption | SelectOption[] | undefined | null;
@@ -44,12 +44,11 @@ export class FilteredSelectComponent
   extends AbstractMatFormFieldControl<Option>
   implements OnInit, OnDestroy, OnChanges
 {
-  private subscription!: Subscription;
+  private _selectSubscription!: Subscription;
   @Input() options!: SelectOption[];
-  @Input() multiple = false;
 
   /**
-   * Use `fi1terSelectOptions()` method.
+   * Use `filterSelectOptions()` method.
    * If 'false' then `isLoading` also should be controlled from outside.
    */
   @Input() isInternalFilterOn = true;
@@ -69,10 +68,6 @@ export class FilteredSelectComponent
   selectControl = new FormControl();
   filterControl = new FormControl('');
   filteredOptions: SelectOption[] = [];
-  selectedOptions: SelectOption[] = [];
-  selectedOptionsChange: SelectOption[] = [];
-  areAllOptionsSelected = false;
-  noneOptionsSelected = true;
 
   constructor(
     _elementRef: ElementRef,
@@ -94,16 +89,15 @@ export class FilteredSelectComponent
   }
 
   ngOnInit() {
-    this.subscription = this.selectControl.valueChanges.subscribe(value => {
-      super.value = value;
-    });
+    this._selectSubscription = this.selectControl.valueChanges.subscribe(
+      value => {
+        super.value = value;
+      }
+    );
     this.filteredOptions = this.options?.slice() || [];
     this.filterControl.valueChanges
       .pipe(debounceTime(this.isInternalFilterOn ? 0 : 666))
       .subscribe(value => {
-        if (this.multiple) {
-          this.updateSelectedAndFilteredOptions();
-        }
         this.filterChanged.emit(this.filterControl.value);
         if (this.isInternalFilterOn) this.innerFilterOptions(value);
       });
@@ -120,8 +114,8 @@ export class FilteredSelectComponent
   }
 
   override ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this._selectSubscription) {
+      this._selectSubscription.unsubscribe();
     }
     super.ngOnDestroy();
   }
@@ -143,40 +137,6 @@ export class FilteredSelectComponent
     this.focused = true;
   }
 
-  selectAllOptions(select: boolean) {
-    this.areAllOptionsSelected = select;
-    this.noneOptionsSelected = !select;
-    if (select) {
-      this.selectedOptionsChange = this.options.slice();
-      this.value = this.options.map(option => option.value);
-    } else {
-      this.selectedOptionsChange = [];
-      this.value = undefined;
-    }
-  }
-
-  onSelectionChange(change: MatSelectChange) {
-    this.areAllOptionsSelected = this.matSelect?.options
-      .toArray()
-      .every(option => option.selected);
-    this.noneOptionsSelected = this.matSelect?.options
-      .toArray()
-      .every(option => !option.selected);
-    if (this.noneOptionsSelected) this.value = undefined;
-    if (this.multiple) {
-      const allOptions = [...this.selectedOptions, ...this.filteredOptions];
-      if ((change.value as any[]).length !== 0) {
-        this.selectedOptionsChange = allOptions?.filter(
-          this.isIn(change.value as any[])
-        );
-      }
-    }
-  }
-
-  onClosed() {
-    this.updateSelectedAndFilteredOptions();
-  }
-
   private innerFilterOptions(value: string | null) {
     const lowerCase = value?.toLocaleLowerCase() || '';
     this.filteredOptions =
@@ -184,30 +144,4 @@ export class FilteredSelectComponent
         return option.name.trim().toLocaleLowerCase().includes(lowerCase);
       }) || this.filteredOptions;
   }
-
-  private updateSelectedAndFilteredOptions() {
-    if (this.selectedOptionsChange.length > 0) {
-      this.selectedOptions = this.selectedOptionsChange;
-    }
-    this.selectedOptionsChange = [];
-    this.filteredOptions = this.options?.filter(
-      this.isNotIn(this.selectedOptions)
-    );
-  }
-
-  private isIn = (values: any[]) => {
-    return (optionToCheck: SelectOption) => {
-      return values
-        .map(value => JSON.stringify(value))
-        .includes(JSON.stringify(optionToCheck.value));
-    };
-  };
-
-  private isNotIn = (options: SelectOption[]) => {
-    return (optionToCheck: SelectOption) => {
-      return !options
-        .map(option => JSON.stringify(option.value))
-        .includes(JSON.stringify(optionToCheck.value));
-    };
-  };
 }

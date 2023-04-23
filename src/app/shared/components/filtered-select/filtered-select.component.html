@@ -1,10 +1,7 @@
 <mat-select
   class="select"
   [formControl]="selectControl"
-  (openedChange)="filterInput.focus()"
-  (selectionChange)="onSelectionChange($event)"
-  [multiple]="multiple"
-  (closed)="onClosed()">
+  (openedChange)="filterInput.focus()">
   <mat-form-field
     class="select__field"
     subscriptSizing="dynamic"
@@ -20,43 +17,10 @@
 
   <ng-container *ngIf="options; else cannotUpdateOptions">
     <div class="select__options-container">
-      <div
-        *ngIf="
-          multiple &&
-          !isLoading &&
-          (selectedOptions.length !== 0 || filteredOptions.length !== 0)
-        ">
-        <mat-checkbox
-          class="select__select-all-checkbox"
-          [checked]="areAllOptionsSelected"
-          [indeterminate]="!noneOptionsSelected && !areAllOptionsSelected"
-          (change)="selectAllOptions($event.checked)">
-          {{
-            (areAllOptionsSelected
-              ? 'filtered_select.checkbox_unselect_all'
-              : 'filtered_select.checkbox_select_all'
-            ) | translate
-          }}
-        </mat-checkbox>
-      </div>
-
-      <mat-option
-        class="select__option"
-        *ngIf="!multiple || isLoading"
-        [disabled]="isLoading">
+      <mat-option class="select__option" [disabled]="isLoading">
         --
       </mat-option>
       <ng-container *ngIf="!isLoading">
-        <ng-container *ngIf="multiple">
-          <mat-option
-            class="select__option"
-            *ngFor="let option of selectedOptions"
-            [value]="option.value">
-            {{ option.name }}
-          </mat-option>
-          <mat-divider *ngIf="selectedOptions.length > 0"></mat-divider>
-        </ng-container>
-
         <mat-option
           class="select__option"
           *ngFor="let option of filteredOptions"
@@ -67,15 +31,6 @@
       <div class="select__loading" *ngIf="isLoading">
         <mat-progress-bar mode="query"></mat-progress-bar>
       </div>
-
-      <mat-option
-        class="select__option hidden"
-        *ngIf="
-          multiple &&
-          selectedOptions.length === 0 &&
-          filteredOptions.length === 0
-        "
-        [disabled]="true"></mat-option>
 
       <div class="select__select-specify">
         <span>...</span>

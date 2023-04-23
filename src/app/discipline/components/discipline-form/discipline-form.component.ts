@@ -64,8 +64,10 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
         { value: '', disabled: this.areNotPermissionsPresent },
         Validators.required
       ),
-      categories: new FormControl(),
+      categories: new FormControl<SelectOption[]>([]),
     });
+
+    this.formGroup.valueChanges.subscribe(change => console.log(change));
   }
 
   get name(): string {
@@ -87,10 +89,12 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
           this.id = parseInt(params['id']);
           this._disciplineService.getById(this.id).subscribe({
             next: discipline => {
-              this.formGroup.patchValue({
+              this.formGroup.setValue({
                 name: discipline.name,
                 shortName: discipline.shortName,
-                categories: discipline.tags.map(tag => tag.id),
+                categories: discipline.tags.map(tag => {
+                  return { name: tag.name, value: tag.id } as SelectOption;
+                }),
               });
             },
           });

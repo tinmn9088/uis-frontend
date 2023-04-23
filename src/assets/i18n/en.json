@@ -36,6 +36,14 @@
     "checkbox_unselect_all": "Unselect all",
     "cannot_load_options": "Failed to load options"
   },
+  "list_management": {
+    "add_button": "Add",
+    "add_button_tooltip": "Add selected",
+    "add_button_error_tooltip": "Already added",
+    "delete_button": "Delete",
+    "delete_button_tooltip": "Delete selected",
+    "empty_list": "Empty."
+  },
   "auth": {
     "authentication_needed": "Need to login",
     "session_expired": "Session expired",

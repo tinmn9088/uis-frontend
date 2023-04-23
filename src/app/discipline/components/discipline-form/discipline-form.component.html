@@ -34,18 +34,17 @@
       class="form__field"
       appearance="outline"
       color="primary"
-      *ngIf="!areNotPermissionsPresent">
+      *ngIf="!areNotPermissionsPresent"
+      floatLabel="always">
       <mat-label class="form__label">
         {{ 'disciplines.form.categories_label' | translate }}
       </mat-label>
-      <app-filtered-select
-        class="form__select"
+      <app-list-management
+        class="form__list-management"
         [options]="categoriesOptions || []"
-        [multiple]="true"
         [isInternalFilterOn]="false"
-        [isLoading]="areCategoriesOptionsLoading"
         (filterChanged)="updateCategoriesOptions($event)"
-        formControlName="categories"></app-filtered-select>
+        formControlName="categories"></app-list-management>
     </mat-form-field>
 
     <div class="form__buttons">
