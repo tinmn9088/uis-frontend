@@ -23,13 +23,35 @@
       {{ 'users.roles.form.select_all' | translate }}
     </p>
   </mat-checkbox>
+  <mat-divider></mat-divider>
+
   <mat-selection-list #permissionsSelect>
     <ng-container *ngFor="let permissionScope of permissionScopes">
-      <div mat-subheader>
-        {{ (permissionScope.scope | uppercase) + ':' }}
+      <div class="form__permissions-list-subheader" mat-subheader>
+        <span class="form__permissions-list-subheader-text">
+          {{ (permissionScope.scope | uppercase) + ':' }}
+        </span>
+        <button
+          class="form__permissions-list-subheader-hide-button"
+          mat-icon-button
+          (click)="
+            isPermissionScopeHidden(permissionScope)
+              ? unhidePermissionScope(permissionScope)
+              : hidePermissionScope(permissionScope)
+          ">
+          <mat-icon>
+            {{
+              isPermissionScopeHidden(permissionScope)
+                ? 'expand_more'
+                : 'expand_less'
+            }}
+          </mat-icon>
+        </button>
       </div>
       <mat-list-option
+        class="form__permissions-list-item"
         *ngFor="let permissionAction of permissionScope.actions"
+        [ngClass]="{ collapsed: isPermissionActionHidden(permissionAction) }"
         [value]="permissionAction.id"
         [selected]="role?.permissionIds?.includes(permissionAction.id)"
         togglePosition="before">

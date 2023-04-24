@@ -27,6 +27,7 @@ import { RoleCreateRequest } from '../../domain/role-create-request';
 import { RoleUpdateRequest } from '../../domain/role-update-request';
 import { PermissionScope } from '../../domain/permission-scope';
 import { MatSelectionList } from '@angular/material/list';
+import { PermissionAction } from '../../domain/permission-action';
 
 @Component({
   selector: 'app-role-form',
@@ -34,6 +35,8 @@ import { MatSelectionList } from '@angular/material/list';
   styleUrls: ['./role-form.component.scss'],
 })
 export class RoleFormComponent implements OnInit, AfterViewInit {
+  private _hiddenPermissionActions = new Set<PermissionAction>();
+  private _hiddenPermissionScopes = new Set<PermissionScope>();
   formGroup!: FormGroup;
   areNotPermissionsPresent: boolean;
   editMode!: boolean;
@@ -81,6 +84,10 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
     this.arePermissionsLoaded = new BehaviorSubject<boolean>(false);
     this._permissionService.getAllScopes().subscribe(scopes => {
       this.permissionScopes = scopes;
+
+      // scopes are collapsed at the start
+      this.permissionScopes.forEach(scope => this.hidePermissionScope(scope));
+
       this.arePermissionScopesLoading = false;
       setTimeout(() => {
         this.arePermissionsLoaded.next(true);
@@ -163,6 +170,36 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
         this.matSelectionList.deselectAll();
       }
     }
+  }
+
+  hidePermissionScope(scope: PermissionScope) {
+    this.hidePermissionActions(scope.actions);
+    this._hiddenPermissionScopes.add(scope);
+  }
+
+  unhidePermissionScope(scope: PermissionScope) {
+    this.unhidePermissionActions(scope.actions);
+    this._hiddenPermissionScopes.delete(scope);
+  }
+
+  isPermissionScopeHidden(scope: PermissionScope): boolean {
+    return this._hiddenPermissionScopes.has(scope);
+  }
+
+  isPermissionActionHidden(action: PermissionAction): boolean {
+    return this._hiddenPermissionActions.has(action);
+  }
+
+  private hidePermissionActions(permissionsToHide: PermissionAction[]) {
+    permissionsToHide.forEach(permissionToHide =>
+      this._hiddenPermissionActions.add(permissionToHide)
+    );
+  }
+
+  private unhidePermissionActions(actionsToUnhide: PermissionAction[]) {
+    actionsToUnhide.forEach(actionToUnhide =>
+      this._hiddenPermissionActions.delete(actionToUnhide)
+    );
   }
 
   private checkAreAllPermissionsSelected(): boolean {
