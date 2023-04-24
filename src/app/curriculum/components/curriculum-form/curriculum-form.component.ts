@@ -151,8 +151,8 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
         this._translate
           .get(
             this.editMode
-              ? 'curriculum.form.snackbar_update_success_message'
-              : 'curriculum.form.snackbar_add_success_message'
+              ? 'curricula.form.snackbar_update_success_message'
+              : 'curricula.form.snackbar_add_success_message'
           )
           .subscribe({
             next: message => {

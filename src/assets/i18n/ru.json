@@ -249,13 +249,14 @@
       "edit": "Изменить специальность"
     }
   },
-  "curriculum": {
+  "curricula": {
     "list": {
       "columns": {
         "id": "Id",
         "approval_date": "Дата утверждения",
         "admission_year": "Год поступления",
-        "specialization_id": "Id специальности"
+        "specialization_id": "Id специальности",
+        "operations": "Действия"
       },
       "no_data_label": "Учебных планов не найдено.",
       "no_permission_label": "Недостаточно прав"

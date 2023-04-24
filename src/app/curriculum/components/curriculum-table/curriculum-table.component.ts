@@ -3,6 +3,8 @@ import { CurriculumPageableResponse } from '../../domain/curriculum-pageable-res
 import { Sort } from '@angular/material/sort';
 import { Curriculum } from '../../domain/curriculum';
 import { CurriculumService } from '../../services/curriculum.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-curriculum-table',
@@ -23,8 +25,19 @@ export class CurriculumTableComponent implements OnInit {
   ];
   isLoading = true;
   dataSource: Curriculum[] = [];
+  canUserModifyCurriculum: boolean;
 
-  constructor(private _curriculumService: CurriculumService) {}
+  constructor(
+    private _curriculumService: CurriculumService,
+    private _authService: AuthService
+  ) {
+    this.canUserModifyCurriculum = this._authService.hasUserPermissions([
+      Permission.CURRICULUM_UPDATE,
+    ]);
+    if (this.canUserModifyCurriculum) {
+      this.displayedColumns.push('operations');
+    }
+  }
 
   ngOnInit() {
     this.getAll();
@@ -48,8 +61,8 @@ export class CurriculumTableComponent implements OnInit {
       });
   }
 
-  getLinkToFormPage(curriculum: Curriculum): string {
-    return this._curriculumService.getLinkToFormPage(curriculum.id);
+  getLinkToFormPage(id: number): string {
+    return this._curriculumService.getLinkToFormPage(id);
   }
 
   getTableCellStyle() {

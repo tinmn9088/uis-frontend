@@ -116,18 +116,18 @@
     "sidenavAddButtonPath": "/curriculum/add",
     "sidenavOptions": [
       {
-        "title": "curriculum.options.search",
+        "title": "curricula.options.search",
         "path": "/curriculum/list",
         "requiredPermissions": ["CURRICULUM_GET"]
       },
       {
-        "title": "curriculum.options.add",
+        "title": "curricula.options.add",
         "path": "/curriculum/add",
         "groupId": 1,
         "requiredPermissions": ["CURRICULUM_CREATE"]
       },
       {
-        "title": "curriculum.options.edit",
+        "title": "curricula.options.edit",
         "path": "/curriculum/0",
         "pathRegex": "/curriculum/\\d+",
         "groupId": 1,

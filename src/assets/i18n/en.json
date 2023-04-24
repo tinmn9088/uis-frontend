@@ -249,13 +249,14 @@
       "edit": "Edit specialization"
     }
   },
-  "curriculum": {
+  "curricula": {
     "list": {
       "columns": {
         "id": "Id",
         "approval_date": "Approval date",
         "admission_year": "Admission year",
-        "specialization_id": "Specialization id"
+        "specialization_id": "Specialization id",
+        "operations": "Operations"
       },
       "no_data_label": "No curricula found.",
       "no_permission_label": "Not allowed"
