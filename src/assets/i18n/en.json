@@ -137,6 +137,7 @@
       },
       "form": {
         "no_permission_label": "Not allowed",
+        "select_all": "All premissions",
         "create_title": "Create role",
         "edit_title": "Edit role",
         "name_label": "Name",

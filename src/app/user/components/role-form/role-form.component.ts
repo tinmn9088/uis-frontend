@@ -5,6 +5,7 @@ import {
   EventEmitter,
   OnInit,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import { PermissionService } from '../../services/permission.service';
 import { Role } from '../../domain/role';
@@ -14,7 +15,13 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Permission } from 'src/app/auth/domain/permission';
-import { map, distinctUntilChanged, delay } from 'rxjs';
+import {
+  map,
+  distinctUntilChanged,
+  delay,
+  BehaviorSubject,
+  filter,
+} from 'rxjs';
 import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
 import { RoleCreateRequest } from '../../domain/role-create-request';
 import { RoleUpdateRequest } from '../../domain/role-update-request';
@@ -26,13 +33,16 @@ import { MatSelectionList } from '@angular/material/list';
   templateUrl: './role-form.component.html',
   styleUrls: ['./role-form.component.scss'],
 })
-export class RoleFormComponent implements OnInit {
+export class RoleFormComponent implements OnInit, AfterViewInit {
   formGroup!: FormGroup;
   areNotPermissionsPresent: boolean;
   editMode!: boolean;
   passwordHidden = true;
   permissionScopes?: PermissionScope[];
   arePermissionScopesLoading = false;
+  areAllPermissionsSelected!: boolean;
+  areSomePermissionsSelected!: boolean;
+  arePermissionsLoaded!: BehaviorSubject<boolean>; // must send `true` at least once
   @ViewChild(MatSelectionList) matSelectionList?: MatSelectionList;
   @Input() role?: Role;
   @Output() roleCreatedUpdated = new EventEmitter<Role>();
@@ -68,13 +78,30 @@ export class RoleFormComponent implements OnInit {
         this.formInvalid.emit(invalid);
       });
     this.arePermissionScopesLoading = true;
+    this.arePermissionsLoaded = new BehaviorSubject<boolean>(false);
     this._permissionService.getAllScopes().subscribe(scopes => {
       this.permissionScopes = scopes;
       this.arePermissionScopesLoading = false;
+      setTimeout(() => {
+        this.arePermissionsLoaded.next(true);
+        this.arePermissionsLoaded.complete();
+      });
     });
 
     // to emit valueChanges event
     this.formGroup.patchValue({ name: this.role?.name }, { emitEvent: true });
+  }
+
+  ngAfterViewInit() {
+    if (!this.arePermissionsLoaded.value) {
+      this.arePermissionsLoaded
+        .pipe(filter(areLoaded => areLoaded))
+        .subscribe(() => {
+          this.initPermissionsSelectionListValues();
+        });
+    } else {
+      this.initPermissionsSelectionListValues();
+    }
   }
 
   get name() {
@@ -125,6 +152,44 @@ export class RoleFormComponent implements OnInit {
             this._snackbarService.showError(message, SnackbarAction.Cross);
           });
       },
+    });
+  }
+
+  selectAllPermissions(doSelect: boolean) {
+    if (this.matSelectionList) {
+      if (doSelect) {
+        this.matSelectionList.selectAll();
+      } else {
+        this.matSelectionList.deselectAll();
+      }
+    }
+  }
+
+  private checkAreAllPermissionsSelected(): boolean {
+    return (
+      !!this.matSelectionList &&
+      this.matSelectionList.selectedOptions.selected.length ===
+        this.matSelectionList.options.length
+    );
+  }
+
+  private checkAreSomePermissionsSelected(): boolean {
+    const selectedCount =
+      this.matSelectionList?.selectedOptions.selected.length || 0;
+    const optionsCount = this.matSelectionList?.options.length || 0;
+    return (
+      !!this.matSelectionList &&
+      selectedCount > 0 &&
+      selectedCount < optionsCount
+    );
+  }
+
+  private initPermissionsSelectionListValues() {
+    this.areAllPermissionsSelected = this.checkAreAllPermissionsSelected();
+    this.areSomePermissionsSelected = this.checkAreSomePermissionsSelected();
+    this.matSelectionList?.selectionChange.subscribe(() => {
+      this.areAllPermissionsSelected = this.checkAreAllPermissionsSelected();
+      this.areSomePermissionsSelected = this.checkAreSomePermissionsSelected();
     });
   }
 }

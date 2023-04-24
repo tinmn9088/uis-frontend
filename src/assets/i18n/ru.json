@@ -137,6 +137,7 @@
       },
       "form": {
         "no_permission_label": "Недостаточно прав",
+        "select_all": "Все права",
         "create_title": "Создать роль",
         "edit_title": "Изменить роль",
         "name_label": "Название",

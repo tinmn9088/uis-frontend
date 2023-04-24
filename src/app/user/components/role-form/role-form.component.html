@@ -14,26 +14,33 @@
     </mat-error>
   </mat-form-field>
 
+  <mat-checkbox
+    class="form__checkbox-select-all"
+    [indeterminate]="areSomePermissionsSelected"
+    [checked]="areAllPermissionsSelected"
+    (change)="selectAllPermissions($event.checked)">
+    <p class="form__checkbox-select-all-label">
+      {{ 'users.roles.form.select_all' | translate }}
+    </p>
+  </mat-checkbox>
+  <mat-selection-list #permissionsSelect>
+    <ng-container *ngFor="let permissionScope of permissionScopes">
+      <div mat-subheader>
+        {{ (permissionScope.scope | uppercase) + ':' }}
+      </div>
+      <mat-list-option
+        *ngFor="let permissionAction of permissionScope.actions"
+        [value]="permissionAction.id"
+        [selected]="role?.permissionIds?.includes(permissionAction.id)"
+        togglePosition="before">
+        <div matListItemTitle>{{ permissionAction.name | uppercase }}</div>
+      </mat-list-option>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-selection-list>
   <ng-container
-    *ngIf="
-      permissionScopes && permissionScopes.length > 0;
-      else noPermissionScopesLabel
-    ">
-    <mat-selection-list #permissionsSelect>
-      <ng-container *ngFor="let permissionScope of permissionScopes">
-        <div mat-subheader>
-          {{ (permissionScope.scope | uppercase) + ':' }}
-        </div>
-        <mat-list-option
-          *ngFor="let permissionAction of permissionScope.actions"
-          [value]="permissionAction.id"
-          [selected]="role?.permissionIds?.includes(permissionAction.id)">
-          <div matListItemTitle>{{ permissionAction.name | uppercase }}</div>
-        </mat-list-option>
-        <mat-divider></mat-divider>
-      </ng-container>
-    </mat-selection-list>
-  </ng-container>
+    *ngIf="!permissionScopes || permissionScopes.length === 0"
+    [ngTemplateOutlet]="noPermissionScopesLabel"></ng-container>
 
   <ng-template #noPermissionScopesLabel>
     <p
