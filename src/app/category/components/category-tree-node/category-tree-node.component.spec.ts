@@ -5,6 +5,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CategoryModule } from '../../category.module';
 import { CategoryFlatNode } from '../../domain/category-flat-node';
 import { RouterTestingModule } from '@angular/router/testing';
+import { JWT_HELPER_SERVICE_TOKEN } from 'src/app/auth/auth.module';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 describe('CategoryTreeNodeComponent', () => {
   let component: CategoryTreeNodeComponent;
@@ -14,6 +16,12 @@ describe('CategoryTreeNodeComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SharedModule, CategoryModule, RouterTestingModule],
       declarations: [CategoryTreeNodeComponent],
+      providers: [
+        {
+          provide: JWT_HELPER_SERVICE_TOKEN,
+          useValue: new JwtHelperService(),
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CategoryTreeNodeComponent);
