@@ -70,7 +70,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
         Validators.required
       ),
       admissionYear: new FormControl(
-        { value: '', disabled: this.areNotPermissionsPresent },
+        { value: new Date(), disabled: this.areNotPermissionsPresent },
         Validators.required
       ),
       specializationId: new FormControl(undefined, Validators.required),
@@ -99,7 +99,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
               this._specializationId = curriculum.specializationId;
               this.formGroup.patchValue({
                 approvalDate: curriculum.approvalDate,
-                admissionYear: curriculum.admissionYear,
+                admissionYear: new Date(curriculum.admissionYear, 0, 1),
                 specializationId: curriculum.specializationId,
               });
             },
