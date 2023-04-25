@@ -79,7 +79,14 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
   }
 
   get categories(): Category[] {
-    return this.formGroup.get('categories')?.value;
+    return (this.formGroup.get('categories')?.value as SelectOption[]).map(
+      option => {
+        return {
+          id: option.value,
+          name: option.name,
+        } as Category;
+      }
+    );
   }
 
   ngOnInit() {
