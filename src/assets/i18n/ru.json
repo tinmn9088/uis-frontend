@@ -131,6 +131,10 @@
           "permission_ids": "Id прав",
           "operations": "Действия"
         },
+        "operation_tooltips": {
+          "edit": "Изменить",
+          "copy": "Копировать"
+        },
         "create_button": "Создать роль",
         "no_permission_label": "Недостаточно прав",
         "no_data_label": "Ролей не найдено."
@@ -140,6 +144,7 @@
         "select_all": "Все права",
         "create_title": "Создать роль",
         "edit_title": "Изменить роль",
+        "copy_of": "Копия",
         "name_label": "Название",
         "required": "Обязательно",
         "create_button": "Создать",

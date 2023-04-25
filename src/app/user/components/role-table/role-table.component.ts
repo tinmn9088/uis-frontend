@@ -48,9 +48,11 @@ export class RoleTableComponent implements OnInit {
     };
   }
 
-  openRoleEditDialog(role: Role) {
+  openRoleEditDialog(role: Role, copyRole = false) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...roleWithoutId } = role;
     this._dialogRef = this._matDialog.open(RoleFormDialogComponent, {
-      data: { role },
+      data: { role: copyRole ? roleWithoutId : role },
     });
     this._dialogRef.afterClosed().subscribe(() => {
       this.search();

@@ -38,8 +38,14 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
   private _hiddenPermissionActions = new Set<PermissionAction>();
   private _hiddenPermissionScopes = new Set<PermissionScope>();
   formGroup!: FormGroup;
+
+  /**
+   * Authorization information.
+   */
   areNotPermissionsPresent: boolean;
+
   editMode!: boolean;
+  copyMode!: boolean;
   passwordHidden = true;
   permissionScopes?: PermissionScope[];
   arePermissionScopesLoading = false;
@@ -65,7 +71,8 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.editMode = !!this.role;
+    this.editMode = !!this.role && !!this.role.id;
+    this.copyMode = !!this.role && !this.role.id;
     this.formGroup = new FormGroup({
       name: new FormControl(
         { value: '', disabled: this.areNotPermissionsPresent },
@@ -96,7 +103,13 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
     });
 
     // to emit valueChanges event
-    this.formGroup.patchValue({ name: this.role?.name }, { emitEvent: true });
+    const name =
+      this.role && this.copyMode
+        ? `${this.role.name} Copy`
+        : this.role && this.editMode
+        ? this.role.name
+        : undefined;
+    this.formGroup.patchValue({ name }, { emitEvent: true });
   }
 
   ngAfterViewInit() {

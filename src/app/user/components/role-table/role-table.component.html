@@ -38,13 +38,40 @@
         {{ 'users.roles.list.columns.operations' | translate }}
       </th>
       <td mat-cell *matCellDef="let role" [ngStyle]="getTableCellStyle()">
-        <button
-          class="table__edit-button"
-          mat-icon-button
-          (click)="openRoleEditDialog(role)"
-          color="primary">
-          <mat-icon>edit</mat-icon>
-        </button>
+        <div class="table__operation-buttons-container">
+          <div
+            class="table__operation-button-container"
+            matTooltip="{{
+              ('users.roles.list.operation_tooltips.edit' | translate) +
+                ' \'' +
+                role.name +
+                '\''
+            }}">
+            <button
+              class="table__edit-button"
+              mat-icon-button
+              (click)="openRoleEditDialog(role)"
+              color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <div
+            class="table__operation-button-container"
+            matTooltip="{{
+              ('users.roles.list.operation_tooltips.copy' | translate) +
+                ' \'' +
+                role.name +
+                '\''
+            }}">
+            <button
+              class="table__copy-button"
+              mat-icon-button
+              (click)="openRoleEditDialog(role, true)"
+              color="primary">
+              <mat-icon>filter_none</mat-icon>
+            </button>
+          </div>
+        </div>
       </td>
     </ng-container>
 

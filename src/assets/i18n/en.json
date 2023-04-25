@@ -131,6 +131,10 @@
           "permission_ids": "Permission Ids",
           "operations": "Operations"
         },
+        "operation_tooltips": {
+          "edit": "Edit",
+          "copy": "Copy"
+        },
         "create_button": "Create role",
         "no_permission_label": "Not allowed",
         "no_data_label": "No roles found."
@@ -140,6 +144,7 @@
         "select_all": "All premissions",
         "create_title": "Create role",
         "edit_title": "Edit role",
+        "copy_of": "Copy of",
         "name_label": "Name",
         "required": "Required",
         "edit_button": "Edit",

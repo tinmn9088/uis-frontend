@@ -9,13 +9,18 @@ import { Role } from '../../domain/role';
   styleUrls: ['./role-form-dialog.component.scss'],
 })
 export class RoleFormDialogComponent {
+  editMode!: boolean;
+  copyMode!: boolean;
   isFormInvalid = true;
   @ViewChild(RoleFormComponent) roleForm!: RoleFormComponent;
 
   constructor(
     private _dialogRef: MatDialogRef<RoleFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { role?: Role }
-  ) {}
+  ) {
+    this.editMode = !!this.data.role && !!this.data.role.id;
+    this.copyMode = !!this.data.role && !this.data.role.id;
+  }
 
   onCreateUpdateButtonClicked() {
     this.roleForm.submit();
