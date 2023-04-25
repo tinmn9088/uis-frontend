@@ -50,7 +50,7 @@ export class ModuleService {
   getAllRequiredPermissions(name: ModuleName): Permission[] {
     const module = this.getModule(name);
     const allRequiredPermissions = new Set(module.requiredPermissions);
-    module.sidenavOptions?.map(option =>
+    module.options?.map(option =>
       option.requiredPermissions.forEach(permission =>
         allRequiredPermissions.add(permission)
       )
@@ -65,7 +65,7 @@ export class ModuleService {
 
   getSidenavOptions(name: ModuleName): ModuleSidenavOption[] | undefined {
     const module = this.getModule(name);
-    return module.sidenavOptions;
+    return module.options;
   }
 
   getAllModules(): Module[] {

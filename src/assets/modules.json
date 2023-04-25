@@ -6,7 +6,7 @@
     "path": "/user",
     "resourcePath": "/users",
     "requiredPermissions": ["USER_READ"],
-    "sidenavOptions": [
+    "options": [
       {
         "title": "users.options.user_management",
         "path": "/user/list",
@@ -27,7 +27,7 @@
     "resourcePath": "/tags",
     "requiredPermissions": ["TAG_READ"],
     "sidenavAddButtonPath": "/category/add",
-    "sidenavOptions": [
+    "options": [
       {
         "title": "categories.options.search",
         "path": "/category/list",
@@ -56,7 +56,7 @@
     "resourcePath": "/disciplines",
     "requiredPermissions": ["DISCIPLINE_GET", "DISCIPLINE_SEARCH"],
     "sidenavAddButtonPath": "/discipline/add",
-    "sidenavOptions": [
+    "options": [
       {
         "title": "disciplines.options.search",
         "path": "/discipline/list",
@@ -85,7 +85,7 @@
     "resourcePath": "/specializations",
     "requiredPermissions": ["SPECIALIZATION_GET", "SPECIALIZATION_SEARCH"],
     "sidenavAddButtonPath": "/specialization/add",
-    "sidenavOptions": [
+    "options": [
       {
         "title": "specializations.options.search",
         "path": "/specialization/list",
@@ -114,7 +114,7 @@
     "resourcePath": "/curriculums",
     "requiredPermissions": ["CURRICULUM_GET"],
     "sidenavAddButtonPath": "/curriculum/add",
-    "sidenavOptions": [
+    "options": [
       {
         "title": "curricula.options.search",
         "path": "/curriculum/list",

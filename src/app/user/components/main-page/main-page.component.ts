@@ -47,8 +47,7 @@ export class MainPageComponent implements OnInit {
             ? `${module.path}/list`
             : module.path || '',
         themeCssClass: themeCssClass,
-        options:
-          module.sidenavOptions?.filter(option => !option.pathRegex) || [],
+        options: module.options?.filter(option => !option.pathRegex) || [],
         isAllowed: this.authService.hasUserPermissions(requiredPermissions),
       };
     });
