@@ -9,6 +9,10 @@ import { Permission } from 'src/app/auth/domain/permission';
   providedIn: 'root',
 })
 export class ModuleService {
+  getMainPagePath(): string {
+    return Modules.mainPage.path;
+  }
+
   getThemeCssClass(name: ModuleName): string | undefined {
     const module = this.getModule(name);
     return module.themeCssClass;

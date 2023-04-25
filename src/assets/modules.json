@@ -1,4 +1,7 @@
 {
+  "mainPage": {
+    "path": "/user/main"
+  },
   "user": {
     "name": "User",
     "themeCssClass": "user-theme",
@@ -7,6 +10,11 @@
     "resourcePath": "/users",
     "requiredPermissions": ["USER_READ"],
     "options": [
+      {
+        "title": "users.options.main_page",
+        "path": "/user/main",
+        "requiredPermissions": []
+      },
       {
         "title": "users.options.user_management",
         "path": "/user/list",

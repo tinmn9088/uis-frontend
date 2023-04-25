@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,13 +14,14 @@ import { ToolbarTab } from '../../domain/toolbar-tab';
 import { MatToolbar } from '@angular/material/toolbar';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/user/domain/user';
+import { ModuleService } from '../../services/module.service';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements AfterViewInit {
+export class ToolbarComponent implements OnInit, AfterViewInit {
   private _resizeObserver: ResizeObserver;
   readonly languages = Language;
   addMenuItems = [
@@ -42,13 +44,22 @@ export class ToolbarComponent implements AfterViewInit {
    */
   @Input() showTabs = false;
   @Input() showBurger = false;
+  @Input() showMainPageButton = false;
+
+  /**
+   * `ModuleService.getMainPagePath()` value by default.
+   */
+  @Input() mainPagePath!: string;
+
   @Input() showAddMenu = false;
   @Output() menuButtonClick = new EventEmitter();
+  @Output() mainPageButtonClick = new EventEmitter();
   @ViewChild(MatToolbar) matToolbar!: MatToolbar;
 
   constructor(
     public languageService: LanguageService,
     public authService: AuthService,
+    private _moduleService: ModuleService,
     private _router: Router
   ) {
     this._resizeObserver = new ResizeObserver(entries => {
@@ -58,6 +69,12 @@ export class ToolbarComponent implements AfterViewInit {
 
   get user(): User | undefined {
     return this.authService.user;
+  }
+
+  ngOnInit() {
+    if (!this.mainPagePath) {
+      this.mainPagePath = this._moduleService.getMainPagePath();
+    }
   }
 
   ngAfterViewInit() {
@@ -74,12 +91,16 @@ export class ToolbarComponent implements AfterViewInit {
     this.menuButtonClick.emit();
   }
 
+  onMainPageClick() {
+    this.mainPageButtonClick.emit();
+  }
+
   onResize(width: number) {
     this.compact = width < 960;
   }
 
   onShowProfile() {
-    this._router.navigateByUrl('/user/main');
+    this._router.navigateByUrl(this.mainPagePath);
   }
 
   onLogout() {
