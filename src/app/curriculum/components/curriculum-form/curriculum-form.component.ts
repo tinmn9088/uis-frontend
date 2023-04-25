@@ -85,6 +85,10 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     return (this.formGroup.get('admissionYear')?.value as Date).getFullYear();
   }
 
+  set admissionYear(year: number) {
+    this.formGroup.get('admissionYear')?.setValue(new Date(year, 0, 1));
+  }
+
   get specializationId(): number {
     return this.formGroup.get('specializationId')?.value;
   }
@@ -162,6 +166,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
           });
         if (this.editMode) {
           this.formGroup.patchValue(curriculum, { emitEvent: true });
+          this.admissionYear = curriculum.admissionYear;
         } else {
           this._router.navigateByUrl(
             this._curriculumService.getLinkToFormPage(curriculum.id)
