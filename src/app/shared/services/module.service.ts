@@ -13,6 +13,21 @@ export class ModuleService {
     return Modules.mainPage.path;
   }
 
+  getI18nGroupName(name: ModuleName): string | undefined {
+    const module = this.getModule(name);
+    return module.i18nGroupName;
+  }
+
+  getAllI18nGroupNames(): string[] {
+    const names = this.getAllModuleNames();
+    const groupNames: string[] = [];
+    for (const name of names) {
+      const groupName = this.getModule(name).i18nGroupName;
+      if (groupName) groupNames.push();
+    }
+    return groupNames;
+  }
+
   getThemeCssClass(name: ModuleName): string | undefined {
     const module = this.getModule(name);
     return module.themeCssClass;
@@ -49,7 +64,7 @@ export class ModuleService {
   }
 
   /**
-   * @returns required permissions for module and sidenav options
+   * @returns required permissions for module and options
    */
   getAllRequiredPermissions(name: ModuleName): Permission[] {
     const module = this.getModule(name);
@@ -67,7 +82,7 @@ export class ModuleService {
     return module.sidenavAddButtonPath;
   }
 
-  getSidenavOptions(name: ModuleName): ModuleSidenavOption[] | undefined {
+  getOptions(name: ModuleName): ModuleSidenavOption[] | undefined {
     const module = this.getModule(name);
     return module.options;
   }

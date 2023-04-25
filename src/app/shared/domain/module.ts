@@ -6,6 +6,7 @@ export interface Module extends PermissionRequiring {
   path?: string;
   themeCssClass?: string;
   i18nName?: string;
+  i18nGroupName?: string;
   sidenavAddButtonPath?: string;
   options?: ModuleSidenavOption[];
 }

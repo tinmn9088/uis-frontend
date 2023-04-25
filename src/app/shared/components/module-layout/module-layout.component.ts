@@ -94,8 +94,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!moduleName) {
           return;
         }
-        this.sidenavOptions =
-          this._moduleService.getSidenavOptions(moduleName) || [];
+        this.sidenavOptions = this._moduleService.getOptions(moduleName) || [];
         this.activeOption = this.sidenavOptions.find(option =>
           this.isActiveOption(currentPath, option)
         );

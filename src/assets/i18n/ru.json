@@ -6,6 +6,10 @@
       "disciplines": "Дисциплины",
       "specializations": "Специальности",
       "curricula": "Учебные планы"
+    },
+    "groupName": {
+      "security": "Безопасность",
+      "academic": "Учебные"
     }
   },
   "toolbar": {
@@ -70,6 +74,7 @@
         "subtitle": "Опции",
         "open_button": "Открыть"
       },
+      "title": "Список модулей",
       "no_modules_label": "Нет доступных модулей",
       "login_label": "Войдите, чтобы увидеть больше",
       "login_button_text": "Войти"

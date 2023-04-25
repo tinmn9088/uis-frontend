@@ -6,6 +6,10 @@
       "disciplines": "Disciplines",
       "specializations": "Specializations",
       "curricula": "Curricula"
+    },
+    "groupName": {
+      "security": "Security",
+      "academic": "Academic"
     }
   },
   "toolbar": {
@@ -70,6 +74,7 @@
         "subtitle": "Options",
         "open_button": "Open"
       },
+      "title": "Module list",
       "no_modules_label": "No modules available",
       "login_label": "Login to see more",
       "login_button_text": "Login"
