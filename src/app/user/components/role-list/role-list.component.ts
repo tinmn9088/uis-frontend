@@ -19,7 +19,7 @@ export class RoleListComponent {
   @ViewChild(RoleTableComponent)
   roleTable!: RoleTableComponent;
   totalElements!: number;
-  pageSize = 16;
+  pageSize = 15;
   pageNumber!: number;
   arePermissionsPresent: boolean;
   canUserCreateRole: boolean;
@@ -61,6 +61,7 @@ export class RoleListComponent {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.roleTable.search(this.searchQuery);
   }
 

@@ -19,7 +19,7 @@ export class UserListComponent {
   @ViewChild(UserTableComponent)
   userTable!: UserTableComponent;
   totalElements!: number;
-  pageSize = 16;
+  pageSize = 15;
   pageNumber!: number;
   arePermissionsPresent: boolean;
   canUserCreateUser: boolean;
@@ -62,6 +62,7 @@ export class UserListComponent {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.userTable.search(this.searchQuery);
   }
 

@@ -18,7 +18,7 @@ export class SpecializationListComponent implements AfterViewInit {
   @ViewChild(SpecializationTreeComponent)
   specializationTree!: SpecializationTreeComponent;
   totalElements!: number;
-  pageSize = 6;
+  pageSize = 5;
   arePermissionsPresent: boolean;
   pageNumber!: number;
 
@@ -69,6 +69,7 @@ export class SpecializationListComponent implements AfterViewInit {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
+    this.pageSize = event.pageSize;
     setTimeout(() => this.specializationTree.search(this.searchQuery));
   }
 }

@@ -14,7 +14,7 @@ export class CurriculumListComponent {
   @ViewChild(CurriculumTableComponent)
   curriculumTable!: CurriculumTableComponent;
   totalElements!: number;
-  pageSize = 16;
+  pageSize = 15;
   arePermissionsPresent: boolean;
   pageNumber!: number;
 
@@ -30,6 +30,7 @@ export class CurriculumListComponent {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
+    this.pageSize = event.pageSize;
     setTimeout(() => this.curriculumTable.getAll());
   }
 

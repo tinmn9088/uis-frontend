@@ -18,7 +18,7 @@ export class CategoryListComponent implements AfterViewInit {
   @ViewChild(CategoryTreeComponent)
   categoryTree!: CategoryTreeComponent;
   totalElements!: number;
-  pageSize = 16;
+  pageSize = 15;
   arePermissionsPresent: boolean;
   pageNumber!: number;
 
@@ -69,6 +69,7 @@ export class CategoryListComponent implements AfterViewInit {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
+    this.pageSize = event.pageSize;
     setTimeout(() => this.categoryTree.search(this.searchQuery));
   }
 }

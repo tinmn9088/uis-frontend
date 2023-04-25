@@ -31,6 +31,9 @@
       "default": "Guest"
     }
   },
+  "paginator": {
+    "page_size_options": "Page size"
+  },
   "sidenav": {
     "add_button": "Create"
   },
@@ -203,7 +206,8 @@
       "columns": {
         "name": "Name",
         "short_name": "Short name",
-        "categories": "Categories"
+        "categories": "Categories",
+        "operations": "Operations"
       },
       "no_data_label": "No disciplines found.",
       "no_permission_label": "Not allowed"

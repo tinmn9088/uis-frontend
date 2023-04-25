@@ -16,7 +16,7 @@ export class DisciplineListComponent {
   @ViewChild(DisciplineTableComponent)
   disciplineTable!: DisciplineTableComponent;
   totalElements!: number;
-  pageSize = 16;
+  pageSize = 15;
   arePermissionsPresent: boolean;
   pageNumber!: number;
 
@@ -46,6 +46,7 @@ export class DisciplineListComponent {
 
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex;
+    this.pageSize = event.pageSize;
     setTimeout(() => this.disciplineTable.search(this.searchQuery));
   }
 
