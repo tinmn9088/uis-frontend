@@ -4,6 +4,8 @@ import { CurriculumTableComponent } from './components/curriculum-table/curricul
 import { CurriculumListComponent } from './components/curriculum-list/curriculum-list.component';
 import { CurriculumFormComponent } from './components/curriculum-form/curriculum-form.component';
 import { SharedModule } from '../shared/shared.module';
+import { CurriculumRoutingModule } from './curriculum-routing.module';
+import { CurriculumService } from './services/curriculum.service';
 
 @NgModule({
   declarations: [
@@ -11,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
     CurriculumListComponent,
     CurriculumFormComponent,
   ],
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, CurriculumRoutingModule],
+  providers: [CurriculumService],
 })
 export class CurriculumModule {}

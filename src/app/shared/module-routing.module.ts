@@ -1,11 +1,8 @@
 import { RouterModule, Routes } from '@angular/router';
 import Modules from 'src/assets/modules.json';
-import { AppRoutingRedirectComponent } from './components/app-routing-redirect/app-routing-redirect.component';
 import { NgModule } from '@angular/core';
 import { ModuleLayoutComponent } from './components/module-layout/module-layout.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
-import { CurriculumListComponent } from '../curriculum/components/curriculum-list/curriculum-list.component';
-import { CurriculumFormComponent } from '../curriculum/components/curriculum-form/curriculum-form.component';
 
 const routes: Routes = [
   {
@@ -34,16 +31,10 @@ const routes: Routes = [
       },
       {
         path: Modules.curriculum.path.slice(1),
-        children: [
-          {
-            path: '',
-            component: AppRoutingRedirectComponent,
-            data: { redirectTo: 'list' },
-          },
-          { path: 'list', component: CurriculumListComponent },
-          { path: 'add', component: CurriculumFormComponent },
-          { path: ':id', component: CurriculumFormComponent },
-        ],
+        loadChildren: () =>
+          import('../curriculum/curriculum.module').then(
+            m => m.CurriculumModule
+          ),
       },
     ],
   },

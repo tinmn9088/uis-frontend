@@ -26,7 +26,6 @@ import {
 import { LOCATION_INITIALIZED } from '@angular/common';
 import { LanguageService } from './shared/services/language.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AppRoutingRedirectComponent } from './shared/components/app-routing-redirect/app-routing-redirect.component';
 import { SnackbarService } from './shared/services/snackbar.service';
 import { BehaviorSubject, filter } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -35,7 +34,6 @@ import { ModuleRoutingModule } from './shared/module-routing.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { SnackbarAction } from './shared/domain/snackbar-action';
-import { CurriculumModule } from './curriculum/curriculum.module';
 
 export function translateLoader(
   translate: TranslateService,
@@ -82,7 +80,7 @@ export class AppErrorHandler implements ErrorHandler {
 }
 
 @NgModule({
-  declarations: [AppComponent, AppRoutingRedirectComponent],
+  declarations: [AppComponent],
   bootstrap: [AppComponent],
   imports: [
     AuthModule,
@@ -90,7 +88,6 @@ export class AppErrorHandler implements ErrorHandler {
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    CurriculumModule,
     UserModule,
     HttpClientModule,
     ModuleRoutingModule,

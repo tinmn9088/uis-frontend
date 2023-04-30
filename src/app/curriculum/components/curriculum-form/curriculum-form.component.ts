@@ -66,11 +66,11 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     });
     this.formGroup = new FormGroup({
       approvalDate: new FormControl(
-        { value: '', disabled: this.areNotPermissionsPresent },
+        { value: undefined, disabled: this.areNotPermissionsPresent },
         Validators.required
       ),
       admissionYear: new FormControl(
-        { value: new Date(), disabled: this.areNotPermissionsPresent },
+        { value: undefined, disabled: this.areNotPermissionsPresent },
         Validators.required
       ),
       specializationId: new FormControl(undefined, Validators.required),

@@ -5,24 +5,13 @@ import { UserLayoutComponent } from './user/components/user-layout/user-layout.c
 import { UserListComponent } from './user/components/user-list/user-list.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { MainPageComponent } from './user/components/main-page/main-page.component';
-import { AppRoutingRedirectComponent } from './shared/components/app-routing-redirect/app-routing-redirect.component';
 import { RoleListComponent } from './user/components/role-list/role-list.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: AppRoutingRedirectComponent,
-    data: { redirectTo: 'user' },
-  },
-  {
     path: 'user',
     component: UserLayoutComponent,
     children: [
-      {
-        path: '',
-        component: AppRoutingRedirectComponent,
-        data: { redirectTo: 'main' },
-      },
       {
         path: 'main',
         component: MainPageComponent,
@@ -41,18 +30,28 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
           {
-            path: '',
-            component: AppRoutingRedirectComponent,
-            data: { redirectTo: 'list' },
-          },
-          {
             path: 'list',
             canActivateChild: [AuthGuard],
             component: RoleListComponent,
           },
+          {
+            path: '',
+            redirectTo: 'list',
+            pathMatch: 'full',
+          },
         ],
       },
+      {
+        path: '',
+        redirectTo: 'main',
+        pathMatch: 'full',
+      },
     ],
+  },
+  {
+    path: '',
+    redirectTo: 'user',
+    pathMatch: 'full',
   },
 ];
 
