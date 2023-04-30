@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DisciplineListComponent } from './components/discipline-list/discipline-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { DisciplineTableComponent } from './components/discipline-table/discipline-table.component';
 import { DisciplineFormComponent } from './components/discipline-form/discipline-form.component';
+import { DisciplineRoutingModule } from './discipline-routing.module';
+import { DisciplineService } from './services/discipline.service';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { DisciplineFormComponent } from './components/discipline-form/discipline
     DisciplineTableComponent,
     DisciplineFormComponent,
   ],
-  imports: [CommonModule, SharedModule],
+  imports: [SharedModule, DisciplineRoutingModule],
+  providers: [DisciplineService],
 })
 export class DisciplineModule {}

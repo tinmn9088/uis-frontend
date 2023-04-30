@@ -1,10 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import Modules from 'src/assets/modules.json';
 import { AppRoutingRedirectComponent } from './components/app-routing-redirect/app-routing-redirect.component';
-import { SpecializationListComponent } from '../specialization/components/specialization-list/specialization-list.component';
-import { SpecializationFormComponent } from '../specialization/components/specialization-form/specialization-form.component';
-import { DisciplineListComponent } from '../discipline/components/discipline-list/discipline-list.component';
-import { DisciplineFormComponent } from '../discipline/components/discipline-form/discipline-form.component';
 import { NgModule } from '@angular/core';
 import { ModuleLayoutComponent } from './components/module-layout/module-layout.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
@@ -41,16 +37,10 @@ const routes: Routes = [
       },
       {
         path: Modules.discipline.path.slice(1),
-        children: [
-          {
-            path: '',
-            component: AppRoutingRedirectComponent,
-            data: { redirectTo: 'list' },
-          },
-          { path: 'list', component: DisciplineListComponent },
-          { path: 'add', component: DisciplineFormComponent },
-          { path: ':id', component: DisciplineFormComponent },
-        ],
+        loadChildren: () =>
+          import('../discipline/discipline.module').then(
+            m => m.DisciplineModule
+          ),
       },
       {
         path: Modules.curriculum.path.slice(1),

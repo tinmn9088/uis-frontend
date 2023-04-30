@@ -28,7 +28,6 @@ import { LanguageService } from './shared/services/language.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingRedirectComponent } from './shared/components/app-routing-redirect/app-routing-redirect.component';
 import { SnackbarService } from './shared/services/snackbar.service';
-import { DisciplineModule } from './discipline/discipline.module';
 import { BehaviorSubject, filter } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ModuleService } from './shared/services/module.service';
@@ -93,7 +92,6 @@ export class AppErrorHandler implements ErrorHandler {
     AppRoutingModule,
     SharedModule,
     CategoryModule,
-    DisciplineModule,
     CurriculumModule,
     UserModule,
     HttpClientModule,
