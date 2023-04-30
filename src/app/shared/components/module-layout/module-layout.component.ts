@@ -86,7 +86,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     ];
     this._pathChangeSubscription = this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const currentPath = event.url;
+        const currentPath = event.urlAfterRedirects;
 
         this.isContentHidden = true;
 

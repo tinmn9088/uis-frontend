@@ -11,16 +11,21 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SpecializationModule } from './specialization/specialization.module';
 import {
+  HttpLoaderFactory,
   REFRESH_JWT_REQUEST_COUNT_TOKEN,
   SharedModule,
   THEME_CSS_CLASS_TOKEN,
 } from './shared/shared.module';
-import { TranslateService } from '@ngx-translate/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
 import { LOCATION_INITIALIZED } from '@angular/common';
 import { LanguageService } from './shared/services/language.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingRedirectComponent } from './shared/components/app-routing-redirect/app-routing-redirect.component';
 import { SnackbarService } from './shared/services/snackbar.service';
 import { DisciplineModule } from './discipline/discipline.module';
@@ -84,15 +89,22 @@ export class AppErrorHandler implements ErrorHandler {
   imports: [
     AuthModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
     CategoryModule,
-    SpecializationModule,
     DisciplineModule,
     CurriculumModule,
     UserModule,
     HttpClientModule,
     ModuleRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     {

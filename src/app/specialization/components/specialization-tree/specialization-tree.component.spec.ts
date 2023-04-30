@@ -1,13 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpecializationTreeComponent } from './specialization-tree.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { HttpLoaderFactory, SharedModule } from 'src/app/shared/shared.module';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import {
   getLevel,
   isExpandable,
 } from '../../services/specialization-tree-data-source.service';
 import { SpecializationFlatNode } from '../../domain/specialization-flat-node';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 describe('SpecializationTreeComponent', () => {
   let component: SpecializationTreeComponent;
@@ -15,7 +17,16 @@ describe('SpecializationTreeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [
+        SharedModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient],
+          },
+        }),
+      ],
       declarations: [SpecializationTreeComponent],
       providers: [
         {

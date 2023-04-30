@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RoleTableComponent } from './role-table.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { HttpLoaderFactory, SharedModule } from 'src/app/shared/shared.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 describe('RoleTableComponent', () => {
   let component: RoleTableComponent;
@@ -9,7 +11,16 @@ describe('RoleTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [
+        SharedModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient],
+          },
+        }),
+      ],
       declarations: [RoleTableComponent],
     }).compileComponents();
 

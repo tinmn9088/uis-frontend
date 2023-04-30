@@ -115,6 +115,8 @@ export class SpecializationTreeDataSourceService
   }
 
   handleTreeControl(change: SelectionChange<SpecializationFlatNode>) {
+    console.log(change);
+
     if (change.added) {
       change.added.forEach(node => this.toggleNode(node, true));
     }

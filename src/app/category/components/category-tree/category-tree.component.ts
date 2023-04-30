@@ -24,7 +24,9 @@ export class CategoryTreeComponent implements OnInit {
     public treeControl: FlatTreeControl<CategoryFlatNode>,
     public categoryService: CategoryService,
     public dataSource: CategoryTreeDataSourceService
-  ) {}
+  ) {
+    console.log(treeControl);
+  }
 
   ngOnInit() {
     this.search();

@@ -34,16 +34,10 @@ const routes: Routes = [
       },
       {
         path: Modules.specialization.path.slice(1),
-        children: [
-          {
-            path: '',
-            component: AppRoutingRedirectComponent,
-            data: { redirectTo: 'list' },
-          },
-          { path: 'list', component: SpecializationListComponent },
-          { path: 'add', component: SpecializationFormComponent },
-          { path: ':id', component: SpecializationFormComponent },
-        ],
+        loadChildren: () =>
+          import('../specialization/specialization.module').then(
+            m => m.SpecializationModule
+          ),
       },
       {
         path: Modules.discipline.path.slice(1),

@@ -1,11 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpecializationTreeNodeComponent } from './specialization-tree-node.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { HttpLoaderFactory, SharedModule } from 'src/app/shared/shared.module';
 import { SpecializationFlatNode } from '../../domain/specialization-flat-node';
 import { RouterTestingModule } from '@angular/router/testing';
 import { JWT_HELPER_SERVICE_TOKEN } from 'src/app/auth/auth.module';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SpecializationTreeNodeComponent', () => {
   let component: SpecializationTreeNodeComponent;
@@ -13,7 +16,18 @@ describe('SpecializationTreeNodeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedModule, RouterTestingModule],
+      imports: [
+        SharedModule,
+        BrowserAnimationsModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient],
+          },
+        }),
+      ],
       declarations: [SpecializationTreeNodeComponent],
       providers: [
         {

@@ -13,7 +13,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
 import { PaginatorComponent } from './components/paginator/paginator.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
@@ -52,8 +51,6 @@ export const REFRESH_JWT_REQUEST_COUNT_TOKEN = new InjectionToken<string>(
 const modules = [
   CommonModule,
   RouterModule,
-  BrowserAnimationsModule,
-  HttpClientModule,
   FormsModule,
   ReactiveFormsModule,
   LayoutModule,
@@ -107,7 +104,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   exports: [...modules, declarations, TranslateModule],
   imports: [
     ...modules,
-    TranslateModule.forRoot({
+    TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,

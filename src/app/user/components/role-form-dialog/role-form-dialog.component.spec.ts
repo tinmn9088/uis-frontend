@@ -4,8 +4,11 @@ import { RoleFormDialogComponent } from './role-form-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { JWT_HELPER_SERVICE_TOKEN } from 'src/app/auth/auth.module';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { HttpLoaderFactory, SharedModule } from 'src/app/shared/shared.module';
 import { UserModule } from '../../user.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RoleFormDialogComponent', () => {
   let component: RoleFormDialogComponent;
@@ -13,7 +16,18 @@ describe('RoleFormDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedModule, UserModule],
+      imports: [
+        SharedModule,
+        BrowserAnimationsModule,
+        UserModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient],
+          },
+        }),
+      ],
       declarations: [RoleFormDialogComponent],
       providers: [
         { provide: MatDialogRef, useValue: {} },
