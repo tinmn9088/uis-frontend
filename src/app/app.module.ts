@@ -2,15 +2,13 @@ import {
   APP_INITIALIZER,
   ErrorHandler,
   Inject,
-  Injectable,
   Injector,
   NgModule,
-  NgZone,
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent, AppErrorHandler } from './app.component';
 import {
   HttpLoaderFactory,
   REFRESH_JWT_REQUEST_COUNT_TOKEN,
@@ -26,14 +24,12 @@ import {
 import { LOCATION_INITIALIZED } from '@angular/common';
 import { LanguageService } from './shared/services/language.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { SnackbarService } from './shared/services/snackbar.service';
 import { BehaviorSubject, filter } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ModuleService } from './shared/services/module.service';
 import { ModuleRoutingModule } from './shared/module-routing.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { SnackbarAction } from './shared/domain/snackbar-action';
 
 export function translateLoader(
   translate: TranslateService,
@@ -60,23 +56,6 @@ export function translateLoader(
         });
       });
     });
-}
-
-@Injectable()
-export class AppErrorHandler implements ErrorHandler {
-  constructor(
-    private _snackbarService: SnackbarService,
-    private _zone: NgZone
-  ) {}
-
-  handleError(error: Error) {
-    console.error(error);
-    if (error.message) {
-      this._zone.run(() => {
-        this._snackbarService.showError(error.message, SnackbarAction.Cross);
-      });
-    }
-  }
 }
 
 @NgModule({
