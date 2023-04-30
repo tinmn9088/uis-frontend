@@ -31,7 +31,6 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { BehaviorSubject, filter } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ModuleService } from './shared/services/module.service';
-import { CategoryModule } from './category/category.module';
 import { ModuleRoutingModule } from './shared/module-routing.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
@@ -91,7 +90,6 @@ export class AppErrorHandler implements ErrorHandler {
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    CategoryModule,
     CurriculumModule,
     UserModule,
     HttpClientModule,

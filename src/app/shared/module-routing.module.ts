@@ -4,8 +4,6 @@ import { AppRoutingRedirectComponent } from './components/app-routing-redirect/a
 import { NgModule } from '@angular/core';
 import { ModuleLayoutComponent } from './components/module-layout/module-layout.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
-import { CategoryListComponent } from '../category/components/category-list/category-list.component';
-import { CategoryFormComponent } from '../category/components/category-form/category-form.component';
 import { CurriculumListComponent } from '../curriculum/components/curriculum-list/curriculum-list.component';
 import { CurriculumFormComponent } from '../curriculum/components/curriculum-form/curriculum-form.component';
 
@@ -17,16 +15,8 @@ const routes: Routes = [
     children: [
       {
         path: Modules.category.path.slice(1),
-        children: [
-          {
-            path: '',
-            component: AppRoutingRedirectComponent,
-            data: { redirectTo: 'list' },
-          },
-          { path: 'list', component: CategoryListComponent },
-          { path: 'add', component: CategoryFormComponent },
-          { path: ':id', component: CategoryFormComponent },
-        ],
+        loadChildren: () =>
+          import('../category/category.module').then(m => m.CategoryModule),
       },
       {
         path: Modules.specialization.path.slice(1),

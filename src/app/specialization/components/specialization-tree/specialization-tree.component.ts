@@ -24,9 +24,7 @@ export class SpecializationTreeComponent implements OnInit {
     public treeControl: FlatTreeControl<SpecializationFlatNode>,
     public specializationService: SpecializationService,
     public dataSource: SpecializationTreeDataSourceService
-  ) {
-    console.log(treeControl);
-  }
+  ) {}
 
   ngOnInit() {
     this.search();
