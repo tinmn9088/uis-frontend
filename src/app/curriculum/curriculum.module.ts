@@ -6,12 +6,14 @@ import { CurriculumFormComponent } from './components/curriculum-form/curriculum
 import { SharedModule } from '../shared/shared.module';
 import { CurriculumRoutingModule } from './curriculum-routing.module';
 import { CurriculumService } from './services/curriculum.service';
+import { CurriculumDisciplineTableComponent } from './components/curriculum-discipline-table/curriculum-discipline-table.component';
 
 @NgModule({
   declarations: [
     CurriculumTableComponent,
     CurriculumListComponent,
     CurriculumFormComponent,
+    CurriculumDisciplineTableComponent,
   ],
   imports: [CommonModule, SharedModule, CurriculumRoutingModule],
   providers: [CurriculumService],

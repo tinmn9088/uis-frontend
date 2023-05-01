@@ -291,7 +291,28 @@
       "apply_button": "Применить",
       "cancel_button": "Отмена",
       "snackbar_add_success_message": "Добавлено",
-      "snackbar_update_success_message": "Обновлено"
+      "snackbar_update_success_message": "Обновлено",
+      "disciplines": {
+        "table": {
+          "columns": {
+            "discipline_id": "Дисциплина",
+            "semester": "Семестр",
+            "total_hours": "Всего часов",
+            "lecture_hours": "Часов лекций",
+            "practice_hours": "Часов практики",
+            "lab_hours": "Часов лабораторных занятий",
+            "self_study_hours": "Часов самостоятельной работы",
+            "test_count": "Кол-во контрольных",
+            "credit": "Зачет",
+            "exam": "Экзамен",
+            "credit_units": "Зачетные единицы",
+            "operations": "Операции"
+          },
+          "title": "Curriculum disciplines",
+          "no_data_label": "No disciplines found.",
+          "no_permission_label": "Not allowed"
+        }
+      }
     },
     "options": {
       "search": "Поиск учебных планов",

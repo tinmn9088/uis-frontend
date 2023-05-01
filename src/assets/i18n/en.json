@@ -291,7 +291,28 @@
       "apply_button": "Apply",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
-      "snackbar_update_success_message": "Updated"
+      "snackbar_update_success_message": "Updated",
+      "disciplines": {
+        "table": {
+          "columns": {
+            "discipline_id": "Discipline",
+            "semester": "Semester",
+            "total_hours": "Total hours",
+            "lecture_hours": "Lecture hours",
+            "practice_hours": "Practice hours",
+            "lab_hours": "Lab hours",
+            "self_study_hours": "Self study hours",
+            "test_count": "Test count",
+            "credit": "Credit",
+            "exam": "Exam",
+            "credit_units": "Credit units",
+            "operations": "Operations"
+          },
+          "title": "Curriculum disciplines",
+          "no_data_label": "No disciplines found.",
+          "no_permission_label": "Not allowed"
+        }
+      }
     },
     "options": {
       "search": "Search curricula",

@@ -8,6 +8,9 @@ import { CurriculumAddRequest } from '../domain/curriculum-add-request';
 import { CurriculumUpdateRequest } from '../domain/curriculum-update-request';
 import { CurriculumPageableResponse } from '../domain/curriculum-pageable-response';
 import { Sort } from '@angular/material/sort';
+import { CurriculumDiscipline } from '../domain/curriculum-discipline';
+import { CurriculumDisciplineAddRequest } from '../domain/curriculum-discipline-add-request';
+import { CurriculumDisciplineUpdateRequest } from '../domain/curriculum-discipline-update-request';
 
 @Injectable({
   providedIn: 'root',
@@ -52,5 +55,42 @@ export class CurriculumService {
     return this._http.get<CurriculumPageableResponse>(`${this.MODULE_URL}`, {
       params: params,
     });
+  }
+
+  getAllDisciplines(curriculumId: number): Observable<CurriculumDiscipline[]> {
+    return this._http.get<CurriculumDiscipline[]>(
+      `${this.MODULE_URL}/${curriculumId}/disciplines`
+    );
+  }
+
+  addDiscipline(
+    curriculumDiscipline: CurriculumDisciplineAddRequest
+  ): Observable<CurriculumDiscipline> {
+    const curriculumId = curriculumDiscipline.curriculumId;
+    const disciplineId = curriculumDiscipline.disciplineId;
+    return this._http.post<CurriculumDiscipline>(
+      `${this.MODULE_URL}/${curriculumId}/disciplines/${disciplineId}`,
+      curriculumDiscipline
+    );
+  }
+
+  updateDiscipline(
+    curriculumDiscipline: CurriculumDisciplineUpdateRequest
+  ): Observable<CurriculumDiscipline> {
+    const curriculumId = curriculumDiscipline.curriculumId;
+    const disciplineId = curriculumDiscipline.disciplineId;
+    return this._http.put<CurriculumDiscipline>(
+      `${this.MODULE_URL}/${curriculumId}/disciplines/${disciplineId}`,
+      curriculumDiscipline
+    );
+  }
+
+  removeDiscipline(
+    curriculumId: number,
+    disciplineId: number
+  ): Observable<void> {
+    return this._http.delete<void>(
+      `${this.MODULE_URL}/${curriculumId}/disciplines/${disciplineId}`
+    );
   }
 }

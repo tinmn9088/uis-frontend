@@ -1,9 +1,12 @@
+$scrollbar-width: 8px;
+$form-padding: 8px;
+
 .form {
-  min-width: fit-content;
+  min-width: calc(100% - $scrollbar-width - $form-padding);
   height: 100%;
   overflow: auto;
 
-  padding: 0 8px 0 8px;
+  padding: 0 $form-padding;
 
   &__container {
     display: flex;
@@ -27,6 +30,18 @@
   &__edit-button,
   &__cancel-button {
     font-weight: bolder;
+  }
+
+  &__discipline-table-container {
+    margin: 12px 0;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  &__discipline-table {
+    max-height: 360px;
+    overflow: auto;
   }
 }
 

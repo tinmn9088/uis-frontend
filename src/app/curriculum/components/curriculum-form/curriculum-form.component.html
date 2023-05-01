@@ -116,4 +116,12 @@
       </a>
     </div>
   </div>
+  <div class="form__discipline-table-container" *ngIf="editMode && id">
+    <h4>
+      {{ 'curricula.form.disciplines.table.title' | translate }}
+    </h4>
+    <app-curriculum-discipline-table
+      class="form__discipline-table"
+      [curriculumId]="id"></app-curriculum-discipline-table>
+  </div>
 </form>
