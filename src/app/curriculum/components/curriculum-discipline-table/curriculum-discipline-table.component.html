@@ -167,20 +167,31 @@
         mat-cell
         *matCellDef="let curriculumDiscipline"
         [ngStyle]="getTableCellStyle()">
-        <button
-          class="table__edit-button"
-          type="button"
-          mat-icon-button
-          *ngIf="canUserModifyCurriculum"
-          (click)="
-            removeDiscipline(
-              curriculumDiscipline.curriculumId,
-              curriculumDiscipline.disciplineId
-            )
-          "
-          color="warn">
-          <mat-icon>delete</mat-icon>
-        </button>
+        <div class="table__operation-buttons-container">
+          <button
+            class="table__edit-button"
+            type="button"
+            mat-icon-button
+            *ngIf="canUserModifyCurriculum"
+            (click)="openCurriculumDisciplineFormDialog(curriculumDiscipline)"
+            color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            class="table__edit-button"
+            type="button"
+            mat-icon-button
+            *ngIf="canUserModifyCurriculum"
+            (click)="
+              removeDiscipline(
+                curriculumDiscipline.curriculumId,
+                curriculumDiscipline.disciplineId
+              )
+            "
+            color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </td>
     </ng-container>
 

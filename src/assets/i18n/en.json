@@ -309,8 +309,39 @@
             "operations": "Operations"
           },
           "title": "Curriculum disciplines",
-          "no_data_label": "No disciplines found.",
-          "no_permission_label": "Not allowed"
+          "no_data_label": "No disciplines.",
+          "no_permission_label": "Not allowed",
+          "snackbar_remove_success_message": "Removed successfully",
+          "snackbar_remove_error_message": "Failed to remove"
+        },
+        "form": {
+          "title": "Curriculum discipline",
+          "discipline_id_label": "Discipline",
+          "discipline_id_error": "Discipline required",
+          "semester_label": "Semester",
+          "semester_error": "Must be value between 1 and 8",
+          "total_hours_label": "Total hours",
+          "total_hours_error": "Must be greater than or equal to the sum of the remaining hourly values",
+          "lecture_hours_label": "Lecture hours",
+          "lecture_hours_error": "Must be positive",
+          "practice_hours_label": "Practice hours",
+          "practice_hours_error": "Must be positive",
+          "lab_hours_label": "Lab hours",
+          "lab_hours_error": "Must be positive",
+          "self_study_hours_label": "Self study hours",
+          "self_study_hours_error": "Must be positive",
+          "test_count_label": "Test count",
+          "test_count_error": "Must be positive",
+          "credit_label": "Credit",
+          "exam_label": "Exam",
+          "credit_units_label": "Credit units",
+          "credit_units_error": "Must be positive",
+          "add_discipline_button": "Add discipline",
+          "add_button": "Add",
+          "edit_button": "Edit",
+          "cancel_button": "Cancel",
+          "snackbar_add_success_message": "Added",
+          "snackbar_update_success_message": "Updated"
         }
       }
     },

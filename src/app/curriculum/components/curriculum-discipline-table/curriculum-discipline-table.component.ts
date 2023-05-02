@@ -1,16 +1,13 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  NgZone,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CurriculumDiscipline } from '../../domain/curriculum-discipline';
 import { CurriculumService } from '../../services/curriculum.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
 import { DisciplineService } from 'src/app/discipline/services/discipline.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CurriculumDisciplineDialogComponent } from '../curriculum-discipline-dialog/curriculum-discipline-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'app-curriculum-discipline-table[curriculumId]',
@@ -18,6 +15,10 @@ import { DisciplineService } from 'src/app/discipline/services/discipline.servic
   styleUrls: ['./curriculum-discipline-table.component.scss'],
 })
 export class CurriculumDisciplineTableComponent implements OnInit {
+  private _dialogRef?: MatDialogRef<
+    CurriculumDisciplineDialogComponent,
+    unknown
+  >;
   @Input() curriculumId!: number;
   @Output() dataUpdated = new EventEmitter<CurriculumDiscipline[]>();
   displayedColumns: string[] = [
@@ -41,7 +42,9 @@ export class CurriculumDisciplineTableComponent implements OnInit {
     private _curriculumService: CurriculumService,
     private _disciplineService: DisciplineService,
     private _authService: AuthService,
-    private ngZone: NgZone
+    private _matDialog: MatDialog,
+    private _snackbarService: SnackbarService,
+    private _translate: TranslateService
   ) {
     this.canUserModifyCurriculum = this._authService.hasUserPermissions([
       Permission.CURRICULUM_UPDATE,
@@ -52,10 +55,10 @@ export class CurriculumDisciplineTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllDisciplines();
+    this.updateData();
   }
 
-  getAllDisciplines() {
+  updateData() {
     this.isLoading = true;
     this.dataSource = [];
     this._curriculumService
@@ -88,6 +91,45 @@ export class CurriculumDisciplineTableComponent implements OnInit {
   }
 
   removeDiscipline(curriculumId: number, disciplineId: number) {
-    this._curriculumService.removeDiscipline(curriculumId, disciplineId);
+    this._curriculumService
+      .removeDiscipline(curriculumId, disciplineId)
+      .subscribe({
+        next: () => {
+          this._translate
+            .get(
+              'curricula.form.disciplines.table.snackbar_remove_success_message'
+            )
+            .subscribe(message => {
+              this._snackbarService.showSuccess(message);
+            });
+        },
+        error: error => {
+          this._translate
+            .get(
+              'curricula.form.disciplines.table.snackbar_remove_error_message'
+            )
+            .subscribe(message => {
+              console.error(error);
+              this._snackbarService.showError(message);
+            });
+        },
+        complete: () => {
+          this.updateData();
+        },
+      });
+  }
+
+  openCurriculumDisciplineFormDialog(
+    curriculumDiscipline: CurriculumDiscipline
+  ) {
+    this._dialogRef = this._matDialog.open(
+      CurriculumDisciplineDialogComponent,
+      {
+        data: { curriculumDiscipline },
+      }
+    );
+    this._dialogRef.afterClosed().subscribe(actionPerformed => {
+      if (actionPerformed) this.updateData();
+    });
   }
 }

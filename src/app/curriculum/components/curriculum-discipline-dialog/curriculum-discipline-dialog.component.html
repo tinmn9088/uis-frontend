@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>
+  {{
+    editMode
+      ? ('curricula.form.disciplines.form.title' | translate) + ': '
+      : ('curricula.form.disciplines.form.title' | translate)
+  }}
+  <span class="title" *ngIf="editMode">
+    {{
+      data.curriculumDiscipline?.disciplineId +
+        ' (' +
+        data.curriculumDiscipline?.curriculumId +
+        ')'
+    }}
+  </span>
+</h2>
+<mat-dialog-content class="content">
+  <app-curriculum-discipline-form
+    (curricululDisciplineCreatedUpdated)="
+      onCurricululDisciplineCreatedUpdated()
+    "
+    (formInvalid)="isFormInvalid = $event"></app-curriculum-discipline-form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button [mat-dialog-close]="actionPerformed">
+    {{ 'curricula.form.disciplines.form.cancel_button' | translate }}
+  </button>
+  <button
+    mat-flat-button
+    (click)="onCreateUpdateButtonClicked()"
+    color="primary"
+    [disabled]="isFormInvalid">
+    {{
+      (editMode
+        ? 'curricula.form.disciplines.form.edit_button'
+        : 'curricula.form.disciplines.form.add_button'
+      ) | translate
+    }}
+  </button>
+</mat-dialog-actions>

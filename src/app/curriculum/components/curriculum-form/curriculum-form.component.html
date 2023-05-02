@@ -116,10 +116,25 @@
       </a>
     </div>
   </div>
+
+  <mat-divider class="form__divider"></mat-divider>
+
   <div class="form__discipline-table-container" *ngIf="editMode && id">
-    <h4>
-      {{ 'curricula.form.disciplines.table.title' | translate }}
-    </h4>
+    <div class="form__discipline-table-top">
+      <h3 class="form__discipline-table-top-title">
+        {{ 'curricula.form.disciplines.table.title' | translate }}
+      </h3>
+      <button
+        class="form__discipline-table-top-add-button"
+        type="button"
+        mat-flat-button
+        color="primary"
+        (click)="openCurriculumDisciplineFormDialog()">
+        {{
+          'curricula.form.disciplines.form.add_discipline_button' | translate
+        }}
+      </button>
+    </div>
     <app-curriculum-discipline-table
       class="form__discipline-table"
       [curriculumId]="id"></app-curriculum-discipline-table>

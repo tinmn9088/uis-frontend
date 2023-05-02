@@ -308,9 +308,40 @@
             "credit_units": "Зачетные единицы",
             "operations": "Операции"
           },
-          "title": "Curriculum disciplines",
-          "no_data_label": "No disciplines found.",
-          "no_permission_label": "Not allowed"
+          "title": "Дисциплины учебного плана",
+          "no_data_label": "Пусто.",
+          "no_permission_label": "Недостаточно прав",
+          "snackbar_remove_success_message": "Дисциплина удалена",
+          "snackbar_remove_error_message": "Не удалось удалить дисциплину"
+        },
+        "form": {
+          "title": "Дисциплина учебного плана",
+          "discipline_id_label": "Дисциплина",
+          "discipline_id_error": "Дисциплина обязательна",
+          "semester_label": "Семестр",
+          "semester_error": "Значение должно быть от 1 до 8",
+          "total_hours_label": "Всего часов",
+          "total_hours_error": "Должно быть больше или равно сумме оставшихся часовых значений",
+          "lecture_hours_label": "Лекционные часы",
+          "lecture_hours_error": "Должно быть положительным",
+          "practice_hours_label": "Часов практических занятий",
+          "practice_hours_error": "Должно быть положительным",
+          "lab_hours_label": "Часов лабораторных работ",
+          "lab_hours_error": "Должно быть положительным",
+          "self_study_hours_label": "Часов самостоятельной работы",
+          "self_study_hours_error": "Должно быть положительным",
+          "test_count_label": "Кол-во контрольных",
+          "test_count_error": "Должно быть положительным",
+          "credit_label": "Зачет",
+          "exam_label": "Экзамен",
+          "credit_units_label": "Зачетные единицы",
+          "credit_units_error": "Должно быть положительным",
+          "add_discipline_button": "Добавить дисциплину",
+          "add_button": "Добавить",
+          "edit_button": "Изменить",
+          "cancel_button": "Отмена",
+          "snackbar_add_success_message": "Добавлена",
+          "snackbar_update_success_message": "Обновлена"
         }
       }
     },

@@ -32,6 +32,10 @@ $form-padding: 8px;
     font-weight: bolder;
   }
 
+  &__divider {
+    margin: 36px 0 12px 0;
+  }
+
   &__discipline-table-container {
     margin: 12px 0;
     display: flex;
@@ -42,6 +46,17 @@ $form-padding: 8px;
   &__discipline-table {
     max-height: 360px;
     overflow: auto;
+
+    &-top {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+
+      &-title {
+        margin-right: 16px;
+      }
+    }
   }
 }
 

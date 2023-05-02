@@ -1,0 +1,150 @@
+<form class="form" [formGroup]="formGroup">
+  <mat-form-field
+    class="form__field"
+    appearance="fill"
+    color="primary"
+    *ngIf="!areNotPermissionsPresent">
+    <mat-label class="form__label">
+      {{ 'curricula.form.disciplines.form.discipline_id_label' | translate }}
+    </mat-label>
+    <app-filtered-select
+      class="form__select"
+      [options]="disciplineOptions"
+      [isInternalFilterOn]="false"
+      [isLoading]="areDisciplineOptionsLoading"
+      (filterChanged)="updateDisciplineOptions($event)"
+      formControlName="disciplineId"></app-filtered-select>
+    <mat-error class="form__error-message">
+      {{ 'curricula.form.disciplines.form.discipline_id_error' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label>
+      {{ 'curricula.form.disciplines.form.semester_label' | translate }}
+    </mat-label>
+    <input
+      matInput
+      type="number"
+      name="semester"
+      min="1"
+      max="8"
+      formControlName="semester" />
+    <mat-error>
+      {{ 'curricula.form.disciplines.form.semester_error' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label>
+      {{ 'curricula.form.disciplines.form.lecture_hours_label' | translate }}
+    </mat-label>
+    <input
+      matInput
+      type="number"
+      name="lectureHours"
+      min="1"
+      formControlName="lectureHours" />
+    <mat-error>
+      {{ 'curricula.form.disciplines.form.lecture_hours_error' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label>
+      {{ 'curricula.form.disciplines.form.practice_hours_label' | translate }}
+    </mat-label>
+    <input
+      matInput
+      type="number"
+      name="practiceHours"
+      min="1"
+      formControlName="practiceHours" />
+    <mat-error>
+      {{ 'curricula.form.disciplines.form.practice_hours_error' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label>
+      {{ 'curricula.form.disciplines.form.lab_hours_label' | translate }}
+    </mat-label>
+    <input
+      matInput
+      type="number"
+      name="labHours"
+      min="1"
+      formControlName="labHours" />
+    <mat-error>
+      {{ 'curricula.form.disciplines.form.lab_hours_error' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label>
+      {{ 'curricula.form.disciplines.form.self_study_hours_label' | translate }}
+    </mat-label>
+    <input
+      matInput
+      type="number"
+      name="selfStudyHours"
+      min="1"
+      formControlName="selfStudyHours" />
+    <mat-error>
+      {{ 'curricula.form.disciplines.form.self_study_hours_error' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label>
+      {{ 'curricula.form.disciplines.form.total_hours_label' | translate }}
+    </mat-label>
+    <input
+      matInput
+      type="number"
+      name="totalHours"
+      min="1"
+      formControlName="totalHours" />
+    <mat-error>
+      {{ 'curricula.form.disciplines.form.total_hours_error' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label>
+      {{ 'curricula.form.disciplines.form.test_count_label' | translate }}
+    </mat-label>
+    <input
+      matInput
+      type="number"
+      name="testCount"
+      min="1"
+      formControlName="testCount" />
+    <mat-error>
+      {{ 'curricula.form.disciplines.form.test_count_error' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-checkbox formControlName="exam">
+    {{ 'curricula.form.disciplines.form.exam_label' | translate }}
+  </mat-checkbox>
+
+  <mat-checkbox formControlName="credit">
+    {{ 'curricula.form.disciplines.form.credit_label' | translate }}
+  </mat-checkbox>
+
+  <mat-form-field class="form__field" appearance="fill" color="primary">
+    <mat-label>
+      {{ 'curricula.form.disciplines.form.credit_units_label' | translate }}
+    </mat-label>
+    <input
+      matInput
+      type="number"
+      name="creditUnits"
+      min="1"
+      formControlName="creditUnits" />
+    <mat-error>
+      {{ 'curricula.form.disciplines.form.credit_units_error' | translate }}
+    </mat-error>
+  </mat-form-field>
+</form>

@@ -22,6 +22,9 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { LanguageService } from 'src/app/shared/services/language.service';
 import { DatepickerYearHeaderComponent } from 'src/app/shared/components/datepicker-year-header/datepicker-year-header.component';
 import { Permission } from 'src/app/auth/domain/permission';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CurriculumDisciplineDialogComponent } from '../curriculum-discipline-dialog/curriculum-discipline-dialog.component';
+import { CurriculumDisciplineTableComponent } from '../curriculum-discipline-table/curriculum-discipline-table.component';
 
 @Component({
   selector: 'app-curriculum-form',
@@ -29,6 +32,10 @@ import { Permission } from 'src/app/auth/domain/permission';
   styleUrls: ['./curriculum-form.component.scss'],
 })
 export class CurriculumFormComponent implements OnInit, AfterViewInit {
+  private _dialogRef?: MatDialogRef<
+    CurriculumDisciplineDialogComponent,
+    unknown
+  >;
   private _resizeObserver: ResizeObserver;
   private _specializationId?: number;
   datepickerYearHeader = DatepickerYearHeaderComponent;
@@ -40,6 +47,8 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   areNotPermissionsPresent: boolean;
   areParentOptionsLoading = false;
   @ViewChild('form') form!: ElementRef;
+  @ViewChild(CurriculumDisciplineTableComponent)
+  disciplineTable!: CurriculumDisciplineTableComponent;
 
   constructor(
     private _curriculumService: CurriculumService,
@@ -49,6 +58,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     private _translate: TranslateService,
     private _router: Router,
     private _route: ActivatedRoute,
+    private _matDialog: MatDialog,
     private _languageService: LanguageService,
     private _adapter: DateAdapter<unknown>,
     @Inject(MAT_DATE_LOCALE) private _locale: string
@@ -248,5 +258,15 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     } else if (formWidth <= 600) {
       this.formContainerWidthPercents = 100;
     }
+  }
+
+  openCurriculumDisciplineFormDialog() {
+    this._dialogRef = this._matDialog.open(
+      CurriculumDisciplineDialogComponent,
+      { data: { curriculumDiscipline: undefined } }
+    );
+    this._dialogRef.afterClosed().subscribe(actionPerformed => {
+      if (actionPerformed) this.disciplineTable.updateData();
+    });
   }
 }
