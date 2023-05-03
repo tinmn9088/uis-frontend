@@ -266,8 +266,6 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
       { data: { curriculumId: this.id, curriculumDiscipline: undefined } }
     );
     this._dialogRef.afterClosed().subscribe(actionPerformed => {
-      console.log(actionPerformed);
-
       if (actionPerformed) this.disciplineTable.updateData();
     });
   }

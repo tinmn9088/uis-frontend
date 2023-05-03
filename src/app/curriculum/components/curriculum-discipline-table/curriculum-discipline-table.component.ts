@@ -132,8 +132,6 @@ export class CurriculumDisciplineTableComponent implements OnInit {
       }
     );
     this._dialogRef.afterClosed().subscribe(actionPerformed => {
-      console.log(actionPerformed);
-
       if (actionPerformed) this.updateData();
     });
   }

@@ -136,6 +136,7 @@ export class CurriculumDisciplineFormComponent implements OnInit {
         Validators.required,
         Validators.min(1),
       ]),
+      basicFormGroup: new FormGroup({}),
     });
     this.formGroup.valueChanges
       .pipe(
