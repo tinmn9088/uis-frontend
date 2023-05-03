@@ -339,9 +339,11 @@
           "add_discipline_button": "Добавить дисциплину",
           "add_button": "Добавить",
           "edit_button": "Изменить",
-          "cancel_button": "Отмена",
-          "snackbar_add_success_message": "Добавлена",
-          "snackbar_update_success_message": "Обновлена"
+          "close_button": "Закрыть",
+          "snackbar_add_success_message": "Добавлено",
+          "snackbar_add_error_message": "Не удалось добавить",
+          "snackbar_update_success_message": "Изменено",
+          "snackbar_update_error_message": "Не удалось изменить"
         }
       }
     },

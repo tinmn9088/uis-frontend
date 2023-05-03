@@ -15,14 +15,16 @@
 </h2>
 <mat-dialog-content class="content">
   <app-curriculum-discipline-form
+    [curriculumId]="data.curriculumId"
+    [curriculumDiscipline]="data.curriculumDiscipline"
     (curricululDisciplineCreatedUpdated)="
-      onCurricululDisciplineCreatedUpdated()
+      onCurriculumDisciplineCreatedUpdated()
     "
     (formInvalid)="isFormInvalid = $event"></app-curriculum-discipline-form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-flat-button [mat-dialog-close]="actionPerformed">
-    {{ 'curricula.form.disciplines.form.cancel_button' | translate }}
+    {{ 'curricula.form.disciplines.form.close_button' | translate }}
   </button>
   <button
     mat-flat-button

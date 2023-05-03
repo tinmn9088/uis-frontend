@@ -263,9 +263,11 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   openCurriculumDisciplineFormDialog() {
     this._dialogRef = this._matDialog.open(
       CurriculumDisciplineDialogComponent,
-      { data: { curriculumDiscipline: undefined } }
+      { data: { curriculumId: this.id, curriculumDiscipline: undefined } }
     );
     this._dialogRef.afterClosed().subscribe(actionPerformed => {
+      console.log(actionPerformed);
+
       if (actionPerformed) this.disciplineTable.updateData();
     });
   }

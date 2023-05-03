@@ -9,12 +9,18 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { distinctUntilChanged, map, tap } from 'rxjs';
+import { delay, distinctUntilChanged, map, tap } from 'rxjs';
 import { DisciplineService } from 'src/app/discipline/services/discipline.service';
 import { SelectOption } from 'src/app/shared/domain/select-option';
+import { CurriculumDisciplineAddRequest } from '../../domain/curriculum-discipline-add-request';
+import { CurriculumDisciplineUpdateRequest } from '../../domain/curriculum-discipline-update-request';
+import { CurriculumService } from '../../services/curriculum.service';
+import { TranslateService } from '@ngx-translate/core';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
 
 @Component({
-  selector: 'app-curriculum-discipline-form',
+  selector: 'app-curriculum-discipline-form[curriculumId]',
   templateUrl: './curriculum-discipline-form.component.html',
   styleUrls: ['./curriculum-discipline-form.component.scss'],
 })
@@ -42,13 +48,17 @@ export class CurriculumDisciplineFormComponent implements OnInit {
   disciplineOptions!: SelectOption[];
   areDisciplineOptionsLoading = false;
   @Input() curriculumDiscipline?: CurriculumDiscipline;
+  @Input() curriculumId!: number;
   @Output() curricululDisciplineCreatedUpdated =
     new EventEmitter<CurriculumDiscipline>();
   @Output() formInvalid = new EventEmitter<boolean>();
 
   constructor(
     private _authService: AuthService,
-    private _disciplineService: DisciplineService
+    private _curriculumService: CurriculumService,
+    private _disciplineService: DisciplineService,
+    private _snackbarService: SnackbarService,
+    private _translate: TranslateService
   ) {
     this.areNotPermissionsPresent = !this._authService.hasUserPermissions([
       Permission.CURRICULUM_UPDATE,
@@ -87,12 +97,12 @@ export class CurriculumDisciplineFormComponent implements OnInit {
     return this.formGroup.get('testCount')?.value;
   }
 
-  get credit(): boolean {
-    return this.formGroup.get('credit')?.value;
+  get hasCredit(): boolean {
+    return this.formGroup.get('hasCredit')?.value;
   }
 
-  get exam(): boolean {
-    return this.formGroup.get('exam')?.value;
+  get hasExam(): boolean {
+    return this.formGroup.get('hasExam')?.value;
   }
 
   get creditUnits(): number {
@@ -101,29 +111,31 @@ export class CurriculumDisciplineFormComponent implements OnInit {
 
   ngOnInit() {
     this.editMode =
-      !!this.curriculumDiscipline &&
-      !!this.curriculumDiscipline.curriculumId &&
-      !!this.curriculumDiscipline.disciplineId;
+      !!this.curriculumDiscipline && !!this.curriculumDiscipline.disciplineId;
 
-    const positiveNumberValidators = [Validators.required, Validators.min(1)];
     this.formGroup = new FormGroup({
       disciplineId: new FormControl(undefined, Validators.required),
       semester: new FormControl(undefined, [
-        ...positiveNumberValidators,
+        Validators.required,
+        Validators.min(1),
         Validators.max(8),
       ]),
-      lectureHours: new FormControl(undefined, positiveNumberValidators),
-      practiceHours: new FormControl(undefined, positiveNumberValidators),
-      labHours: new FormControl(undefined, positiveNumberValidators),
-      selfStudyHours: new FormControl(undefined, positiveNumberValidators),
+      lectureHours: new FormControl(undefined, Validators.min(1)),
+      practiceHours: new FormControl(undefined, Validators.min(1)),
+      labHours: new FormControl(undefined, Validators.min(1)),
+      selfStudyHours: new FormControl(undefined, Validators.min(1)),
       totalHours: new FormControl(undefined, [
-        ...positiveNumberValidators,
+        Validators.required,
+        Validators.min(1),
         this.TotalHoursValidator,
       ]),
-      testCount: new FormControl(undefined, positiveNumberValidators),
-      credit: new FormControl(false),
-      exam: new FormControl(false),
-      creditUnits: new FormControl(undefined, positiveNumberValidators),
+      testCount: new FormControl(undefined, Validators.min(1)),
+      hasCredit: new FormControl(false),
+      hasExam: new FormControl(false),
+      creditUnits: new FormControl(undefined, [
+        Validators.required,
+        Validators.min(1),
+      ]),
     });
     this.formGroup.valueChanges
       .pipe(
@@ -134,10 +146,72 @@ export class CurriculumDisciplineFormComponent implements OnInit {
         this.formInvalid.emit(invalid);
       });
     this.updateDisciplineOptions();
+    if (this.curriculumDiscipline) {
+      this.formGroup.patchValue(this.curriculumDiscipline, { emitEvent: true });
+    }
   }
 
   submit() {
-    this.curricululDisciplineCreatedUpdated.emit();
+    if (this.formGroup.invalid) {
+      return;
+    }
+    this.formGroup.disable();
+    const requestBody:
+      | CurriculumDisciplineAddRequest
+      | CurriculumDisciplineUpdateRequest = {
+      curriculumId: this.curriculumId,
+      disciplineId: this.disciplineId,
+      semester: this.semester,
+      totalHours: this.totalHours,
+      lectureHours: this.lectureHours,
+      practiceHours: this.practiceHours,
+      labHours: this.labHours,
+      selfStudyHours: this.selfStudyHours,
+      testCount: this.testCount,
+      hasCredit: this.hasCredit,
+      hasExam: this.hasExam,
+      creditUnits: this.creditUnits,
+    };
+
+    const request$ =
+      this.editMode && this.curriculumDiscipline
+        ? this._curriculumService.updateDiscipline(requestBody)
+        : this._curriculumService.addDiscipline(requestBody);
+
+    request$.subscribe({
+      next: curriculumDiscipline => {
+        this._translate
+          .get(
+            this.editMode
+              ? 'curricula.form.disciplines.form.snackbar_update_success_message'
+              : 'curricula.form.disciplines.form.snackbar_add_success_message'
+          )
+          .pipe(
+            delay(666),
+            tap(() => {
+              this.curricululDisciplineCreatedUpdated.emit(
+                curriculumDiscipline
+              );
+              this.formGroup.enable();
+            })
+          )
+          .subscribe(message => {
+            this._snackbarService.showSuccess(message, SnackbarAction.Cross);
+          });
+      },
+      error: () => {
+        this._translate
+          .get(
+            this.editMode
+              ? 'curricula.form.disciplines.form.snackbar_update_error_message'
+              : 'curricula.form.disciplines.form.snackbar_add_error_message'
+          )
+          .subscribe(message => {
+            this.formGroup.enable();
+            this._snackbarService.showError(message, SnackbarAction.Cross);
+          });
+      },
+    });
   }
 
   updateDisciplineOptions(query?: string | null) {

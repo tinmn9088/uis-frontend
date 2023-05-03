@@ -339,9 +339,11 @@
           "add_discipline_button": "Add discipline",
           "add_button": "Add",
           "edit_button": "Edit",
-          "cancel_button": "Cancel",
+          "close_button": "Close",
           "snackbar_add_success_message": "Added",
-          "snackbar_update_success_message": "Updated"
+          "snackbar_add_error_message": "Failed to add",
+          "snackbar_update_success_message": "Updated",
+          "snackbar_update_error_message": "Failed to update"
         }
       }
     },

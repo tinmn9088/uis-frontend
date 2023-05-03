@@ -64,7 +64,7 @@ export class CurriculumDisciplineTableComponent implements OnInit {
     this._curriculumService
       .getAllDisciplines(this.curriculumId)
       .subscribe(response => {
-        this.dataSource = [...response, ...response, ...response, ...response];
+        this.dataSource = response;
         this.isLoading = false;
         this.dataUpdated.emit(response);
       });
@@ -125,10 +125,15 @@ export class CurriculumDisciplineTableComponent implements OnInit {
     this._dialogRef = this._matDialog.open(
       CurriculumDisciplineDialogComponent,
       {
-        data: { curriculumDiscipline },
+        data: {
+          curriculumId: curriculumDiscipline.curriculumId,
+          curriculumDiscipline,
+        },
       }
     );
     this._dialogRef.afterClosed().subscribe(actionPerformed => {
+      console.log(actionPerformed);
+
       if (actionPerformed) this.updateData();
     });
   }

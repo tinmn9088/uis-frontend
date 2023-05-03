@@ -18,11 +18,13 @@ export class CurriculumDisciplineDialogComponent {
   constructor(
     private _dialogRef: MatDialogRef<CurriculumDisciplineFormComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { curriculumDiscipline?: CurriculumDiscipline }
+    public data: {
+      curriculumId: number;
+      curriculumDiscipline?: CurriculumDiscipline;
+    }
   ) {
     this.editMode =
       !!this.data.curriculumDiscipline &&
-      !!this.data.curriculumDiscipline.curriculumId &&
       !!this.data.curriculumDiscipline.disciplineId;
   }
 
@@ -30,11 +32,8 @@ export class CurriculumDisciplineDialogComponent {
     this.curriculumDisciplineForm.submit();
   }
 
-  onCurricululDisciplineCreatedUpdated() {
+  onCurriculumDisciplineCreatedUpdated() {
     this.actionPerformed = true;
-  }
-
-  onCreatedUpdated() {
-    this._dialogRef.close();
+    if (!this.editMode) this._dialogRef.close(this.actionPerformed);
   }
 }
