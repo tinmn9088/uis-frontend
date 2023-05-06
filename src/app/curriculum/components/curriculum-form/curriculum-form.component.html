@@ -41,20 +41,11 @@
       <mat-label>
         {{ 'curricula.form.admission_year_label' | translate }}
       </mat-label>
-      <input
-        class="form__input"
-        matInput
-        [matDatepicker]="admissionYear"
-        formControlName="admissionYear" />
-      <mat-datepicker-toggle
-        matIconSuffix
-        [for]="admissionYear"></mat-datepicker-toggle>
-      <mat-datepicker
-        #admissionYear
-        startView="multi-year"
-        [calendarHeaderComponent]="datepickerYearHeader"
-        (yearSelected)="onYearSelected($event, admissionYear)">
-      </mat-datepicker>
+      <mat-select formControlName="admissionYear">
+        <mat-option *ngFor="let year of admissionYearOptions" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
       <mat-error class="form__error-message">
         {{ 'curricula.form.admission_year_error' | translate }}
       </mat-error>
@@ -117,26 +108,28 @@
     </div>
   </div>
 
-  <mat-divider class="form__divider"></mat-divider>
+  <ng-container *ngIf="editMode && id">
+    <mat-divider class="form__divider"></mat-divider>
 
-  <div class="form__discipline-table-container" *ngIf="editMode && id">
-    <div class="form__discipline-table-top">
-      <h3 class="form__discipline-table-top-title">
-        {{ 'curricula.form.disciplines.table.title' | translate }}
-      </h3>
-      <button
-        class="form__discipline-table-top-add-button"
-        type="button"
-        mat-flat-button
-        color="primary"
-        (click)="openCurriculumDisciplineFormDialog()">
-        {{
-          'curricula.form.disciplines.form.add_discipline_button' | translate
-        }}
-      </button>
+    <div class="form__discipline-table-container">
+      <div class="form__discipline-table-top">
+        <h3 class="form__discipline-table-top-title">
+          {{ 'curricula.form.disciplines.table.title' | translate }}
+        </h3>
+        <button
+          class="form__discipline-table-top-add-button"
+          type="button"
+          mat-flat-button
+          color="primary"
+          (click)="openCurriculumDisciplineFormDialog()">
+          {{
+            'curricula.form.disciplines.form.add_discipline_button' | translate
+          }}
+        </button>
+      </div>
+      <app-curriculum-discipline-table
+        class="form__discipline-table"
+        [curriculumId]="id"></app-curriculum-discipline-table>
     </div>
-    <app-curriculum-discipline-table
-      class="form__discipline-table"
-      [curriculumId]="id"></app-curriculum-discipline-table>
-  </div>
+  </ng-container>
 </form>

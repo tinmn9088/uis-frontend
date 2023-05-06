@@ -20,7 +20,6 @@ import { SpecializationService } from 'src/app/specialization/services/specializ
 import { MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { LanguageService } from 'src/app/shared/services/language.service';
-import { DatepickerYearHeaderComponent } from 'src/app/shared/components/datepicker-year-header/datepicker-year-header.component';
 import { Permission } from 'src/app/auth/domain/permission';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CurriculumDisciplineDialogComponent } from '../curriculum-discipline-dialog/curriculum-discipline-dialog.component';
@@ -38,8 +37,8 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   >;
   private _resizeObserver: ResizeObserver;
   private _specializationId?: number;
-  datepickerYearHeader = DatepickerYearHeaderComponent;
   id?: number;
+  admissionYearOptions!: number[];
   editMode!: boolean;
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
@@ -85,6 +84,8 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
       ),
       specializationId: new FormControl(undefined, Validators.required),
     });
+
+    this.admissionYearOptions = this.generateAdmissionYearOptions();
   }
 
   get approvalDate(): Date {
@@ -92,11 +93,11 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   }
 
   get admissionYear(): number {
-    return (this.formGroup.get('admissionYear')?.value as Date).getFullYear();
+    return this.formGroup.get('admissionYear')?.value;
   }
 
   set admissionYear(year: number) {
-    this.formGroup.get('admissionYear')?.setValue(new Date(year, 0, 1));
+    this.formGroup.get('admissionYear')?.setValue(year);
   }
 
   get specializationId(): number {
@@ -113,7 +114,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
               this._specializationId = curriculum.specializationId;
               this.formGroup.patchValue({
                 approvalDate: curriculum.approvalDate,
-                admissionYear: new Date(curriculum.admissionYear, 0, 1),
+                admissionYear: curriculum.admissionYear,
                 specializationId: curriculum.specializationId,
               });
             },
@@ -241,6 +242,16 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     matDatepicker.close();
   }
 
+  openCurriculumDisciplineFormDialog() {
+    this._dialogRef = this._matDialog.open(
+      CurriculumDisciplineDialogComponent,
+      { data: { curriculumId: this.id, curriculumDiscipline: undefined } }
+    );
+    this._dialogRef.afterClosed().subscribe(actionPerformed => {
+      if (actionPerformed) this.disciplineTable.updateData();
+    });
+  }
+
   /**
    * Breakpoints:
    * * `width` > 1080 - __33%__
@@ -260,13 +271,11 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openCurriculumDisciplineFormDialog() {
-    this._dialogRef = this._matDialog.open(
-      CurriculumDisciplineDialogComponent,
-      { data: { curriculumId: this.id, curriculumDiscipline: undefined } }
-    );
-    this._dialogRef.afterClosed().subscribe(actionPerformed => {
-      if (actionPerformed) this.disciplineTable.updateData();
-    });
+  private generateAdmissionYearOptions(): number[] {
+    const options: number[] = [];
+    for (let year = new Date().getFullYear(); options.length < 15; year++) {
+      options.push(year);
+    }
+    return options;
   }
 }

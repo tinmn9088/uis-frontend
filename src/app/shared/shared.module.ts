@@ -40,7 +40,6 @@ import { PaginatorService } from './services/paginator.service';
 import { LanguageService } from './services/language.service';
 import { FilteredSelectComponent } from './components/filtered-select/filtered-select.component';
 import { EmptyComponent } from './components/empty/empty.component';
-import { DatepickerYearHeaderComponent } from './components/datepicker-year-header/datepicker-year-header.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { ListManagementComponent } from './components/list-management/list-management.component';
 
@@ -91,7 +90,6 @@ const declarations = [
   PaginatorComponent,
   JoinPipe,
   FilteredSelectComponent,
-  DatepickerYearHeaderComponent,
   EmptyComponent,
   TruncatePipe,
   ListManagementComponent,
