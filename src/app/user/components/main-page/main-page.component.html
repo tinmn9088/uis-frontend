@@ -5,7 +5,8 @@
     <mat-accordion class="list__panels-container" multi>
       <mat-expansion-panel
         class="list__panel"
-        *ngFor="let cardGroup of cardGroups | keyvalue">
+        *ngFor="let cardGroup of cardGroups | keyvalue"
+        expanded="true">
         <mat-expansion-panel-header>
           {{ cardGroup.key | translate }}
         </mat-expansion-panel-header>
