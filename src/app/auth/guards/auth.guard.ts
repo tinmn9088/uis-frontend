@@ -94,6 +94,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       .subscribe(message => {
         this._snackbarService.showInfo(message);
       });
+    this._authService.logout();
     this._router.navigate(this._authService.AUTH_PAGE_PATH, {
       queryParams: { redirectTo: url },
     });

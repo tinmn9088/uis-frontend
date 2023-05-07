@@ -56,13 +56,17 @@
     "session_expired": "Сессия истекла",
     "login_form": {
       "sign_in": "Вход",
+      "sign_out_username": "Выйти,",
+      "sign_out_button": "Выйти",
       "password_label": "Пароль",
       "login_label": "Логин",
       "required": "Обязательно",
       "messages": {
         "success": "Вход выполнен",
         "invalid_request_error": "Неверный логин или пароль",
-        "server_error": "Попробуйте позже"
+        "server_error": "Попробуйте позже",
+        "logged_in_already_username": "Вход уже выполнен как",
+        "logged_out": "Необходимо войти"
       }
     }
   },

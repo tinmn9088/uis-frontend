@@ -56,13 +56,17 @@
     "session_expired": "Session expired",
     "login_form": {
       "sign_in": "Sign in",
+      "sign_out_username": "Sign out,",
+      "sign_out_button": "Sign out",
       "password_label": "Password",
       "login_label": "Login",
       "required": "Required",
       "messages": {
-        "success": "Logged in successfully",
+        "success": "Signed in successfully",
         "invalid_request_error": "Invalid login or password",
-        "server_error": "Try again later"
+        "server_error": "Try again later",
+        "logged_in_already_username": "Already signed in as",
+        "logged_out": "Need to sign in"
       }
     }
   },

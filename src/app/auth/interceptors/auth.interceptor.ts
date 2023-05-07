@@ -110,6 +110,7 @@ export class AuthInterceptor implements HttpInterceptor {
     this._translateService.get('auth.session_expired').subscribe(message => {
       this._snackbarService.showInfo(message);
     });
+    this._authService.logout();
     this._router.navigate(this._authService.AUTH_PAGE_PATH, {
       queryParams: { redirectTo: this._router.url },
     });

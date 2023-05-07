@@ -67,6 +67,7 @@ export class MainPageComponent implements OnInit {
   }
 
   navigateToAuthPage() {
+    this.authService.logout();
     this._router.navigate(this.authService.AUTH_PAGE_PATH);
   }
 }

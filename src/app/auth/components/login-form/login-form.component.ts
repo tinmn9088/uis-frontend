@@ -25,6 +25,8 @@ export class LoginFormComponent implements OnInit {
     .pipe(distinctUntilChanged());
   cardWidthPercents = 66;
   passwordHidden = true;
+  isUserLoggedIn!: boolean;
+  currentUsername?: string;
   redirectTo?: string;
 
   formGroup: FormGroup = new FormGroup({
@@ -46,6 +48,15 @@ export class LoginFormComponent implements OnInit {
     this.redirectTo = this._activatedRoute.snapshot.queryParams['redirectTo'];
     if (this.redirectTo) {
       console.debug(`Will redirect back to: "${this.redirectTo}"`);
+    }
+    this.isUserLoggedIn = this.checkIsUserLoggedIn();
+    if (this.isUserLoggedIn) {
+      this.currentUsername = this._authService.user.username;
+      this._translate
+        .get('auth.login_form.messages.logged_in_already_username')
+        .subscribe(message => {
+          this._snackbarService.showInfo(`${message} ${this.currentUsername}`);
+        });
     }
   }
 
@@ -87,6 +98,20 @@ export class LoginFormComponent implements OnInit {
           });
       },
     });
+  }
+
+  logout() {
+    this._authService.logout();
+    this.isUserLoggedIn = this.checkIsUserLoggedIn();
+    this._translate
+      .get('auth.login_form.messages.logged_out')
+      .subscribe(messsage => {
+        this._snackbarService.showInfo(messsage);
+      });
+  }
+
+  private checkIsUserLoggedIn(): boolean {
+    return !!this._authService.auth && !!this._authService.user;
   }
 
   private onBreakpointChange() {
