@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ModuleName } from 'src/app/shared/domain/module-name';
-import { ModuleSidenavOption } from 'src/app/shared/domain/module-sidenav-option';
+import { ModuleOption } from 'src/app/shared/domain/module-option';
 import { ModuleService } from 'src/app/shared/services/module.service';
 
 declare type ModuleCard = {
@@ -10,7 +10,7 @@ declare type ModuleCard = {
   i18nGroupName: string;
   path: string;
   themeCssClass: any;
-  options: ModuleSidenavOption[];
+  options: ModuleOption[];
   isAllowed: boolean;
 };
 
@@ -51,7 +51,8 @@ export class MainPageComponent implements OnInit {
             ? `${module.path}/list`
             : module.path || '',
         themeCssClass: themeCssClass,
-        options: module.options?.filter(option => !option.pathRegex) || [],
+        options:
+          module.options?.filter(option => this.showCardOption(option)) || [],
         isAllowed: this.authService.hasUserPermissions(requiredPermissions),
         i18nGroupName: module.i18nGroupName || '-',
       };
@@ -69,5 +70,10 @@ export class MainPageComponent implements OnInit {
   navigateToAuthPage() {
     this.authService.logout();
     this._router.navigate(this.authService.AUTH_PAGE_PATH);
+  }
+
+  private showCardOption(option: ModuleOption): boolean {
+    const mainPagePath = this._moduleService.getMainPagePath();
+    return !option.pathRegex && option.path !== mainPagePath;
   }
 }

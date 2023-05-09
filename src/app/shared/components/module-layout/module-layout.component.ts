@@ -13,7 +13,7 @@ import {
 } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { BehaviorSubject, Subscription, distinctUntilChanged } from 'rxjs';
-import { ModuleSidenavOption } from '../../domain/module-sidenav-option';
+import { ModuleOption } from '../../domain/module-option';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { ModuleService } from '../../services/module.service';
 import { ModuleName } from '../../domain/module-name';
@@ -36,8 +36,8 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   sidenavFullsize = true;
   showToolbarTabs = true;
   isContentHidden = true;
-  sidenavOptions!: ModuleSidenavOption[];
-  activeOption?: ModuleSidenavOption;
+  sidenavOptions!: ModuleOption[];
+  activeOption?: ModuleOption;
   toolbarTabs!: ToolbarTab[];
   activeTab?: ToolbarTab;
   addButtonPath?: string;
@@ -141,7 +141,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  isSidenavOptionHidden(option: ModuleSidenavOption): boolean {
+  isSidenavOptionHidden(option: ModuleOption): boolean {
     if (option === this.activeOption) return false;
     const group = this.sidenavOptions.filter(
       other => other.groupId === option.groupId
@@ -152,7 +152,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     return option !== group[0];
   }
 
-  private isActiveOption(currentPath: string, option: ModuleSidenavOption) {
+  private isActiveOption(currentPath: string, option: ModuleOption) {
     let active = currentPath.startsWith(option.path);
     if (option.pathRegex) {
       active = active || currentPath.match(option.pathRegex) !== null;

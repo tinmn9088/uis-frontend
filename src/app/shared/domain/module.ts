@@ -1,5 +1,5 @@
 import { PermissionRequiring } from 'src/app/auth/domain/permission-requiring';
-import { ModuleSidenavOption } from './module-sidenav-option';
+import { ModuleOption } from './module-option';
 
 export interface Module extends PermissionRequiring {
   name?: string;
@@ -8,5 +8,5 @@ export interface Module extends PermissionRequiring {
   i18nName?: string;
   i18nGroupName?: string;
   sidenavAddButtonPath?: string;
-  options?: ModuleSidenavOption[];
+  options?: ModuleOption[];
 }
