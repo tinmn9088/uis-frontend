@@ -68,6 +68,11 @@
         "logged_in_already_username": "Already signed in as",
         "logged_out": "Need to sign in"
       }
+    },
+    "logout_dialog": {
+      "confirmation_message": "Logout?",
+      "no_button": "No",
+      "yes_button": "Yes"
     }
   },
   "users": {

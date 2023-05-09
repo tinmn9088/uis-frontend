@@ -15,6 +15,8 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/user/domain/user';
 import { ModuleService } from '../../services/module.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LogoutDialogComponent } from 'src/app/auth/components/logout-dialog/logout-dialog.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -60,7 +62,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     public languageService: LanguageService,
     public authService: AuthService,
     private _moduleService: ModuleService,
-    private _router: Router
+    private _router: Router,
+    private _matDialog: MatDialog
   ) {
     this._resizeObserver = new ResizeObserver(entries => {
       this.onResize(entries[0]?.contentRect.width);
@@ -104,8 +107,13 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
   }
 
   onLogout() {
-    this.authService.logout();
-    this._router.navigateByUrl('/');
+    const dialogRef = this._matDialog.open(LogoutDialogComponent);
+    dialogRef.afterClosed().subscribe(isLogoutConfirmed => {
+      if (isLogoutConfirmed) {
+        this.authService.logout();
+        this._router.navigateByUrl('/');
+      }
+    });
   }
 
   getUserRolesNames(): string[] | undefined {

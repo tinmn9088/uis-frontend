@@ -68,6 +68,11 @@
         "logged_in_already_username": "Вход уже выполнен как",
         "logged_out": "Необходимо войти"
       }
+    },
+    "logout_dialog": {
+      "confirmation_message": "Выйти?",
+      "no_button": "Нет",
+      "yes_button": "Да"
     }
   },
   "users": {
