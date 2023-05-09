@@ -18,6 +18,7 @@ import { DisciplineUpdateRequest } from '../../domain/discipline-update-request'
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
 import { Category } from 'src/app/category/domain/category';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-discipline-form',
@@ -166,8 +167,8 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
           );
         }
       },
-      error: (reason: Error) => {
-        this._snackbarService.showError(reason.message);
+      error: (response: HttpErrorResponse) => {
+        this._snackbarService.showError(response.error.message);
         this.formGroup.enable();
       },
     });

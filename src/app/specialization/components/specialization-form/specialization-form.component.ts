@@ -16,6 +16,7 @@ import { map } from 'rxjs';
 import { SpecializationUpdateRequest } from '../../domain/specialization-update-request';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-specialization-form',
@@ -166,8 +167,8 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
           );
         }
       },
-      error: (reason: Error) => {
-        this._snackbarService.showError(reason.message);
+      error: (response: HttpErrorResponse) => {
+        this._snackbarService.showError(response.error.message);
         this.formGroup.enable();
       },
     });

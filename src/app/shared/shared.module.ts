@@ -42,6 +42,7 @@ import { FilteredSelectComponent } from './components/filtered-select/filtered-s
 import { EmptyComponent } from './components/empty/empty.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { ListManagementComponent } from './components/list-management/list-management.component';
+import { ErrorMessageService } from './services/error-message.service';
 
 export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('themeClass');
 export const REFRESH_JWT_REQUEST_COUNT_TOKEN = new InjectionToken<string>(
@@ -115,6 +116,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     PaginatorService,
     LanguageService,
+    ErrorMessageService,
     MatDatepickerModule,
     MatNativeDateModule,
   ],

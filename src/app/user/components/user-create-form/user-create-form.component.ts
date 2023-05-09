@@ -8,6 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
 import { User } from '../../domain/user';
+import { ErrorMessageService } from 'src/app/shared/services/error-message.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-create-form',
@@ -25,7 +27,8 @@ export class UserCreateFormComponent {
     private _userService: UserService,
     private _authService: AuthService,
     private _translate: TranslateService,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    private _errorMessageService: ErrorMessageService
   ) {
     this.areNotPermissionsPresent = !this._authService.hasUserPermissions([
       Permission.USER_CREATE,
@@ -92,12 +95,18 @@ export class UserCreateFormComponent {
             this._snackbarService.showSuccess(message, SnackbarAction.Cross);
           });
       },
-      error: () => {
+      error: (response: HttpErrorResponse) => {
         this._translate
           .get('users.user_create_form.messages.error')
           .subscribe(message => {
             this.formGroup.enable();
-            this._snackbarService.showError(message, SnackbarAction.Cross);
+            this._snackbarService.showError(
+              this._errorMessageService.buildHttpErrorMessage(
+                response,
+                message
+              ),
+              SnackbarAction.Cross
+            );
           });
       },
     });

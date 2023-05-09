@@ -18,6 +18,8 @@ import { CurriculumService } from '../../services/curriculum.service';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
+import { ErrorMessageService } from 'src/app/shared/services/error-message.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-curriculum-discipline-form[curriculumId]',
@@ -58,6 +60,7 @@ export class CurriculumDisciplineFormComponent implements OnInit {
     private _curriculumService: CurriculumService,
     private _disciplineService: DisciplineService,
     private _snackbarService: SnackbarService,
+    private _errorMessageService: ErrorMessageService,
     private _translate: TranslateService
   ) {
     this.areNotPermissionsPresent = !this._authService.hasUserPermissions([
@@ -200,7 +203,7 @@ export class CurriculumDisciplineFormComponent implements OnInit {
             this._snackbarService.showSuccess(message, SnackbarAction.Cross);
           });
       },
-      error: () => {
+      error: (response: HttpErrorResponse) => {
         this._translate
           .get(
             this.editMode
@@ -209,7 +212,13 @@ export class CurriculumDisciplineFormComponent implements OnInit {
           )
           .subscribe(message => {
             this.formGroup.enable();
-            this._snackbarService.showError(message, SnackbarAction.Cross);
+            this._snackbarService.showError(
+              this._errorMessageService.buildHttpErrorMessage(
+                response,
+                message
+              ),
+              SnackbarAction.Cross
+            );
           });
       },
     });

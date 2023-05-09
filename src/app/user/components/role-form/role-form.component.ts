@@ -28,6 +28,8 @@ import { RoleUpdateRequest } from '../../domain/role-update-request';
 import { PermissionScope } from '../../domain/permission-scope';
 import { MatSelectionList } from '@angular/material/list';
 import { PermissionAction } from '../../domain/permission-action';
+import { ErrorMessageService } from 'src/app/shared/services/error-message.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-role-form',
@@ -62,7 +64,8 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
     private _permissionService: PermissionService,
     private _authService: AuthService,
     private _translate: TranslateService,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    private _errorMessageService: ErrorMessageService
   ) {
     this.areNotPermissionsPresent = !this._authService.hasUserPermissions([
       Permission.ROLE_CREATE,
@@ -160,7 +163,7 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
             this._snackbarService.showSuccess(message, SnackbarAction.Cross);
           });
       },
-      error: () => {
+      error: (response: HttpErrorResponse) => {
         this._translate
           .get(
             this.editMode
@@ -169,7 +172,13 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
           )
           .subscribe(message => {
             this.formGroup.enable();
-            this._snackbarService.showError(message, SnackbarAction.Cross);
+            this._snackbarService.showError(
+              this._errorMessageService.buildHttpErrorMessage(
+                response,
+                message
+              ),
+              SnackbarAction.Cross
+            );
           });
       },
     });

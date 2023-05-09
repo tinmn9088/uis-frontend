@@ -24,6 +24,7 @@ import { Permission } from 'src/app/auth/domain/permission';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CurriculumDisciplineDialogComponent } from '../curriculum-discipline-dialog/curriculum-discipline-dialog.component';
 import { CurriculumDisciplineTableComponent } from '../curriculum-discipline-table/curriculum-discipline-table.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-curriculum-form',
@@ -184,8 +185,8 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
           );
         }
       },
-      error: (reason: Error) => {
-        this._snackbarService.showError(reason.message);
+      error: (response: HttpErrorResponse) => {
+        this._snackbarService.showError(response.error.message);
         this.formGroup.enable();
       },
     });

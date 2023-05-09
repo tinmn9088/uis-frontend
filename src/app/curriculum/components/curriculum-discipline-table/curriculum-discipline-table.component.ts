@@ -8,6 +8,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CurriculumDisciplineDialogComponent } from '../curriculum-discipline-dialog/curriculum-discipline-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { ErrorMessageService } from 'src/app/shared/services/error-message.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-curriculum-discipline-table[curriculumId]',
@@ -44,6 +46,7 @@ export class CurriculumDisciplineTableComponent implements OnInit {
     private _authService: AuthService,
     private _matDialog: MatDialog,
     private _snackbarService: SnackbarService,
+    private _errorMessageService: ErrorMessageService,
     private _translate: TranslateService
   ) {
     this.canUserModifyCurriculum = this._authService.hasUserPermissions([
@@ -103,14 +106,18 @@ export class CurriculumDisciplineTableComponent implements OnInit {
               this._snackbarService.showSuccess(message);
             });
         },
-        error: error => {
+        error: (response: HttpErrorResponse) => {
           this._translate
             .get(
               'curricula.form.disciplines.table.snackbar_remove_error_message'
             )
             .subscribe(message => {
-              console.error(error);
-              this._snackbarService.showError(message);
+              this._snackbarService.showError(
+                this._errorMessageService.buildHttpErrorMessage(
+                  response,
+                  message
+                )
+              );
             });
         },
         complete: () => {

@@ -16,6 +16,7 @@ import { CategoryAddRequest } from '../../domain/category-add-request';
 import { map } from 'rxjs';
 import { Permission } from 'src/app/auth/domain/permission';
 import { CategoryUpdateRequest } from '../../domain/category-update-request';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-category-form',
@@ -142,8 +143,8 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
           );
         }
       },
-      error: (reason: Error) => {
-        this._snackbarService.showError(reason.message);
+      error: (response: HttpErrorResponse) => {
+        this._snackbarService.showError(response.error.message);
         this.formGroup.enable();
       },
     });

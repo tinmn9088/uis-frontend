@@ -8,6 +8,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { ErrorMessageService } from 'src/app/shared/services/error-message.service';
 
 @Component({
   selector: 'app-login-form',
@@ -38,6 +39,7 @@ export class LoginFormComponent implements OnInit {
     private _breakpointObserver: BreakpointObserver,
     private _authService: AuthService,
     private _snackbarService: SnackbarService,
+    private _errorMessageService: ErrorMessageService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _translate: TranslateService
@@ -85,16 +87,22 @@ export class LoginFormComponent implements OnInit {
             this._router.navigateByUrl(this.redirectTo || '/');
           });
       },
-      error: (error: HttpErrorResponse) => {
+      error: (response: HttpErrorResponse) => {
         this._translate
           .get(
-            error.status === HttpStatusCode.NotFound
+            response.status === HttpStatusCode.NotFound
               ? 'auth.login_form.messages.invalid_request_error'
               : 'auth.login_form.messages.server_error'
           )
           .subscribe(message => {
             this.formGroup.enable();
-            this._snackbarService.showError(message, SnackbarAction.Cross);
+            this._snackbarService.showError(
+              this._errorMessageService.buildHttpErrorMessage(
+                response,
+                message
+              ),
+              SnackbarAction.Cross
+            );
           });
       },
     });
