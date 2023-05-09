@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModuleName } from '../domain/module-name';
 import Modules from 'src/assets/modules.json';
-import { ModuleSidenavOption } from '../domain/module-sidenav-option';
+import { ModuleOption } from '../domain/module-option';
 import { Module } from '../domain/module';
 import { Permission } from 'src/app/auth/domain/permission';
 
@@ -9,6 +9,25 @@ import { Permission } from 'src/app/auth/domain/permission';
   providedIn: 'root',
 })
 export class ModuleService {
+  getMainPagePath(): string {
+    return Modules.mainPage.path;
+  }
+
+  getI18nGroupName(name: ModuleName): string | undefined {
+    const module = this.getModule(name);
+    return module.i18nGroupName;
+  }
+
+  getAllI18nGroupNames(): string[] {
+    const names = this.getAllModuleNames();
+    const groupNames: string[] = [];
+    for (const name of names) {
+      const groupName = this.getModule(name).i18nGroupName;
+      if (groupName) groupNames.push();
+    }
+    return groupNames;
+  }
+
   getThemeCssClass(name: ModuleName): string | undefined {
     const module = this.getModule(name);
     return module.themeCssClass;
@@ -45,12 +64,12 @@ export class ModuleService {
   }
 
   /**
-   * @returns required permissions for module and sidenav options
+   * @returns required permissions for module and options
    */
   getAllRequiredPermissions(name: ModuleName): Permission[] {
     const module = this.getModule(name);
     const allRequiredPermissions = new Set(module.requiredPermissions);
-    module.sidenavOptions?.map(option =>
+    module.options?.map(option =>
       option.requiredPermissions.forEach(permission =>
         allRequiredPermissions.add(permission)
       )
@@ -63,9 +82,9 @@ export class ModuleService {
     return module.sidenavAddButtonPath;
   }
 
-  getSidenavOptions(name: ModuleName): ModuleSidenavOption[] | undefined {
+  getOptions(name: ModuleName): ModuleOption[] | undefined {
     const module = this.getModule(name);
-    return module.sidenavOptions;
+    return module.options;
   }
 
   getAllModules(): Module[] {

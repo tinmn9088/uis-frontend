@@ -11,6 +11,30 @@
     flex-direction: column;
   }
 
+  &__checkbox-select-all {
+    margin-left: 8px;
+
+    &-label {
+      margin-left: 20px;
+    }
+  }
+
+  &__permissions-list-item {
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  &__permissions-list-subheader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    &-text {
+      flex-grow: 1;
+    }
+  }
+
   &__no-permission {
     width: 100%;
     display: flex;
@@ -27,6 +51,10 @@
       text-align: center;
     }
   }
+}
+
+.collapsed {
+  display: none;
 }
 
 .loading {

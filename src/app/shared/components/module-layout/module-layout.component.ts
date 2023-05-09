@@ -13,8 +13,8 @@ import {
 } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { BehaviorSubject, Subscription, distinctUntilChanged } from 'rxjs';
-import { ModuleSidenavOption } from '../../domain/module-sidenav-option';
-import { NavigationEnd, Router } from '@angular/router';
+import { ModuleOption } from '../../domain/module-option';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { ModuleService } from '../../services/module.service';
 import { ModuleName } from '../../domain/module-name';
 import { THEME_CSS_CLASS_TOKEN } from '../../shared.module';
@@ -35,9 +35,9 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   contentHeightPixels?: number;
   sidenavFullsize = true;
   showToolbarTabs = true;
-  isContentHidden = false;
-  sidenavOptions!: ModuleSidenavOption[];
-  activeOption?: ModuleSidenavOption;
+  isContentHidden = true;
+  sidenavOptions!: ModuleOption[];
+  activeOption?: ModuleOption;
   toolbarTabs!: ToolbarTab[];
   activeTab?: ToolbarTab;
   addButtonPath?: string;
@@ -85,17 +85,17 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     ];
     this._pathChangeSubscription = this._router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        const currentPath = event.url;
-
+      if (event instanceof NavigationStart) {
         this.isContentHidden = true;
+      }
+      if (event instanceof NavigationEnd) {
+        const currentPath = event.urlAfterRedirects;
 
         const moduleName = this._moduleService.getModuleNameByPath(currentPath);
         if (!moduleName) {
           return;
         }
-        this.sidenavOptions =
-          this._moduleService.getSidenavOptions(moduleName) || [];
+        this.sidenavOptions = this._moduleService.getOptions(moduleName) || [];
         this.activeOption = this.sidenavOptions.find(option =>
           this.isActiveOption(currentPath, option)
         );
@@ -107,7 +107,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
         setTimeout(() => {
           this.isContentHidden = false;
-        }, 150);
+        }, 200);
       }
     });
   }
@@ -141,7 +141,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  isSidenavOptionHidden(option: ModuleSidenavOption): boolean {
+  isSidenavOptionHidden(option: ModuleOption): boolean {
     if (option === this.activeOption) return false;
     const group = this.sidenavOptions.filter(
       other => other.groupId === option.groupId
@@ -152,7 +152,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     return option !== group[0];
   }
 
-  private isActiveOption(currentPath: string, option: ModuleSidenavOption) {
+  private isActiveOption(currentPath: string, option: ModuleOption) {
     let active = currentPath.startsWith(option.path);
     if (option.pathRegex) {
       active = active || currentPath.match(option.pathRegex) !== null;

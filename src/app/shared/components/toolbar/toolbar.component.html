@@ -9,6 +9,16 @@
       <mat-icon>menu</mat-icon>
     </button>
 
+    <a [routerLink]="mainPagePath" *ngIf="showMainPageButton">
+      <button
+        mat-icon-button
+        class="toolbar__main-page-button"
+        aria-label="Main page button"
+        (click)="onMainPageClick()">
+        <mat-icon>home</mat-icon>
+      </button>
+    </a>
+
     <ng-container *ngIf="!compact">
       <ng-container *ngTemplateOutlet="tabsTemplate"></ng-container>
     </ng-container>

@@ -1,12 +1,21 @@
 {
+  "mainPage": {
+    "path": "/user/main"
+  },
   "user": {
     "name": "User",
     "themeCssClass": "user-theme",
     "i18nName": "module.name.users",
+    "i18nGroupName": "module.groupName.security",
     "path": "/user",
     "resourcePath": "/users",
     "requiredPermissions": ["USER_READ"],
-    "sidenavOptions": [
+    "options": [
+      {
+        "title": "users.options.main_page",
+        "path": "/user/main",
+        "requiredPermissions": []
+      },
       {
         "title": "users.options.user_management",
         "path": "/user/list",
@@ -23,11 +32,12 @@
     "name": "Category",
     "themeCssClass": "category-theme",
     "i18nName": "module.name.categories",
+    "i18nGroupName": "module.groupName.academic",
     "path": "/category",
     "resourcePath": "/tags",
     "requiredPermissions": ["TAG_READ"],
     "sidenavAddButtonPath": "/category/add",
-    "sidenavOptions": [
+    "options": [
       {
         "title": "categories.options.search",
         "path": "/category/list",
@@ -52,11 +62,12 @@
     "name": "Discipline",
     "themeCssClass": "discipline-theme",
     "i18nName": "module.name.disciplines",
+    "i18nGroupName": "module.groupName.academic",
     "path": "/discipline",
     "resourcePath": "/disciplines",
     "requiredPermissions": ["DISCIPLINE_GET", "DISCIPLINE_SEARCH"],
     "sidenavAddButtonPath": "/discipline/add",
-    "sidenavOptions": [
+    "options": [
       {
         "title": "disciplines.options.search",
         "path": "/discipline/list",
@@ -81,11 +92,12 @@
     "name": "Specialization",
     "themeCssClass": "specialization-theme",
     "i18nName": "module.name.specializations",
+    "i18nGroupName": "module.groupName.academic",
     "path": "/specialization",
     "resourcePath": "/specializations",
     "requiredPermissions": ["SPECIALIZATION_GET", "SPECIALIZATION_SEARCH"],
     "sidenavAddButtonPath": "/specialization/add",
-    "sidenavOptions": [
+    "options": [
       {
         "title": "specializations.options.search",
         "path": "/specialization/list",
@@ -110,24 +122,25 @@
     "name": "Curriculum",
     "themeCssClass": "curriculum-theme",
     "i18nName": "module.name.curricula",
+    "i18nGroupName": "module.groupName.academic",
     "path": "/curriculum",
     "resourcePath": "/curriculums",
     "requiredPermissions": ["CURRICULUM_GET"],
     "sidenavAddButtonPath": "/curriculum/add",
-    "sidenavOptions": [
+    "options": [
       {
-        "title": "curriculum.options.search",
+        "title": "curricula.options.search",
         "path": "/curriculum/list",
         "requiredPermissions": ["CURRICULUM_GET"]
       },
       {
-        "title": "curriculum.options.add",
+        "title": "curricula.options.add",
         "path": "/curriculum/add",
         "groupId": 1,
         "requiredPermissions": ["CURRICULUM_CREATE"]
       },
       {
-        "title": "curriculum.options.edit",
+        "title": "curricula.options.edit",
         "path": "/curriculum/0",
         "pathRegex": "/curriculum/\\d+",
         "groupId": 1,

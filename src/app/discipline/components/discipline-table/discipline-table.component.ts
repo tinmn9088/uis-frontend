@@ -4,7 +4,8 @@ import { DisciplineService } from '../../services/discipline.service';
 import { Sort } from '@angular/material/sort';
 import { Discipline } from '../../domain/discipline';
 import { CategoryService } from 'src/app/category/services/category.service';
-import { Category } from 'src/app/category/domain/category';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-discipline-table',
@@ -20,11 +21,20 @@ export class DisciplineTableComponent implements OnInit {
   displayedColumns: string[] = ['name', 'shortName', 'categories'];
   isLoading = true;
   dataSource: Discipline[] = [];
+  canUserModifyDiscipline: boolean;
 
   constructor(
     private _disciplineService: DisciplineService,
-    private _categoryService: CategoryService
-  ) {}
+    private _categoryService: CategoryService,
+    private _authService: AuthService
+  ) {
+    this.canUserModifyDiscipline = this._authService.hasUserPermissions([
+      Permission.DISCIPLINE_UPDATE,
+    ]);
+    if (this.canUserModifyDiscipline) {
+      this.displayedColumns.push('operations');
+    }
+  }
 
   ngOnInit() {
     this.search();

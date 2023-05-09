@@ -7,7 +7,7 @@
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>
-        {{ 'curriculum.list.columns.id' | translate }}
+        {{ 'curricula.list.columns.id' | translate }}
       </th>
       <td
         mat-cell
@@ -17,7 +17,7 @@
           visibility: isLoading ? 'hidden' : 'visible',
           transition: 'opacity 0.1s linear'
         }">
-        <a [routerLink]="getLinkToFormPage(curriculum)">
+        <a [routerLink]="getLinkToFormPage(curriculum.id)">
           {{ curriculum.id }}
         </a>
       </td>
@@ -26,7 +26,7 @@
     <!-- Approval date Column -->
     <ng-container matColumnDef="approvalDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'curriculum.list.columns.approval_date' | translate }}
+        {{ 'curricula.list.columns.approval_date' | translate }}
       </th>
       <td mat-cell *matCellDef="let curriculum" [ngStyle]="getTableCellStyle()">
         {{ curriculum.approvalDate }}
@@ -36,7 +36,7 @@
     <!-- Admission year Column -->
     <ng-container matColumnDef="admissionYear">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'curriculum.list.columns.admission_year' | translate }}
+        {{ 'curricula.list.columns.admission_year' | translate }}
       </th>
       <td mat-cell *matCellDef="let curriculum" [ngStyle]="getTableCellStyle()">
         {{ curriculum.admissionYear }}
@@ -46,10 +46,27 @@
     <!-- Specialization id Column -->
     <ng-container matColumnDef="specializationId">
       <th mat-header-cell *matHeaderCellDef>
-        {{ 'curriculum.list.columns.specialization_id' | translate }}
+        {{ 'curricula.list.columns.specialization_id' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let curricula" [ngStyle]="getTableCellStyle()">
+        {{ curricula.specializationId }}
+      </td>
+    </ng-container>
+
+    <!-- Operations Column -->
+    <ng-container matColumnDef="operations">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'curricula.list.columns.operations' | translate }}
       </th>
       <td mat-cell *matCellDef="let curriculum" [ngStyle]="getTableCellStyle()">
-        {{ curriculum.specializationId }}
+        <button
+          class="table__edit-button"
+          mat-icon-button
+          *ngIf="canUserModifyCurriculum"
+          [routerLink]="getLinkToFormPage(curriculum.id)"
+          color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
       </td>
     </ng-container>
 
@@ -64,6 +81,6 @@
   <div
     class="table__no-data-label"
     *ngIf="!isLoading && (!dataSource || dataSource.length === 0)">
-    <p>{{ 'curriculum.list.no_data_label' | translate }}</p>
+    <p>{{ 'curricula.list.no_data_label' | translate }}</p>
   </div>
 </div>

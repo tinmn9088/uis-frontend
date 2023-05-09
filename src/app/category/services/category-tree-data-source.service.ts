@@ -113,8 +113,6 @@ export class CategoryTreeDataSourceService
   }
 
   handleTreeControl(change: SelectionChange<CategoryFlatNode>) {
-    console.log('CategoryFlatNode', change);
-
     if (change.added) {
       change.added.forEach(node => this.toggleNode(node, true));
     }

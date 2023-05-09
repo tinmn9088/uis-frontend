@@ -42,4 +42,19 @@
     (click)="paginator.nextPage()">
     <i class="material-icons">chevron_right</i>
   </button>
+
+  <div
+    class="paginator__page-size"
+    *ngIf="!hidePageSizeSelect && pageSizeOptions"
+    appearance="outline"
+    matTooltip="{{ 'paginator.page_size_options' | translate }}"
+    [matTooltipPosition]="'right'">
+    <mat-select
+      class="paginator__page-size-select"
+      [formControl]="pageSizeFormControl">
+      <mat-option *ngFor="let option of pageSizeOptions" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </div>
 </div>

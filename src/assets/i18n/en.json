@@ -6,6 +6,10 @@
       "disciplines": "Disciplines",
       "specializations": "Specializations",
       "curricula": "Curricula"
+    },
+    "groupName": {
+      "security": "Security",
+      "academic": "Academic"
     }
   },
   "toolbar": {
@@ -27,6 +31,9 @@
       "default": "Guest"
     }
   },
+  "paginator": {
+    "page_size_options": "Page size"
+  },
   "sidenav": {
     "add_button": "Create"
   },
@@ -36,19 +43,36 @@
     "checkbox_unselect_all": "Unselect all",
     "cannot_load_options": "Failed to load options"
   },
+  "list_management": {
+    "add_button": "Add",
+    "add_button_tooltip": "Add selected",
+    "add_button_error_tooltip": "Already added",
+    "delete_button": "Delete",
+    "delete_button_tooltip": "Delete selected",
+    "empty_list": "Empty."
+  },
   "auth": {
     "authentication_needed": "Need to login",
     "session_expired": "Session expired",
     "login_form": {
       "sign_in": "Sign in",
+      "sign_out_username": "Sign out,",
+      "sign_out_button": "Sign out",
       "password_label": "Password",
       "login_label": "Login",
       "required": "Required",
       "messages": {
-        "success": "Logged in successfully",
+        "success": "Signed in successfully",
         "invalid_request_error": "Invalid login or password",
-        "server_error": "Try again later"
+        "server_error": "Try again later",
+        "logged_in_already_username": "Already signed in as",
+        "logged_out": "Need to sign in"
       }
+    },
+    "logout_dialog": {
+      "confirmation_message": "Logout?",
+      "no_button": "No",
+      "yes_button": "Yes"
     }
   },
   "users": {
@@ -62,6 +86,7 @@
         "subtitle": "Options",
         "open_button": "Open"
       },
+      "title": "Module list",
       "no_modules_label": "No modules available",
       "login_label": "Login to see more",
       "login_button_text": "Login"
@@ -123,14 +148,20 @@
           "permission_ids": "Permission Ids",
           "operations": "Operations"
         },
+        "operation_tooltips": {
+          "edit": "Edit",
+          "copy": "Copy"
+        },
         "create_button": "Create role",
         "no_permission_label": "Not allowed",
         "no_data_label": "No roles found."
       },
       "form": {
         "no_permission_label": "Not allowed",
+        "select_all": "All premissions",
         "create_title": "Create role",
         "edit_title": "Edit role",
+        "copy_of": "Copy of",
         "name_label": "Name",
         "required": "Required",
         "edit_button": "Edit",
@@ -144,6 +175,7 @@
       }
     },
     "options": {
+      "main_page": "Main page",
       "user_management": "Users management",
       "role_management": "Roles management"
     }
@@ -183,7 +215,8 @@
       "columns": {
         "name": "Name",
         "short_name": "Short name",
-        "categories": "Categories"
+        "categories": "Categories",
+        "operations": "Operations"
       },
       "no_data_label": "No disciplines found.",
       "no_permission_label": "Not allowed"
@@ -217,7 +250,9 @@
       "edit_button": "Edit",
       "no_data_label": "No specializations found.",
       "no_permission_label": "Not allowed",
-      "failed_to_retrieve_children_message": "Failed to retireve children specializations"
+      "failed_to_retrieve_children_message": "Failed to retireve children specializations",
+      "tree_node_short_name_label": "Short name",
+      "tree_node_cipher_label": "Cipher"
     },
     "form": {
       "add_title": "Add specialization",
@@ -241,13 +276,14 @@
       "edit": "Edit specialization"
     }
   },
-  "curriculum": {
+  "curricula": {
     "list": {
       "columns": {
         "id": "Id",
         "approval_date": "Approval date",
         "admission_year": "Admission year",
-        "specialization_id": "Specialization id"
+        "specialization_id": "Specialization id",
+        "operations": "Operations"
       },
       "no_data_label": "No curricula found.",
       "no_permission_label": "Not allowed"
@@ -266,7 +302,66 @@
       "apply_button": "Apply",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
-      "snackbar_update_success_message": "Updated"
+      "snackbar_update_success_message": "Updated",
+      "disciplines": {
+        "table": {
+          "columns": {
+            "discipline_id": "Discipline",
+            "semester": "Semester",
+            "total_hours": "Total hours",
+            "lecture_hours": "Lecture hours",
+            "practice_hours": "Practice hours",
+            "lab_hours": "Lab hours",
+            "self_study_hours": "Self study hours",
+            "test_count": "Test count",
+            "credit": "Credit",
+            "exam": "Exam",
+            "credit_units": "Credit units",
+            "operations": "Operations"
+          },
+          "title": "Curriculum disciplines",
+          "no_data_label": "No disciplines.",
+          "no_permission_label": "Not allowed",
+          "snackbar_remove_success_message": "Removed successfully",
+          "snackbar_remove_error_message": "Failed to remove"
+        },
+        "form": {
+          "title": "Curriculum discipline",
+          "discipline_id_label": "Discipline",
+          "discipline_id_error": "Discipline required",
+          "semester_label": "Semester",
+          "semester_error": "Must be value between 1 and 8",
+          "total_hours_label": "Total hours",
+          "total_hours_error": "Must be greater than or equal to the sum of the remaining hourly values",
+          "lecture_hours_label": "Lecture hours",
+          "lecture_hours_error": "Must be positive",
+          "practice_hours_label": "Practice hours",
+          "practice_hours_error": "Must be positive",
+          "lab_hours_label": "Lab hours",
+          "lab_hours_error": "Must be positive",
+          "self_study_hours_label": "Self study hours",
+          "self_study_hours_error": "Must be positive",
+          "test_count_label": "Test count",
+          "test_count_error": "Must be positive",
+          "credit_label": "Credit",
+          "exam_label": "Exam",
+          "credit_units_label": "Credit units",
+          "credit_units_error": "Must be positive",
+          "add_discipline_button": "Add discipline",
+          "add_button": "Add",
+          "edit_button": "Edit",
+          "close_button": "Close",
+          "step_general_label": "General",
+          "step_hours_label": "Hours",
+          "step_tests_label": "Tests",
+          "previous_button": "Back",
+          "next_button": "Next",
+          "snackbar_add_success_message": "Added",
+          "snackbar_add_error_message": "Failed to add",
+          "snackbar_update_success_message": "Updated",
+          "snackbar_update_error_message": "Failed to update"
+        }
+      }
     },
     "options": {
       "search": "Search curricula",

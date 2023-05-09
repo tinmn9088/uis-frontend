@@ -1,0 +1,74 @@
+<div class="management">
+  <mat-form-field
+    class="management__form-field"
+    appearance="outline"
+    color="primary">
+    <app-filtered-select
+      class="management__select"
+      [options]="options"
+      [isInternalFilterOn]="isInternalFilterOn"
+      [isLoading]="isLoading"
+      (filterChanged)="onFilterChanged($event)"
+      [formControl]="selectControl">
+    </app-filtered-select>
+  </mat-form-field>
+
+  <div class="management__buttons-container">
+    <div
+      class="management__button-container"
+      matTooltip="{{
+        (isOptionAlreadyPresentInItems.value
+          ? 'list_management.add_button_error_tooltip'
+          : 'list_management.add_button_tooltip'
+        ) | translate
+      }}"
+      matTooltipPosition="right">
+      <button
+        class="management__add-button"
+        type="button"
+        mat-stroked-button
+        [disabled]="!selectControl.value || isOptionAlreadyPresentInItems.value"
+        (click)="onItemAdd(selectControl.value)">
+        <mat-icon>add</mat-icon>
+        {{ 'list_management.add_button' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <mat-selection-list
+    class="management__list"
+    #values
+    (selectionChange)="onSelectionChange()">
+    <ng-container *ngIf="value?.length; else emptyListLabel">
+      <mat-list-option
+        class="management__list-item"
+        *ngFor="let item of value"
+        [value]="item.value">
+        {{ item.name }}
+      </mat-list-option>
+    </ng-container>
+    <ng-template #emptyListLabel>
+      <p class="management__list-empty-label">
+        {{ 'list_management.empty_list' | translate }}
+      </p>
+    </ng-template>
+  </mat-selection-list>
+
+  <div class="management__buttons-container">
+    <div
+      class="management__button-container"
+      matTooltip="{{ 'list_management.delete_button_tooltip' | translate }}"
+      matTooltipPosition="right">
+      <button
+        class="management__delete-button"
+        mat-flat-button
+        type="button"
+        color="warn"
+        [disabled]="!areItemsSelected.value"
+        (click)="onItemsDelete()">
+        <mat-icon>delete</mat-icon>
+        {{ 'list_management.delete_button' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

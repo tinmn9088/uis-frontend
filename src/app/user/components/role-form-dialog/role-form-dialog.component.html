@@ -1,12 +1,19 @@
 <h2 mat-dialog-title>
   {{
-    data.role
+    editMode
       ? ('users.roles.form.edit_title' | translate) + ': '
       : ('users.roles.form.create_title' | translate)
   }}
-  <span class="title-name" *ngIf="data.role">
-    {{ data.role.name }}
+  <span class="title-name" *ngIf="editMode">
+    {{ data.role?.name }}
   </span>
+  <ng-container *ngIf="copyMode">
+    ( {{ 'users.roles.form.copy_of' | translate }}
+    <span class="title-name">
+      {{ data.role?.name }}
+    </span>
+    )
+  </ng-container>
 </h2>
 <mat-dialog-content class="content">
   <app-role-form
@@ -25,7 +32,7 @@
     color="primary"
     [disabled]="isFormInvalid">
     {{
-      (data.role
+      (editMode
         ? 'users.roles.form.edit_button'
         : 'users.roles.form.create_button'
       ) | translate

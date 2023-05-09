@@ -6,6 +6,10 @@
       "disciplines": "Дисциплины",
       "specializations": "Специальности",
       "curricula": "Учебные планы"
+    },
+    "groupName": {
+      "security": "Безопасность",
+      "academic": "Учебные"
     }
   },
   "toolbar": {
@@ -27,6 +31,9 @@
       "default": "Гость"
     }
   },
+  "paginator": {
+    "page_size_options": "Размер страницы"
+  },
   "sidenav": {
     "add_button": "Добавить"
   },
@@ -36,19 +43,36 @@
     "checkbox_unselect_all": "Отменить выбор",
     "cannot_load_options": "Не удалось загрузить"
   },
+  "list_management": {
+    "add_button": "Добавить",
+    "add_button_tooltip": "Добавить выбранное",
+    "add_button_error_tooltip": "Уже добавлено",
+    "delete_button": "Удалить",
+    "delete_button_tooltip": "Удалить выбранные",
+    "empty_list": "Пусто."
+  },
   "auth": {
     "authentication_needed": "Необходимо войти",
     "session_expired": "Сессия истекла",
     "login_form": {
       "sign_in": "Вход",
+      "sign_out_username": "Выйти,",
+      "sign_out_button": "Выйти",
       "password_label": "Пароль",
       "login_label": "Логин",
       "required": "Обязательно",
       "messages": {
         "success": "Вход выполнен",
         "invalid_request_error": "Неверный логин или пароль",
-        "server_error": "Попробуйте позже"
+        "server_error": "Попробуйте позже",
+        "logged_in_already_username": "Вход уже выполнен как",
+        "logged_out": "Необходимо войти"
       }
+    },
+    "logout_dialog": {
+      "confirmation_message": "Выйти?",
+      "no_button": "Нет",
+      "yes_button": "Да"
     }
   },
   "users": {
@@ -62,6 +86,7 @@
         "subtitle": "Опции",
         "open_button": "Открыть"
       },
+      "title": "Список модулей",
       "no_modules_label": "Нет доступных модулей",
       "login_label": "Войдите, чтобы увидеть больше",
       "login_button_text": "Войти"
@@ -123,14 +148,20 @@
           "permission_ids": "Id прав",
           "operations": "Действия"
         },
+        "operation_tooltips": {
+          "edit": "Изменить",
+          "copy": "Копировать"
+        },
         "create_button": "Создать роль",
         "no_permission_label": "Недостаточно прав",
         "no_data_label": "Ролей не найдено."
       },
       "form": {
         "no_permission_label": "Недостаточно прав",
+        "select_all": "Все права",
         "create_title": "Создать роль",
         "edit_title": "Изменить роль",
+        "copy_of": "Копия",
         "name_label": "Название",
         "required": "Обязательно",
         "create_button": "Создать",
@@ -144,6 +175,7 @@
       }
     },
     "options": {
+      "main_page": "Главная страница",
       "user_management": "Управление пользователями",
       "role_management": "Управление ролями"
     }
@@ -183,7 +215,8 @@
       "columns": {
         "name": "Название",
         "short_name": "Краткое название",
-        "categories": "Категории"
+        "categories": "Категории",
+        "operations": "Действия"
       },
       "no_data_label": "Дисциплин не найдено.",
       "no_permission_label": "Недостаточно прав"
@@ -217,7 +250,9 @@
       "edit_button": "Редактировать",
       "no_data_label": "Специальностей не найдено.",
       "no_permission_label": "Недостаточно прав",
-      "failed_to_retrieve_children_message": "Не удалось получить дочерние специальности"
+      "failed_to_retrieve_children_message": "Не удалось получить дочерние специальности",
+      "tree_node_short_name_label": "Короткое название",
+      "tree_node_cipher_label": "Шифр"
     },
     "form": {
       "add_title": "Добавить специальность",
@@ -241,13 +276,14 @@
       "edit": "Изменить специальность"
     }
   },
-  "curriculum": {
+  "curricula": {
     "list": {
       "columns": {
         "id": "Id",
         "approval_date": "Дата утверждения",
         "admission_year": "Год поступления",
-        "specialization_id": "Id специальности"
+        "specialization_id": "Id специальности",
+        "operations": "Действия"
       },
       "no_data_label": "Учебных планов не найдено.",
       "no_permission_label": "Недостаточно прав"
@@ -266,7 +302,66 @@
       "apply_button": "Применить",
       "cancel_button": "Отмена",
       "snackbar_add_success_message": "Добавлено",
-      "snackbar_update_success_message": "Обновлено"
+      "snackbar_update_success_message": "Обновлено",
+      "disciplines": {
+        "table": {
+          "columns": {
+            "discipline_id": "Дисциплина",
+            "semester": "Семестр",
+            "total_hours": "Всего часов",
+            "lecture_hours": "Часов лекций",
+            "practice_hours": "Часов практики",
+            "lab_hours": "Часов лабораторных занятий",
+            "self_study_hours": "Часов самостоятельной работы",
+            "test_count": "Кол-во контрольных",
+            "credit": "Зачет",
+            "exam": "Экзамен",
+            "credit_units": "Зачетные единицы",
+            "operations": "Операции"
+          },
+          "title": "Дисциплины учебного плана",
+          "no_data_label": "Пусто.",
+          "no_permission_label": "Недостаточно прав",
+          "snackbar_remove_success_message": "Дисциплина удалена",
+          "snackbar_remove_error_message": "Не удалось удалить дисциплину"
+        },
+        "form": {
+          "title": "Дисциплина учебного плана",
+          "discipline_id_label": "Дисциплина",
+          "discipline_id_error": "Дисциплина обязательна",
+          "semester_label": "Семестр",
+          "semester_error": "Значение должно быть от 1 до 8",
+          "total_hours_label": "Всего часов",
+          "total_hours_error": "Должно быть больше или равно сумме оставшихся часовых значений",
+          "lecture_hours_label": "Лекционные часы",
+          "lecture_hours_error": "Должно быть положительным",
+          "practice_hours_label": "Часов практических занятий",
+          "practice_hours_error": "Должно быть положительным",
+          "lab_hours_label": "Часов лабораторных работ",
+          "lab_hours_error": "Должно быть положительным",
+          "self_study_hours_label": "Часов самостоятельной работы",
+          "self_study_hours_error": "Должно быть положительным",
+          "test_count_label": "Кол-во контрольных",
+          "test_count_error": "Должно быть положительным",
+          "credit_label": "Зачет",
+          "exam_label": "Экзамен",
+          "credit_units_label": "Зачетные единицы",
+          "credit_units_error": "Должно быть положительным",
+          "add_discipline_button": "Добавить дисциплину",
+          "add_button": "Добавить",
+          "edit_button": "Изменить",
+          "close_button": "Закрыть",
+          "step_general_label": "Основное",
+          "step_hours_label": "Часы",
+          "step_tests_label": "Контроль",
+          "previous_button": "Назад",
+          "next_button": "Вперед",
+          "snackbar_add_success_message": "Добавлено",
+          "snackbar_add_error_message": "Не удалось добавить",
+          "snackbar_update_success_message": "Изменено",
+          "snackbar_update_error_message": "Не удалось изменить"
+        }
+      }
     },
     "options": {
       "search": "Поиск учебных планов",

@@ -1,45 +1,67 @@
 <div class="list">
+  <h3 class="list__title">{{ 'users.main.title' | translate }}</h3>
   <ng-container
     *ngIf="!!authService.auth && allowedCards.length > 0; else noPermission">
-    <ng-container *ngFor="let card of cards">
-      <mat-card
-        *ngIf="card.isAllowed"
-        class="list__card"
-        [ngClass]="card.themeCssClass">
-        <mat-card-header>
-          <mat-card-title class="list__card-title">
-            {{ card.i18nName | translate }}
-            <mat-icon *ngIf="!card.isAllowed" class="list__card-title-icon">
-              highlight_off
-            </mat-icon>
-          </mat-card-title>
-          <mat-card-subtitle
-            class="list__card-subtitle"
-            *ngIf="card.options.length > 0">
-            {{ 'users.main.cards.subtitle' | translate }}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content
-          class="list__card-content-container"
-          [ngClass]="{ disabled: !card.isAllowed }">
-          <div class="list__sidenav-options-list">
-            <p class="list__sidenav-option" *ngFor="let option of card.options">
-              <mat-icon class="list__sidenav-option-icon">launch</mat-icon>
-              <a [routerLink]="option.path">
-                {{ option.title | translate }}
-              </a>
-            </p>
-          </div>
-        </mat-card-content>
-        <mat-card-actions
-          [align]="'end'"
-          [ngClass]="{ disabled: !card.isAllowed }">
-          <button mat-flat-button color="primary" [routerLink]="card.path">
-            {{ 'users.main.cards.open_button' | translate }}
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </ng-container>
+    <mat-accordion class="list__panels-container" multi>
+      <mat-expansion-panel
+        class="list__panel"
+        *ngFor="let cardGroup of cardGroups | keyvalue"
+        expanded="true">
+        <mat-expansion-panel-header>
+          {{ cardGroup.key | translate }}
+        </mat-expansion-panel-header>
+        <div class="list__panel-cards-container">
+          <ng-container *ngFor="let card of cardGroup.value">
+            <mat-card
+              *ngIf="card.isAllowed"
+              class="list__card"
+              [ngClass]="card.themeCssClass">
+              <mat-card-header>
+                <mat-card-title class="list__card-title">
+                  {{ card.i18nName | translate }}
+                  <mat-icon
+                    *ngIf="!card.isAllowed"
+                    class="list__card-title-icon">
+                    highlight_off
+                  </mat-icon>
+                </mat-card-title>
+                <mat-card-subtitle
+                  class="list__card-subtitle"
+                  *ngIf="card.options.length > 0">
+                  {{ 'users.main.cards.subtitle' | translate }}
+                </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content
+                class="list__card-content-container"
+                [ngClass]="{ disabled: !card.isAllowed }">
+                <div class="list__sidenav-options-list">
+                  <p
+                    class="list__sidenav-option"
+                    *ngFor="let option of card.options">
+                    <mat-icon class="list__sidenav-option-icon"
+                      >launch</mat-icon
+                    >
+                    <a [routerLink]="option.path">
+                      {{ option.title | translate }}
+                    </a>
+                  </p>
+                </div>
+              </mat-card-content>
+              <mat-card-actions
+                [align]="'end'"
+                [ngClass]="{ disabled: !card.isAllowed }">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  [routerLink]="card.path">
+                  {{ 'users.main.cards.open_button' | translate }}
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </ng-container>
   <ng-template #noPermission>
     <div class="list__no-permission">

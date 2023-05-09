@@ -1,7 +1,12 @@
 .node {
   &__container {
     display: flex;
+    flex-direction: row;
     align-items: center;
+  }
+
+  &__edit-button-container {
+    margin-left: 10px;
   }
 
   &__failed-icon {

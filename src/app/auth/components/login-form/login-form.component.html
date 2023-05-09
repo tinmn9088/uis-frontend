@@ -1,65 +1,91 @@
 <div class="login-form">
-  <h3 class="login-form__header">
-    {{ 'auth.login_form.sign_in' | translate }}
-  </h3>
+  <ng-container *ngIf="!isUserLoggedIn; else logoutSuggestion">
+    <h3 class="login-form__header">
+      {{ 'auth.login_form.sign_in' | translate }}
+    </h3>
 
-  <mat-card
-    class="login-form__card"
-    [ngStyle]="{ width: cardWidthPercents + '%' }">
-    <form
-      class="login-form__form"
-      [formGroup]="formGroup"
-      (ngSubmit)="onSubmit()">
-      <mat-form-field
-        class="login-form__field"
-        appearance="fill"
-        color="primary">
-        <mat-label>
-          {{ 'auth.login_form.login_label' | translate }}
-        </mat-label>
-        <input matInput name="username" formControlName="username" />
-        <mat-error>
-          {{ 'auth.login_form.required' | translate }}
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field
-        class="login-form__field"
-        appearance="fill"
-        color="primary">
-        <mat-label>{{
-          'auth.login_form.password_label' | translate
-        }}</mat-label>
-        <input
-          matInput
-          [type]="passwordHidden ? 'password' : 'text'"
-          name="password"
-          formControlName="password" />
+    <mat-card
+      class="login-form__card"
+      [ngStyle]="{ width: cardWidthPercents + '%' }">
+      <form
+        class="login-form__form"
+        [formGroup]="formGroup"
+        (ngSubmit)="onSubmit()">
+        <mat-form-field
+          class="login-form__field"
+          appearance="fill"
+          color="primary">
+          <mat-label>
+            {{ 'auth.login_form.login_label' | translate }}
+          </mat-label>
+          <input matInput name="username" formControlName="username" />
+          <mat-error>
+            {{ 'auth.login_form.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          class="login-form__field"
+          appearance="fill"
+          color="primary">
+          <mat-label>{{
+            'auth.login_form.password_label' | translate
+          }}</mat-label>
+          <input
+            matInput
+            [type]="passwordHidden ? 'password' : 'text'"
+            name="password"
+            formControlName="password" />
+          <button
+            type="button"
+            tabindex="-1"
+            mat-icon-button
+            matSuffix
+            (click)="passwordHidden = !passwordHidden"
+            [disabled]="formGroup.disabled">
+            <mat-icon>{{
+              passwordHidden ? 'visibility_off' : 'visibility'
+            }}</mat-icon>
+          </button>
+          <mat-error>
+            {{ 'auth.login_form.required' | translate }}
+          </mat-error>
+        </mat-form-field>
         <button
-          type="button"
-          tabindex="-1"
-          mat-icon-button
-          matSuffix
-          (click)="passwordHidden = !passwordHidden"
+          class="login-from__submit-button"
+          mat-flat-button
+          color="primary"
           [disabled]="formGroup.disabled">
-          <mat-icon>{{
-            passwordHidden ? 'visibility_off' : 'visibility'
-          }}</mat-icon>
+          {{ 'auth.login_form.sign_in' | translate }}
         </button>
-        <mat-error>
-          {{ 'auth.login_form.required' | translate }}
-        </mat-error>
-      </mat-form-field>
+        <mat-progress-bar
+          class="login-form__progress-bar"
+          [ngStyle]="{ visibility: formGroup.disabled ? 'visible' : 'hidden' }"
+          mode="indeterminate"></mat-progress-bar>
+      </form>
+    </mat-card>
+  </ng-container>
+
+  <ng-template #logoutSuggestion>
+    <h3 class="login-form__header">
+      {{
+        ('auth.login_form.sign_out_username' | translate) +
+          ' ' +
+          currentUsername +
+          '?'
+      }}
+    </h3>
+
+    <mat-card
+      class="login-form__card"
+      [ngStyle]="{ width: cardWidthPercents + '%' }">
       <button
-        class="login-from__submit-button"
+        class="login-from__logout-button"
         mat-flat-button
         color="primary"
-        [disabled]="formGroup.disabled">
-        {{ 'auth.login_form.sign_in' | translate }}
+        (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        {{ 'auth.login_form.sign_out_button' | translate }}
       </button>
-      <mat-progress-bar
-        class="login-form__progress-bar"
-        [ngStyle]="{ visibility: formGroup.disabled ? 'visible' : 'hidden' }"
-        mode="indeterminate"></mat-progress-bar>
-    </form>
-  </mat-card>
+    </mat-card>
+  </ng-template>
 </div>

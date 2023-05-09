@@ -8,9 +8,12 @@ import { CategoryFormComponent } from './components/category-form/category-form.
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { CategoryFlatNode } from './domain/category-flat-node';
 import {
+  CategoryTreeDataSourceService,
   getLevel,
   isExpandable,
 } from './services/category-tree-data-source.service';
+import { CategoryService } from './services/category.service';
+import { CategoryRoutingModule } from './category-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,8 +22,10 @@ import {
     CategoryTreeNodeComponent,
     CategoryFormComponent,
   ],
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, CategoryRoutingModule],
   providers: [
+    CategoryService,
+    CategoryTreeDataSourceService,
     {
       provide: FlatTreeControl,
       useValue: new FlatTreeControl<CategoryFlatNode>(getLevel, isExpandable),

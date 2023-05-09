@@ -18,6 +18,7 @@ import { DisciplineUpdateRequest } from '../../domain/discipline-update-request'
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
 import { Category } from 'src/app/category/domain/category';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-discipline-form',
@@ -64,8 +65,10 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
         { value: '', disabled: this.areNotPermissionsPresent },
         Validators.required
       ),
-      categories: new FormControl(),
+      categories: new FormControl<SelectOption[]>([]),
     });
+
+    this.formGroup.valueChanges.subscribe(change => console.log(change));
   }
 
   get name(): string {
@@ -77,7 +80,14 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
   }
 
   get categories(): Category[] {
-    return this.formGroup.get('categories')?.value;
+    return (this.formGroup.get('categories')?.value as SelectOption[]).map(
+      option => {
+        return {
+          id: option.value,
+          name: option.name,
+        } as Category;
+      }
+    );
   }
 
   ngOnInit() {
@@ -87,10 +97,12 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
           this.id = parseInt(params['id']);
           this._disciplineService.getById(this.id).subscribe({
             next: discipline => {
-              this.formGroup.patchValue({
+              this.formGroup.setValue({
                 name: discipline.name,
                 shortName: discipline.shortName,
-                categories: discipline.tags.map(tag => tag.id),
+                categories: discipline.tags.map(tag => {
+                  return { name: tag.name, value: tag.id } as SelectOption;
+                }),
               });
             },
           });
@@ -155,8 +167,8 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
           );
         }
       },
-      error: (reason: Error) => {
-        this._snackbarService.showError(reason.message);
+      error: (response: HttpErrorResponse) => {
+        this._snackbarService.showError(response.error.message);
         this.formGroup.enable();
       },
     });

@@ -5,14 +5,14 @@
     <h3 class="form__title">
       {{
         editMode
-          ? ('curriculum.form.edit_title' | translate)
-          : ('curriculum.form.add_title' | translate | uppercase)
+          ? ('curricula.form.edit_title' | translate)
+          : ('curricula.form.add_title' | translate | uppercase)
       }}
     </h3>
 
     <mat-form-field appearance="outline" class="form__field">
       <mat-label>
-        {{ 'curriculum.form.approval_date_label' | translate }}
+        {{ 'curricula.form.approval_date_label' | translate }}
       </mat-label>
       <input
         class="form__input"
@@ -25,38 +25,29 @@
       <mat-datepicker #approvalDate>
         <mat-datepicker-actions>
           <button mat-button matDatepickerCancel>
-            {{ 'curriculum.form.cancel_button' | translate }}
+            {{ 'curricula.form.cancel_button' | translate }}
           </button>
           <button mat-raised-button color="primary" matDatepickerApply>
-            {{ 'curriculum.form.apply_button' | translate }}
+            {{ 'curricula.form.apply_button' | translate }}
           </button>
         </mat-datepicker-actions>
       </mat-datepicker>
       <mat-error class="form__error-message">
-        {{ 'curriculum.form.approval_date_error' | translate }}
+        {{ 'curricula.form.approval_date_error' | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="form__field">
       <mat-label>
-        {{ 'curriculum.form.admission_year_label' | translate }}
+        {{ 'curricula.form.admission_year_label' | translate }}
       </mat-label>
-      <input
-        class="form__input"
-        matInput
-        [matDatepicker]="admissionYear"
-        formControlName="admissionYear" />
-      <mat-datepicker-toggle
-        matIconSuffix
-        [for]="admissionYear"></mat-datepicker-toggle>
-      <mat-datepicker
-        #admissionYear
-        startView="multi-year"
-        [calendarHeaderComponent]="datepickerYearHeader"
-        (yearSelected)="onYearSelected($event, admissionYear)">
-      </mat-datepicker>
+      <mat-select formControlName="admissionYear">
+        <mat-option *ngFor="let year of admissionYearOptions" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
       <mat-error class="form__error-message">
-        {{ 'curriculum.form.admission_year_error' | translate }}
+        {{ 'curricula.form.admission_year_error' | translate }}
       </mat-error>
     </mat-form-field>
 
@@ -66,7 +57,7 @@
       color="primary"
       *ngIf="!areNotPermissionsPresent">
       <mat-label class="form__label">
-        {{ 'curriculum.form.specialization_label' | translate }}
+        {{ 'curricula.form.specialization_label' | translate }}
       </mat-label>
       <app-filtered-select
         class="form__select"
@@ -76,7 +67,7 @@
         (filterChanged)="updateSpecializationOptions($event)"
         formControlName="specializationId"></app-filtered-select>
       <mat-error class="form__error-message">
-        {{ 'curriculum.form.specialization_error' | translate }}
+        {{ 'curricula.form.specialization_error' | translate }}
       </mat-error>
     </mat-form-field>
 
@@ -89,7 +80,7 @@
           [disabled]="
             areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
           ">
-          {{ 'curriculum.form.add_button' | translate }}
+          {{ 'curricula.form.add_button' | translate }}
         </button>
       </ng-container>
       <ng-template #editButton>
@@ -100,7 +91,7 @@
           [disabled]="
             areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
           ">
-          {{ 'curriculum.form.edit_button' | translate }}
+          {{ 'curricula.form.edit_button' | translate }}
         </button>
       </ng-template>
 
@@ -111,9 +102,34 @@
           color="secondary"
           type="button"
           [disabled]="formGroup.disabled">
-          {{ 'curriculum.form.cancel_button' | translate }}
+          {{ 'curricula.form.cancel_button' | translate }}
         </button>
       </a>
     </div>
   </div>
+
+  <ng-container *ngIf="editMode && id">
+    <mat-divider class="form__divider"></mat-divider>
+
+    <div class="form__discipline-table-container">
+      <div class="form__discipline-table-top">
+        <h3 class="form__discipline-table-top-title">
+          {{ 'curricula.form.disciplines.table.title' | translate }}
+        </h3>
+        <button
+          class="form__discipline-table-top-add-button"
+          type="button"
+          mat-flat-button
+          color="primary"
+          (click)="openCurriculumDisciplineFormDialog()">
+          {{
+            'curricula.form.disciplines.form.add_discipline_button' | translate
+          }}
+        </button>
+      </div>
+      <app-curriculum-discipline-table
+        class="form__discipline-table"
+        [curriculumId]="id"></app-curriculum-discipline-table>
+    </div>
+  </ng-container>
 </form>

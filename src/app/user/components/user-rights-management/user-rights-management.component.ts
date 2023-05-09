@@ -7,6 +7,8 @@ import { User } from '../../domain/user';
 import { UserService } from '../../services/user.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorMessageService } from 'src/app/shared/services/error-message.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export declare type RoleChangeEvent = {
   userId: number;
@@ -32,7 +34,8 @@ export class UserRightsManagementComponent implements OnInit {
     private _roleService: RoleService,
     private _userService: UserService,
     private _snackbarService: SnackbarService,
-    private _translate: TranslateService
+    private _translate: TranslateService,
+    private _errorMessageService: ErrorMessageService
   ) {
     this.formGroup = new FormGroup({
       roleId: new FormControl({ value: '', disabled: this.disabled }),
@@ -78,12 +81,13 @@ export class UserRightsManagementComponent implements OnInit {
             this._snackbarService.showSuccess(message);
           });
       },
-      error: error => {
+      error: (response: HttpErrorResponse) => {
         this._translate
           .get('users.user_rights_management.role_change_error_message')
           .subscribe(message => {
-            console.error(error);
-            this._snackbarService.showError(message);
+            this._snackbarService.showError(
+              this._errorMessageService.buildHttpErrorMessage(response, message)
+            );
           });
       },
     });
@@ -100,12 +104,13 @@ export class UserRightsManagementComponent implements OnInit {
             this._snackbarService.showSuccess(message);
           });
       },
-      error: error => {
+      error: (response: HttpErrorResponse) => {
         this._translate
           .get('users.user_rights_management.role_change_error_message')
           .subscribe(message => {
-            console.error(error);
-            this._snackbarService.showError(message);
+            this._snackbarService.showError(
+              this._errorMessageService.buildHttpErrorMessage(response, message)
+            );
           });
       },
     });

@@ -1,0 +1,20 @@
+.management {
+  display: flex;
+  flex-direction: column;
+
+  &__button-container {
+    width: fit-content;
+  }
+
+  &__list {
+    max-height: 100px;
+    overflow-x: auto;
+    margin: 10px 0;
+
+    &-empty-label {
+      text-align: center;
+      font-style: italic;
+      color: rgba(0, 0, 0, 0.56);
+    }
+  }
+}

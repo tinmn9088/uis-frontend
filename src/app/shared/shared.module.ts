@@ -13,7 +13,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
 import { PaginatorComponent } from './components/paginator/paginator.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
@@ -32,6 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
+import { MatStepperModule } from '@angular/material/stepper';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -40,8 +40,9 @@ import { PaginatorService } from './services/paginator.service';
 import { LanguageService } from './services/language.service';
 import { FilteredSelectComponent } from './components/filtered-select/filtered-select.component';
 import { EmptyComponent } from './components/empty/empty.component';
-import { DatepickerYearHeaderComponent } from './components/datepicker-year-header/datepicker-year-header.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { ListManagementComponent } from './components/list-management/list-management.component';
+import { ErrorMessageService } from './services/error-message.service';
 
 export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('themeClass');
 export const REFRESH_JWT_REQUEST_COUNT_TOKEN = new InjectionToken<string>(
@@ -51,8 +52,6 @@ export const REFRESH_JWT_REQUEST_COUNT_TOKEN = new InjectionToken<string>(
 const modules = [
   CommonModule,
   RouterModule,
-  BrowserAnimationsModule,
-  HttpClientModule,
   FormsModule,
   ReactiveFormsModule,
   LayoutModule,
@@ -83,6 +82,7 @@ const modules = [
   MatNativeDateModule,
   MatTooltipModule,
   MatListModule,
+  MatStepperModule,
 ];
 
 const declarations = [
@@ -91,7 +91,9 @@ const declarations = [
   PaginatorComponent,
   JoinPipe,
   FilteredSelectComponent,
-  DatepickerYearHeaderComponent,
+  EmptyComponent,
+  TruncatePipe,
+  ListManagementComponent,
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -99,11 +101,11 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [...declarations, EmptyComponent, TruncatePipe],
+  declarations: [...declarations],
   exports: [...modules, declarations, TranslateModule],
   imports: [
     ...modules,
-    TranslateModule.forRoot({
+    TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
@@ -114,6 +116,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     PaginatorService,
     LanguageService,
+    ErrorMessageService,
     MatDatepickerModule,
     MatNativeDateModule,
   ],

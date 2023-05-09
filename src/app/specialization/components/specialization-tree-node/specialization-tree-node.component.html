@@ -28,13 +28,19 @@
       </ng-container>
     </mat-expansion-panel-header>
     <p class="extansion-panel__row">
-      <span class="extansion-panel__row-title">Короткое название:</span>
+      <span class="extansion-panel__row-title">
+        {{
+          ('specializations.list.tree_node_short_name_label' | translate) + ':'
+        }}
+      </span>
       <span class="extansion-panel__row-value">{{
         specializationNode.specialization.shortName
       }}</span>
     </p>
     <p class="extansion-panel__row">
-      <span class="extansion-panel__row-title">Шифр:</span>
+      <span class="extansion-panel__row-title">
+        {{ ('specializations.list.tree_node_cipher_label' | translate) + ':' }}
+      </span>
       <span class="extansion-panel__row-value">{{
         specializationNode.specialization.cipher
       }}</span>
