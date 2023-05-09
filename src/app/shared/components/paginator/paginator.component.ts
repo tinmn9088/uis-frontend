@@ -24,9 +24,9 @@ export class PaginatorComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() pageSize!: number;
 
   /**
-   * `[5, 10, 25]` by default.
+   * `[5, 10, 15, 25, 50, 100]` by default.
    */
-  @Input() pageSizeOptions?: number[] = [5, 10, 15, 25];
+  @Input() pageSizeOptions?: number[] = [5, 10, 15, 25, 50, 100];
 
   @Input() pageIndex!: number;
   @Input() hidePageSizeSelect = false;
