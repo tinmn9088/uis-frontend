@@ -5,9 +5,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ErrorMessageService {
-  buildHttpErrorMessage(response: HttpErrorResponse, message?: string): string {
-    return message
-      ? `${message} (${response.error.message})`
+  buildHttpErrorMessage(
+    response: HttpErrorResponse,
+    description: string
+  ): string {
+    return response.status >= 500
+      ? `${description} (${response.error.message})`
       : response.message;
   }
 }
