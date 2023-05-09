@@ -245,7 +245,9 @@
       "edit_button": "Edit",
       "no_data_label": "No specializations found.",
       "no_permission_label": "Not allowed",
-      "failed_to_retrieve_children_message": "Failed to retireve children specializations"
+      "failed_to_retrieve_children_message": "Failed to retireve children specializations",
+      "tree_node_short_name_label": "Short name",
+      "tree_node_cipher_label": "Cipher"
     },
     "form": {
       "add_title": "Add specialization",

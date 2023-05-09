@@ -245,7 +245,9 @@
       "edit_button": "Редактировать",
       "no_data_label": "Специальностей не найдено.",
       "no_permission_label": "Недостаточно прав",
-      "failed_to_retrieve_children_message": "Не удалось получить дочерние специальности"
+      "failed_to_retrieve_children_message": "Не удалось получить дочерние специальности",
+      "tree_node_short_name_label": "Короткое название",
+      "tree_node_cipher_label": "Шифр"
     },
     "form": {
       "add_title": "Добавить специальность",
