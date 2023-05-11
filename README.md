@@ -1,14 +1,19 @@
 # University Information System
 
-## Build
+## Development
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Launch
+
+Run `npm install` and `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
+The application will automatically reload if you change any of the source files.
 
 ## Deployment
 
-1. Start with the production build: `ng build`
+1. Run `npm install` to install required dependencies.
 
-1. Copy everything within the output folder (`dist/project-name/`) to a folder on the server.
+1. Run `ng build` to start the production build.
+
+1. Copy everything within the output folder (`dist/uis-frontend/`) to a folder on the server.
 
 1. Configure the server to redirect requests for missing files to _index.html_.
 
@@ -25,12 +30,6 @@ See [environments](src/environments).
 See [modules.json](src/assets/modules.json).
 
 See [i18n](src/assets/i18n).
-
-## Development
-
-### Launch
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ### Prettier and ESLint
 
