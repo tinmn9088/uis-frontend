@@ -155,7 +155,7 @@
         "pathRegex": "/curriculum/\\d+",
         "type": "update",
         "groupId": 1,
-        "requiredPermissions": ["CURRICULUM_UPDATE"]
+        "requiredPermissions": ["CURRICULUM_GET", "CURRICULUM_UPDATE"]
       }
     ]
   }
