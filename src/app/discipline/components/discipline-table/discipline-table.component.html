@@ -49,15 +49,16 @@
         <ng-container *ngFor="let category of discipline.tags">
           <ng-container *ngIf="canUserGetCategory; else categoryTitleNoLink">
             <a [routerLink]="getLinkToCategoryFormPage(category.id)">
-              {{ category.name }}
+              <mat-chip class="table__chip">
+                <span class="table__chip-label">{{ category.name }}</span>
+              </mat-chip>
             </a>
           </ng-container>
           <ng-template #categoryTitleNoLink>
-            <span>
+            <mat-chip class="table__chip" [disableRipple]="true">
               {{ category.name }}
-            </span>
+            </mat-chip>
           </ng-template>
-          <span *ngIf="category !== discipline.tags.at(-1)"> , </span>
         </ng-container>
       </td>
     </ng-container>
