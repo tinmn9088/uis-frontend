@@ -17,9 +17,16 @@
           visibility: isLoading ? 'hidden' : 'visible',
           transition: 'opacity 0.1s linear'
         }">
-        <a [routerLink]="getLinkToFormPage(curriculum.id)">
-          {{ curriculum.id }}
-        </a>
+        <ng-container *ngIf="canUserModifyCurriculum; else titleNoLink">
+          <a [routerLink]="getLinkToFormPage(curriculum.id)">
+            {{ curriculum.id }}
+          </a>
+        </ng-container>
+        <ng-template #titleNoLink>
+          <span>
+            {{ curriculum.id }}
+          </span>
+        </ng-template>
       </td>
     </ng-container>
 

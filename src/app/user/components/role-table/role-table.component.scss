@@ -29,6 +29,18 @@
     flex-direction: row;
     flex-wrap: wrap;
   }
+
+  &__role-scopes-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  &__role-scope-title {
+    margin: 16px 12px;
+    padding-right: 4px;
+    padding-top: 2px;
+  }
 }
 
 a {

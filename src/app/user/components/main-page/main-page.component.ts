@@ -37,13 +37,10 @@ export class MainPageComponent implements OnInit {
     this.cards = this._moduleService.getAllModules().map(module => {
       const moduleName =
         module.path && this._moduleService.getModuleNameByPath(module.path);
-      const requiredPermissions =
-        (moduleName &&
-          this._moduleService.getAllRequiredPermissions(moduleName)) ||
-        [];
-
       const themeCssClass = {} as any;
       if (module.themeCssClass) themeCssClass[module.themeCssClass] = true;
+      const options =
+        module.options?.filter(option => this.showCardOption(option)) || [];
       return {
         i18nName: module.i18nName || '',
         path:
@@ -51,9 +48,8 @@ export class MainPageComponent implements OnInit {
             ? `${module.path}/list`
             : module.path || '',
         themeCssClass: themeCssClass,
-        options:
-          module.options?.filter(option => this.showCardOption(option)) || [],
-        isAllowed: this.authService.hasUserPermissions(requiredPermissions),
+        options,
+        isAllowed: options.length > 0,
         i18nGroupName: module.i18nGroupName || '-',
       };
     });
@@ -74,6 +70,9 @@ export class MainPageComponent implements OnInit {
 
   private showCardOption(option: ModuleOption): boolean {
     const mainPagePath = this._moduleService.getMainPagePath();
-    return !option.pathRegex && option.path !== mainPagePath;
+    const isAllowed = this.authService.hasUserPermissions(
+      option.requiredPermissions
+    );
+    return isAllowed && !option.pathRegex && option.path !== mainPagePath;
   }
 }

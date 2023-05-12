@@ -1,4 +1,9 @@
-<form class="form" #form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+<form
+  class="form"
+  *ngIf="editMode ? canUserGetCurriculum : true; else noPermission"
+  #form
+  [formGroup]="formGroup"
+  (ngSubmit)="onSubmit()">
   <div
     class="form__container"
     [ngStyle]="{ width: formContainerWidthPercents + '%' }">
@@ -55,7 +60,7 @@
       class="form__field"
       appearance="outline"
       color="primary"
-      *ngIf="!areNotPermissionsPresent">
+      *ngIf="editMode ? canUserModifyCurriculum : canUserCreateCurriculum">
       <mat-label class="form__label">
         {{ 'curricula.form.specialization_label' | translate }}
       </mat-label>
@@ -78,7 +83,7 @@
           mat-flat-button
           color="primary"
           [disabled]="
-            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+            !canUserCreateCurriculum || formGroup.disabled || !formGroup.valid
           ">
           {{ 'curricula.form.add_button' | translate }}
         </button>
@@ -89,7 +94,7 @@
           mat-flat-button
           color="primary"
           [disabled]="
-            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+            !canUserModifyCurriculum || formGroup.disabled || !formGroup.valid
           ">
           {{ 'curricula.form.edit_button' | translate }}
         </button>
@@ -121,7 +126,8 @@
           type="button"
           mat-flat-button
           color="primary"
-          (click)="openCurriculumDisciplineFormDialog()">
+          (click)="openCurriculumDisciplineFormDialog()"
+          [disabled]="!canUserModifyCurriculum">
           {{
             'curricula.form.disciplines.form.add_discipline_button' | translate
           }}
@@ -133,3 +139,10 @@
     </div>
   </ng-container>
 </form>
+
+<ng-template #noPermission>
+  <div class="form__no-permission">
+    <mat-icon class="form__no-permission-icon">error_outline</mat-icon>
+    {{ 'curricula.list.no_permission_label' | translate }}
+  </div>
+</ng-template>

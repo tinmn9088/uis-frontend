@@ -31,9 +31,11 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
   parentOptions!: SelectOption[];
-  areNotPermissionsPresent: boolean;
+  canUserGetSpecialization: boolean;
+  canUserCreateSpecialization: boolean;
+  canUserModifySpecialization: boolean;
   areParentOptionsLoading = false;
-  @ViewChild('form') form!: ElementRef;
+  @ViewChild('form') form?: ElementRef;
 
   constructor(
     private _specializationService: SpecializationService,
@@ -44,29 +46,34 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
     private _route: ActivatedRoute
   ) {
     this.editMode = !this._router.url.endsWith('add');
-    this.areNotPermissionsPresent = this.editMode
-      ? !this._authService.hasUserPermissions([
-          Permission.SPECIALIZATION_GET,
-          Permission.SPECIALIZATION_UPDATE,
-        ])
-      : !this._authService.hasUserPermissions([
-          Permission.SPECIALIZATION_CREATE,
-        ]);
+    this.canUserGetSpecialization = this._authService.hasUserPermissions([
+      Permission.SPECIALIZATION_GET,
+    ]);
+    this.canUserCreateSpecialization = this._authService.hasUserPermissions([
+      Permission.SPECIALIZATION_CREATE,
+    ]);
+    this.canUserModifySpecialization = this._authService.hasUserPermissions([
+      Permission.SPECIALIZATION_UPDATE,
+    ]);
 
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
     });
+    const isFormControlDisabled = () =>
+      this.editMode
+        ? !this.canUserModifySpecialization
+        : !this.canUserCreateSpecialization;
     this.formGroup = new FormGroup({
       name: new FormControl(
-        { value: '', disabled: this.areNotPermissionsPresent },
+        { value: '', disabled: isFormControlDisabled() },
         Validators.required
       ),
       shortName: new FormControl(
-        { value: '', disabled: this.areNotPermissionsPresent },
+        { value: '', disabled: isFormControlDisabled() },
         Validators.required
       ),
       cipher: new FormControl(
-        { value: '', disabled: this.areNotPermissionsPresent },
+        { value: '', disabled: isFormControlDisabled() },
         Validators.required
       ),
       parentId: new FormControl(),
@@ -112,12 +119,12 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this._resizeObserver.observe(this.form.nativeElement);
+    if (this.form) this._resizeObserver.observe(this.form.nativeElement);
 
     // fix initial 100% form container width (autofocus is too fast)
     setTimeout(
       () =>
-        (document.querySelector('.form__input') as HTMLInputElement).focus(),
+        (document.querySelector('.form__input') as HTMLInputElement)?.focus(),
       200
     );
   }

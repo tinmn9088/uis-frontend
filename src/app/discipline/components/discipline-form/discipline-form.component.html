@@ -1,4 +1,9 @@
-<form class="form" #form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+<form
+  class="form"
+  *ngIf="editMode ? canUserGetDiscipline : true; else noPermission"
+  #form
+  [formGroup]="formGroup"
+  (ngSubmit)="onSubmit()">
   <div
     class="form__container"
     [ngStyle]="{ width: formContainerWidthPercents + '%' }">
@@ -34,7 +39,7 @@
       class="form__field"
       appearance="outline"
       color="primary"
-      *ngIf="!areNotPermissionsPresent"
+      *ngIf="editMode ? canUserModifyDiscipline : canUserCreateDiscipline"
       floatLabel="always">
       <mat-label class="form__label">
         {{ 'disciplines.form.categories_label' | translate }}
@@ -54,7 +59,7 @@
           mat-flat-button
           color="primary"
           [disabled]="
-            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+            !canUserCreateDiscipline || formGroup.disabled || !formGroup.valid
           ">
           {{ 'disciplines.form.add_button' | translate }}
         </button>
@@ -65,7 +70,7 @@
           mat-flat-button
           color="primary"
           [disabled]="
-            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+            !canUserModifyDiscipline || formGroup.disabled || !formGroup.valid
           ">
           {{ 'disciplines.form.edit_button' | translate }}
         </button>
@@ -84,3 +89,10 @@
     </div>
   </div>
 </form>
+
+<ng-template #noPermission>
+  <div class="form__no-permission">
+    <mat-icon class="form__no-permission-icon">error_outline</mat-icon>
+    {{ 'disciplines.list.no_permission_label' | translate }}
+  </div>
+</ng-template>

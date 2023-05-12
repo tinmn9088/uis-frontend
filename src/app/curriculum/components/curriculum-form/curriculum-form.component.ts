@@ -44,9 +44,11 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
   specializationOptions!: SelectOption[];
-  areNotPermissionsPresent: boolean;
+  canUserGetCurriculum: boolean;
+  canUserCreateCurriculum: boolean;
+  canUserModifyCurriculum: boolean;
   areParentOptionsLoading = false;
-  @ViewChild('form') form!: ElementRef;
+  @ViewChild('form') form?: ElementRef;
   @ViewChild(CurriculumDisciplineTableComponent)
   disciplineTable!: CurriculumDisciplineTableComponent;
 
@@ -64,23 +66,30 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DATE_LOCALE) private _locale: string
   ) {
     this.editMode = !this._router.url.endsWith('add');
-    this.areNotPermissionsPresent = this.editMode
-      ? !this._authService.hasUserPermissions([
-          Permission.CURRICULUM_GET,
-          Permission.CURRICULUM_UPDATE,
-        ])
-      : !this._authService.hasUserPermissions([Permission.CURRICULUM_CREATE]);
+    this.canUserGetCurriculum = this._authService.hasUserPermissions([
+      Permission.CURRICULUM_GET,
+    ]);
+    this.canUserCreateCurriculum = this._authService.hasUserPermissions([
+      Permission.CURRICULUM_CREATE,
+    ]);
+    this.canUserModifyCurriculum = this._authService.hasUserPermissions([
+      Permission.CURRICULUM_UPDATE,
+    ]);
 
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
     });
+    const isFormControlDisabled = () =>
+      this.editMode
+        ? !this.canUserModifyCurriculum
+        : !this.canUserCreateCurriculum;
     this.formGroup = new FormGroup({
       approvalDate: new FormControl(
-        { value: undefined, disabled: this.areNotPermissionsPresent },
+        { value: undefined, disabled: isFormControlDisabled() },
         Validators.required
       ),
       admissionYear: new FormControl(
-        { value: undefined, disabled: this.areNotPermissionsPresent },
+        { value: undefined, disabled: isFormControlDisabled() },
         Validators.required
       ),
       specializationId: new FormControl(undefined, Validators.required),
@@ -129,12 +138,12 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this._resizeObserver.observe(this.form.nativeElement);
+    if (this.form) this._resizeObserver.observe(this.form.nativeElement);
 
     // fix initial 100% form container width (autofocus is too fast)
     setTimeout(
       () =>
-        (document.querySelector('.form__input') as HTMLInputElement).focus(),
+        (document.querySelector('.form__input') as HTMLInputElement)?.focus(),
       200
     );
   }

@@ -9,8 +9,12 @@ export class ErrorMessageService {
     response: HttpErrorResponse,
     description: string
   ): string {
-    return response.status >= 500
-      ? `${description} (${response.error.message})`
+    return response.status < 500
+      ? response.error.validationMessages
+        ? `${description} (${response.error.message}): ${(
+            response.error.validationMessages as string[]
+          ).join(', ')}`
+        : `${description} (${response.error.message})`
       : response.message;
   }
 }

@@ -19,6 +19,7 @@ import { ModuleService } from '../../services/module.service';
 import { ModuleName } from '../../domain/module-name';
 import { THEME_CSS_CLASS_TOKEN } from '../../shared.module';
 import { ToolbarTab } from '../../domain/toolbar-tab';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-module-layout',
@@ -40,7 +41,8 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   activeOption?: ModuleOption;
   toolbarTabs!: ToolbarTab[];
   activeTab?: ToolbarTab;
-  addButtonPath?: string;
+  createPath?: string;
+  showCreateButton = false;
   @ViewChild(MatDrawerContainer) drawerContainer!: MatDrawerContainer;
   @ViewChild(MatDrawerContent) drawerContent!: MatDrawerContent;
   @ViewChild(MatDrawer) drawer!: MatDrawer;
@@ -49,6 +51,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     private _breakpointObserver: BreakpointObserver,
     private _router: Router,
     private _moduleService: ModuleService,
+    private _authService: AuthService,
     @Inject(THEME_CSS_CLASS_TOKEN) public themeClass$: BehaviorSubject<string>
   ) {
     this._resizeObserver = new ResizeObserver(entries => {
@@ -102,8 +105,14 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
         this.activeTab = this.toolbarTabs.find(tab =>
           currentPath.startsWith(tab.path)
         );
-        this.addButtonPath =
-          this._moduleService.getSidenavAddButtonPath(moduleName);
+        const createOption = this._moduleService.getCreateOption(moduleName);
+        this.createPath = createOption?.path;
+        this.showCreateButton =
+          !!this.createPath &&
+          !!createOption &&
+          this._authService.hasUserPermissions(
+            createOption.requiredPermissions
+          );
 
         setTimeout(() => {
           this.isContentHidden = false;
@@ -142,7 +151,16 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   isSidenavOptionHidden(option: ModuleOption): boolean {
+    // always show active
     if (option === this.activeOption) return false;
+
+    // hide if required permissions are not present
+    if (!this._authService.hasUserPermissions(option.requiredPermissions)) {
+      return true;
+    }
+
+    // get all options with the same group id,
+    // show only the first option from the group or the active one
     const group = this.sidenavOptions.filter(
       other => other.groupId === option.groupId
     );

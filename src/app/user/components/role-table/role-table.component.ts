@@ -4,6 +4,10 @@ import { RoleFormDialogComponent } from '../role-form-dialog/role-form-dialog.co
 import { RolePageableResponse } from '../../domain/role-pageable-response';
 import { Role } from '../../domain/role';
 import { RoleService } from '../../services/role.service';
+import { PermissionService } from '../../services/permission.service';
+import { PermissionScope } from '../../domain/permission-scope';
+import { BehaviorSubject } from 'rxjs';
+import { PermissionAction } from '../../domain/permission-action';
 
 @Component({
   selector: 'app-role-table',
@@ -18,14 +22,22 @@ export class RoleTableComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'permissionIds', 'operations'];
   isLoading = true;
   dataSource: Role[] = [];
+  permissionsByRoleId = new Map<number, BehaviorSubject<PermissionScope[]>>();
+  availablePermissions!: PermissionScope[];
+  allPermissionScopesAreLoaded = new BehaviorSubject<boolean>(false);
 
   constructor(
     private _roleService: RoleService,
+    private _permissionService: PermissionService,
     private _matDialog: MatDialog
   ) {}
 
   ngOnInit() {
     this.search();
+    this._permissionService.getAllScopes().subscribe(scopes => {
+      this.availablePermissions = scopes;
+      this.allPermissionScopesAreLoaded.next(true);
+    });
   }
 
   search(searchQuery?: string) {
@@ -38,6 +50,32 @@ export class RoleTableComponent implements OnInit {
         this.isLoading = false;
         this.dataUpdated.emit(response);
       });
+  }
+
+  getRolePermissions(role: Role): BehaviorSubject<PermissionScope[]> {
+    if (this.permissionsByRoleId.has(role.id)) {
+      return this.permissionsByRoleId.get(role.id) as BehaviorSubject<
+        PermissionScope[]
+      >;
+    } else {
+      const permissions = new BehaviorSubject<PermissionScope[]>([]);
+      this.permissionsByRoleId.set(role.id, permissions);
+      setTimeout(() => {
+        const subscribtion = this.allPermissionScopesAreLoaded.subscribe(
+          areLoaded => {
+            if (areLoaded) {
+              permissions.next(this.filterPermissionsByIds(role.permissionIds));
+              setTimeout(() => subscribtion.unsubscribe());
+            }
+          }
+        );
+      });
+      return permissions;
+    }
+  }
+
+  getPermissionActionsNames(actions: PermissionAction[]): string[] {
+    return actions.map(action => action.name);
   }
 
   getTableCellStyle() {
@@ -57,5 +95,18 @@ export class RoleTableComponent implements OnInit {
     this._dialogRef.afterClosed().subscribe(() => {
       this.search();
     });
+  }
+
+  private filterPermissionsByIds(permissionIds: number[]): PermissionScope[] {
+    const scopes: PermissionScope[] = [];
+    this.availablePermissions.forEach(scope => {
+      const filteredActions = scope.actions.filter(action =>
+        permissionIds.includes(action.id)
+      );
+      if (filteredActions.length > 0) {
+        scopes.push({ scope: scope.scope, actions: filteredActions });
+      }
+    });
+    return scopes;
   }
 }

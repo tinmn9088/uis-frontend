@@ -28,6 +28,19 @@
   &__cancel-button {
     font-weight: bolder;
   }
+
+  &__no-permission {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.56);
+
+    &-icon {
+      margin-right: 10px;
+    }
+  }
 }
 
 a {

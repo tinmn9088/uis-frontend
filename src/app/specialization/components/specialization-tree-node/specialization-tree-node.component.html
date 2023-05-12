@@ -16,9 +16,16 @@
             class="extansion-panel__failed-icon">
             error_outline
           </mat-icon>
-          <a [routerLink]="linkToForm">
-            {{ specializationNode.specialization.name }}
-          </a>
+          <ng-container *ngIf="arePermissionsPresent; else titleNoLink">
+            <a [routerLink]="linkToForm">
+              {{ specializationNode.specialization.name }}
+            </a>
+          </ng-container>
+          <ng-template #titleNoLink>
+            <span>
+              {{ specializationNode.specialization.name }}
+            </span>
+          </ng-template>
         </mat-panel-title>
         <mat-panel-description
           class="extansion-panel__header-description"

@@ -35,7 +35,7 @@
     "page_size_options": "Page size"
   },
   "sidenav": {
-    "add_button": "Create"
+    "create_button": "Create"
   },
   "filtered_select": {
     "placeholder": "Search ...",

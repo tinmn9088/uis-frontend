@@ -19,6 +19,14 @@
     align-items: center;
     width: 100%;
   }
+
+  &__chip {
+    margin-right: 3px;
+
+    &-label {
+      cursor: pointer;
+    }
+  }
 }
 
 a {

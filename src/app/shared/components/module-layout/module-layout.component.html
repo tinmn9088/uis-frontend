@@ -25,12 +25,12 @@
           visibility: isContentHidden ? 'hidden' : 'visible',
           transition: 'opacity 0.1s linear'
         }">
-        <a *ngIf="addButtonPath" routerLink="{{ addButtonPath }}">
+        <a *ngIf="showCreateButton" routerLink="{{ createPath }}">
           <button
             mat-raised-button
-            class="layout__sidenav-add-button"
+            class="layout__sidenav-create-button"
             color="primary">
-            {{ 'sidenav.add_button' | translate | uppercase }}
+            {{ 'sidenav.create_button' | translate | uppercase }}
           </button>
         </a>
         <ng-container *ngFor="let option of sidenavOptions">
