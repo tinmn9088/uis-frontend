@@ -5,9 +5,16 @@
       class="node__failed-icon">
       error_outline
     </mat-icon>
-    <a class="node__text" [routerLink]="linkToForm">
-      {{ categoryNode.category.name }}
-    </a>
+    <ng-container *ngIf="arePermissionsPresent; else titleNoLink">
+      <a class="node__text" [routerLink]="linkToForm">
+        {{ categoryNode.category.name }}
+      </a>
+    </ng-container>
+    <ng-template #titleNoLink>
+      <span class="node__text">
+        {{ categoryNode.category.name }}
+      </span>
+    </ng-template>
     <div
       class="node__edit-button-container"
       matTooltip="{{ 'categories.list.no_permission_label' | translate }}"

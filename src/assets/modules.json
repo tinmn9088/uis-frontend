@@ -59,7 +59,7 @@
         "pathRegex": "/category/\\d+",
         "type": "update",
         "groupId": 1,
-        "requiredPermissions": ["TAG_UPDATE"]
+        "requiredPermissions": ["TAG_READ", "TAG_UPDATE"]
       }
     ]
   },
@@ -115,7 +115,7 @@
         "path": "/specialization/add",
         "type": "create",
         "groupId": 1,
-        "requiredPermissions": ["SPECIALIZATION_GET", "SPECIALIZATION_CREATE"]
+        "requiredPermissions": ["SPECIALIZATION_CREATE"]
       },
       {
         "title": "specializations.options.edit",

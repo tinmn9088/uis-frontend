@@ -31,9 +31,11 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
   parentOptions!: SelectOption[];
-  areNotPermissionsPresent: boolean;
+  canUserGetCategory: boolean;
+  canUserCreateCategory: boolean;
+  canUserModifyCategory: boolean;
   areParentOptionsLoading = false;
-  @ViewChild('form') form!: ElementRef;
+  @ViewChild('form') form?: ElementRef;
 
   constructor(
     private _categoryService: CategoryService,
@@ -44,19 +46,24 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     private _route: ActivatedRoute
   ) {
     this.editMode = !this._router.url.endsWith('add');
-    this.areNotPermissionsPresent = this.editMode
-      ? !this._authService.hasUserPermissions([
-          Permission.TAG_READ,
-          Permission.TAG_UPDATE,
-        ])
-      : !this._authService.hasUserPermissions([Permission.TAG_CREATE]);
+    this.canUserGetCategory = this._authService.hasUserPermissions([
+      Permission.TAG_READ,
+    ]);
+    this.canUserCreateCategory = this._authService.hasUserPermissions([
+      Permission.TAG_CREATE,
+    ]);
+    this.canUserModifyCategory = this._authService.hasUserPermissions([
+      Permission.TAG_UPDATE,
+    ]);
 
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
     });
+    const isFormControlDisabled = () =>
+      this.editMode ? !this.canUserModifyCategory : !this.canUserCreateCategory;
     this.formGroup = new FormGroup({
       name: new FormControl(
-        { value: '', disabled: this.areNotPermissionsPresent },
+        { value: '', disabled: isFormControlDisabled() },
         Validators.required
       ),
       parentId: new FormControl(),
@@ -92,12 +99,12 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this._resizeObserver.observe(this.form.nativeElement);
+    if (this.form) this._resizeObserver.observe(this.form.nativeElement);
 
     // fix initial 100% form container width (autofocus is too fast)
     setTimeout(
       () =>
-        (document.querySelector('.form__input') as HTMLInputElement).focus(),
+        (document.querySelector('.form__input') as HTMLInputElement)?.focus(),
       200
     );
   }

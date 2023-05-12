@@ -1,4 +1,9 @@
-<form class="form" #form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+<form
+  class="form"
+  *ngIf="editMode ? canUserGetCategory : true; else noPermission"
+  #form
+  [formGroup]="formGroup"
+  (ngSubmit)="onSubmit()">
   <div
     class="form__container"
     [ngStyle]="{ width: formContainerWidthPercents + '%' }">
@@ -25,7 +30,7 @@
       class="form__field"
       appearance="outline"
       color="primary"
-      *ngIf="!areNotPermissionsPresent">
+      *ngIf="editMode ? canUserModifyCategory : canUserCreateCategory">
       <mat-label class="form__label">
         {{ 'categories.form.parent_label' | translate }}
       </mat-label>
@@ -45,7 +50,7 @@
           mat-flat-button
           color="primary"
           [disabled]="
-            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+            !canUserCreateCategory || formGroup.disabled || !formGroup.valid
           ">
           {{ 'categories.form.add_button' | translate }}
         </button>
@@ -56,7 +61,7 @@
           mat-flat-button
           color="primary"
           [disabled]="
-            areNotPermissionsPresent || formGroup.disabled || !formGroup.valid
+            !canUserModifyCategory || formGroup.disabled || !formGroup.valid
           ">
           {{ 'categories.form.edit_button' | translate }}
         </button>
@@ -75,3 +80,10 @@
     </div>
   </div>
 </form>
+
+<ng-template #noPermission>
+  <div class="form__no-permission">
+    <mat-icon class="form__no-permission-icon">error_outline</mat-icon>
+    {{ 'categories.list.no_permission_label' | translate }}
+  </div>
+</ng-template>

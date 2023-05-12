@@ -1,6 +1,6 @@
 <form
   class="form"
-  *ngIf="canUserGetSpecialization; else noPermission"
+  *ngIf="editMode ? canUserGetSpecialization : true; else noPermission"
   #form
   [formGroup]="formGroup"
   (ngSubmit)="onSubmit()">
