@@ -28,7 +28,20 @@
         {{ 'users.roles.list.columns.permission_ids' | translate }}
       </th>
       <td mat-cell *matCellDef="let role" [ngStyle]="getTableCellStyle()">
-        {{ role.permissionIds | join : ', ' }}
+        <div class="table__role-scopes-container">
+          <ng-container *ngFor="let scope of getRolePermissions(role) | async">
+            <span
+              class="table__role-scope-title"
+              matBadge="{{ scope.actions.length }}"
+              matTooltip="{{
+                getPermissionActionsNames(scope.actions)
+                  | join : ', '
+                  | uppercase
+              }}">
+              {{ scope.scope | uppercase }}
+            </span>
+          </ng-container>
+        </div>
       </td>
     </ng-container>
 
