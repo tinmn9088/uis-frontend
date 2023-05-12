@@ -9,7 +9,7 @@ export class ErrorMessageService {
     response: HttpErrorResponse,
     description: string
   ): string {
-    return response.status >= 500
+    return response.status < 500
       ? `${description} (${response.error.message})`
       : response.message;
   }
