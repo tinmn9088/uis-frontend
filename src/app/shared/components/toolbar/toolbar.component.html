@@ -28,7 +28,7 @@
     <span
       class="toolbar__button_with-arrow"
       aria-label="Add button"
-      *ngIf="showAddMenu"
+      *ngIf="showAddMenu && addMenuItems.length > 0"
       [matMenuTriggerFor]="addMenu">
       <mat-icon>add</mat-icon>
       <mat-icon class="toolbar__button-arrow">arrow_drop_down</mat-icon>

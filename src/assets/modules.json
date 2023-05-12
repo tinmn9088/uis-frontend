@@ -14,16 +14,19 @@
       {
         "title": "users.options.main_page",
         "path": "/user/main",
+        "type": "list",
         "requiredPermissions": []
       },
       {
         "title": "users.options.user_management",
         "path": "/user/list",
+        "type": "search",
         "requiredPermissions": ["USER_READ"]
       },
       {
         "title": "users.options.role_management",
         "path": "/user/role/list",
+        "type": "search",
         "requiredPermissions": ["ROLE_READ"]
       }
     ]
@@ -41,11 +44,13 @@
       {
         "title": "categories.options.search",
         "path": "/category/list",
+        "type": "search",
         "requiredPermissions": ["TAG_READ"]
       },
       {
         "title": "categories.options.add",
         "path": "/category/add",
+        "type": "create",
         "groupId": 1,
         "requiredPermissions": ["TAG_CREATE"]
       },
@@ -53,6 +58,7 @@
         "title": "categories.options.edit",
         "path": "/category/0",
         "pathRegex": "/category/\\d+",
+        "type": "update",
         "groupId": 1,
         "requiredPermissions": ["TAG_UPDATE"]
       }
@@ -71,11 +77,13 @@
       {
         "title": "disciplines.options.search",
         "path": "/discipline/list",
+        "type": "search",
         "requiredPermissions": ["DISCIPLINE_GET", "DISCIPLINE_SEARCH"]
       },
       {
         "title": "disciplines.options.add",
         "path": "/discipline/add",
+        "type": "create",
         "groupId": 1,
         "requiredPermissions": ["DISCIPLINE_CREATE"]
       },
@@ -83,6 +91,7 @@
         "title": "disciplines.options.edit",
         "path": "/discipline/0",
         "pathRegex": "/discipline/\\d+",
+        "type": "update",
         "groupId": 1,
         "requiredPermissions": ["DISCIPLINE_UPDATE"]
       }
@@ -101,11 +110,13 @@
       {
         "title": "specializations.options.search",
         "path": "/specialization/list",
+        "type": "search",
         "requiredPermissions": ["SPECIALIZATION_GET", "SPECIALIZATION_SEARCH"]
       },
       {
         "title": "specializations.options.add",
         "path": "/specialization/add",
+        "type": "create",
         "groupId": 1,
         "requiredPermissions": ["SPECIALIZATION_CREATE"]
       },
@@ -113,6 +124,7 @@
         "title": "specializations.options.edit",
         "path": "/specialization/0",
         "pathRegex": "/specialization/\\d+",
+        "type": "update",
         "groupId": 1,
         "requiredPermissions": ["SPECIALIZATION_UPDATE"]
       }
@@ -131,11 +143,13 @@
       {
         "title": "curricula.options.search",
         "path": "/curriculum/list",
+        "type": "search",
         "requiredPermissions": ["CURRICULUM_GET"]
       },
       {
         "title": "curricula.options.add",
         "path": "/curriculum/add",
+        "type": "create",
         "groupId": 1,
         "requiredPermissions": ["CURRICULUM_CREATE"]
       },
@@ -143,6 +157,7 @@
         "title": "curricula.options.edit",
         "path": "/curriculum/0",
         "pathRegex": "/curriculum/\\d+",
+        "type": "update",
         "groupId": 1,
         "requiredPermissions": ["CURRICULUM_UPDATE"]
       }

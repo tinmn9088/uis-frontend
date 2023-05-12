@@ -4,6 +4,7 @@ import Modules from 'src/assets/modules.json';
 import { ModuleOption } from '../domain/module-option';
 import { Module } from '../domain/module';
 import { Permission } from 'src/app/auth/domain/permission';
+import { ModuleOptionType } from '../domain/module-option-type';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +86,12 @@ export class ModuleService {
   getOptions(name: ModuleName): ModuleOption[] | undefined {
     const module = this.getModule(name);
     return module.options;
+  }
+
+  getCreateOptions(): ModuleOption[] {
+    return this.getAllModules()
+      .flatMap(module => module.options || [])
+      .filter(option => option.type === ModuleOptionType.Create);
   }
 
   getAllModules(): Module[] {

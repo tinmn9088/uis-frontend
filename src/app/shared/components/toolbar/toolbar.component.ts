@@ -26,12 +26,7 @@ import { LogoutDialogComponent } from 'src/app/auth/components/logout-dialog/log
 export class ToolbarComponent implements OnInit, AfterViewInit {
   private _resizeObserver: ResizeObserver;
   readonly languages = Language;
-  addMenuItems = [
-    { text: 'toolbar.menu.add.category', path: '/category/add' },
-    { text: 'toolbar.menu.add.discipline', path: '/discipline/add' },
-    { text: 'toolbar.menu.add.specialization', path: '/specialization/add' },
-    { text: 'toolbar.menu.add.curricula', path: '/curriculum/add' },
-  ];
+  addMenuItems: { text: string; path: string }[];
   compact = false;
 
   /**
@@ -68,6 +63,14 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     this._resizeObserver = new ResizeObserver(entries => {
       this.onResize(entries[0]?.contentRect.width);
     });
+    this.addMenuItems = this._moduleService
+      .getCreateOptions()
+      .filter(option =>
+        this.authService.hasUserPermissions(option.requiredPermissions)
+      )
+      .map(option => {
+        return { text: option.title, path: option.path };
+      });
   }
 
   get user(): User | undefined {
