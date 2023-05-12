@@ -115,7 +115,7 @@
         "path": "/specialization/add",
         "type": "create",
         "groupId": 1,
-        "requiredPermissions": ["SPECIALIZATION_CREATE"]
+        "requiredPermissions": ["SPECIALIZATION_GET", "SPECIALIZATION_CREATE"]
       },
       {
         "title": "specializations.options.edit",
@@ -123,7 +123,7 @@
         "pathRegex": "/specialization/\\d+",
         "type": "update",
         "groupId": 1,
-        "requiredPermissions": ["SPECIALIZATION_UPDATE"]
+        "requiredPermissions": ["SPECIALIZATION_GET", "SPECIALIZATION_UPDATE"]
       }
     ]
   },
