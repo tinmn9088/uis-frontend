@@ -78,14 +78,18 @@ export class ModuleService {
     return [...allRequiredPermissions];
   }
 
-  getSidenavAddButtonPath(name: ModuleName): string | undefined {
-    const module = this.getModule(name);
-    return module.sidenavAddButtonPath;
-  }
-
   getOptions(name: ModuleName): ModuleOption[] | undefined {
     const module = this.getModule(name);
     return module.options;
+  }
+
+  /**
+   * @returns path of first option with type {@link ModuleOptionType.Create}.
+   */
+  getCreateOption(name: ModuleName): ModuleOption | undefined {
+    return this.getOptions(name)?.find(
+      option => option.type === ModuleOptionType.Create
+    );
   }
 
   getCreateOptions(): ModuleOption[] {

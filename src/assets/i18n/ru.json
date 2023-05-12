@@ -35,7 +35,7 @@
     "page_size_options": "Размер страницы"
   },
   "sidenav": {
-    "add_button": "Добавить"
+    "create_button": "Добавить"
   },
   "filtered_select": {
     "placeholder": "Поиск ...",
