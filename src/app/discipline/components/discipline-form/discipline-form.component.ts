@@ -32,9 +32,11 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
   formContainerWidthPercents?: number;
   formGroup!: FormGroup;
   categoriesOptions?: SelectOption[];
-  areNotPermissionsPresent: boolean;
+  canUserGetDiscipline: boolean;
+  canUserCreateDiscipline: boolean;
+  canUserModifyDiscipline: boolean;
   areCategoriesOptionsLoading = true;
-  @ViewChild('form') form!: ElementRef;
+  @ViewChild('form') form?: ElementRef;
 
   constructor(
     private _disciplineService: DisciplineService,
@@ -46,23 +48,30 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
     private _route: ActivatedRoute
   ) {
     this.editMode = !this._router.url.endsWith('add');
-    this.areNotPermissionsPresent = this.editMode
-      ? !this._authService.hasUserPermissions([
-          Permission.DISCIPLINE_GET,
-          Permission.DISCIPLINE_UPDATE,
-        ])
-      : !this._authService.hasUserPermissions([Permission.DISCIPLINE_CREATE]);
+    this.canUserGetDiscipline = this._authService.hasUserPermissions([
+      Permission.DISCIPLINE_GET,
+    ]);
+    this.canUserCreateDiscipline = this._authService.hasUserPermissions([
+      Permission.DISCIPLINE_CREATE,
+    ]);
+    this.canUserModifyDiscipline = this._authService.hasUserPermissions([
+      Permission.DISCIPLINE_UPDATE,
+    ]);
 
     this._resizeObserver = new ResizeObserver(entries => {
       this.updateFormContainerWidth(entries[0]?.contentRect.width);
     });
+    const isFormControlDisabled = () =>
+      this.editMode
+        ? !this.canUserModifyDiscipline
+        : !this.canUserCreateDiscipline;
     this.formGroup = new FormGroup({
       name: new FormControl(
-        { value: '', disabled: this.areNotPermissionsPresent },
+        { value: '', disabled: isFormControlDisabled() },
         Validators.required
       ),
       shortName: new FormControl(
-        { value: '', disabled: this.areNotPermissionsPresent },
+        { value: '', disabled: isFormControlDisabled() },
         Validators.required
       ),
       categories: new FormControl<SelectOption[]>([]),
@@ -113,12 +122,12 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this._resizeObserver.observe(this.form.nativeElement);
+    if (this.form) this._resizeObserver.observe(this.form.nativeElement);
 
     // fix initial 100% form container width (autofocus is too fast)
     setTimeout(
       () =>
-        (document.querySelector('.form__input') as HTMLInputElement).focus(),
+        (document.querySelector('.form__input') as HTMLInputElement)?.focus(),
       200
     );
   }

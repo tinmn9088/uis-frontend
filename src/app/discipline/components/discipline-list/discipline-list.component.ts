@@ -23,6 +23,7 @@ export class DisciplineListComponent {
   constructor(private _authService: AuthService) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.DISCIPLINE_SEARCH,
+      Permission.DISCIPLINE_GET,
     ]);
     this.formGroup = new FormGroup({
       searchQuery: new FormControl({

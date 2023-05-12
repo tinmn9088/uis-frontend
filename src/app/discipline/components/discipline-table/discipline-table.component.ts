@@ -22,6 +22,7 @@ export class DisciplineTableComponent implements OnInit {
   isLoading = true;
   dataSource: Discipline[] = [];
   canUserModifyDiscipline: boolean;
+  canUserGetCategory: boolean;
 
   constructor(
     private _disciplineService: DisciplineService,
@@ -30,6 +31,9 @@ export class DisciplineTableComponent implements OnInit {
   ) {
     this.canUserModifyDiscipline = this._authService.hasUserPermissions([
       Permission.DISCIPLINE_UPDATE,
+    ]);
+    this.canUserGetCategory = this._authService.hasUserPermissions([
+      Permission.TAG_READ,
     ]);
     if (this.canUserModifyDiscipline) {
       this.displayedColumns.push('operations');
