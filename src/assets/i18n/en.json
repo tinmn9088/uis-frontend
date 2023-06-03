@@ -300,8 +300,10 @@
       "add_button": "Add",
       "edit_button": "Edit",
       "apply_button": "Apply",
+      "delete_button": "Delete",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
+      "snackbar_delete_success_message": "Curriculum deleted",
       "snackbar_update_success_message": "Updated",
       "disciplines": {
         "table": {

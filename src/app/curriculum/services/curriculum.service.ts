@@ -43,6 +43,10 @@ export class CurriculumService {
     return this._http.put<Curriculum>(`${this.MODULE_URL}/${id}`, curriculum);
   }
 
+  delete(id: number): Observable<void> {
+    return this._http.delete<void>(`${this.MODULE_URL}/${id}`);
+  }
+
   getAll(
     size?: number,
     page?: number,

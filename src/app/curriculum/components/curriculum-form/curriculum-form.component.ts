@@ -47,6 +47,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   canUserGetCurriculum: boolean;
   canUserCreateCurriculum: boolean;
   canUserModifyCurriculum: boolean;
+  canUserDeleteCurriculum: boolean;
   areParentOptionsLoading = false;
   @ViewChild('form') form?: ElementRef;
   @ViewChild(CurriculumDisciplineTableComponent)
@@ -74,6 +75,9 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     ]);
     this.canUserModifyCurriculum = this._authService.hasUserPermissions([
       Permission.CURRICULUM_UPDATE,
+    ]);
+    this.canUserDeleteCurriculum = this._authService.hasUserPermissions([
+      Permission.CURRICULUM_DELETE,
     ]);
 
     this._resizeObserver = new ResizeObserver(entries => {
@@ -122,6 +126,11 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
           this._curriculumService.getById(this.id).subscribe({
             next: curriculum => {
               this._specializationId = curriculum.specializationId;
+
+              // if actual admission year is not present in generated array
+              this.admissionYearOptions.push(curriculum.admissionYear);
+              this.admissionYearOptions.sort();
+
               this.formGroup.patchValue({
                 approvalDate: curriculum.approvalDate,
                 admissionYear: curriculum.admissionYear,
@@ -252,6 +261,26 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     matDatepicker.close();
   }
 
+  onDelete() {
+    if (this.id) {
+      this.formGroup.disable();
+      this._curriculumService.delete(this.id).subscribe({
+        next: () => {
+          this._translate
+            .get('curricula.form.snackbar_delete_success_message')
+            .subscribe(message => {
+              this._snackbarService.showSuccess(`${message} (${this.id})`);
+              this.formGroup.enable();
+            });
+        },
+        error: (response: HttpErrorResponse) => {
+          this._snackbarService.showError(response.error.message);
+          this.formGroup.enable();
+        },
+      });
+    }
+  }
+
   openCurriculumDisciplineFormDialog() {
     this._dialogRef = this._matDialog.open(
       CurriculumDisciplineDialogComponent,
@@ -283,7 +312,11 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
 
   private generateAdmissionYearOptions(): number[] {
     const options: number[] = [];
-    for (let year = new Date().getFullYear(); options.length < 15; year++) {
+    for (
+      let year = new Date().getFullYear() - 10;
+      options.length < 25;
+      year++
+    ) {
       options.push(year);
     }
     return options;

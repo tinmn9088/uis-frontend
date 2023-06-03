@@ -300,8 +300,10 @@
       "add_button": "Добавить",
       "edit_button": "Изменить",
       "apply_button": "Применить",
+      "delete_button": "Удалить",
       "cancel_button": "Отмена",
       "snackbar_add_success_message": "Добавлено",
+      "snackbar_delete_success_message": "Учебный план удален",
       "snackbar_update_success_message": "Обновлено",
       "disciplines": {
         "table": {
