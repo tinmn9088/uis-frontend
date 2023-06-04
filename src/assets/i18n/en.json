@@ -31,6 +31,17 @@
       "default": "Guest"
     }
   },
+  "error_pages": {
+    "notfound": {
+      "header": "Not Found",
+      "description": "Resource (%replace%) not found."
+    }
+  },
+  "delete_dialog": {
+    "confirmation_message": "Are you sure you want to delete %replace%?",
+    "no_button": "No",
+    "yes_button": "Yes"
+  },
   "paginator": {
     "page_size_options": "Page size"
   },
@@ -181,6 +192,7 @@
     }
   },
   "categories": {
+    "title": "Category",
     "list": {
       "search": {
         "placeholder": "Search by: name"
@@ -208,6 +220,7 @@
     }
   },
   "disciplines": {
+    "title": "Discipline",
     "list": {
       "search": {
         "placeholder": "Search by: name, short name"
@@ -243,6 +256,7 @@
     }
   },
   "specializations": {
+    "title": "Specialization",
     "list": {
       "search": {
         "placeholder": "Search by: name, cipher"
@@ -277,6 +291,7 @@
     }
   },
   "curricula": {
+    "title": "Curriculum",
     "list": {
       "columns": {
         "id": "Id",
@@ -301,6 +316,7 @@
       "edit_button": "Edit",
       "apply_button": "Apply",
       "delete_button": "Delete",
+      "delete_button_tooltip": "Click to delete",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
       "snackbar_delete_success_message": "Curriculum deleted",

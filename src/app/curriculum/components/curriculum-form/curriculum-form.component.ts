@@ -5,6 +5,7 @@ import {
   Inject,
   OnInit,
   ViewChild,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectOption } from 'src/app/shared/domain/select-option';
@@ -25,7 +26,14 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CurriculumDisciplineDialogComponent } from '../curriculum-discipline-dialog/curriculum-discipline-dialog.component';
 import { CurriculumDisciplineTableComponent } from '../curriculum-discipline-table/curriculum-discipline-table.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DeleteDialogComponent } from 'src/app/shared/components/delete-dialog/delete-dialog.component';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 
+/**
+ * Query params:
+ * * `showDelete` - will focus on delete button.
+ */
 @Component({
   selector: 'app-curriculum-form',
   templateUrl: './curriculum-form.component.html',
@@ -50,6 +58,9 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   canUserDeleteCurriculum: boolean;
   areParentOptionsLoading = false;
   @ViewChild('form') form?: ElementRef;
+  @ViewChild('deleteButton') deleteButton?: MatButton;
+  @ViewChild('deleteTooltip') deleteTooltip?: MatTooltip;
+  isDeleteTooltipDisabled = true;
   @ViewChild(CurriculumDisciplineTableComponent)
   disciplineTable!: CurriculumDisciplineTableComponent;
 
@@ -64,7 +75,8 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     private _matDialog: MatDialog,
     private _languageService: LanguageService,
     private _adapter: DateAdapter<unknown>,
-    @Inject(MAT_DATE_LOCALE) private _locale: string
+    @Inject(MAT_DATE_LOCALE) private _locale: string,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {
     this.editMode = !this._router.url.endsWith('add');
     this.canUserGetCurriculum = this._authService.hasUserPermissions([
@@ -118,6 +130,14 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     return this.formGroup.get('specializationId')?.value;
   }
 
+  get selectedSpecializationName(): string {
+    return (
+      this.specializationOptions.find(
+        option => option.value === this.specializationId
+      )?.name || ''
+    );
+  }
+
   ngOnInit() {
     if (this.editMode) {
       this._route.params.subscribe({
@@ -132,7 +152,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
               this.admissionYearOptions.sort();
 
               this.formGroup.patchValue({
-                approvalDate: curriculum.approvalDate,
+                approvalDate: new Date(curriculum.approvalDate),
                 admissionYear: curriculum.admissionYear,
                 specializationId: curriculum.specializationId,
               });
@@ -150,11 +170,18 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     if (this.form) this._resizeObserver.observe(this.form.nativeElement);
 
     // fix initial 100% form container width (autofocus is too fast)
-    setTimeout(
-      () =>
-        (document.querySelector('.form__input') as HTMLInputElement)?.focus(),
-      200
-    );
+    setTimeout(() => {
+      (document.querySelector('.form__input') as HTMLInputElement)?.focus();
+      this._route.queryParams.subscribe(params => {
+        if (params['showDelete']) {
+          this.deleteButton?._elementRef?.nativeElement?.focus();
+          this.isDeleteTooltipDisabled = false;
+          this._changeDetectorRef.detectChanges();
+          this.deleteTooltip?.show();
+          this._changeDetectorRef.detectChanges();
+        }
+      });
+    }, 200);
   }
 
   onSubmit() {
@@ -262,23 +289,32 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   }
 
   onDelete() {
-    if (this.id) {
-      this.formGroup.disable();
-      this._curriculumService.delete(this.id).subscribe({
-        next: () => {
-          this._translate
-            .get('curricula.form.snackbar_delete_success_message')
-            .subscribe(message => {
-              this._snackbarService.showSuccess(`${message} (${this.id})`);
-              this.formGroup.enable();
-            });
-        },
-        error: (response: HttpErrorResponse) => {
-          this._snackbarService.showError(response.error.message);
-          this.formGroup.enable();
-        },
-      });
-    }
+    const name = `${this.selectedSpecializationName} (${this._adapter.format(
+      this.approvalDate,
+      ''
+    )})`;
+    const dialogRef = this._matDialog.open(DeleteDialogComponent, {
+      data: { name },
+    });
+    dialogRef.afterClosed().subscribe(isDeleteConfirmed => {
+      if (isDeleteConfirmed && this.id) {
+        this.formGroup.disable();
+        this._curriculumService.delete(this.id).subscribe({
+          next: () => {
+            this._translate
+              .get('curricula.form.snackbar_delete_success_message')
+              .subscribe(message => {
+                this._snackbarService.showSuccess(`${message} (${this.id})`);
+                this.formGroup.enable();
+              });
+          },
+          error: (response: HttpErrorResponse) => {
+            this._snackbarService.showError(response.error.message);
+            this.formGroup.enable();
+          },
+        });
+      }
+    });
   }
 
   openCurriculumDisciplineFormDialog() {

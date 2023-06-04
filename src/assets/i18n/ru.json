@@ -31,6 +31,17 @@
       "default": "Гость"
     }
   },
+  "error_pages": {
+    "notfound": {
+      "header": "Не найдено",
+      "description": "Ресурс (%replace%) не найден."
+    }
+  },
+  "delete_dialog": {
+    "confirmation_message": "Уверены, что хотите удалить %replace%?",
+    "no_button": "Нет",
+    "yes_button": "Да"
+  },
   "paginator": {
     "page_size_options": "Размер страницы"
   },
@@ -181,6 +192,7 @@
     }
   },
   "categories": {
+    "title": "Категория",
     "list": {
       "search": {
         "placeholder": "Поиск по: название"
@@ -208,6 +220,7 @@
     }
   },
   "disciplines": {
+    "title": "Дисциплина",
     "list": {
       "search": {
         "placeholder": "Поиск по: название, краткое название"
@@ -243,6 +256,7 @@
     }
   },
   "specializations": {
+    "title": "Специальность",
     "list": {
       "search": {
         "placeholder": "Поиск по: название, шифр"
@@ -277,6 +291,7 @@
     }
   },
   "curricula": {
+    "title": "Учебный план",
     "list": {
       "columns": {
         "id": "Id",
@@ -301,6 +316,7 @@
       "edit_button": "Изменить",
       "apply_button": "Применить",
       "delete_button": "Удалить",
+      "delete_button_tooltip": "Нажмите, чтобы удалить",
       "cancel_button": "Отмена",
       "snackbar_add_success_message": "Добавлено",
       "snackbar_delete_success_message": "Учебный план удален",

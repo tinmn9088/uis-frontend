@@ -45,6 +45,8 @@ import { EmptyComponent } from './components/empty/empty.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { ListManagementComponent } from './components/list-management/list-management.component';
 import { ErrorMessageService } from './services/error-message.service';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 
 export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('themeClass');
 export const REFRESH_JWT_REQUEST_COUNT_TOKEN = new InjectionToken<string>(
@@ -105,7 +107,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [...declarations],
+  declarations: [...declarations, NotFoundComponent, DeleteDialogComponent],
   exports: [...modules, declarations, TranslateModule],
   imports: [
     ...modules,

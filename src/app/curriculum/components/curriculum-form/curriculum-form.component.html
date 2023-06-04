@@ -101,8 +101,13 @@
       </ng-template>
 
       <button
+        #deleteButton
         class="form__delete-button"
         mat-flat-button
+        #deleteTooltip="matTooltip"
+        matTooltip="{{ 'curricula.form.delete_button_tooltip' | translate }}"
+        matTooltipPosition="right"
+        [matTooltipDisabled]="isDeleteTooltipDisabled"
         type="button"
         color="warn"
         *ngIf="editMode && canUserDeleteCurriculum"

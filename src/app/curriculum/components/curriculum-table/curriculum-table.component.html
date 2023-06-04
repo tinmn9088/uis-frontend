@@ -66,14 +66,26 @@
         {{ 'curricula.list.columns.operations' | translate }}
       </th>
       <td mat-cell *matCellDef="let curriculum" [ngStyle]="getTableCellStyle()">
-        <button
-          class="table__edit-button"
-          mat-icon-button
-          *ngIf="canUserModifyCurriculum"
-          [routerLink]="getLinkToFormPage(curriculum.id)"
-          color="primary">
-          <mat-icon>edit</mat-icon>
-        </button>
+        <div class="table__operation-buttons-container">
+          <button
+            class="table__edit-button"
+            mat-icon-button
+            *ngIf="canUserModifyCurriculum"
+            [routerLink]="getLinkToFormPage(curriculum.id)"
+            color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            class="table__delete-button"
+            type="button"
+            mat-icon-button
+            *ngIf="canUserDeleteCurriculum"
+            [routerLink]="getLinkToFormPage(curriculum.id)"
+            [queryParams]="{ showDelete: true }"
+            color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </td>
     </ng-container>
 

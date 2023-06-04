@@ -26,6 +26,7 @@ export class CurriculumTableComponent implements OnInit {
   isLoading = true;
   dataSource: Curriculum[] = [];
   canUserModifyCurriculum: boolean;
+  canUserDeleteCurriculum: boolean;
 
   constructor(
     private _curriculumService: CurriculumService,
@@ -34,7 +35,10 @@ export class CurriculumTableComponent implements OnInit {
     this.canUserModifyCurriculum = this._authService.hasUserPermissions([
       Permission.CURRICULUM_UPDATE,
     ]);
-    if (this.canUserModifyCurriculum) {
+    this.canUserDeleteCurriculum = this._authService.hasUserPermissions([
+      Permission.CURRICULUM_DELETE,
+    ]);
+    if (this.canUserModifyCurriculum || this.canUserDeleteCurriculum) {
       this.displayedColumns.push('operations');
     }
   }
