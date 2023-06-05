@@ -4,9 +4,19 @@ import { CurriculumListComponent } from './components/curriculum-list/curriculum
 import { CurriculumFormComponent } from './components/curriculum-form/curriculum-form.component';
 import { showDeleteResolver } from '../shared/resolvers/show-delete-resolver';
 import { curriculumResolver } from './resolvers/curriculum-resolver';
+import { paginationResolver } from '../shared/resolvers/pagination-resolver';
+import { sortResolver } from '../shared/resolvers/sort-resolver';
 
 const routes: Routes = [
-  { path: 'list', component: CurriculumListComponent },
+  {
+    path: 'list',
+    component: CurriculumListComponent,
+    resolve: {
+      pagination: paginationResolver,
+      sort: sortResolver,
+    },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+  },
   { path: 'add', component: CurriculumFormComponent },
   {
     path: ':id',

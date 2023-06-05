@@ -12,7 +12,13 @@ import {
   MatDrawerContent,
 } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { BehaviorSubject, Subscription, distinctUntilChanged } from 'rxjs';
+import {
+  BehaviorSubject,
+  Subscription,
+  distinctUntilChanged,
+  filter,
+  pairwise,
+} from 'rxjs';
 import { ModuleOption } from '../../domain/module-option';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { ModuleService } from '../../services/module.service';
@@ -33,6 +39,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     .pipe(distinctUntilChanged());
   private _pathChangeSubscription: Subscription;
   private _resizeObserver: ResizeObserver;
+  private _previousUrl?: string;
   contentHeightPixels?: number;
   sidenavFullsize = true;
   showToolbarTabs = true;
@@ -89,7 +96,11 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     ];
     this._pathChangeSubscription = this._router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        this.isContentHidden = true;
+        const currentUrl = event.url.split('?')[0];
+        if (currentUrl !== this._previousUrl) {
+          this._previousUrl = currentUrl;
+          this.isContentHidden = true;
+        }
       }
       if (event instanceof NavigationEnd) {
         const currentPath = event.urlAfterRedirects;
@@ -119,6 +130,7 @@ export class ModuleLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
         }, 200);
       }
     });
+    this._previousUrl = this._router.url.split('?')[0];
   }
 
   ngOnInit() {

@@ -5,6 +5,8 @@ import { Curriculum } from '../../domain/curriculum';
 import { CurriculumService } from '../../services/curriculum.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
+import { ActivatedRoute, Router } from '@angular/router';
+import { QueryParamsService } from 'src/app/shared/services/query-params.service';
 
 @Component({
   selector: 'app-curriculum-table',
@@ -30,7 +32,10 @@ export class CurriculumTableComponent implements OnInit {
 
   constructor(
     private _curriculumService: CurriculumService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _queryParamService: QueryParamsService
   ) {
     this.canUserModifyCurriculum = this._authService.hasUserPermissions([
       Permission.CURRICULUM_UPDATE,
@@ -48,9 +53,9 @@ export class CurriculumTableComponent implements OnInit {
   }
 
   onSortChange(sort: Sort) {
-    console.log(sort);
     this.sort = sort;
     this.sortChanged.emit(sort);
+    this._queryParamService.appendSort(this._route, sort);
   }
 
   getAll() {
