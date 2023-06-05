@@ -319,8 +319,11 @@
       "delete_button_tooltip": "Нажмите, чтобы удалить",
       "cancel_button": "Отмена",
       "snackbar_add_success_message": "Добавлено",
+      "snackbar_add_fail_message": "Не удалось добавить",
       "snackbar_delete_success_message": "Учебный план удален",
+      "snackbar_delete_fail_message": "Ну удалось удалить учебный план",
       "snackbar_update_success_message": "Обновлено",
+      "snackbar_update_fail_message": "Не удалось обновить",
       "disciplines": {
         "table": {
           "columns": {

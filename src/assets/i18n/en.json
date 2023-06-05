@@ -319,8 +319,11 @@
       "delete_button_tooltip": "Click to delete",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
+      "snackbar_add_fail_message": "Failed to added",
       "snackbar_delete_success_message": "Curriculum deleted",
+      "snackbar_delete_fail_message": "Failed to delete curriculum",
       "snackbar_update_success_message": "Updated",
+      "snackbar_update_fail_message": "Failed to update",
       "disciplines": {
         "table": {
           "columns": {

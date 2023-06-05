@@ -29,6 +29,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DeleteDialogComponent } from 'src/app/shared/components/delete-dialog/delete-dialog.component';
 import { MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
+import { ErrorMessageService } from 'src/app/shared/services/error-message.service';
+import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
 
 /**
  * Query params:
@@ -69,6 +71,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     private _specializationService: SpecializationService,
     private _authService: AuthService,
     private _snackbarService: SnackbarService,
+    private _errorMessageService: ErrorMessageService,
     private _translate: TranslateService,
     private _router: Router,
     private _route: ActivatedRoute,
@@ -140,25 +143,19 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.editMode) {
-      this._route.params.subscribe({
-        next: params => {
-          this.id = parseInt(params['id']);
-          this._curriculumService.getById(this.id).subscribe({
-            next: curriculum => {
-              this._specializationId = curriculum.specializationId;
+      this._route.data.subscribe(({ curriculum }) => {
+        this.id = curriculum.id;
+        this._specializationId = curriculum.specializationId;
 
-              // if actual admission year is not present in generated array
-              this.admissionYearOptions.push(curriculum.admissionYear);
-              this.admissionYearOptions.sort();
+        // if actual admission year is not present in generated array
+        this.admissionYearOptions.push(curriculum.admissionYear);
+        this.admissionYearOptions.sort();
 
-              this.formGroup.patchValue({
-                approvalDate: new Date(curriculum.approvalDate),
-                admissionYear: curriculum.admissionYear,
-                specializationId: curriculum.specializationId,
-              });
-            },
-          });
-        },
+        this.formGroup.patchValue({
+          approvalDate: new Date(curriculum.approvalDate),
+          admissionYear: curriculum.admissionYear,
+          specializationId: curriculum.specializationId,
+        });
       });
     }
     this.updateSpecializationOptions();
@@ -172,8 +169,8 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     // fix initial 100% form container width (autofocus is too fast)
     setTimeout(() => {
       (document.querySelector('.form__input') as HTMLInputElement)?.focus();
-      this._route.queryParams.subscribe(params => {
-        if (params['showDelete']) {
+      this._route.data.subscribe(({ showDelete }) => {
+        if (showDelete) {
           this.deleteButton?._elementRef?.nativeElement?.focus();
           this.isDeleteTooltipDisabled = false;
           this._changeDetectorRef.detectChanges();
@@ -231,7 +228,22 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
         }
       },
       error: (response: HttpErrorResponse) => {
-        this._snackbarService.showError(response.error.message);
+        this._translate
+          .get(
+            this.editMode
+              ? 'curricula.form.snackbar_update_fail_message'
+              : 'curricula.form.snackbar_add_fail_message'
+          )
+          .subscribe(message => {
+            this.formGroup.enable();
+            this._snackbarService.showError(
+              this._errorMessageService.buildHttpErrorMessage(
+                response,
+                message
+              ),
+              SnackbarAction.Cross
+            );
+          });
         this.formGroup.enable();
       },
     });
@@ -305,11 +317,22 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
               .get('curricula.form.snackbar_delete_success_message')
               .subscribe(message => {
                 this._snackbarService.showSuccess(`${message} (${this.id})`);
-                this.formGroup.enable();
+                this._router.navigateByUrl(this.getLinkToSearchPage());
               });
           },
           error: (response: HttpErrorResponse) => {
-            this._snackbarService.showError(response.error.message);
+            this._translate
+              .get('curricula.form.snackbar_delete_fail_message')
+              .subscribe(message => {
+                this.formGroup.enable();
+                this._snackbarService.showError(
+                  this._errorMessageService.buildHttpErrorMessage(
+                    response,
+                    message
+                  ),
+                  SnackbarAction.Cross
+                );
+              });
             this.formGroup.enable();
           },
         });
