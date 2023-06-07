@@ -7,6 +7,9 @@ export const sortResolver: ResolveFn<Sort | undefined> = (
   const value = route.queryParamMap.get('sort');
   const sort = value?.split(',');
   return sort
-    ? ({ active: sort[0] || '', direction: sort[1] || 'asc' } as Sort)
+    ? ({
+        active: sort[0] || '',
+        direction: sort[1] === 'desc' ? 'desc' : 'asc',
+      } as Sort)
     : undefined;
 };
