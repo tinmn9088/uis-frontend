@@ -33,8 +33,11 @@
   },
   "error_pages": {
     "notfound": {
-      "header": "Не найдено",
-      "description": "Ресурс (%replace%) не найден."
+      "header": "404 Не найдено",
+      "description_resource": "Ресурс",
+      "description_not_found": "не найден",
+      "main_page_return": "Вернуться на",
+      "main_page_link": "Главную страницу"
     }
   },
   "delete_dialog": {

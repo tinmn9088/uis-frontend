@@ -25,4 +25,8 @@ export class QueryParamsService {
   appendPagination(relativeTo: ActivatedRoute, size: number, page: number) {
     this.appendQueryParams(relativeTo, { size, page });
   }
+
+  appendResourceName(relativeTo: ActivatedRoute, resourceName: string) {
+    this.appendQueryParams(relativeTo, { resourceName });
+  }
 }

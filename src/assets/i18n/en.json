@@ -33,8 +33,11 @@
   },
   "error_pages": {
     "notfound": {
-      "header": "Not Found",
-      "description": "Resource (%replace%) not found."
+      "header": "404 Not Found",
+      "description_resource": "Resource",
+      "description_not_found": "not found",
+      "main_page_return": "Return to",
+      "main_page_link": "Main page"
     }
   },
   "delete_dialog": {
