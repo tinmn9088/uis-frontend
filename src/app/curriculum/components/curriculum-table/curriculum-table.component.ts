@@ -59,7 +59,6 @@ export class CurriculumTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getAll();
     this._route.data.subscribe(({ sort }) => {
       if (sort && this.displayedColumns.includes(sort.active)) {
         this.sort = sort;

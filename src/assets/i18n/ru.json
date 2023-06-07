@@ -41,7 +41,7 @@
     }
   },
   "delete_dialog": {
-    "confirmation_message": "Уверены, что хотите удалить %replace%?",
+    "confirmation_message": "Уверены, что хотите удалить",
     "no_button": "Нет",
     "yes_button": "Да"
   },
@@ -211,10 +211,15 @@
       "name_error": "Название обязательно",
       "parent_label": "Родительная категория",
       "add_button": "Добавить",
+      "delete_button": "Удалить",
       "edit_button": "Изменить",
       "cancel_button": "Отмена",
       "snackbar_add_success_message": "Добавлено",
-      "snackbar_update_success_message": "Обновлено"
+      "snackbar_add_fail_message": "Не удалось добавить",
+      "snackbar_delete_success_message": "Категория удалена",
+      "snackbar_delete_fail_message": "Ну удалось удалить категорию",
+      "snackbar_update_success_message": "Обновлено",
+      "snackbar_update_fail_message": "Не удалось обновить"
     },
     "options": {
       "search": "Поиск категорий",

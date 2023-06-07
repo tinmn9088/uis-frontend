@@ -17,6 +17,10 @@ import { map } from 'rxjs';
 import { Permission } from 'src/app/auth/domain/permission';
 import { CategoryUpdateRequest } from '../../domain/category-update-request';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from 'src/app/shared/components/delete-dialog/delete-dialog.component';
+import { ErrorMessageService } from 'src/app/shared/services/error-message.service';
+import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
 
 @Component({
   selector: 'app-category-form',
@@ -34,6 +38,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
   canUserGetCategory: boolean;
   canUserCreateCategory: boolean;
   canUserModifyCategory: boolean;
+  canUserDeleteCategory: boolean;
   areParentOptionsLoading = false;
   @ViewChild('form') form?: ElementRef;
 
@@ -41,8 +46,10 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     private _categoryService: CategoryService,
     private _authService: AuthService,
     private _snackbarService: SnackbarService,
+    private _errorMessageService: ErrorMessageService,
     private _translate: TranslateService,
     private _router: Router,
+    private _matDialog: MatDialog,
     private _route: ActivatedRoute
   ) {
     this.editMode = !this._router.url.endsWith('add');
@@ -54,6 +61,9 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
     ]);
     this.canUserModifyCategory = this._authService.hasUserPermissions([
       Permission.TAG_UPDATE,
+    ]);
+    this.canUserDeleteCategory = this._authService.hasUserPermissions([
+      Permission.TAG_DELETE,
     ]);
 
     this._resizeObserver = new ResizeObserver(entries => {
@@ -80,19 +90,13 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.editMode) {
-      this._route.params.subscribe({
-        next: params => {
-          this.id = parseInt(params['id']);
-          this._categoryService.getById(this.id).subscribe({
-            next: category => {
-              this._parentId = category.parentId;
-              this.formGroup.patchValue({
-                name: category.name,
-                parentId: category.parentId,
-              });
-            },
-          });
-        },
+      this._route.data.subscribe(({ category }) => {
+        this.id = category.id;
+        this._parentId = category.parentId;
+        this.formGroup.patchValue({
+          name: category.name,
+          parentId: category.parentId,
+        });
       });
     }
     this.updateParentOptions();
@@ -151,9 +155,60 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
         }
       },
       error: (response: HttpErrorResponse) => {
-        this._snackbarService.showError(response.error.message);
+        this._translate
+          .get(
+            this.editMode
+              ? 'categories.form.snackbar_update_fail_message'
+              : 'categories.form.snackbar_add_fail_message'
+          )
+          .subscribe(message => {
+            this.formGroup.enable();
+            this._snackbarService.showError(
+              this._errorMessageService.buildHttpErrorMessage(
+                response,
+                message
+              ),
+              SnackbarAction.Cross
+            );
+          });
         this.formGroup.enable();
       },
+    });
+  }
+
+  onDelete() {
+    const dialogRef = this._matDialog.open(DeleteDialogComponent, {
+      data: { name: this.name },
+    });
+    dialogRef.afterClosed().subscribe(isDeleteConfirmed => {
+      if (isDeleteConfirmed && this.id) {
+        this.formGroup.disable();
+        this._categoryService.delete(this.id).subscribe({
+          next: () => {
+            this._translate
+              .get('categories.form.snackbar_delete_success_message')
+              .subscribe(message => {
+                this._snackbarService.showSuccess(`${message} (${this.id})`);
+                this._router.navigateByUrl(this.getLinkToSearchPage());
+              });
+          },
+          error: (response: HttpErrorResponse) => {
+            this._translate
+              .get('categories.form.snackbar_delete_fail_message')
+              .subscribe(message => {
+                this.formGroup.enable();
+                this._snackbarService.showError(
+                  this._errorMessageService.buildHttpErrorMessage(
+                    response,
+                    message
+                  ),
+                  SnackbarAction.Cross
+                );
+              });
+            this.formGroup.enable();
+          },
+        });
+      }
     });
   }
 

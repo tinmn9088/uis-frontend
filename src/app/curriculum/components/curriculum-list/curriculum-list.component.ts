@@ -29,9 +29,10 @@ export class CurriculumListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._route.data.subscribe(data => {
-      this.pageNumber = data['pagination']?.page;
-      this.pageSize = data['pagination']?.size;
+    this._route.data.subscribe(({ pagination }) => {
+      this.pageNumber = pagination.page;
+      this.pageSize = pagination.size;
+      setTimeout(() => this.curriculumTable.getAll());
     });
   }
 

@@ -41,7 +41,7 @@
     }
   },
   "delete_dialog": {
-    "confirmation_message": "Are you sure you want to delete %replace%?",
+    "confirmation_message": "Are you sure you want to delete",
     "no_button": "No",
     "yes_button": "Yes"
   },
@@ -211,10 +211,15 @@
       "name_error": "Name required",
       "parent_label": "Parent category",
       "add_button": "Add",
+      "delete_button": "Delete",
       "edit_button": "Edit",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
-      "snackbar_update_success_message": "Updated"
+      "snackbar_add_fail_message": "Failed to add",
+      "snackbar_delete_success_message": "Deleted",
+      "snackbar_delete_fail_message": "Failed to delete",
+      "snackbar_update_success_message": "Updated",
+      "snackbar_update_fail_message": "Failed to update"
     },
     "options": {
       "search": "Search categories",

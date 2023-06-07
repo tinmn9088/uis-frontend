@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, OnInit, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CategoryTreeComponent } from '../category-tree/category-tree.component';
 import { HighlightTextService } from 'src/app/shared/services/highlight-text.service';
@@ -6,25 +6,27 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { CategoryPageableResponse } from '../../domain/category-pageable-response';
 import { PageEvent } from '@angular/material/paginator';
 import { Permission } from 'src/app/auth/domain/permission';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss'],
 })
-export class CategoryListComponent implements AfterViewInit {
+export class CategoryListComponent implements OnInit, AfterViewInit {
   private _resizeObserver: ResizeObserver;
   formGroup!: FormGroup;
   @ViewChild(CategoryTreeComponent)
   categoryTree!: CategoryTreeComponent;
   totalElements!: number;
-  pageSize = 15;
   arePermissionsPresent: boolean;
+  pageSize!: number;
   pageNumber!: number;
 
   constructor(
     public highlightTextService: HighlightTextService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _route: ActivatedRoute
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.TAG_READ,
@@ -50,6 +52,14 @@ export class CategoryListComponent implements AfterViewInit {
 
   get searchQuery(): string {
     return this.formGroup.get('searchQuery')?.value;
+  }
+
+  ngOnInit() {
+    this._route.data.subscribe(({ pagination }) => {
+      this.pageNumber = pagination.page;
+      this.pageSize = pagination.size;
+      setTimeout(() => this.categoryTree.search(this.searchQuery));
+    });
   }
 
   ngAfterViewInit() {

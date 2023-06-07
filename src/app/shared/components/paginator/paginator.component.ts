@@ -12,7 +12,7 @@ import {
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { PaginatorService } from '../../services/paginator.service';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { QueryParamsService } from '../../services/query-params.service';
 
 @Component({
@@ -40,7 +40,6 @@ export class PaginatorComponent implements OnInit, AfterViewInit, OnChanges {
 
   constructor(
     private _paginatorService: PaginatorService,
-    private _router: Router,
     private _route: ActivatedRoute,
     private _queryParamsService: QueryParamsService
   ) {}
