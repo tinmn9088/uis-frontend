@@ -6,6 +6,7 @@ import { DisciplineTableComponent } from '../discipline-table/discipline-table.c
 import { Permission } from 'src/app/auth/domain/permission';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { QueryParamsService } from 'src/app/shared/services/query-params.service';
 
 @Component({
   selector: 'app-discipline-list',
@@ -23,7 +24,8 @@ export class DisciplineListComponent implements OnInit {
 
   constructor(
     private _authService: AuthService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _queryParamsService: QueryParamsService
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.DISCIPLINE_SEARCH,
@@ -38,7 +40,8 @@ export class DisciplineListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._route.data.subscribe(({ pagination }) => {
+    this._route.data.subscribe(({ searchQuery, pagination }) => {
+      this.formGroup.setValue({ searchQuery }, { emitEvent: false });
       this.pageNumber = pagination.page;
       this.pageSize = pagination.size;
       setTimeout(() => this.disciplineTable.search(this.searchQuery));
@@ -50,6 +53,7 @@ export class DisciplineListComponent implements OnInit {
   }
 
   onSearch() {
+    this._queryParamsService.appendSearchQuery(this._route, this.searchQuery);
     this.disciplineTable.search(this.searchQuery);
   }
 

@@ -7,6 +7,7 @@ import { CategoryPageableResponse } from '../../domain/category-pageable-respons
 import { PageEvent } from '@angular/material/paginator';
 import { Permission } from 'src/app/auth/domain/permission';
 import { ActivatedRoute } from '@angular/router';
+import { QueryParamsService } from 'src/app/shared/services/query-params.service';
 
 @Component({
   selector: 'app-category-list',
@@ -26,7 +27,8 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   constructor(
     public highlightTextService: HighlightTextService,
     private _authService: AuthService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _queryParamsService: QueryParamsService
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.TAG_READ,
@@ -55,7 +57,8 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this._route.data.subscribe(({ pagination }) => {
+    this._route.data.subscribe(({ searchQuery, pagination }) => {
+      this.formGroup.setValue({ searchQuery }, { emitEvent: false });
       this.pageNumber = pagination.page;
       this.pageSize = pagination.size;
       setTimeout(() => this.categoryTree.search(this.searchQuery));
@@ -70,6 +73,7 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   }
 
   onSearch() {
+    this._queryParamsService.appendSearchQuery(this._route, this.searchQuery);
     setTimeout(() => this.categoryTree.search(this.searchQuery));
   }
 

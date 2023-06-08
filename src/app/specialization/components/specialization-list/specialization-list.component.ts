@@ -7,6 +7,7 @@ import { HighlightTextService } from 'src/app/shared/services/highlight-text.ser
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
 import { ActivatedRoute } from '@angular/router';
+import { QueryParamsService } from 'src/app/shared/services/query-params.service';
 
 @Component({
   selector: 'app-specialization-list',
@@ -26,7 +27,8 @@ export class SpecializationListComponent implements OnInit, AfterViewInit {
   constructor(
     public highlightTextService: HighlightTextService,
     private _authService: AuthService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _queryParamsService: QueryParamsService
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.SPECIALIZATION_SEARCH,
@@ -56,7 +58,8 @@ export class SpecializationListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this._route.data.subscribe(({ pagination }) => {
+    this._route.data.subscribe(({ searchQuery, pagination }) => {
+      this.formGroup.setValue({ searchQuery }, { emitEvent: false });
       this.pageNumber = pagination.page;
       this.pageSize = pagination.size;
       setTimeout(() => this.specializationTree.search(this.searchQuery));
@@ -71,6 +74,7 @@ export class SpecializationListComponent implements OnInit, AfterViewInit {
   }
 
   onSearch() {
+    this._queryParamsService.appendSearchQuery(this._route, this.searchQuery);
     setTimeout(() => this.specializationTree.search(this.searchQuery));
   }
 

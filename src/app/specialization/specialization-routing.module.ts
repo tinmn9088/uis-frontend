@@ -4,12 +4,16 @@ import { SpecializationListComponent } from './components/specialization-list/sp
 import { SpecializationFormComponent } from './components/specialization-form/specialization-form.component';
 import { specializationResolver } from './resolvers/specialization-resolver';
 import { paginationResolver } from '../shared/resolvers/pagination-resolver';
+import { searchQueryResolver } from '../shared/resolvers/search-query-resolver';
 
 const routes: Routes = [
   {
     path: 'list',
     component: SpecializationListComponent,
-    resolve: { pagination: paginationResolver },
+    resolve: {
+      pagination: paginationResolver,
+      searchQuery: searchQueryResolver,
+    },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
   { path: 'add', component: SpecializationFormComponent },

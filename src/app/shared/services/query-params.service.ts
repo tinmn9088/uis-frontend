@@ -29,4 +29,8 @@ export class QueryParamsService {
   appendResourceName(relativeTo: ActivatedRoute, resourceName: string) {
     this.appendQueryParams(relativeTo, { resourceName });
   }
+
+  appendSearchQuery(relativeTo: ActivatedRoute, searchQuery: string) {
+    this.appendQueryParams(relativeTo, { q: searchQuery });
+  }
 }
