@@ -188,7 +188,7 @@ export class CategoryFormComponent implements OnInit, AfterViewInit {
             this._translate
               .get('categories.form.snackbar_delete_success_message')
               .subscribe(message => {
-                this._snackbarService.showSuccess(`${message} (${this.id})`);
+                this._snackbarService.showSuccess(`${message} (${this.name})`);
                 this._router.navigateByUrl(this.getLinkToSearchPage());
               });
           },

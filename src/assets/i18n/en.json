@@ -288,9 +288,14 @@
       "parent_label": "Parent specialization",
       "add_button": "Add",
       "edit_button": "Edit",
+      "delete_button": "Delete",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
-      "snackbar_update_success_message": "Updated"
+      "snackbar_add_fail_message": "Failed to add",
+      "snackbar_delete_success_message": "Deleted",
+      "snackbar_delete_fail_message": "Failed to delete",
+      "snackbar_update_success_message": "Updated",
+      "snackbar_update_fail_message": "Failed to update"
     },
     "options": {
       "search": "Search specializations",
