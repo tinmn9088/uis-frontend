@@ -253,9 +253,15 @@
       "categories_select_specify_category": "... Specify category name",
       "add_button": "Add",
       "edit_button": "Edit",
+      "delete_button": "Delete",
+      "delete_button_tooltip": "Click to delete",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
-      "snackbar_update_success_message": "Updated"
+      "snackbar_add_fail_message": "Failed to add",
+      "snackbar_delete_success_message": "Deleted",
+      "snackbar_delete_fail_message": "Failed to delete",
+      "snackbar_update_success_message": "Updated",
+      "snackbar_update_fail_message": "Failed to update"
     },
     "options": {
       "search": "Search disciplines",

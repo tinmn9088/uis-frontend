@@ -4,6 +4,7 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DisciplineService } from '../../services/discipline.service';
@@ -19,6 +20,13 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
 import { Category } from 'src/app/category/domain/category';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from 'src/app/shared/components/delete-dialog/delete-dialog.component';
+import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
+import { ErrorMessageService } from 'src/app/shared/services/error-message.service';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { Discipline } from '../../domain/discipline';
 
 @Component({
   selector: 'app-discipline-form',
@@ -35,17 +43,24 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
   canUserGetDiscipline: boolean;
   canUserCreateDiscipline: boolean;
   canUserModifyDiscipline: boolean;
+  canUserDeleteDiscipline: boolean;
   areCategoriesOptionsLoading = true;
   @ViewChild('form') form?: ElementRef;
+  @ViewChild('deleteButton') deleteButton?: MatButton;
+  @ViewChild('deleteTooltip') deleteTooltip?: MatTooltip;
+  isDeleteTooltipDisabled = true;
 
   constructor(
     private _disciplineService: DisciplineService,
     private _categoryService: CategoryService,
     private _authService: AuthService,
     private _snackbarService: SnackbarService,
+    private _errorMessageService: ErrorMessageService,
     private _translate: TranslateService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _matDialog: MatDialog,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {
     this.editMode = !this._router.url.endsWith('add');
     this.canUserGetDiscipline = this._authService.hasUserPermissions([
@@ -56,6 +71,9 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
     ]);
     this.canUserModifyDiscipline = this._authService.hasUserPermissions([
       Permission.DISCIPLINE_UPDATE,
+    ]);
+    this.canUserDeleteDiscipline = this._authService.hasUserPermissions([
+      Permission.DISCIPLINE_DELETE,
     ]);
 
     this._resizeObserver = new ResizeObserver(entries => {
@@ -101,21 +119,15 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.editMode) {
-      this._route.params.subscribe({
-        next: params => {
-          this.id = parseInt(params['id']);
-          this._disciplineService.getById(this.id).subscribe({
-            next: discipline => {
-              this.formGroup.setValue({
-                name: discipline.name,
-                shortName: discipline.shortName,
-                categories: discipline.tags.map(tag => {
-                  return { name: tag.name, value: tag.id } as SelectOption;
-                }),
-              });
-            },
-          });
-        },
+      this._route.data.subscribe(({ discipline }) => {
+        this.id = discipline.id;
+        this.formGroup.setValue({
+          name: discipline.name,
+          shortName: discipline.shortName,
+          categories: (discipline as Discipline).tags.map(tag => {
+            return { name: tag.name, value: tag.id } as SelectOption;
+          }),
+        });
       });
     }
     this.updateCategoriesOptions();
@@ -125,11 +137,18 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
     if (this.form) this._resizeObserver.observe(this.form.nativeElement);
 
     // fix initial 100% form container width (autofocus is too fast)
-    setTimeout(
-      () =>
-        (document.querySelector('.form__input') as HTMLInputElement)?.focus(),
-      200
-    );
+    setTimeout(() => {
+      (document.querySelector('.form__input') as HTMLInputElement)?.focus();
+      this._route.data.subscribe(({ showDelete }) => {
+        if (showDelete) {
+          this.deleteButton?._elementRef?.nativeElement?.focus();
+          this.isDeleteTooltipDisabled = false;
+          this._changeDetectorRef.detectChanges();
+          this.deleteTooltip?.show();
+          this._changeDetectorRef.detectChanges();
+        }
+      });
+    }, 200);
   }
 
   onSubmit() {
@@ -177,9 +196,60 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
         }
       },
       error: (response: HttpErrorResponse) => {
-        this._snackbarService.showError(response.error.message);
+        this._translate
+          .get(
+            this.editMode
+              ? 'disciplines.form.snackbar_update_fail_message'
+              : 'disciplines.form.snackbar_add_fail_message'
+          )
+          .subscribe(message => {
+            this.formGroup.enable();
+            this._snackbarService.showError(
+              this._errorMessageService.buildHttpErrorMessage(
+                response,
+                message
+              ),
+              SnackbarAction.Cross
+            );
+          });
         this.formGroup.enable();
       },
+    });
+  }
+
+  onDelete() {
+    const dialogRef = this._matDialog.open(DeleteDialogComponent, {
+      data: { name: this.name },
+    });
+    dialogRef.afterClosed().subscribe(isDeleteConfirmed => {
+      if (isDeleteConfirmed && this.id) {
+        this.formGroup.disable();
+        this._disciplineService.delete(this.id).subscribe({
+          next: () => {
+            this._translate
+              .get('disciplines.form.snackbar_delete_success_message')
+              .subscribe(message => {
+                this._snackbarService.showSuccess(`${message} (${this.name})`);
+                this._router.navigateByUrl(this.getLinkToSearchPage());
+              });
+          },
+          error: (response: HttpErrorResponse) => {
+            this._translate
+              .get('disciplines.form.snackbar_delete_fail_message')
+              .subscribe(message => {
+                this.formGroup.enable();
+                this._snackbarService.showError(
+                  this._errorMessageService.buildHttpErrorMessage(
+                    response,
+                    message
+                  ),
+                  SnackbarAction.Cross
+                );
+              });
+            this.formGroup.enable();
+          },
+        });
+      }
     });
   }
 
