@@ -63,7 +63,9 @@ export class PaginatorComponent implements OnInit, AfterViewInit, OnChanges {
     const newPageSize = changes['pageSize']?.currentValue;
     if (newPageSize) {
       // fix page size selector not updated when navigating in browser history
-      setTimeout(() => this.pageSizeFormControl.patchValue(newPageSize));
+      setTimeout(() =>
+        this.pageSizeFormControl.patchValue(newPageSize, { emitEvent: false })
+      );
     }
     setTimeout(() => this.updatePageIndexes(), 0);
   }
