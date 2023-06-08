@@ -76,6 +76,21 @@
         </button>
       </ng-template>
 
+      <button
+        #deleteButton
+        class="form__delete-button"
+        mat-flat-button
+        #deleteTooltip="matTooltip"
+        matTooltip="{{ 'disciplines.form.delete_button_tooltip' | translate }}"
+        matTooltipPosition="right"
+        [matTooltipDisabled]="isDeleteTooltipDisabled"
+        type="button"
+        color="warn"
+        *ngIf="editMode && canUserDeleteDiscipline"
+        (click)="onDelete()">
+        {{ 'disciplines.form.delete_button' | translate }}
+      </button>
+
       <a [routerLink]="getLinkToSearchPage()">
         <button
           class="form__cancel-button"

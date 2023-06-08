@@ -57,4 +57,8 @@ export class DisciplineService {
       }
     );
   }
+
+  delete(id: number): Observable<void> {
+    return this._http.delete<void>(`${this.MODULE_URL}/${id}`);
+  }
 }

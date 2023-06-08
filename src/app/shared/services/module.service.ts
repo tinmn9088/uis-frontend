@@ -14,6 +14,10 @@ export class ModuleService {
     return Modules.mainPage.path;
   }
 
+  getNotFoundPagePath(): string {
+    return Modules.errorPages.notFound.path;
+  }
+
   getI18nGroupName(name: ModuleName): string | undefined {
     const module = this.getModule(name);
     return module.i18nGroupName;

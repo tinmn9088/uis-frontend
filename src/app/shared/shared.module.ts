@@ -45,6 +45,9 @@ import { EmptyComponent } from './components/empty/empty.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { ListManagementComponent } from './components/list-management/list-management.component';
 import { ErrorMessageService } from './services/error-message.service';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
+import { QueryParamsService } from './services/query-params.service';
 
 export const THEME_CSS_CLASS_TOKEN = new InjectionToken<string>('themeClass');
 export const REFRESH_JWT_REQUEST_COUNT_TOKEN = new InjectionToken<string>(
@@ -98,6 +101,8 @@ const declarations = [
   EmptyComponent,
   TruncatePipe,
   ListManagementComponent,
+  NotFoundComponent,
+  DeleteDialogComponent,
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -123,6 +128,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ErrorMessageService,
     MatDatepickerModule,
     MatNativeDateModule,
+    QueryParamsService,
   ],
 })
 export class SharedModule {}

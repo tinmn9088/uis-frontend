@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import {
   SpecializationTreeDataSourceService,
@@ -13,7 +13,7 @@ import { SpecializationFlatNode } from '../../domain/specialization-flat-node';
   templateUrl: './specialization-tree.component.html',
   styleUrls: ['./specialization-tree.component.scss'],
 })
-export class SpecializationTreeComponent implements OnInit {
+export class SpecializationTreeComponent {
   isLoading = true;
   noFound = false;
   @Input() pageSize?: number;
@@ -25,10 +25,6 @@ export class SpecializationTreeComponent implements OnInit {
     public specializationService: SpecializationService,
     public dataSource: SpecializationTreeDataSourceService
   ) {}
-
-  ngOnInit() {
-    this.search();
-  }
 
   hasChild = (_: number, node: SpecializationFlatNode) => isExpandable(node);
 

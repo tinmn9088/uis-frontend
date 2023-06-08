@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CategoryPageableResponse } from '../../domain/category-pageable-response';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { CategoryFlatNode } from '../../domain/category-flat-node';
@@ -13,7 +13,7 @@ import {
   templateUrl: './category-tree.component.html',
   styleUrls: ['./category-tree.component.scss'],
 })
-export class CategoryTreeComponent implements OnInit {
+export class CategoryTreeComponent {
   isLoading = true;
   noFound = false;
   @Input() pageSize?: number;
@@ -25,10 +25,6 @@ export class CategoryTreeComponent implements OnInit {
     public categoryService: CategoryService,
     public dataSource: CategoryTreeDataSourceService
   ) {}
-
-  ngOnInit() {
-    this.search();
-  }
 
   hasChild = (_: number, node: CategoryFlatNode) => isExpandable(node);
 

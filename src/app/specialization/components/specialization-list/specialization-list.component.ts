@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { OnInit, AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SpecializationTreeComponent } from '../specialization-tree/specialization-tree.component';
 import { PageEvent } from '@angular/material/paginator';
@@ -6,25 +6,27 @@ import { SpecializationPageableResponse } from '../../domain/specialization-page
 import { HighlightTextService } from 'src/app/shared/services/highlight-text.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-specialization-list',
   templateUrl: './specialization-list.component.html',
   styleUrls: ['./specialization-list.component.scss'],
 })
-export class SpecializationListComponent implements AfterViewInit {
+export class SpecializationListComponent implements OnInit, AfterViewInit {
   private _resizeObserver: ResizeObserver;
   formGroup!: FormGroup;
   @ViewChild(SpecializationTreeComponent)
   specializationTree!: SpecializationTreeComponent;
   totalElements!: number;
-  pageSize = 5;
   arePermissionsPresent: boolean;
+  pageSize!: number;
   pageNumber!: number;
 
   constructor(
     public highlightTextService: HighlightTextService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _route: ActivatedRoute
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.SPECIALIZATION_SEARCH,
@@ -51,6 +53,14 @@ export class SpecializationListComponent implements AfterViewInit {
 
   get searchQuery(): string {
     return this.formGroup.get('searchQuery')?.value;
+  }
+
+  ngOnInit() {
+    this._route.data.subscribe(({ pagination }) => {
+      this.pageNumber = pagination.page;
+      this.pageSize = pagination.size;
+      setTimeout(() => this.specializationTree.search(this.searchQuery));
+    });
   }
 
   ngAfterViewInit() {

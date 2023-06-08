@@ -92,6 +92,16 @@
         </button>
       </ng-template>
 
+      <button
+        class="form__delete-button"
+        mat-flat-button
+        type="button"
+        color="warn"
+        *ngIf="editMode && canUserDeleteSpecialization"
+        (click)="onDelete()">
+        {{ 'specializations.form.delete_button' | translate }}
+      </button>
+
       <a [routerLink]="getLinkToSearchPage()">
         <button
           class="form__cancel-button"

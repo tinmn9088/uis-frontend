@@ -2,6 +2,11 @@
   "mainPage": {
     "path": "/user/main"
   },
+  "errorPages": {
+    "notFound": {
+      "path": "/notfound"
+    }
+  },
   "user": {
     "name": "User",
     "themeCssClass": "user-theme",

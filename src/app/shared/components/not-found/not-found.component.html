@@ -1,0 +1,17 @@
+<div class="container">
+  <app-toolbar [showMainPageButton]="true"></app-toolbar>
+  <div class="container__content">
+    <h2>{{ 'error_pages.notfound.header' | translate }}</h2>
+    <p *ngIf="resourceName">
+      {{ 'error_pages.notfound.description_resource' | translate }}
+      <span>'{{ resourceName }}'</span>
+      {{ 'error_pages.notfound.description_not_found' | translate }}.
+    </p>
+    <p>
+      {{ 'error_pages.notfound.main_page_return' | translate }}
+      <a [routerLink]="getLinkToMainPage()">
+        {{ 'error_pages.notfound.main_page_link' | translate }} </a
+      >.
+    </p>
+  </div>
+</div>

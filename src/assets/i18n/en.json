@@ -31,6 +31,20 @@
       "default": "Guest"
     }
   },
+  "error_pages": {
+    "notfound": {
+      "header": "404 Not Found",
+      "description_resource": "Resource",
+      "description_not_found": "not found",
+      "main_page_return": "Return to",
+      "main_page_link": "Main page"
+    }
+  },
+  "delete_dialog": {
+    "confirmation_message": "Are you sure you want to delete",
+    "no_button": "No",
+    "yes_button": "Yes"
+  },
   "paginator": {
     "page_size_options": "Page size"
   },
@@ -181,6 +195,7 @@
     }
   },
   "categories": {
+    "title": "Category",
     "list": {
       "search": {
         "placeholder": "Search by: name"
@@ -196,10 +211,15 @@
       "name_error": "Name required",
       "parent_label": "Parent category",
       "add_button": "Add",
+      "delete_button": "Delete",
       "edit_button": "Edit",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
-      "snackbar_update_success_message": "Updated"
+      "snackbar_add_fail_message": "Failed to add",
+      "snackbar_delete_success_message": "Deleted",
+      "snackbar_delete_fail_message": "Failed to delete",
+      "snackbar_update_success_message": "Updated",
+      "snackbar_update_fail_message": "Failed to update"
     },
     "options": {
       "search": "Search categories",
@@ -208,6 +228,7 @@
     }
   },
   "disciplines": {
+    "title": "Discipline",
     "list": {
       "search": {
         "placeholder": "Search by: name, short name"
@@ -232,9 +253,15 @@
       "categories_select_specify_category": "... Specify category name",
       "add_button": "Add",
       "edit_button": "Edit",
+      "delete_button": "Delete",
+      "delete_button_tooltip": "Click to delete",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
-      "snackbar_update_success_message": "Updated"
+      "snackbar_add_fail_message": "Failed to add",
+      "snackbar_delete_success_message": "Deleted",
+      "snackbar_delete_fail_message": "Failed to delete",
+      "snackbar_update_success_message": "Updated",
+      "snackbar_update_fail_message": "Failed to update"
     },
     "options": {
       "search": "Search disciplines",
@@ -243,6 +270,7 @@
     }
   },
   "specializations": {
+    "title": "Specialization",
     "list": {
       "search": {
         "placeholder": "Search by: name, cipher"
@@ -266,9 +294,14 @@
       "parent_label": "Parent specialization",
       "add_button": "Add",
       "edit_button": "Edit",
+      "delete_button": "Delete",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
-      "snackbar_update_success_message": "Updated"
+      "snackbar_add_fail_message": "Failed to add",
+      "snackbar_delete_success_message": "Deleted",
+      "snackbar_delete_fail_message": "Failed to delete",
+      "snackbar_update_success_message": "Updated",
+      "snackbar_update_fail_message": "Failed to update"
     },
     "options": {
       "search": "Search specializations",
@@ -277,6 +310,7 @@
     }
   },
   "curricula": {
+    "title": "Curriculum",
     "list": {
       "columns": {
         "id": "Id",
@@ -300,9 +334,15 @@
       "add_button": "Add",
       "edit_button": "Edit",
       "apply_button": "Apply",
+      "delete_button": "Delete",
+      "delete_button_tooltip": "Click to delete",
       "cancel_button": "Cancel",
       "snackbar_add_success_message": "Added",
+      "snackbar_add_fail_message": "Failed to added",
+      "snackbar_delete_success_message": "Curriculum deleted",
+      "snackbar_delete_fail_message": "Failed to delete curriculum",
       "snackbar_update_success_message": "Updated",
+      "snackbar_update_fail_message": "Failed to update",
       "disciplines": {
         "table": {
           "columns": {

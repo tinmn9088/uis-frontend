@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { CurriculumModule } from '../../curriculum.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CurriculumListComponent', () => {
   let component: CurriculumListComponent;
@@ -16,6 +17,7 @@ describe('CurriculumListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         SharedModule,
+        RouterTestingModule,
         CurriculumModule,
         TranslateModule.forRoot({
           loader: {

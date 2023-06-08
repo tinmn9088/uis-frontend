@@ -8,6 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DisciplineListComponent', () => {
   let component: DisciplineListComponent;
@@ -18,6 +19,7 @@ describe('DisciplineListComponent', () => {
       imports: [
         SharedModule,
         BrowserAnimationsModule,
+        RouterTestingModule,
         DisciplineModule,
         TranslateModule.forRoot({
           loader: {

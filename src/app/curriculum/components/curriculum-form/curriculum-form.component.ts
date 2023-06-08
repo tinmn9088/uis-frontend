@@ -5,6 +5,7 @@ import {
   Inject,
   OnInit,
   ViewChild,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectOption } from 'src/app/shared/domain/select-option';
@@ -25,7 +26,16 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CurriculumDisciplineDialogComponent } from '../curriculum-discipline-dialog/curriculum-discipline-dialog.component';
 import { CurriculumDisciplineTableComponent } from '../curriculum-discipline-table/curriculum-discipline-table.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DeleteDialogComponent } from 'src/app/shared/components/delete-dialog/delete-dialog.component';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { ErrorMessageService } from 'src/app/shared/services/error-message.service';
+import { SnackbarAction } from 'src/app/shared/domain/snackbar-action';
 
+/**
+ * Query params:
+ * * `showDelete` - will focus on delete button.
+ */
 @Component({
   selector: 'app-curriculum-form',
   templateUrl: './curriculum-form.component.html',
@@ -47,8 +57,12 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   canUserGetCurriculum: boolean;
   canUserCreateCurriculum: boolean;
   canUserModifyCurriculum: boolean;
+  canUserDeleteCurriculum: boolean;
   areParentOptionsLoading = false;
   @ViewChild('form') form?: ElementRef;
+  @ViewChild('deleteButton') deleteButton?: MatButton;
+  @ViewChild('deleteTooltip') deleteTooltip?: MatTooltip;
+  isDeleteTooltipDisabled = true;
   @ViewChild(CurriculumDisciplineTableComponent)
   disciplineTable!: CurriculumDisciplineTableComponent;
 
@@ -57,13 +71,15 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     private _specializationService: SpecializationService,
     private _authService: AuthService,
     private _snackbarService: SnackbarService,
+    private _errorMessageService: ErrorMessageService,
     private _translate: TranslateService,
     private _router: Router,
     private _route: ActivatedRoute,
     private _matDialog: MatDialog,
     private _languageService: LanguageService,
     private _adapter: DateAdapter<unknown>,
-    @Inject(MAT_DATE_LOCALE) private _locale: string
+    @Inject(MAT_DATE_LOCALE) private _locale: string,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {
     this.editMode = !this._router.url.endsWith('add');
     this.canUserGetCurriculum = this._authService.hasUserPermissions([
@@ -74,6 +90,9 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     ]);
     this.canUserModifyCurriculum = this._authService.hasUserPermissions([
       Permission.CURRICULUM_UPDATE,
+    ]);
+    this.canUserDeleteCurriculum = this._authService.hasUserPermissions([
+      Permission.CURRICULUM_DELETE,
     ]);
 
     this._resizeObserver = new ResizeObserver(entries => {
@@ -114,22 +133,29 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     return this.formGroup.get('specializationId')?.value;
   }
 
+  get selectedSpecializationName(): string {
+    return (
+      this.specializationOptions.find(
+        option => option.value === this.specializationId
+      )?.name || ''
+    );
+  }
+
   ngOnInit() {
     if (this.editMode) {
-      this._route.params.subscribe({
-        next: params => {
-          this.id = parseInt(params['id']);
-          this._curriculumService.getById(this.id).subscribe({
-            next: curriculum => {
-              this._specializationId = curriculum.specializationId;
-              this.formGroup.patchValue({
-                approvalDate: curriculum.approvalDate,
-                admissionYear: curriculum.admissionYear,
-                specializationId: curriculum.specializationId,
-              });
-            },
-          });
-        },
+      this._route.data.subscribe(({ curriculum }) => {
+        this.id = curriculum.id;
+        this._specializationId = curriculum.specializationId;
+
+        // if actual admission year is not present in generated array
+        this.admissionYearOptions.push(curriculum.admissionYear);
+        this.admissionYearOptions.sort();
+
+        this.formGroup.patchValue({
+          approvalDate: new Date(curriculum.approvalDate),
+          admissionYear: curriculum.admissionYear,
+          specializationId: curriculum.specializationId,
+        });
       });
     }
     this.updateSpecializationOptions();
@@ -141,11 +167,18 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     if (this.form) this._resizeObserver.observe(this.form.nativeElement);
 
     // fix initial 100% form container width (autofocus is too fast)
-    setTimeout(
-      () =>
-        (document.querySelector('.form__input') as HTMLInputElement)?.focus(),
-      200
-    );
+    setTimeout(() => {
+      (document.querySelector('.form__input') as HTMLInputElement)?.focus();
+      this._route.data.subscribe(({ showDelete }) => {
+        if (showDelete) {
+          this.deleteButton?._elementRef?.nativeElement?.focus();
+          this.isDeleteTooltipDisabled = false;
+          this._changeDetectorRef.detectChanges();
+          this.deleteTooltip?.show();
+          this._changeDetectorRef.detectChanges();
+        }
+      });
+    }, 200);
   }
 
   onSubmit() {
@@ -195,7 +228,22 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
         }
       },
       error: (response: HttpErrorResponse) => {
-        this._snackbarService.showError(response.error.message);
+        this._translate
+          .get(
+            this.editMode
+              ? 'curricula.form.snackbar_update_fail_message'
+              : 'curricula.form.snackbar_add_fail_message'
+          )
+          .subscribe(message => {
+            this.formGroup.enable();
+            this._snackbarService.showError(
+              this._errorMessageService.buildHttpErrorMessage(
+                response,
+                message
+              ),
+              SnackbarAction.Cross
+            );
+          });
         this.formGroup.enable();
       },
     });
@@ -252,6 +300,46 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
     matDatepicker.close();
   }
 
+  onDelete() {
+    const name = `${this.selectedSpecializationName} (${this._adapter.format(
+      this.approvalDate,
+      ''
+    )})`;
+    const dialogRef = this._matDialog.open(DeleteDialogComponent, {
+      data: { name },
+    });
+    dialogRef.afterClosed().subscribe(isDeleteConfirmed => {
+      if (isDeleteConfirmed && this.id) {
+        this.formGroup.disable();
+        this._curriculumService.delete(this.id).subscribe({
+          next: () => {
+            this._translate
+              .get('curricula.form.snackbar_delete_success_message')
+              .subscribe(message => {
+                this._snackbarService.showSuccess(`${message} (${this.id})`);
+                this._router.navigateByUrl(this.getLinkToSearchPage());
+              });
+          },
+          error: (response: HttpErrorResponse) => {
+            this._translate
+              .get('curricula.form.snackbar_delete_fail_message')
+              .subscribe(message => {
+                this.formGroup.enable();
+                this._snackbarService.showError(
+                  this._errorMessageService.buildHttpErrorMessage(
+                    response,
+                    message
+                  ),
+                  SnackbarAction.Cross
+                );
+              });
+            this.formGroup.enable();
+          },
+        });
+      }
+    });
+  }
+
   openCurriculumDisciplineFormDialog() {
     this._dialogRef = this._matDialog.open(
       CurriculumDisciplineDialogComponent,
@@ -283,7 +371,11 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
 
   private generateAdmissionYearOptions(): number[] {
     const options: number[] = [];
-    for (let year = new Date().getFullYear(); options.length < 15; year++) {
+    for (
+      let year = new Date().getFullYear() - 10;
+      options.length < 25;
+      year++
+    ) {
       options.push(year);
     }
     return options;

@@ -3,6 +3,8 @@ import Modules from 'src/assets/modules.json';
 import { NgModule } from '@angular/core';
 import { ModuleLayoutComponent } from './components/module-layout/module-layout.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { resourceNameResolver } from './resolvers/resource-name-resolver';
 
 const routes: Routes = [
   {
@@ -37,6 +39,13 @@ const routes: Routes = [
           ),
       },
     ],
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
+    resolve: {
+      resourceName: resourceNameResolver,
+    },
   },
 ];
 

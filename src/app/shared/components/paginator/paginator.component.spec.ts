@@ -4,6 +4,7 @@ import { PaginatorComponent } from './paginator.component';
 import { HttpLoaderFactory, SharedModule } from '../../shared.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PaginatorComponent', () => {
   let component: PaginatorComponent;
@@ -13,6 +14,7 @@ describe('PaginatorComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         SharedModule,
+        RouterTestingModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
