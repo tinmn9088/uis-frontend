@@ -46,20 +46,22 @@
         {{ 'disciplines.list.columns.categories' | translate }}
       </th>
       <td mat-cell *matCellDef="let discipline" [ngStyle]="getTableCellStyle()">
-        <ng-container *ngFor="let category of discipline.tags">
-          <ng-container *ngIf="canUserGetCategory; else categoryTitleNoLink">
-            <a [routerLink]="getLinkToCategoryFormPage(category.id)">
-              <mat-chip class="table__chip">
-                <span class="table__chip-label">{{ category.name }}</span>
+        <div class="table__categories-container">
+          <ng-container *ngFor="let category of discipline.tags">
+            <ng-container *ngIf="canUserGetCategory; else categoryTitleNoLink">
+              <a [routerLink]="getLinkToCategoryFormPage(category.id)">
+                <mat-chip class="table__chip">
+                  <span class="table__chip-label">{{ category.name }}</span>
+                </mat-chip>
+              </a>
+            </ng-container>
+            <ng-template #categoryTitleNoLink>
+              <mat-chip class="table__chip" [disableRipple]="true">
+                {{ category.name }}
               </mat-chip>
-            </a>
+            </ng-template>
           </ng-container>
-          <ng-template #categoryTitleNoLink>
-            <mat-chip class="table__chip" [disableRipple]="true">
-              {{ category.name }}
-            </mat-chip>
-          </ng-template>
-        </ng-container>
+        </div>
       </td>
     </ng-container>
 
