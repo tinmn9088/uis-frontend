@@ -11,6 +11,8 @@ import { Sort } from '@angular/material/sort';
 import { CurriculumDiscipline } from '../domain/curriculum-discipline';
 import { CurriculumDisciplineAddRequest } from '../domain/curriculum-discipline-add-request';
 import { CurriculumDisciplineUpdateRequest } from '../domain/curriculum-discipline-update-request';
+import { CurriculumSearchRequest } from '../domain/curriculum-search-request';
+import { CurriculumSearchFilter } from '../domain/curriculum-search-filter';
 
 @Injectable({
   providedIn: 'root',
@@ -59,6 +61,26 @@ export class CurriculumService {
     return this._http.get<CurriculumPageableResponse>(`${this.MODULE_URL}`, {
       params: params,
     });
+  }
+
+  search(
+    filter: CurriculumSearchFilter,
+    size?: number,
+    page?: number,
+    sort?: Sort
+  ): Observable<CurriculumPageableResponse> {
+    const request: CurriculumSearchRequest = {
+      searchDto: filter,
+      pageable: {
+        page: page,
+        size: size,
+        sort: sort ? `${sort.active},${sort.direction}` : undefined,
+      },
+    };
+    return this._http.post<CurriculumPageableResponse>(
+      `${this.MODULE_URL}/search`,
+      request
+    );
   }
 
   getAllDisciplines(curriculumId: number): Observable<CurriculumDiscipline[]> {
