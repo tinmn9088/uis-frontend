@@ -29,7 +29,7 @@ export class DisciplineListComponent implements OnInit {
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.DISCIPLINE_SEARCH,
-      Permission.DISCIPLINE_GET,
+      Permission.DISCIPLINE_READ,
     ]);
     this.formGroup = new FormGroup({
       searchQuery: new FormControl({

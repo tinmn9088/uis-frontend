@@ -69,7 +69,7 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
   ) {
     this.areNotPermissionsPresent = !this._authService.hasUserPermissions([
       Permission.ROLE_CREATE,
-      Permission.PERMISSION_GET,
+      Permission.PERMISSION_READ,
     ]);
   }
 

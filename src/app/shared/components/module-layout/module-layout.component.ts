@@ -16,8 +16,6 @@ import {
   BehaviorSubject,
   Subscription,
   distinctUntilChanged,
-  filter,
-  pairwise,
 } from 'rxjs';
 import { ModuleOption } from '../../domain/module-option';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';

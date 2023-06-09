@@ -32,7 +32,7 @@ export class SpecializationListComponent implements OnInit, AfterViewInit {
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.SPECIALIZATION_SEARCH,
-      Permission.SPECIALIZATION_GET,
+      Permission.SPECIALIZATION_READ,
     ]);
 
     this.formGroup = new FormGroup({

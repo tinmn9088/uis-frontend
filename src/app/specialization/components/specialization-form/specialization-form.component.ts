@@ -54,7 +54,7 @@ export class SpecializationFormComponent implements OnInit, AfterViewInit {
   ) {
     this.editMode = !this._router.url.endsWith('add');
     this.canUserGetSpecialization = this._authService.hasUserPermissions([
-      Permission.SPECIALIZATION_GET,
+      Permission.SPECIALIZATION_READ,
     ]);
     this.canUserCreateSpecialization = this._authService.hasUserPermissions([
       Permission.SPECIALIZATION_CREATE,

@@ -24,7 +24,7 @@ export class CurriculumListComponent implements OnInit {
     private _route: ActivatedRoute
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
-      Permission.CURRICULUM_GET,
+      Permission.CURRICULUM_READ,
     ]);
   }
 
