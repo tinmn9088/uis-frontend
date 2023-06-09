@@ -73,8 +73,18 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   }
 
   onSearch() {
-    this._queryParamsService.appendSearchQuery(this._route, this.searchQuery);
-    setTimeout(() => this.categoryTree.search(this.searchQuery));
+    this.pageNumber = 0;
+    this._queryParamsService.appendQueryParams(
+      this._route,
+      this._queryParamsService.mergeParams(
+        this._queryParamsService.generatePaginationParam(
+          this.pageSize,
+          this.pageNumber
+        ),
+        this._queryParamsService.generateSearchQueryParam(this.searchQuery)
+      )
+    );
+    () => this.categoryTree.search(this.searchQuery);
   }
 
   onDataUpdate(response: CategoryPageableResponse) {
