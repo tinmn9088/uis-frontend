@@ -1,7 +1,7 @@
 import { CurriculumSearchFilter } from './curriculum-search-filter';
 
 export interface CurriculumSearchRequest {
-  searchDto: CurriculumSearchFilter;
+  searchDto?: CurriculumSearchFilter;
   pageable?: {
     page?: number;
     size?: number;

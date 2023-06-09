@@ -57,12 +57,14 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this._route.data.subscribe(({ searchQuery, pagination }) => {
-      this.formGroup.setValue({ searchQuery }, { emitEvent: false });
-      this.pageNumber = pagination.page;
-      this.pageSize = pagination.size;
-      setTimeout(() => this.categoryTree.search(this.searchQuery));
-    });
+    if (this.arePermissionsPresent) {
+      this._route.data.subscribe(({ searchQuery, pagination }) => {
+        this.formGroup.setValue({ searchQuery }, { emitEvent: false });
+        this.pageNumber = pagination.page;
+        this.pageSize = pagination.size;
+        setTimeout(() => this.categoryTree.search(this.searchQuery));
+      });
+    }
   }
 
   ngAfterViewInit() {

@@ -64,7 +64,7 @@ export class CurriculumService {
   }
 
   search(
-    filter: CurriculumSearchFilter,
+    filter?: CurriculumSearchFilter,
     size?: number,
     page?: number,
     sort?: Sort

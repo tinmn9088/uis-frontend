@@ -312,6 +312,13 @@
   "curricula": {
     "title": "Curriculum",
     "list": {
+      "search": {
+        "approval_date_begin": "Approval Date Begin",
+        "approval_date_end": "Approval Date End",
+        "admission_year_begin": "Admission Year Begin",
+        "admission_year_end": "Admission Year End",
+        "filter_button": "Filter"
+      },
       "columns": {
         "id": "Id",
         "approval_date": "Approval date",

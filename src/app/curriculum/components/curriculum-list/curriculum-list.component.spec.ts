@@ -8,6 +8,7 @@ import { CurriculumModule } from '../../curriculum.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CurriculumListComponent', () => {
   let component: CurriculumListComponent;
@@ -18,6 +19,7 @@ describe('CurriculumListComponent', () => {
       imports: [
         SharedModule,
         RouterTestingModule,
+        BrowserAnimationsModule,
         CurriculumModule,
         TranslateModule.forRoot({
           loader: {

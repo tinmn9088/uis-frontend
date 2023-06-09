@@ -312,6 +312,13 @@
   "curricula": {
     "title": "Учебный план",
     "list": {
+      "search": {
+        "approval_date_begin": "Дата утверждения Начало",
+        "approval_date_end": "Дата утверждения Конец",
+        "admission_year_begin": "Год поступления Начало",
+        "admission_year_end": "Год поступления Конец",
+        "filter_button": "Показать"
+      },
       "columns": {
         "id": "Id",
         "approval_date": "Дата утверждения",

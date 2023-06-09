@@ -58,12 +58,14 @@ export class SpecializationListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this._route.data.subscribe(({ searchQuery, pagination }) => {
-      this.formGroup.setValue({ searchQuery }, { emitEvent: false });
-      this.pageNumber = pagination.page;
-      this.pageSize = pagination.size;
-      setTimeout(() => this.specializationTree.search(this.searchQuery));
-    });
+    if (this.arePermissionsPresent) {
+      this._route.data.subscribe(({ searchQuery, pagination }) => {
+        this.formGroup.setValue({ searchQuery }, { emitEvent: false });
+        this.pageNumber = pagination.page;
+        this.pageSize = pagination.size;
+        setTimeout(() => this.specializationTree.search(this.searchQuery));
+      });
+    }
   }
 
   ngAfterViewInit() {

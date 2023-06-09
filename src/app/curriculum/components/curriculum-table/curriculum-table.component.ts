@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
 import { ActivatedRoute } from '@angular/router';
 import { QueryParamsService } from 'src/app/shared/services/query-params.service';
+import { CurriculumSearchFilter } from '../../domain/curriculum-search-filter';
 
 @Component({
   selector: 'app-curriculum-table',
@@ -80,11 +81,11 @@ export class CurriculumTableComponent implements OnInit, AfterViewInit {
     this._queryParamService.appendSort(this._route, sort);
   }
 
-  getAll() {
+  search(filter?: CurriculumSearchFilter) {
     this.isLoading = true;
     this.dataSource = [];
     this._curriculumService
-      .getAll(this.pageSize, this.pageNumber, this.sort)
+      .search(filter, this.pageSize, this.pageNumber, this.sort)
       .subscribe(response => {
         this.dataSource = response.content;
         this.isLoading = false;

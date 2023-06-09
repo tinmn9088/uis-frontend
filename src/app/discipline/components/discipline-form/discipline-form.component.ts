@@ -94,8 +94,6 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
       ),
       categories: new FormControl<SelectOption[]>([]),
     });
-
-    this.formGroup.valueChanges.subscribe(change => console.log(change));
   }
 
   get name(): string {
