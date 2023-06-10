@@ -18,6 +18,7 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 })
 export class CurriculumListComponent implements OnInit {
   formGroup: FormGroup;
+  searchPanelOpenState = false;
   @ViewChild(CurriculumTableComponent)
   curriculumTable!: CurriculumTableComponent;
   totalElements!: number;
@@ -75,10 +76,11 @@ export class CurriculumListComponent implements OnInit {
 
   ngOnInit() {
     if (this.arePermissionsPresent) {
-      this._route.data.subscribe(({ pagination }) => {
+      this._route.data.subscribe(({ pagination, filter }) => {
         this.pageNumber = pagination.page;
         this.pageSize = pagination.size;
-        setTimeout(() => this.curriculumTable.search());
+        this.formGroup.patchValue(filter, { emitEvent: false });
+        setTimeout(() => this.curriculumTable.search(filter));
       });
     }
     this._locale = this._languageService.getLanguage();
@@ -92,6 +94,17 @@ export class CurriculumListComponent implements OnInit {
       approvalDateBegin: this.approvalDateBegin,
       approvalDateEnd: this.approvalDateEnd,
     };
+    this.pageNumber = 0;
+    this._queryParamsService.appendQueryParams(
+      this._route,
+      this._queryParamsService.mergeParams(
+        this._queryParamsService.generatePaginationParam(
+          this.pageSize,
+          this.pageNumber
+        ),
+        { filter: JSON.stringify(filter) }
+      )
+    );
     this.curriculumTable.search(filter);
   }
 

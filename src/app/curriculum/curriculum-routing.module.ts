@@ -6,6 +6,7 @@ import { showDeleteResolver } from '../shared/resolvers/show-delete-resolver';
 import { curriculumResolver } from './resolvers/curriculum-resolver';
 import { paginationResolver } from '../shared/resolvers/pagination-resolver';
 import { sortResolver } from '../shared/resolvers/sort-resolver';
+import { curriculumFilterResolver } from './resolvers/curriculum-filter-resolver';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
     resolve: {
       pagination: paginationResolver,
       sort: sortResolver,
+      filter: curriculumFilterResolver,
     },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },

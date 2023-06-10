@@ -313,6 +313,8 @@
     "title": "Учебный план",
     "list": {
       "search": {
+        "panel_header": "Поиск",
+        "panel_description": "Дата утверждения, Год поступления",
         "approval_date_section_label": "Дата утверждения",
         "approval_date_begin": "Начало",
         "approval_date_end": "Конец",

@@ -1,97 +1,124 @@
 <div class="list">
-  <form [formGroup]="formGroup" (ngSubmit)="onSearch()">
-    <div class="list__search-container">
-      <p class="list__form-section-label">
-        {{ 'curricula.list.search.approval_date_section_label' | translate }}
-      </p>
-      <div class="list__search-group-container">
-        <mat-form-field appearance="outline" class="form__field">
-          <mat-label>
-            {{ 'curricula.list.search.approval_date_begin' | translate }}
-          </mat-label>
-          <input
-            class="form__input"
-            matInput
-            [matDatepicker]="approvalDateBegin"
-            formControlName="approvalDateBegin" />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="approvalDateBegin"></mat-datepicker-toggle>
-          <mat-datepicker #approvalDateBegin>
-            <mat-datepicker-actions>
-              <button mat-button matDatepickerCancel>
-                {{ 'curricula.form.cancel_button' | translate }}
-              </button>
-              <button mat-raised-button color="primary" matDatepickerApply>
-                {{ 'curricula.form.apply_button' | translate }}
-              </button>
-            </mat-datepicker-actions>
-          </mat-datepicker>
-        </mat-form-field>
+  <form
+    class="list__search-form"
+    [formGroup]="formGroup"
+    (ngSubmit)="onSearch()">
+    <mat-accordion class="list__search-expansion-panel-container">
+      <mat-expansion-panel
+        class="list__search-expansion-panel"
+        (opened)="searchPanelOpenState = true"
+        (closed)="searchPanelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ 'curricula.list.search.panel_header' | translate }}
+          </mat-panel-title>
+          <mat-panel-description *ngIf="!searchPanelOpenState">
+            {{ 'curricula.list.search.panel_description' | translate }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
 
-        <mat-icon class="list__search-period-divider">trending_flat</mat-icon>
+        <div class="list__search-container">
+          <p class="list__form-section-label">
+            {{
+              'curricula.list.search.approval_date_section_label' | translate
+            }}
+          </p>
+          <div class="list__search-group-container">
+            <mat-form-field appearance="outline" class="form__field">
+              <mat-label>
+                {{ 'curricula.list.search.approval_date_begin' | translate }}
+              </mat-label>
+              <input
+                class="form__input"
+                matInput
+                [matDatepicker]="approvalDateBegin"
+                formControlName="approvalDateBegin" />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="approvalDateBegin"></mat-datepicker-toggle>
+              <mat-datepicker #approvalDateBegin>
+                <mat-datepicker-actions>
+                  <button mat-button matDatepickerCancel>
+                    {{ 'curricula.form.cancel_button' | translate }}
+                  </button>
+                  <button mat-raised-button color="primary" matDatepickerApply>
+                    {{ 'curricula.form.apply_button' | translate }}
+                  </button>
+                </mat-datepicker-actions>
+              </mat-datepicker>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form__field">
-          <mat-label>
-            {{ 'curricula.list.search.approval_date_end' | translate }}
-          </mat-label>
-          <input
-            class="form__input"
-            matInput
-            [matDatepicker]="approvalDateEnd"
-            formControlName="approvalDateEnd" />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="approvalDateEnd"></mat-datepicker-toggle>
-          <mat-datepicker #approvalDateEnd>
-            <mat-datepicker-actions>
-              <button mat-button matDatepickerCancel>
-                {{ 'curricula.form.cancel_button' | translate }}
-              </button>
-              <button mat-raised-button color="primary" matDatepickerApply>
-                {{ 'curricula.form.apply_button' | translate }}
-              </button>
-            </mat-datepicker-actions>
-          </mat-datepicker>
-        </mat-form-field>
-      </div>
+            <mat-icon class="list__search-period-divider">
+              trending_flat
+            </mat-icon>
 
-      <p class="list__form-section-label">
-        {{ 'curricula.list.search.admission_year_section_label' | translate }}
-      </p>
-      <div class="list__search-group-container">
-        <mat-form-field appearance="outline" class="form__field">
-          <mat-label>
-            {{ 'curricula.list.search.admission_year_begin' | translate }}
-          </mat-label>
-          <input
-            class="form__input"
-            matInput
-            type="number"
-            formControlName="admissionYearBegin" />
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="form__field">
+              <mat-label>
+                {{ 'curricula.list.search.approval_date_end' | translate }}
+              </mat-label>
+              <input
+                class="form__input"
+                matInput
+                [matDatepicker]="approvalDateEnd"
+                formControlName="approvalDateEnd" />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="approvalDateEnd"></mat-datepicker-toggle>
+              <mat-datepicker #approvalDateEnd>
+                <mat-datepicker-actions>
+                  <button mat-button matDatepickerCancel>
+                    {{ 'curricula.form.cancel_button' | translate }}
+                  </button>
+                  <button mat-raised-button color="primary" matDatepickerApply>
+                    {{ 'curricula.form.apply_button' | translate }}
+                  </button>
+                </mat-datepicker-actions>
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
 
-        <mat-icon class="list__search-period-divider">trending_flat</mat-icon>
+          <p class="list__form-section-label">
+            {{
+              'curricula.list.search.admission_year_section_label' | translate
+            }}
+          </p>
+          <div class="list__search-group-container">
+            <mat-form-field appearance="outline" class="form__field">
+              <mat-label>
+                {{ 'curricula.list.search.admission_year_begin' | translate }}
+              </mat-label>
+              <input
+                class="form__input"
+                matInput
+                type="number"
+                formControlName="admissionYearBegin" />
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form__field">
-          <mat-label>
-            {{ 'curricula.list.search.admission_year_end' | translate }}
-          </mat-label>
-          <input
-            class="form__input"
-            matInput
-            type="number"
-            formControlName="admissionYearEnd" />
-        </mat-form-field>
-      </div>
+            <mat-icon class="list__search-period-divider">
+              trending_flat
+            </mat-icon>
 
-      <div>
-        <button matSuffix mat-flat-button color="primary">
-          <mat-icon>filter_list</mat-icon>
-          {{ 'curricula.list.search.filter_button' | translate }}
-        </button>
-      </div>
-    </div>
+            <mat-form-field appearance="outline" class="form__field">
+              <mat-label>
+                {{ 'curricula.list.search.admission_year_end' | translate }}
+              </mat-label>
+              <input
+                class="form__input"
+                matInput
+                type="number"
+                formControlName="admissionYearEnd" />
+            </mat-form-field>
+          </div>
+
+          <div>
+            <button matSuffix mat-flat-button color="primary">
+              <mat-icon>filter_list</mat-icon>
+              {{ 'curricula.list.search.filter_button' | translate }}
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </form>
 
   <ng-container *ngIf="arePermissionsPresent; else noPermission">

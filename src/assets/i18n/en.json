@@ -313,6 +313,8 @@
     "title": "Curriculum",
     "list": {
       "search": {
+        "panel_header": "Search",
+        "panel_description": "Approval Date, Admission Year",
         "approval_date_section_label": "Approval Date",
         "approval_date_begin": "Begin",
         "approval_date_end": "End",

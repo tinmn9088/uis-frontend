@@ -1,9 +1,15 @@
 .list {
   height: 100%;
+  overflow: auto;
 
   display: flex;
   flex-direction: column;
   padding: 0 8px 0 8px;
+
+  &__search-form {
+    width: 66%;
+    margin: 8px 0;
+  }
 
   &__form-section-label {
     font-style: italic;
@@ -29,6 +35,7 @@
 
   &__table-container {
     flex-grow: 1;
+    min-height: 140px;
     overflow: scroll;
   }
 
