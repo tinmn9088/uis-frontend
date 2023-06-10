@@ -1,6 +1,9 @@
 <div class="list">
   <form [formGroup]="formGroup" (ngSubmit)="onSearch()">
     <div class="list__search-container">
+      <p class="list__form-section-label">
+        {{ 'curricula.list.search.approval_date_section_label' | translate }}
+      </p>
       <div class="list__search-group-container">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>
@@ -53,6 +56,9 @@
         </mat-form-field>
       </div>
 
+      <p class="list__form-section-label">
+        {{ 'curricula.list.search.admission_year_section_label' | translate }}
+      </p>
       <div class="list__search-group-container">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>

@@ -5,6 +5,11 @@
   flex-direction: column;
   padding: 0 8px 0 8px;
 
+  &__form-section-label {
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.56);
+  }
+
   &__search-container {
     display: flex;
     flex-direction: column;

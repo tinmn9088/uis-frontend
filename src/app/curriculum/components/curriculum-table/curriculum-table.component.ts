@@ -86,10 +86,15 @@ export class CurriculumTableComponent implements OnInit, AfterViewInit {
     this.dataSource = [];
     this._curriculumService
       .search(filter, this.pageSize, this.pageNumber, this.sort)
-      .subscribe(response => {
-        this.dataSource = response.content;
-        this.isLoading = false;
-        this.dataUpdated.emit(response);
+      .subscribe({
+        next: response => {
+          this.dataSource = response.content;
+          this.isLoading = false;
+          this.dataUpdated.emit(response);
+        },
+        error: () => {
+          this.isLoading = false;
+        },
       });
   }
 

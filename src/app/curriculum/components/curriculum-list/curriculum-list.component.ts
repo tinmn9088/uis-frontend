@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { CurriculumTableComponent } from '../curriculum-table/curriculum-table.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CurriculumPageableResponse } from '../../domain/curriculum-pageable-response';
@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CurriculumSearchFilter } from '../../domain/curriculum-search-filter';
 import { QueryParamsService } from 'src/app/shared/services/query-params.service';
+import { LanguageService } from 'src/app/shared/services/language.service';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-curriculum-list',
@@ -26,7 +28,10 @@ export class CurriculumListComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _route: ActivatedRoute,
-    private _queryParamsService: QueryParamsService
+    private _queryParamsService: QueryParamsService,
+    private _languageService: LanguageService,
+    private _adapter: DateAdapter<unknown>,
+    @Inject(MAT_DATE_LOCALE) private _locale: string
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.CURRICULUM_SEARCH,
@@ -76,6 +81,8 @@ export class CurriculumListComponent implements OnInit {
         setTimeout(() => this.curriculumTable.search());
       });
     }
+    this._locale = this._languageService.getLanguage();
+    this._adapter.setLocale(this._locale);
   }
 
   onSearch() {

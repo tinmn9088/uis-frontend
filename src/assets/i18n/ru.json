@@ -313,10 +313,12 @@
     "title": "Учебный план",
     "list": {
       "search": {
-        "approval_date_begin": "Дата утверждения Начало",
-        "approval_date_end": "Дата утверждения Конец",
-        "admission_year_begin": "Год поступления Начало",
-        "admission_year_end": "Год поступления Конец",
+        "approval_date_section_label": "Дата утверждения",
+        "approval_date_begin": "Начало",
+        "approval_date_end": "Конец",
+        "admission_year_section_label": "Год поступления",
+        "admission_year_begin": "Начало",
+        "admission_year_end": "Конец",
         "filter_button": "Показать"
       },
       "columns": {
