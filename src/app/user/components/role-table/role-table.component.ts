@@ -21,7 +21,7 @@ export class RoleTableComponent implements OnInit {
   @Input() pageSize?: number;
   @Input() pageNumber?: number;
   @Output() dataUpdated = new EventEmitter<RolePageableResponse>();
-  displayedColumns: string[] = ['id', 'name', 'permissionIds'];
+  displayedColumns: string[] = ['id', 'name', 'permissions'];
   isLoading = true;
   dataSource: Role[] = [];
   permissionsByRoleId = new Map<number, BehaviorSubject<PermissionScope[]>>();

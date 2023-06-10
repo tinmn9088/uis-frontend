@@ -6,6 +6,8 @@ import { UserListComponent } from './user/components/user-list/user-list.compone
 import { AuthGuard } from './auth/guards/auth.guard';
 import { MainPageComponent } from './user/components/main-page/main-page.component';
 import { RoleListComponent } from './user/components/role-list/role-list.component';
+import { paginationResolver } from './shared/resolvers/pagination-resolver';
+import { searchQueryResolver } from './shared/resolvers/search-query-resolver';
 
 const routes: Routes = [
   {
@@ -24,6 +26,11 @@ const routes: Routes = [
         path: 'list',
         canActivate: [AuthGuard],
         component: UserListComponent,
+        resolve: {
+          pagination: paginationResolver,
+          searchQuery: searchQueryResolver,
+        },
+        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
       },
       {
         path: 'role',
@@ -33,6 +40,11 @@ const routes: Routes = [
             path: 'list',
             canActivateChild: [AuthGuard],
             component: RoleListComponent,
+            resolve: {
+              pagination: paginationResolver,
+              searchQuery: searchQueryResolver,
+            },
+            runGuardsAndResolvers: 'paramsOrQueryParamsChange',
           },
           {
             path: '',

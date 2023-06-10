@@ -159,7 +159,7 @@
         "columns": {
           "id": "Id",
           "name": "Название",
-          "permission_ids": "Id прав",
+          "permissions": "Права",
           "operations": "Действия"
         },
         "operation_tooltips": {

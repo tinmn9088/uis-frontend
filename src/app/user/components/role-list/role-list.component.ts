@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RoleFormDialogComponent } from '../role-form-dialog/role-form-dialog.component';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -7,26 +7,30 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
 import { RolePageableResponse } from '../../domain/role-pageable-response';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
+import { QueryParamsService } from 'src/app/shared/services/query-params.service';
 
 @Component({
   selector: 'app-role-list',
   templateUrl: './role-list.component.html',
   styleUrls: ['./role-list.component.scss'],
 })
-export class RoleListComponent {
+export class RoleListComponent implements OnInit {
   private _dialogRef?: MatDialogRef<RoleFormDialogComponent, unknown>;
   formGroup!: FormGroup;
   @ViewChild(RoleTableComponent)
   roleTable!: RoleTableComponent;
   totalElements!: number;
-  pageSize = 15;
+  pageSize!: number;
   pageNumber!: number;
   arePermissionsPresent: boolean;
   canUserCreateRole: boolean;
 
   constructor(
     private _matDialog: MatDialog,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _queryParamsService: QueryParamsService,
+    private _route: ActivatedRoute
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.ROLE_READ,
@@ -43,6 +47,17 @@ export class RoleListComponent {
     });
   }
 
+  ngOnInit() {
+    if (this.arePermissionsPresent) {
+      this._route.data.subscribe(({ searchQuery, pagination }) => {
+        this.formGroup.setValue({ searchQuery }, { emitEvent: false });
+        this.pageNumber = pagination.page;
+        this.pageSize = pagination.size;
+        setTimeout(() => this.roleTable.search(this.searchQuery));
+      });
+    }
+  }
+
   get searchQuery(): string {
     return this.formGroup.get('searchQuery')?.value;
   }
@@ -52,6 +67,17 @@ export class RoleListComponent {
   }
 
   onSearch() {
+    this.pageNumber = 0;
+    this._queryParamsService.appendQueryParams(
+      this._route,
+      this._queryParamsService.mergeParams(
+        this._queryParamsService.generatePaginationParam(
+          this.pageSize,
+          this.pageNumber
+        ),
+        this._queryParamsService.generateSearchQueryParam(this.searchQuery)
+      )
+    );
     this.roleTable.search(this.searchQuery);
   }
 

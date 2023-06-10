@@ -159,7 +159,7 @@
         "columns": {
           "id": "Id",
           "name": "Name",
-          "permission_ids": "Permission Ids",
+          "permissions": "Permissions",
           "operations": "Operations"
         },
         "operation_tooltips": {
