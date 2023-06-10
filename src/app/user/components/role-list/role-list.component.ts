@@ -75,7 +75,7 @@ export class RoleListComponent {
     });
     this._dialogRef.afterClosed().subscribe(() => {
       this.searchQuery = '';
-      this.roleTable.search();
+      this.roleTable?.search();
     });
   }
 }

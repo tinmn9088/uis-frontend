@@ -74,7 +74,7 @@ export class UserListComponent {
     this._dialogRef = this._matDialog.open(UserCreateDialogComponent);
     this._dialogRef.afterClosed().subscribe(() => {
       this.searchQuery = '';
-      this.userTable.search();
+      this.userTable?.search();
     });
   }
 }

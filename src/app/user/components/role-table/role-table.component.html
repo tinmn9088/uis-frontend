@@ -6,9 +6,14 @@
         {{ 'users.roles.list.columns.id' | translate }}
       </th>
       <td mat-cell *matCellDef="let role" [ngStyle]="getTableCellStyle()">
-        <a (click)="openRoleEditDialog(role)">
+        <a
+          *ngIf="canUserModifyRole; else idNoLink"
+          (click)="openRoleEditDialog(role)">
           {{ role.id }}
         </a>
+        <ng-template #idNoLink>
+          <span>{{ role.id }}</span>
+        </ng-template>
       </td>
     </ng-container>
 
@@ -55,6 +60,7 @@
         <div class="table__operation-buttons-container">
           <div
             class="table__operation-button-container"
+            *ngIf="canUserModifyRole"
             matTooltip="{{
               ('users.roles.list.operation_tooltips.edit' | translate) +
                 ' \'' +
@@ -79,6 +85,7 @@
             }}">
             <button
               class="table__copy-button"
+              *ngIf="canUserCreateRole"
               mat-icon-button
               (click)="openRoleEditDialog(role, true)"
               color="primary">

@@ -39,7 +39,7 @@ export class UserLayoutComponent implements OnDestroy {
         }) || [];
     this._pathChangeSubscription = this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const currentPath = event.urlAfterRedirects;
+        const currentPath = event.urlAfterRedirects.split('?')[0];
         this.activeTab = this.toolbarTabs.find(tab =>
           currentPath.startsWith(tab.path)
         );
