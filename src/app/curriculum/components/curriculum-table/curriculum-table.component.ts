@@ -54,9 +54,7 @@ export class CurriculumTableComponent implements OnInit, AfterViewInit {
     this.canUserDeleteCurriculum = this._authService.hasUserPermissions([
       Permission.CURRICULUM_DELETE,
     ]);
-    if (this.canUserModifyCurriculum || this.canUserDeleteCurriculum) {
-      this.displayedColumns.push('operations');
-    }
+    this.displayedColumns.push('operations');
   }
 
   ngOnInit() {
