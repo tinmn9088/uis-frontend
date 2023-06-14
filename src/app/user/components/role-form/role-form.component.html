@@ -2,8 +2,7 @@
   class="form"
   [formGroup]="formGroup"
   *ngIf="
-    (editMode && canUserReadPermissions && canUserModifyRole) ||
-      (!editMode && canUserReadPermissions && canUserCreateRole);
+    (editMode && canUserModifyRole) || (!editMode && canUserCreateRole);
     else noPermission
   ">
   <mat-form-field class="form__field" appearance="fill" color="primary">
