@@ -1,12 +1,41 @@
 .list {
   height: 100%;
+  overflow: auto;
 
   display: flex;
   flex-direction: column;
   padding: 0 8px 0 8px;
 
+  &__search-form {
+    width: 66%;
+    margin: 8px 0;
+  }
+
+  &__form-section-label {
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.56);
+  }
+
+  &__search-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+  }
+
+  &__search-group-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &__search-period-divider {
+    margin: 0 8px;
+  }
+
   &__table-container {
     flex-grow: 1;
+    min-height: 140px;
     overflow: scroll;
   }
 

@@ -40,15 +40,11 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
   private _hiddenPermissionActions = new Set<PermissionAction>();
   private _hiddenPermissionScopes = new Set<PermissionScope>();
   formGroup!: FormGroup;
-
-  /**
-   * Authorization information.
-   */
-  areNotPermissionsPresent: boolean;
-
   editMode!: boolean;
   copyMode!: boolean;
-  passwordHidden = true;
+  canUserCreateRole: boolean;
+  canUserModifyRole: boolean;
+  canUserReadPermissions: boolean;
   permissionScopes?: PermissionScope[];
   arePermissionScopesLoading = false;
   areAllPermissionsSelected!: boolean;
@@ -67,9 +63,14 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
     private _snackbarService: SnackbarService,
     private _errorMessageService: ErrorMessageService
   ) {
-    this.areNotPermissionsPresent = !this._authService.hasUserPermissions([
+    this.canUserCreateRole = this._authService.hasUserPermissions([
       Permission.ROLE_CREATE,
-      Permission.PERMISSION_GET,
+    ]);
+    this.canUserModifyRole = this._authService.hasUserPermissions([
+      Permission.ROLE_UPDATE,
+    ]);
+    this.canUserReadPermissions = this._authService.hasUserPermissions([
+      Permission.PERMISSION_READ,
     ]);
   }
 
@@ -77,10 +78,7 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
     this.editMode = !!this.role && !!this.role.id;
     this.copyMode = !!this.role && !this.role.id;
     this.formGroup = new FormGroup({
-      name: new FormControl(
-        { value: '', disabled: this.areNotPermissionsPresent },
-        Validators.required
-      ),
+      name: new FormControl('', Validators.required),
     });
     this.formGroup.valueChanges
       .pipe(
@@ -92,17 +90,22 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
       });
     this.arePermissionScopesLoading = true;
     this.arePermissionsLoaded = new BehaviorSubject<boolean>(false);
-    this._permissionService.getAllScopes().subscribe(scopes => {
-      this.permissionScopes = scopes;
+    this._permissionService.getAllScopes().subscribe({
+      next: scopes => {
+        this.permissionScopes = scopes;
 
-      // scopes are collapsed at the start
-      this.permissionScopes.forEach(scope => this.hidePermissionScope(scope));
+        // scopes are collapsed at the start
+        this.permissionScopes.forEach(scope => this.hidePermissionScope(scope));
 
-      this.arePermissionScopesLoading = false;
-      setTimeout(() => {
-        this.arePermissionsLoaded.next(true);
-        this.arePermissionsLoaded.complete();
-      });
+        this.arePermissionScopesLoading = false;
+        setTimeout(() => {
+          this.arePermissionsLoaded.next(true);
+          this.arePermissionsLoaded.complete();
+        });
+      },
+      error: error => {
+        console.error(error);
+      },
     });
 
     // to emit valueChanges event

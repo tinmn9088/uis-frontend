@@ -1,9 +1,11 @@
-<form class="form" [formGroup]="formGroup">
-  <div class="form__no-permission" *ngIf="areNotPermissionsPresent">
-    <mat-icon class="form__no-permission-icon">error_outline</mat-icon>
-    {{ 'users.roles.form.no_permission_label' | translate }}
-  </div>
-
+<form
+  class="form"
+  [formGroup]="formGroup"
+  *ngIf="
+    (editMode && canUserReadPermissions && canUserModifyRole) ||
+      (!editMode && canUserReadPermissions && canUserCreateRole);
+    else noPermission
+  ">
   <mat-form-field class="form__field" appearance="fill" color="primary">
     <mat-label>
       {{ 'users.roles.form.name_label' | translate }}
@@ -76,5 +78,12 @@
 <ng-template #loading>
   <div class="loading">
     <mat-spinner class="loading__spinner"></mat-spinner>
+  </div>
+</ng-template>
+
+<ng-template #noPermission>
+  <div class="form__no-permission">
+    <mat-icon class="form__no-permission-icon">error_outline</mat-icon>
+    {{ 'users.roles.form.no_permission_label' | translate }}
   </div>
 </ng-template>

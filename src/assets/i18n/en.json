@@ -159,7 +159,7 @@
         "columns": {
           "id": "Id",
           "name": "Name",
-          "permission_ids": "Permission Ids",
+          "permissions": "Permissions",
           "operations": "Operations"
         },
         "operation_tooltips": {
@@ -312,6 +312,17 @@
   "curricula": {
     "title": "Curriculum",
     "list": {
+      "search": {
+        "panel_header": "Search",
+        "panel_description": "Approval Date, Admission Year",
+        "approval_date_section_label": "Approval Date",
+        "approval_date_begin": "Begin",
+        "approval_date_end": "End",
+        "admission_year_section_label": "Admission Year",
+        "admission_year_begin": "Begin",
+        "admission_year_end": "End",
+        "filter_button": "Filter"
+      },
       "columns": {
         "id": "Id",
         "approval_date": "Approval date",

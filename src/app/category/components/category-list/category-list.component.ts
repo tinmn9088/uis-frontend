@@ -7,6 +7,7 @@ import { CategoryPageableResponse } from '../../domain/category-pageable-respons
 import { PageEvent } from '@angular/material/paginator';
 import { Permission } from 'src/app/auth/domain/permission';
 import { ActivatedRoute } from '@angular/router';
+import { QueryParamsService } from 'src/app/shared/services/query-params.service';
 
 @Component({
   selector: 'app-category-list',
@@ -26,7 +27,8 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   constructor(
     public highlightTextService: HighlightTextService,
     private _authService: AuthService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _queryParamsService: QueryParamsService
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.TAG_READ,
@@ -55,11 +57,14 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this._route.data.subscribe(({ pagination }) => {
-      this.pageNumber = pagination.page;
-      this.pageSize = pagination.size;
-      setTimeout(() => this.categoryTree.search(this.searchQuery));
-    });
+    if (this.arePermissionsPresent) {
+      this._route.data.subscribe(({ searchQuery, pagination }) => {
+        this.formGroup.setValue({ searchQuery }, { emitEvent: false });
+        this.pageNumber = pagination.page;
+        this.pageSize = pagination.size;
+        setTimeout(() => this.categoryTree.search(this.searchQuery));
+      });
+    }
   }
 
   ngAfterViewInit() {
@@ -70,7 +75,18 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   }
 
   onSearch() {
-    setTimeout(() => this.categoryTree.search(this.searchQuery));
+    this.pageNumber = 0;
+    this._queryParamsService.appendQueryParams(
+      this._route,
+      this._queryParamsService.mergeParams(
+        this._queryParamsService.generatePaginationParam(
+          this.pageSize,
+          this.pageNumber
+        ),
+        this._queryParamsService.generateSearchQueryParam(this.searchQuery)
+      )
+    );
+    () => this.categoryTree.search(this.searchQuery);
   }
 
   onDataUpdate(response: CategoryPageableResponse) {

@@ -6,6 +6,7 @@ import { DisciplineTableComponent } from '../discipline-table/discipline-table.c
 import { Permission } from 'src/app/auth/domain/permission';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { QueryParamsService } from 'src/app/shared/services/query-params.service';
 
 @Component({
   selector: 'app-discipline-list',
@@ -23,11 +24,12 @@ export class DisciplineListComponent implements OnInit {
 
   constructor(
     private _authService: AuthService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _queryParamsService: QueryParamsService
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.DISCIPLINE_SEARCH,
-      Permission.DISCIPLINE_GET,
+      Permission.DISCIPLINE_READ,
     ]);
     this.formGroup = new FormGroup({
       searchQuery: new FormControl({
@@ -38,11 +40,14 @@ export class DisciplineListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._route.data.subscribe(({ pagination }) => {
-      this.pageNumber = pagination.page;
-      this.pageSize = pagination.size;
-      setTimeout(() => this.disciplineTable.search(this.searchQuery));
-    });
+    if (this.arePermissionsPresent) {
+      this._route.data.subscribe(({ searchQuery, pagination }) => {
+        this.formGroup.setValue({ searchQuery }, { emitEvent: false });
+        this.pageNumber = pagination.page;
+        this.pageSize = pagination.size;
+        setTimeout(() => this.disciplineTable.search(this.searchQuery));
+      });
+    }
   }
 
   get searchQuery(): string {
@@ -50,6 +55,17 @@ export class DisciplineListComponent implements OnInit {
   }
 
   onSearch() {
+    this.pageNumber = 0;
+    this._queryParamsService.appendQueryParams(
+      this._route,
+      this._queryParamsService.mergeParams(
+        this._queryParamsService.generatePaginationParam(
+          this.pageSize,
+          this.pageNumber
+        ),
+        this._queryParamsService.generateSearchQueryParam(this.searchQuery)
+      )
+    );
     this.disciplineTable.search(this.searchQuery);
   }
 

@@ -7,6 +7,7 @@ import { HighlightTextService } from 'src/app/shared/services/highlight-text.ser
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Permission } from 'src/app/auth/domain/permission';
 import { ActivatedRoute } from '@angular/router';
+import { QueryParamsService } from 'src/app/shared/services/query-params.service';
 
 @Component({
   selector: 'app-specialization-list',
@@ -26,11 +27,12 @@ export class SpecializationListComponent implements OnInit, AfterViewInit {
   constructor(
     public highlightTextService: HighlightTextService,
     private _authService: AuthService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _queryParamsService: QueryParamsService
   ) {
     this.arePermissionsPresent = this._authService.hasUserPermissions([
       Permission.SPECIALIZATION_SEARCH,
-      Permission.SPECIALIZATION_GET,
+      Permission.SPECIALIZATION_READ,
     ]);
 
     this.formGroup = new FormGroup({
@@ -56,11 +58,14 @@ export class SpecializationListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this._route.data.subscribe(({ pagination }) => {
-      this.pageNumber = pagination.page;
-      this.pageSize = pagination.size;
-      setTimeout(() => this.specializationTree.search(this.searchQuery));
-    });
+    if (this.arePermissionsPresent) {
+      this._route.data.subscribe(({ searchQuery, pagination }) => {
+        this.formGroup.setValue({ searchQuery }, { emitEvent: false });
+        this.pageNumber = pagination.page;
+        this.pageSize = pagination.size;
+        setTimeout(() => this.specializationTree.search(this.searchQuery));
+      });
+    }
   }
 
   ngAfterViewInit() {
@@ -71,7 +76,18 @@ export class SpecializationListComponent implements OnInit, AfterViewInit {
   }
 
   onSearch() {
-    setTimeout(() => this.specializationTree.search(this.searchQuery));
+    this.pageNumber = 0;
+    this._queryParamsService.appendQueryParams(
+      this._route,
+      this._queryParamsService.mergeParams(
+        this._queryParamsService.generatePaginationParam(
+          this.pageSize,
+          this.pageNumber
+        ),
+        this._queryParamsService.generateSearchQueryParam(this.searchQuery)
+      )
+    );
+    this.specializationTree.search(this.searchQuery);
   }
 
   onDataUpdate(response: SpecializationPageableResponse) {

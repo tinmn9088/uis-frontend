@@ -64,7 +64,7 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
   ) {
     this.editMode = !this._router.url.endsWith('add');
     this.canUserGetDiscipline = this._authService.hasUserPermissions([
-      Permission.DISCIPLINE_GET,
+      Permission.DISCIPLINE_READ,
     ]);
     this.canUserCreateDiscipline = this._authService.hasUserPermissions([
       Permission.DISCIPLINE_CREATE,
@@ -94,8 +94,6 @@ export class DisciplineFormComponent implements OnInit, AfterViewInit {
       ),
       categories: new FormControl<SelectOption[]>([]),
     });
-
-    this.formGroup.valueChanges.subscribe(change => console.log(change));
   }
 
   get name(): string {

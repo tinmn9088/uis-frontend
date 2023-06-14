@@ -11,9 +11,9 @@ import {
   catchError,
   throwError,
   mergeMap,
-  of,
   BehaviorSubject,
   finalize,
+  EMPTY,
 } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Auth } from '../domain/auth';
@@ -49,14 +49,17 @@ export class AuthInterceptor implements HttpInterceptor {
           error.status === HttpStatusCode.Unauthorized &&
           this._refreshJwtRequestCount$.value === 0
         ) {
-          const refreshToken = this._authService.auth.refreshToken;
+          const refreshToken = this._authService.auth?.refreshToken;
+          if (!refreshToken) {
+            return throwError(() => error);
+          }
           this._refreshJwtRequestCount$.next(
             this._refreshJwtRequestCount$.value + 1
           );
           return this._authService.refresh({ refreshToken }).pipe(
             catchError(() => {
               this.navigateToAuthPage();
-              return of();
+              return EMPTY;
             }),
             mergeMap(() => {
               const modifiedRequest = this.modifyRequest(request);

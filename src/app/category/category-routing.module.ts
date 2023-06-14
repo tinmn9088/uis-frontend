@@ -4,12 +4,16 @@ import { CategoryListComponent } from './components/category-list/category-list.
 import { CategoryFormComponent } from './components/category-form/category-form.component';
 import { categoryResolver } from './resolvers/category-resolver';
 import { paginationResolver } from '../shared/resolvers/pagination-resolver';
+import { searchQueryResolver } from '../shared/resolvers/search-query-resolver';
 
 const routes: Routes = [
   {
     path: 'list',
     component: CategoryListComponent,
-    resolve: { pagination: paginationResolver },
+    resolve: {
+      pagination: paginationResolver,
+      searchQuery: searchQueryResolver,
+    },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
   { path: 'add', component: CategoryFormComponent },

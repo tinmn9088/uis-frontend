@@ -83,7 +83,7 @@ export class CurriculumFormComponent implements OnInit, AfterViewInit {
   ) {
     this.editMode = !this._router.url.endsWith('add');
     this.canUserGetCurriculum = this._authService.hasUserPermissions([
-      Permission.CURRICULUM_GET,
+      Permission.CURRICULUM_READ,
     ]);
     this.canUserCreateCurriculum = this._authService.hasUserPermissions([
       Permission.CURRICULUM_CREATE,

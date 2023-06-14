@@ -4,6 +4,8 @@ import { RoleTableComponent } from './role-table.component';
 import { HttpLoaderFactory, SharedModule } from 'src/app/shared/shared.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { JWT_HELPER_SERVICE_TOKEN } from 'src/app/auth/auth.module';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 describe('RoleTableComponent', () => {
   let component: RoleTableComponent;
@@ -22,6 +24,12 @@ describe('RoleTableComponent', () => {
         }),
       ],
       declarations: [RoleTableComponent],
+      providers: [
+        {
+          provide: JWT_HELPER_SERVICE_TOKEN,
+          useValue: new JwtHelperService(),
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoleTableComponent);

@@ -6,6 +6,7 @@ import { disciplineResolver } from './resolvers/discipline-resolver';
 import { showDeleteResolver } from '../shared/resolvers/show-delete-resolver';
 import { paginationResolver } from '../shared/resolvers/pagination-resolver';
 import { sortResolver } from '../shared/resolvers/sort-resolver';
+import { searchQueryResolver } from '../shared/resolvers/search-query-resolver';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
     resolve: {
       pagination: paginationResolver,
       sort: sortResolver,
+      searchQuery: searchQueryResolver,
     },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },

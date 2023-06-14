@@ -26,13 +26,13 @@
         "title": "users.options.user_management",
         "path": "/user/list",
         "type": "search",
-        "requiredPermissions": ["USER_READ"]
+        "requiredPermissions": []
       },
       {
         "title": "users.options.role_management",
         "path": "/user/role/list",
         "type": "search",
-        "requiredPermissions": ["ROLE_READ"]
+        "requiredPermissions": []
       }
     ]
   },
@@ -75,13 +75,13 @@
     "i18nGroupName": "module.groupName.academic",
     "path": "/discipline",
     "resourcePath": "/disciplines",
-    "requiredPermissions": ["DISCIPLINE_GET", "DISCIPLINE_SEARCH"],
+    "requiredPermissions": ["DISCIPLINE_READ", "DISCIPLINE_SEARCH"],
     "options": [
       {
         "title": "disciplines.options.search",
         "path": "/discipline/list",
         "type": "search",
-        "requiredPermissions": ["DISCIPLINE_GET", "DISCIPLINE_SEARCH"]
+        "requiredPermissions": ["DISCIPLINE_READ", "DISCIPLINE_SEARCH"]
       },
       {
         "title": "disciplines.options.add",
@@ -107,13 +107,13 @@
     "i18nGroupName": "module.groupName.academic",
     "path": "/specialization",
     "resourcePath": "/specializations",
-    "requiredPermissions": ["SPECIALIZATION_GET", "SPECIALIZATION_SEARCH"],
+    "requiredPermissions": ["SPECIALIZATION_READ", "SPECIALIZATION_SEARCH"],
     "options": [
       {
         "title": "specializations.options.search",
         "path": "/specialization/list",
         "type": "search",
-        "requiredPermissions": ["SPECIALIZATION_GET", "SPECIALIZATION_SEARCH"]
+        "requiredPermissions": ["SPECIALIZATION_READ", "SPECIALIZATION_SEARCH"]
       },
       {
         "title": "specializations.options.add",
@@ -128,7 +128,7 @@
         "pathRegex": "/specialization/\\d+",
         "type": "update",
         "groupId": 1,
-        "requiredPermissions": ["SPECIALIZATION_GET", "SPECIALIZATION_UPDATE"]
+        "requiredPermissions": ["SPECIALIZATION_READ", "SPECIALIZATION_UPDATE"]
       }
     ]
   },
@@ -139,13 +139,13 @@
     "i18nGroupName": "module.groupName.academic",
     "path": "/curriculum",
     "resourcePath": "/curriculums",
-    "requiredPermissions": ["CURRICULUM_GET"],
+    "requiredPermissions": ["CURRICULUM_READ"],
     "options": [
       {
         "title": "curricula.options.search",
         "path": "/curriculum/list",
         "type": "search",
-        "requiredPermissions": ["CURRICULUM_GET"]
+        "requiredPermissions": ["CURRICULUM_READ"]
       },
       {
         "title": "curricula.options.add",
@@ -160,7 +160,7 @@
         "pathRegex": "/curriculum/\\d+",
         "type": "update",
         "groupId": 1,
-        "requiredPermissions": ["CURRICULUM_GET", "CURRICULUM_UPDATE"]
+        "requiredPermissions": ["CURRICULUM_READ", "CURRICULUM_UPDATE"]
       }
     ]
   }

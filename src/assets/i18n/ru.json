@@ -159,7 +159,7 @@
         "columns": {
           "id": "Id",
           "name": "Название",
-          "permission_ids": "Id прав",
+          "permissions": "Права",
           "operations": "Действия"
         },
         "operation_tooltips": {
@@ -258,7 +258,7 @@
       "cancel_button": "Отмена",
       "snackbar_add_success_message": "Добавлено",
       "snackbar_add_fail_message": "Не удалось добавить",
-      "snackbar_delete_success_message": "Категория удалена",
+      "snackbar_delete_success_message": "Дисциплина удалена",
       "snackbar_delete_fail_message": "Ну удалось удалить категорию",
       "snackbar_update_success_message": "Обновлено",
       "snackbar_update_fail_message": "Не удалось обновить"
@@ -298,7 +298,7 @@
       "cancel_button": "Отмена",
       "snackbar_add_success_message": "Добавлено",
       "snackbar_add_fail_message": "Не удалось добавить",
-      "snackbar_delete_success_message": "Категория удалена",
+      "snackbar_delete_success_message": "Специальность удалена",
       "snackbar_delete_fail_message": "Ну удалось удалить категорию",
       "snackbar_update_success_message": "Обновлено",
       "snackbar_update_fail_message": "Не удалось обновить"
@@ -312,6 +312,17 @@
   "curricula": {
     "title": "Учебный план",
     "list": {
+      "search": {
+        "panel_header": "Поиск",
+        "panel_description": "Дата утверждения, Год поступления",
+        "approval_date_section_label": "Дата утверждения",
+        "approval_date_begin": "Начало",
+        "approval_date_end": "Конец",
+        "admission_year_section_label": "Год поступления",
+        "admission_year_begin": "Начало",
+        "admission_year_end": "Конец",
+        "filter_button": "Показать"
+      },
       "columns": {
         "id": "Id",
         "approval_date": "Дата утверждения",

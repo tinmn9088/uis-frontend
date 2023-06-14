@@ -8,6 +8,8 @@ import { PermissionService } from '../../services/permission.service';
 import { PermissionScope } from '../../domain/permission-scope';
 import { BehaviorSubject } from 'rxjs';
 import { PermissionAction } from '../../domain/permission-action';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Permission } from 'src/app/auth/domain/permission';
 
 @Component({
   selector: 'app-role-table',
@@ -19,18 +21,31 @@ export class RoleTableComponent implements OnInit {
   @Input() pageSize?: number;
   @Input() pageNumber?: number;
   @Output() dataUpdated = new EventEmitter<RolePageableResponse>();
-  displayedColumns: string[] = ['id', 'name', 'permissionIds', 'operations'];
+  displayedColumns: string[] = ['id', 'name', 'permissions'];
   isLoading = true;
   dataSource: Role[] = [];
   permissionsByRoleId = new Map<number, BehaviorSubject<PermissionScope[]>>();
   availablePermissions!: PermissionScope[];
+  canUserCreateRole: boolean;
+  canUserModifyRole: boolean;
   allPermissionScopesAreLoaded = new BehaviorSubject<boolean>(false);
 
   constructor(
     private _roleService: RoleService,
     private _permissionService: PermissionService,
+    private _authService: AuthService,
     private _matDialog: MatDialog
-  ) {}
+  ) {
+    this.canUserCreateRole = this._authService.hasUserPermissions([
+      Permission.ROLE_CREATE,
+    ]);
+    this.canUserModifyRole = this._authService.hasUserPermissions([
+      Permission.ROLE_UPDATE,
+    ]);
+    if (this.canUserCreateRole || this.canUserModifyRole) {
+      this.displayedColumns.push('operations');
+    }
+  }
 
   ngOnInit() {
     this.search();
