@@ -26,13 +26,13 @@
         "title": "users.options.user_management",
         "path": "/user/list",
         "type": "search",
-        "requiredPermissions": []
+        "requiredPermissions": ["USER_READ"]
       },
       {
         "title": "users.options.role_management",
         "path": "/user/role/list",
         "type": "search",
-        "requiredPermissions": []
+        "requiredPermissions": ["ROLE_READ"]
       }
     ]
   },
