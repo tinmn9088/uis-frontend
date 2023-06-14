@@ -44,7 +44,6 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
   copyMode!: boolean;
   canUserCreateRole: boolean;
   canUserModifyRole: boolean;
-  canUserReadPermissions: boolean;
   permissionScopes?: PermissionScope[];
   arePermissionScopesLoading = false;
   areAllPermissionsSelected!: boolean;
@@ -68,9 +67,6 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
     ]);
     this.canUserModifyRole = this._authService.hasUserPermissions([
       Permission.ROLE_UPDATE,
-    ]);
-    this.canUserReadPermissions = this._authService.hasUserPermissions([
-      Permission.PERMISSION_READ,
     ]);
   }
 
